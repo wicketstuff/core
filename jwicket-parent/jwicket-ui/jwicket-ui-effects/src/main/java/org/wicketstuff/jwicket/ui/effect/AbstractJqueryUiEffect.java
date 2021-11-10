@@ -1,6 +1,9 @@
 package org.wicketstuff.jwicket.ui.effect;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.wicket.Component;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -8,9 +11,6 @@ import org.wicketstuff.jwicket.JQuery;
 import org.wicketstuff.jwicket.JQueryHeaderContributor;
 import org.wicketstuff.jwicket.JQueryResourceReference;
 import org.wicketstuff.jwicket.JQuerySpeed;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 /** This is the base class for all jQuery UI effects. The general usage is
@@ -59,7 +59,7 @@ import java.util.List;
  * add(bounce); // add effect to page just for header contribution
  * postEffects.add(bounce); // add effect to chain of post effects
  *
- * explode.fire(target, postEffects, myPanel); // execute main effect and post effects on component 
+ * explode.fire(target, postEffects, myPanel); // execute main effect and post effects on component
  * </pre>
  *
  * It is important to add the effects during Page/Panel creation to ensure
@@ -97,7 +97,7 @@ public abstract class AbstractJqueryUiEffect extends JQueryHeaderContributor  {
 	private static final long serialVersionUID = 1L;
 
 	private static long nextId = 0;
-	
+
 	public static final JQueryResourceReference jQueryUiEffectsCoreJs
 		= JQuery.isDebug()
 		? new JQueryResourceReference(AbstractJqueryUiEffect.class, "jquery.effects.core.js")
@@ -133,22 +133,24 @@ public abstract class AbstractJqueryUiEffect extends JQueryHeaderContributor  {
 	 *	@param value the desired speed or {@code null} to reset the speed to the default value.
 	 */
 	public AbstractJqueryUiEffect setSpeed(final JQuerySpeed value) {
-		if (value == null)
+		if (value == null) {
 			this.speed = null;
-		else
+		} else {
 			this.speed = "'" + value.getSpeed() + "'";
+		}
 		return this;
 	}
 
 	/** The effect speed may also be specified in milliseconds
 	 *
-	 *	@param the speed in milliseconds or a value <= 0 to reset the speed to the default value.
+	 *	@param ms the speed in milliseconds or a value &lt;= 0 to reset the speed to the default value.
 	 */
 	public AbstractJqueryUiEffect setSpeed(final int ms) {
-		if (ms <= 0)
+		if (ms <= 0) {
 			this.speed = null;
-		else
+		} else {
 			this.speed = String.valueOf(ms);
+		}
 		return this;
 	}
 
@@ -181,26 +183,28 @@ public abstract class AbstractJqueryUiEffect extends JQueryHeaderContributor  {
 
 	/**	After the execution of an effect, the affected element sometimes is
 	 *	no more visible. This may be in result of the effect mode (e.g.
-	 *	{@link EffectMode#HIDE} or the effect itself {@link Explode) ore
+	 *	{@link EffectMode#HIDE} or the effect itself {@link Explode} or
 	 *	some other circumstances.
 	 *	By setting the fade in property, the original element is faded in
 	 *	after the effect.
 	 *
-	 *	@param value the speed for the fadeIn action.
+	 *	@param speed value the speed for the fadeIn action.
 	 */
 	public AbstractJqueryUiEffect setFadeInAfter(final int speed) {
-		if (speed <= 0)
+		if (speed <= 0) {
 			this.fadeInAfter = null;
-		else
+		} else {
 			this.fadeInAfter = String.valueOf(speed);
+		}
 		return this;
 	}
 
 	public AbstractJqueryUiEffect setFadeInAfter(final JQuerySpeed speed) {
-		if (speed == null)
+		if (speed == null) {
 			this.fadeInAfter = null;
-		else
+		} else {
 			this.fadeInAfter = "'" + speed.getSpeed() + "'";
+		}
 		return this;
 	}
 
@@ -244,8 +248,9 @@ public abstract class AbstractJqueryUiEffect extends JQueryHeaderContributor  {
 			return;
 		}
 		AbstractJqueryUiEffect currentEffect = firstEffect;
-		if (currentEffect == null)
+		if (currentEffect == null) {
 			currentEffect = chain.get(0);
+		}
 
 		if (currentEffect.getEffectClass() != null) {
 			// Save current class of affected element and set effect class
@@ -302,11 +307,13 @@ public abstract class AbstractJqueryUiEffect extends JQueryHeaderContributor  {
 		}
 
 		// recurse through the chain of post effects
-		if (chain != null || (firstEffect != null && chain == null))
-			if (firstEffect != null)
+		if (chain != null || (firstEffect != null && chain == null)) {
+			if (firstEffect != null) {
 				prepare(jsString, null, chain);
-			else
+			} else {
 				prepare(jsString, null, chain.subList(1, chain.size()));
+			}
+		}
 
 		jsString.append("}");
 		// End of post effect processing
@@ -317,7 +324,7 @@ public abstract class AbstractJqueryUiEffect extends JQueryHeaderContributor  {
 
 
 	/** Let's go! Execute the effect for a bunch of components
-	 * 
+	 *
 	 * @param target
 	 * @param components fire the effect on this component
 	 */
@@ -328,7 +335,7 @@ public abstract class AbstractJqueryUiEffect extends JQueryHeaderContributor  {
 
 	/** Let's go! Execute the effect for a bunch of components and after the effect
 	 *	was completed execute another effect for all components
-	 * 
+	 *
 	 * @param target
 	 * @param postEffect this effect is executed after completion of this effect
 	 * @param components fire the effect on this component
@@ -342,47 +349,49 @@ public abstract class AbstractJqueryUiEffect extends JQueryHeaderContributor  {
 
 	/** Let's go! Execute the effect for a bunch of components and after the effect
 	 *	was completed execute some other effects for all components
-	 * 
+	 *
 	 * @param target
-	 * @param postEffects these effects are executed after completion of this effect 
+	 * @param postEffects these effects are executed after completion of this effect
 	 * @param components fire the effect on this component
 	 */
 	public void fire(final AjaxRequestTarget target, final List<AbstractJqueryUiEffect> postEffects, final Component... components) {
-		if (components == null)
+		if (components == null) {
 			return;
+		}
 
 		StringBuilder jsString = new StringBuilder();
-		for (Component component : components)
-			if (component != null)
-				if (component.getOutputMarkupId()) {
-					varNameElement = "effectElement" + nextId;
-					varNameStyle   = "originalStyle" + nextId;
-					varNameClass   = "originalClass" + nextId;
-					nextId++;
-
-					// var effectElement<n>=jQuery('#<componentID>');
-					jsString.append("{var ");
-					jsString.append(varNameElement);
-					jsString.append("=jQuery('#");
-					jsString.append(component.getMarkupId());
-					jsString.append("');");
-
-					if (restoreStyleAfterEffect) {
-						// var originalStyle<n>=effectElement<n>.attr('style');
-						jsString.append("var ");
-						jsString.append(varNameStyle);
-						jsString.append("=");
-						jsString.append(varNameElement);
-						jsString.append(".attr('style');");
-					}
-
-					// build js for main effect and postEffects
-					prepare(jsString, this, postEffects);
-
-					jsString.append("}");
-				}
-				else
+		for (Component component : components) {
+			if (component != null) {
+				if (!component.getOutputMarkupId()) {
 					throw new WicketRuntimeException("You must not fire a jQuery effet on a component wich hast not set output markupId to true! Component: " + component);
+				}
+				varNameElement = "effectElement" + nextId;
+				varNameStyle   = "originalStyle" + nextId;
+				varNameClass   = "originalClass" + nextId;
+				nextId++;
+
+				// var effectElement<n>=jQuery('#<componentID>');
+				jsString.append("{var ");
+				jsString.append(varNameElement);
+				jsString.append("=jQuery('#");
+				jsString.append(component.getMarkupId());
+				jsString.append("');");
+
+				if (restoreStyleAfterEffect) {
+					// var originalStyle<n>=effectElement<n>.attr('style');
+					jsString.append("var ");
+					jsString.append(varNameStyle);
+					jsString.append("=");
+					jsString.append(varNameElement);
+					jsString.append(".attr('style');");
+				}
+
+				// build js for main effect and postEffects
+				prepare(jsString, this, postEffects);
+
+				jsString.append("}");
+			}
+		}
 
 		target.appendJavaScript(jsString.toString());
 		//target.getHeaderResponse().renderOnLoadJavascript(jsString.toString());

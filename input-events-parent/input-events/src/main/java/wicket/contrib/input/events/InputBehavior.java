@@ -37,13 +37,13 @@ import wicket.contrib.input.events.key.KeyType;
 
 /**
  * Add this to your button, link whatever to create a shortcut key..
- * 
+ *
  * <strong>WARNING:this behavior uses a special script for calling
  * window.onload</strong>
- * 
+ *
  * @author Nino Martinez (nino.martinez.wael *at* gmail *dot* com remember no
  *         stars)
- * 
+ *
  */
 public class InputBehavior extends Behavior {
 
@@ -73,18 +73,17 @@ public class InputBehavior extends Behavior {
 	 * if using auto hook be sure to add this behavior last, otherwise it might
 	 * not pickup the event.. Also it will only hook up to the last event if
 	 * more are present (use other constructor to specify manually)
-	 * 
-	 * 
+	 *
+	 *
 	 * Note on keyCombo
-	 * 
+	 *
 	 * The shortcut keys should be specified in this format ...
 	 * Modifier[+Modifier..]+Key
-	 * 
+	 *
 	 * Meaning that you should specify in this order, modifier keys first like
 	 * 'ctrl' and then normal keys like 'a'
-	 * 
+	 *
 	 * @param keyCombo
-	 * @param autoHook
 	 */
 	public InputBehavior(KeyType[] keyCombo) {
 		this.keyCombo = keyCombo;
@@ -105,7 +104,7 @@ public class InputBehavior extends Behavior {
 	/**
 	 * Gets the escaped DOM id that the input will get attached to. All non word
 	 * characters (\W) will be removed from the string.
-	 * 
+	 *
 	 * @return The DOM id of the input - same as the component's markup id}
 	 */
 	protected final String getEscapedComponentMarkupId() {
@@ -202,7 +201,7 @@ public class InputBehavior extends Behavior {
 	 * If this is set to true, keyboard capture will be disabled in input and
 	 * textarea fields. If these elements have focus, the keyboard shortcut will
 	 * not work. This is very useful for single key shortcuts. Default: false
-	 * 
+	 *
 	 * @return
 	 */
 	protected Boolean getDisable_in_input() {
@@ -211,7 +210,7 @@ public class InputBehavior extends Behavior {
 
 	/**
 	 * The event type - can be 'keydown','keyup','keypress'. Default: 'keydown'
-	 * 
+	 *
 	 * @return
 	 */
 	protected KeyHookOn getType() {
@@ -220,7 +219,7 @@ public class InputBehavior extends Behavior {
 
 	/**
 	 * Should the command be passed onto the browser afterwards?
-	 * 
+	 *
 	 * @return
 	 */
 	protected Boolean getPropagate() {
@@ -230,7 +229,7 @@ public class InputBehavior extends Behavior {
 	/**
 	 * target - DOM Node The element that should be watched for the keyboard
 	 * event. Default : document
-	 * 
+	 *
 	 * @return
 	 */
 	protected String getTarget() {

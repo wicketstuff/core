@@ -19,7 +19,7 @@ public class Scale extends AbstractJqueryUiEffect {
 	}
 
 
-	
+
 	@Override
 	String getEffectName() {
 		return "scale";
@@ -28,33 +28,34 @@ public class Scale extends AbstractJqueryUiEffect {
 
 
 	private String direction = null;
-	
+
 	/**	Set the direction
-	 * 
+	 *
 	 *	@param value the direction
 	 *	@return this object
 	 */
 	public Scale setDirection(final ScaleDirection value) {
-		if (value == null)
+		if (value == null) {
 			direction = null;
-		else
+		} else {
 			direction = value.getDirection();
+		}
 		return this;
 	}
 
 
 	private String from = null;
-	
+
 	/**	Set the start size
-	 * 
-	 *	@param height the start height or a number < 0 for default value
-	 *	@param width the start width or a number < 0 for default value
+	 *
+	 *	@param height the start height or a number &lt; 0 for default value
+	 *	@param width the start width or a number &lt; 0 for default value
 	 *	@return this object
 	 */
 	public Scale setFrom(final int height, final int width) {
-		if (height < 0 || width < 0)
+		if (height < 0 || width < 0) {
 			from = null;
-		else {
+		} else {
 			from = "{height:" + height + ",width:" + width + "}";
 		}
 		return this;
@@ -63,34 +64,36 @@ public class Scale extends AbstractJqueryUiEffect {
 
 
 	private String percent = null;
-	
+
 	/**	Set the percentage to scale to
-	 * 
+	 *
 	 *	@param value is the percentage
 	 *	@return this object
 	 */
 	public Scale setPercen(final int value) {
-		if (value <= 0)
+		if (value <= 0) {
 			percent = null;
-		else
+		} else {
 			percent = String.valueOf(value);
+		}
 		return this;
 	}
 
 
 
 	private String scale = null;
-	
+
 	/**	Set the element to scale
-	 * 
+	 *
 	 *	@param value the element
 	 *	@return this object
 	 */
 	public Scale setElement(final ScaleElement value) {
-		if (value == null)
+		if (value == null) {
 			scale = null;
-		else
+		} else {
 			scale = value.getElement();
+		}
 		return this;
 	}
 
@@ -108,22 +111,25 @@ public class Scale extends AbstractJqueryUiEffect {
 				firstOption = false;
 			}
 			if (from != null) {
-				if (!firstOption)
+				if (!firstOption) {
 					jsString.append(",");
+				}
 				jsString.append("from:");
 				jsString.append(from);
 				firstOption = false;
 			}
 			if (percent != null) {
-				if (!firstOption)
+				if (!firstOption) {
 					jsString.append(",");
+				}
 				jsString.append("percent:");
 				jsString.append(percent);
 				firstOption = false;
 			}
 			if (scale != null) {
-				if (!firstOption)
+				if (!firstOption) {
 					jsString.append(",");
+				}
 				jsString.append("scale:'");
 				jsString.append(scale);
 				jsString.append("'");
@@ -136,7 +142,7 @@ public class Scale extends AbstractJqueryUiEffect {
 
 
 	public enum ScaleDirection {
-		
+
 		DEFAULT(null),
 		BOTH("both"),
 		VERTICAL("vertical"),
@@ -152,6 +158,7 @@ public class Scale extends AbstractJqueryUiEffect {
 			return direction;
 		}
 
+		@Override
 		public String toString() {
 			return direction==null?"default":direction;
 		}
@@ -159,7 +166,7 @@ public class Scale extends AbstractJqueryUiEffect {
 
 
 	public enum ScaleElement {
-		
+
 		DEFAULT(null),
 		BOTH("both"),
 		BOX("box"),
@@ -175,6 +182,7 @@ public class Scale extends AbstractJqueryUiEffect {
 			return direction;
 		}
 
+		@Override
 		public String toString() {
 			return direction==null?"default":direction;
 		}

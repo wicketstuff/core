@@ -22,17 +22,18 @@ import org.apache.wicket.util.string.AppendingStringBuffer;
 
 /**
  * This filter removes html page top level markup elements like
- * <code>&lt;html&gt;</code>, <code>&lt;head&gt</code> and
+ * <code>&lt;html&gt;</code>, <code>&lt;head&gt;</code> and
  * <code>&lt;body&gt;</code>. The filter is configured automatically by
  * WicketFilter if it detects the application is (potentially) invoked as a
  * Portlet.
- * 
+ *
  * @author Ate Douma
  */
 public class PortletInvalidMarkupFilter implements IResponseFilter {
 	/*
 	 * @see org.apache.wicket.IResponseFilter#filter(AppendingStringBuffer)
 	 */
+	@Override
 	public AppendingStringBuffer filter(AppendingStringBuffer responseBuffer) {
 		if (ThreadPortletContext.isEmbedded()) {
 			deleteFragment(responseBuffer, "<?xml", "?>");
@@ -48,7 +49,7 @@ public class PortletInvalidMarkupFilter implements IResponseFilter {
 	/**
 	 * Removes entire html fragments from the response buffer (inclusive of
 	 * fragment body).
-	 * 
+	 *
 	 * @param responseBuffer
 	 *            the buffer to delete from
 	 * @param prefix
@@ -68,7 +69,7 @@ public class PortletInvalidMarkupFilter implements IResponseFilter {
 	/**
 	 * Finds and removes the opening and closing tag, if it exists, from the
 	 * responseBuffer.
-	 * 
+	 *
 	 * @param responseBuffer
 	 *            the buffer to search
 	 * @param tagName
@@ -78,10 +79,7 @@ public class PortletInvalidMarkupFilter implements IResponseFilter {
 		int startIndex, endIndex;
 		// find and remove opening tag, if it exists
 		if ((startIndex = responseBuffer.indexOf("<" + tagName)) > -1) {
-			if ((endIndex = responseBuffer.indexOf(">", startIndex)) > -1) {
-				responseBuffer.delete(startIndex, endIndex + 1);
-			}
-			else {
+			if ((endIndex = responseBuffer.indexOf(">", startIndex)) <= -1) {
 				// FIXME if the closing brace of the element cannot be found -
 				// doesn't that mean
 				// that the entire response fragment is invalid and we should
@@ -92,6 +90,7 @@ public class PortletInvalidMarkupFilter implements IResponseFilter {
 				// '>' chars?
 				throw new MarkupException("Cannot find end of element tag named: " + tagName);
 			}
+			responseBuffer.delete(startIndex, endIndex + 1);
 			// remove closing tag, if it exists
 			if ((startIndex = responseBuffer.indexOf("</" + tagName + ">")) > -1) {
 				responseBuffer.delete(startIndex, startIndex + tagName.length() + 3);

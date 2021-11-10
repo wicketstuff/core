@@ -20,7 +20,7 @@ import org.apache.wicket.util.lang.Args;
  * </p>
  * <p>
  * See also {@link PortletSystemMapper#newBookmarkableMapper()} and
- * {@link PortletSystemMapper#newHomePageMapper(org.apache.wicket.util.IProvider)}
+ * {@link PortletSystemMapper#newHomePageMapper(java.util.function.Supplier)}
  * </p>
  *
  * @author Konstantinos Karavitis
@@ -54,18 +54,7 @@ public class MapperDelegate
 				"Bookmarkable page id '%d' class '%s' has expired.", pageInfo.getPageId(),
 				pageClass.getName()));
 		}
-		else
-		{
-			// The https://issues.apache.org/jira/browse/WICKET-5734 fix removed because
-			// at every render phase which follows the action phase of a wicket portlet,
-			// a fresh page instance was created through the creation of a new page provider.
-			// Because of the above, the portlet after an action was rendered
-			// like it was rendered for the first time.
-			// In other words the result of the action phase (e.g a validation error)
-			// was not be transfered to render phase.
-
-			return new RenderPageRequestHandler(provider);
-		}
+		return new RenderPageRequestHandler(provider);
 	}
 
 	/**

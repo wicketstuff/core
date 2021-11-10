@@ -23,7 +23,7 @@ public class EditableLocalDateColumn<M, I, S> extends EditablePropertyColumn<M, 
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param columnId
 	 *            column identified (must be unique within the grid)
 	 * @param headerModel
@@ -42,7 +42,7 @@ public class EditableLocalDateColumn<M, I, S> extends EditablePropertyColumn<M, 
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param columnId
 	 *            column identified (must be unique within the grid)
 	 * @param headerModel
@@ -59,7 +59,7 @@ public class EditableLocalDateColumn<M, I, S> extends EditablePropertyColumn<M, 
 	/**
 	 * Constructor. The column id is omitted in this constructor, because the property expression is
 	 * used as column id.
-	 * 
+	 *
 	 * @param headerModel
 	 *            model for column header
 	 * @param propertyExpression
@@ -81,8 +81,6 @@ public class EditableLocalDateColumn<M, I, S> extends EditablePropertyColumn<M, 
 	 *            model for column header
 	 * @param propertyExpression
 	 *            property expression used to get the displayed value for row object
-	* @param dc
-	*            DataConverter for how to properly display the Date/Time info
 	 */
 	public EditableLocalDateColumn(IModel<String> headerModel, String propertyExpression)
 	{
@@ -105,10 +103,7 @@ public class EditableLocalDateColumn<M, I, S> extends EditablePropertyColumn<M, 
 		{
 			return converter.convertToString((LocalDate)date, getLocale());
 		}
-		else
-		{
-			return "";
-		}
+		return "";
 	}
 
 }

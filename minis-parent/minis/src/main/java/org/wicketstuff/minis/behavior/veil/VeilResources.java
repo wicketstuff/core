@@ -27,32 +27,30 @@ import org.apache.wicket.request.resource.ResourceReference;
 
 /**
  * A behavior that includes all the necessary resources to use the veil on the client
- * 
+ *
  * @author ivaynberg
  */
 public class VeilResources extends Behavior
 {
 	/**
 	 * JavaScript interface for the veil
-	 * 
+	 *
 	 * @author ivaynberg
 	 */
 	public static class Javascript
 	{
 		/**
 		 * Javascript interface to the veil that is decoupled from wicket
-		 * 
+		 *
 		 * @author ivaynberg
 		 */
 		public static class Generic
 		{
 			/**
 			 * Generates javascript to hide a veil over a tag
-			 * 
+			 *
 			 * @param markupId
 			 *            markup id of tag that will be covered by veil
-			 * @param className
-			 *            css class name for veil
 			 * @return javascript
 			 */
 			public static String hide(final String markupId)
@@ -62,7 +60,7 @@ public class VeilResources extends Behavior
 
 			/**
 			 * Generates javascript to show a veil over a tag
-			 * 
+			 *
 			 * @param markupId
 			 *            markup id of tag that will be covered by veil
 			 * @return javascript
@@ -74,7 +72,7 @@ public class VeilResources extends Behavior
 
 			/**
 			 * Generates javascript to show a veil over a tag
-			 * 
+			 *
 			 * @param markupId
 			 *            markup id of tag that will be covered by veil
 			 * @param className
@@ -88,7 +86,7 @@ public class VeilResources extends Behavior
 
 			/**
 			 * Generates javascript to toggle a veil over a tag
-			 * 
+			 *
 			 * @param markupId
 			 *            markup id of tag that will be covered by veil
 			 * @return javascript
@@ -101,7 +99,7 @@ public class VeilResources extends Behavior
 
 			/**
 			 * Generates javascript to toggle a veil over a tag
-			 * 
+			 *
 			 * @param markupId
 			 *            markup id of tag that will be covered by veil
 			 * @param className
@@ -124,11 +122,9 @@ public class VeilResources extends Behavior
 
 		/**
 		 * Generates javascript to hide a veil over a tag
-		 * 
+		 *
 		 * @param component
 		 *            component that will be covered by veil
-		 * @param className
-		 *            css class name for veil
 		 * @return javascript
 		 */
 		public static String hide(final Component component)
@@ -138,7 +134,7 @@ public class VeilResources extends Behavior
 
 		/**
 		 * Generates javascript to show a veil over a tag
-		 * 
+		 *
 		 * @param component
 		 *            component that will be covered by veil
 		 * @return javascript
@@ -150,7 +146,7 @@ public class VeilResources extends Behavior
 
 		/**
 		 * Generates javascript to show a veil over a tag
-		 * 
+		 *
 		 * @param component
 		 *            component that will be covered by veil
 		 * @param className
@@ -164,7 +160,7 @@ public class VeilResources extends Behavior
 
 		/**
 		 * Generates javascript to show a toggle over a tag
-		 * 
+		 *
 		 * @param component
 		 *            component that will be covered by veil
 		 * @return javascript
@@ -176,7 +172,7 @@ public class VeilResources extends Behavior
 
 		/**
 		 * Generates javascript to toggle a veil over a tag
-		 * 
+		 *
 		 * @param component
 		 *            component that will be covered by veil
 		 * @param className
@@ -221,7 +217,7 @@ public class VeilResources extends Behavior
 	}
 
 	/**
-	 * @see Behavior#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
+	 * @see Behavior#renderHead(Component, IHeaderResponse)
 	 */
 	@Override
 	public void renderHead(final Component c, final IHeaderResponse response)

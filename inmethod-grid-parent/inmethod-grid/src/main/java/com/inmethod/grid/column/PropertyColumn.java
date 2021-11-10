@@ -4,25 +4,25 @@ import java.util.Locale;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.Session;
+import org.apache.wicket.core.util.lang.PropertyResolver;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.ISortState;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.Response;
 import org.apache.wicket.util.convert.IConverter;
-import org.apache.wicket.core.util.lang.PropertyResolver;
 import org.apache.wicket.util.string.Strings;
 
 import com.inmethod.grid.IRenderable;
 
 /**
  * A lightweight column that displays a property of row object specified by an property expression.
- * 
+ *
  * @param <M>
  *            grid model object type
  * @param <I>
  *            row/item model object type
  * @param <P>
  *            type of the property
- * 
+ *
  * @author Matej Knopp
  */
 public class PropertyColumn<M, I, P, S> extends AbstractLightWeightColumn<M, I, S>
@@ -34,7 +34,7 @@ public class PropertyColumn<M, I, P, S> extends AbstractLightWeightColumn<M, I, 
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param columnId
 	 *            column identified (must be unique within the grid)
 	 * @param headerModel
@@ -54,7 +54,7 @@ public class PropertyColumn<M, I, P, S> extends AbstractLightWeightColumn<M, I, 
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param columnId
 	 *            column identified (must be unique within the grid)
 	 * @param headerModel
@@ -70,7 +70,7 @@ public class PropertyColumn<M, I, P, S> extends AbstractLightWeightColumn<M, I, 
 	/**
 	 * Constructor. The column id is omitted in this constructor, because the property expression is
 	 * used as column id.
-	 * 
+	 *
 	 * @param headerModel
 	 *            model for column header
 	 * @param propertyExpression
@@ -87,7 +87,7 @@ public class PropertyColumn<M, I, P, S> extends AbstractLightWeightColumn<M, I, 
 	/**
 	 * Constructor. The column id is omitted in this constructor, because the property expression is
 	 * used as column id.
-	 * 
+	 *
 	 * @param headerModel
 	 *            model for column header
 	 * @param propertyExpression
@@ -103,7 +103,7 @@ public class PropertyColumn<M, I, P, S> extends AbstractLightWeightColumn<M, I, 
 	/**
 	 * Sets whether the markup will be escaped. Set to <code>false</code> if the property contains
 	 * html snippets that need to be rendered as html (without being escaped).
-	 * 
+	 *
 	 * @param escape
 	 * @return <code>this</code> (useful for method chaining)
 	 */
@@ -115,8 +115,8 @@ public class PropertyColumn<M, I, P, S> extends AbstractLightWeightColumn<M, I, 
 
 	/**
 	 * Returns whether the markup will be escaped.
-	 * 
-	 * @return <code>true</code. if the markup will be escaped, <code>false</code> otherwise
+	 *
+	 * @return <code>true</code>. if the markup will be escaped, <code>false</code> otherwise
 	 */
 	public boolean isEscapeMarkup()
 	{
@@ -175,10 +175,7 @@ public class PropertyColumn<M, I, P, S> extends AbstractLightWeightColumn<M, I, 
 			IConverter<C> converter = getConverter(cKlazz);
 			return converter.convertToString(object, getLocale());
 		}
-		else
-		{
-			return "";
-		}
+		return "";
 	}
 
 	/**
@@ -189,6 +186,7 @@ public class PropertyColumn<M, I, P, S> extends AbstractLightWeightColumn<M, I, 
 	{
 		return new IRenderable<I>()
 		{
+			@Override
 			public void render(IModel<I> rowModel, Response response)
 			{
 				CharSequence value = getValue(rowModel);
@@ -202,7 +200,7 @@ public class PropertyColumn<M, I, P, S> extends AbstractLightWeightColumn<M, I, 
 
 	/**
 	 * Returns the property expression.
-	 * 
+	 *
 	 * @return property expression
 	 */
 	public String getPropertyExpression()

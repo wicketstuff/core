@@ -22,7 +22,7 @@ import org.apache.wicket.behavior.Behavior;
  * Contains information about how a component should be displayed in a layout. A component should
  * have only one constraint.
  * <p/>
- * This class violates the idea of {@link org.apache.wicket.behavior.IBehavior}.
+ * This class violates the idea of {@link org.apache.wicket.behavior.Behavior}.
  * </p>
  */
 public class ConstraintBehavior extends Behavior

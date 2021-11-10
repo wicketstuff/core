@@ -101,7 +101,7 @@ public class BarChart<T extends Number> extends AbstractChart<BarData<T>, Long> 
 
 	/**
 	 * Add a value for bar chart
-	 * @param value  Set values
+	 * @param values Set values
 	 */
 	@SuppressWarnings("unchecked")
 	public void addValues(T... values) {

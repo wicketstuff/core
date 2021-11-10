@@ -247,7 +247,7 @@ public class BeautyTips extends AbstractToolTip {
     private int widthInPx = 0;
 
     /**
-     * Sets the width of the ToolTip in px. If the parameter widthInPx is <= 0 the
+     * Sets the width of the ToolTip in px. If the parameter widthInPx is &lt;= 0 the
      * width of the ToolTip is reset to the internal default.
      *
      * @param widthInPx The width of the ToolTip in px
@@ -263,7 +263,7 @@ public class BeautyTips extends AbstractToolTip {
 
     /**
      * Sets the padding of the ToolTip's content in px.
-     * If the parameter paddingInPx is < 0 the padding
+     * If the parameter paddingInPx is &lt; 0 the padding
      * is reset to the internal default.
      *
      * @param paddingInPx The padding of the ToolTip's content of the ToolTip in px
@@ -278,7 +278,7 @@ public class BeautyTips extends AbstractToolTip {
     private int spikeGirth = -1;
 
     /**
-     * Sets the width of the spike. If the width < 0 then the width
+     * Sets the width of the spike. If the width &lt; 0 then the width
      * is reset to the internal default.
      *
      * @param width The width of the spike
@@ -293,7 +293,7 @@ public class BeautyTips extends AbstractToolTip {
     private int spikeLength = -1;
 
     /**
-     * Sets the length of the spike. If the length < 0 then the length
+     * Sets the length of the spike. If the length &lt; 0 then the length
      * is reset to the internal default.
      *
      * @param length The length of the spike
@@ -308,7 +308,7 @@ public class BeautyTips extends AbstractToolTip {
     private int spikeOverlap = -1;
 
     /**
-     * Sets the overlap of the spike onto target. If the overlap < 0 then the overlap
+     * Sets the overlap of the spike onto target. If the overlap &lt; 0 then the overlap
      * is reset to the internal default.
      *
      * @param overlap The overlap of the spike onto target
@@ -323,7 +323,7 @@ public class BeautyTips extends AbstractToolTip {
     private int cornerRadius = -1;
 
     /**
-     * Sets the radius of the ToolTip box. If the radius < 0 then the radius
+     * Sets the radius of the ToolTip box. If the radius &lt; 0 then the radius
      * is reset to the internal default. If the radius = 0 then a square ToolTip
      * box is displayed.
      *

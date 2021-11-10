@@ -4,9 +4,7 @@ import org.apache.wicket.protocol.http.WebApplication;
 
 /**
  * Application object for your web application. If you want to run this application without
- * deploying, run the Start class.
- * 
- * @see com.mycompany.Start#main(String[])
+ * deploying, run the Start class (in tests).
  */
 public class GaeWicketApplication extends WebApplication implements GaeApplication
 {
@@ -22,7 +20,7 @@ public class GaeWicketApplication extends WebApplication implements GaeApplicati
 	{
 		return 10;
 	}
-	
+
 	/**
 	 * @see org.apache.wicket.Application#getHomePage()
 	 */

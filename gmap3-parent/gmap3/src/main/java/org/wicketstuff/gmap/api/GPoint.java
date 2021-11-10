@@ -52,7 +52,7 @@ public class GPoint implements GValue
     }
 
     /**
-     * @see wicket.contrib.gmap.api.GValue#getJSconstructor()
+     * @see GValue#getJSconstructor()
      */
     @Override
     public String getJSconstructor()

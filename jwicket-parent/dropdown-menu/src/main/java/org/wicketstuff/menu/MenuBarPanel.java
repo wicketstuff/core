@@ -177,7 +177,7 @@ import org.wicketstuff.jwicket.JQueryCssResourceReference;
  * z-index:99999;
  * }
  *
- * .menubar li>ul {
+ * .menubar li&gt;ul {
  * top: auto;
  * left: auto;
  * }
@@ -324,7 +324,8 @@ public class MenuBarPanel extends Panel implements IStyleResolver {
         target.add(this.menubar);
     }
 
-    public JQueryCssResourceReference[] getCssResources() {
+    @Override
+	public JQueryCssResourceReference[] getCssResources() {
         return CSS;
     }
 }

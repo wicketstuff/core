@@ -5,7 +5,7 @@
 
 /**
  * � 2006, 2009. Step Ahead Software Pty Ltd. All rights reserved.
- * 
+ *
  * Source file created and managed by Javelin (TM) Step Ahead Software.
  * To maintain code and model synchronization you may directly edit code in method bodies
  * and any sections starting with the 'Keep_*' marker. Make all other changes via Javelin.
@@ -23,28 +23,28 @@ package org.wicketstuff.modalx;
  * Class Name : ModalMgr Diagram : Wicket Generic Modal Windows Project : Echobase framework Type :
  * interface Manages the allocation and deallocation of modal windows. An application implements
  * this method (typically in a base Page class) and provides for 'n' modalWindows. The markup for
- * that base class should include the appropriate number of modal window <divs>. For example if the
+ * that base class should include the appropriate number of modal window &lt;divs&gt;. For example if the
  * maxumum depth of modal windows was n = 2 then the base class markup should have:
- * 
- * <div wicket:id="modalWindow_0"></div> <div wicket:id="modalWindow_1"></div>
- * 
- * 
+ *
+ * &lt;div wicket:id="modalWindow_0"&gt;&lt;/div&gt; &lt;div wicket:id="modalWindow_1"&gt;&lt;/div&gt;
+ *
+ *
  * and the constructor of the ModalMgr implementor should contain code like this:
- * 
+ *
  * // Establish the ModalWindows
- * 
- * modalContentWindows = new ModalContentWindow[MAX_MODALS]; for (int m = 0; m < MAX_MODALS; m++) {
+ *
+ * modalContentWindows = new ModalContentWindow[MAX_MODALS]; for (int m = 0; m &lt; MAX_MODALS; m++) {
  * ModalContentWindow modalWindow = new PbModalWindow(this, "modalWindow_" + m, true);
  * modalWindow.setInitialWidth(600);
- * 
+ *
  * modalWindow.setInitialHeight(400);
- * 
+ *
  * body.add(modalWindow);
- * 
+ *
  * modalContentWindows[m] = modalWindow;
- * 
+ *
  * }
- * 
+ *
  * @author Chris Colman
  */
 public abstract interface ModalMgr
@@ -66,7 +66,7 @@ public abstract interface ModalMgr
 	 * NOTE: This method replaces the old trackModalVisit(IWicketModalVisit) method as that was very specific
            * to tracking and there are more things that are likely to be required than just visit tracking so the name
            * and parameter was changed.
-	 * To implement previous trackModalVisit behaviour call modalContentPanel.createModalVisit(); and do 
+	 * To implement previous trackModalVisit behaviour call modalContentPanel.createModalVisit(); and do
 	 * whatever you previously did with the IWicketModalVisit object that was created
 	 */
 	public abstract void preShow(ModalContentPanel modalContentPanel);

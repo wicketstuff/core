@@ -66,7 +66,7 @@ public class LocalDateTextFieldPanel<M, I, S> extends EditableCellPanel<M, I, Lo
 		protected void onComponentTag(ComponentTag tag)
 		{
 			super.onComponentTag(tag);
-			
+
 			if (!isValid())
 			{
 				tag.put("class", "imxt-invalid");
@@ -111,11 +111,11 @@ public class LocalDateTextFieldPanel<M, I, S> extends EditableCellPanel<M, I, Lo
 	}
 
 	/** newDateTextField
-	 * 
+	 *
 	 *  @param id component Id
 	 *  @param date date of the field to be edited
-	 *  @param dc DateConverter
-	 *  @see DateTextField#DateTextField(String, IModel, FormatStyle)
+	 *  @param style date style to display
+	 *  @see LocalDateTextField#LocalDateTextField(String, IModel, FormatStyle)
 	 *  @return DateTextField
 	 */
 	protected LocalDateTextField newDateTextField(final String id, final IModel<LocalDate> date, FormatStyle style)

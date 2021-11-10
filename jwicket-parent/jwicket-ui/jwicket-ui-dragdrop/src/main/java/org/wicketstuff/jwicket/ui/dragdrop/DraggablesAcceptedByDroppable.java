@@ -1,12 +1,12 @@
 package org.wicketstuff.jwicket.ui.dragdrop;
 
 
-import org.apache.wicket.markup.head.IHeaderResponse;
-import org.apache.wicket.markup.head.JavaScriptContentHeaderItem;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptContentHeaderItem;
 
 
 /**
@@ -15,15 +15,15 @@ import java.util.List;
  * For this reason you can give each draggable a name and tell a dropable the name of
  * all the draggables that you want it to accept. Multiple draggable  can share the
  * same name.
- * 
+ *
  * This class collects all the names of draggable elements for one or more droppable elements
- * 
+ *
  *
  */
 public class DraggablesAcceptedByDroppable implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	public static final String DRAG_NAME_IDENTIFIER = "dragClass";
 
 	private static final String functionPrefix = "wicketJQeryDropAccessTester";
@@ -42,9 +42,11 @@ public class DraggablesAcceptedByDroppable implements Serializable {
 	 */
 	public DraggablesAcceptedByDroppable(final String... names) {
 		id = functionPrefix + String.valueOf(nextId++);
-		for (String name : names)
-			if (name != null && !acceptedNames.contains(name))
+		for (String name : names) {
+			if (name != null && !acceptedNames.contains(name)) {
 				acceptedNames.add(name);
+			}
+		}
 	}
 
 
@@ -54,8 +56,9 @@ public class DraggablesAcceptedByDroppable implements Serializable {
 	 * Duplicate types are eliminated null values are ignored.
 	 */
 	public void addName(final String name) {
-		if (name != null && !acceptedNames.contains(name))
+		if (name != null && !acceptedNames.contains(name)) {
 			acceptedNames.add(name);
+		}
 	}
 
 	/**
@@ -63,10 +66,11 @@ public class DraggablesAcceptedByDroppable implements Serializable {
 	 * @param name The name to be removed
 	 */
 	public void removeName(final String name) {
-		if (name != null)
+		if (name != null) {
 			acceptedNames.remove(name);
+		}
 	}
-	
+
 	/**
 	 * How many names are currently accepted
 	 * @return The numer of currently accepted names
@@ -78,13 +82,13 @@ public class DraggablesAcceptedByDroppable implements Serializable {
 
 	/** Each collection of names has a unique id. It is used e.g. to
 	 * construct a unique JavaScript function name
-	 * 
+	 *
 	 * @return Tne id of this set od names
 	 */
 	public String getId() {
 		return id;
 	}
-	
+
 	@Override
 	public boolean equals(Object other) {
 		return super.equals(other);
@@ -96,10 +100,11 @@ public class DraggablesAcceptedByDroppable implements Serializable {
 			StringBuilder sb = new StringBuilder("[");
 			boolean first = true;
 			for (String s : acceptedNames) {
-				if (!first)
+				if (!first) {
 					sb.append(",");
-				else
+				} else {
 					first = false;
+				}
 				sb.append("'");
 				sb.append(s);
 				sb.append("'");
@@ -107,21 +112,20 @@ public class DraggablesAcceptedByDroppable implements Serializable {
 			sb.append("]");
 			return sb.toString();
 		}
-		else {
-			String jsSet = "[";
-			boolean first = true;
-			for (String s : acceptedNames) {
-				if (!first)
-					jsSet += ",";
-				else
-					first = false;
-				jsSet += "'";
-				jsSet += s;
-				jsSet += "'";
+		String jsSet = "[";
+		boolean first = true;
+		for (String s : acceptedNames) {
+			if (!first) {
+				jsSet += ",";
+			} else {
+				first = false;
 			}
-			jsSet += "]";
-			return jsSet.toString();
+			jsSet += "'";
+			jsSet += s;
+			jsSet += "'";
 		}
+		jsSet += "]";
+		return jsSet.toString();
 	}
 
 
@@ -135,19 +139,19 @@ public class DraggablesAcceptedByDroppable implements Serializable {
 		return id;
 	}
 
-	
+
 	/**
 	 * Create a JavaScript function that checks the names against the
 	 * name of the function's argument. If the name of the function's argument
 	 * matches on name in the list of names the function returns true.
-	 * 
+	 *
 	 * This method renders the JavaScript function for name checking into the page header.
 	 *
 	 * The JavaScript function has the form
 	 * <pre>
 	 * var someFunctionName = function(candidate) {
 	 *     var accepted = ['droppableA','droppableB'];
-	 *     for (var i = 0; i < accepted.length; i++)
+	 *     for (var i = 0; i &lt; accepted.length; i++)
 	 *         if (accepted[i] == jQuery(candidate).attr('dragClass')
 	 *             return true;
 	 *     return false;

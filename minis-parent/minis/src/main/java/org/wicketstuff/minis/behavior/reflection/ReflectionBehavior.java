@@ -47,23 +47,23 @@ import org.apache.wicket.util.string.AppendingStringBuffer;
  * The reflection.js library and more documentation can be found here <a
  * href="http://cow.neondragon.net/stuff/reflection/"
  * >http://cow.neondragon.net/stuff/reflection/</a>
- * 
+ *
  * @author Martijn Dashorst
  */
 public class ReflectionBehavior extends Behavior
 {
 	/**
 	 * Container for javascript calls this behavior enables
-	 * 
+	 *
 	 * @author ivaynberg
-	 * 
+	 *
 	 */
 	public static final class Javascript
 	{
 		/**
 		 * Gets the Javascript for removing a reflection from an image. You have to manually add the
 		 * REFLECTION_JS resource reference to your page if you use this script directly.
-		 * 
+		 *
 		 * @param id
 		 *            the markup id of the image.
 		 * @return the script.
@@ -80,7 +80,7 @@ public class ReflectionBehavior extends Behavior
 		/**
 		 * Gets the script that adds a reflection to an image. You have to manually add the
 		 * REFLECTION_JS resource reference to your page if you use this script directly.
-		 * 
+		 *
 		 * @param id
 		 *            the markup id of the image
 		 * @param opacity
@@ -144,7 +144,7 @@ public class ReflectionBehavior extends Behavior
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param height
 	 *            see {@link #setReflectionHeight(Integer)}
 	 * @param opacity
@@ -158,7 +158,7 @@ public class ReflectionBehavior extends Behavior
 
 	/**
 	 * Binds the component to this behavior.
-	 * 
+	 *
 	 * @see Behavior#bind(Component)
 	 */
 	@Override
@@ -171,8 +171,8 @@ public class ReflectionBehavior extends Behavior
 
 	/**
 	 * Adds the reflection.js javascript to the page.
-	 * 
-	 * @see Behavior#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
+	 *
+	 * @see Behavior#renderHead(Component, IHeaderResponse)
 	 */
 	@Override
 	public void renderHead(Component c, final IHeaderResponse response)
@@ -181,13 +181,14 @@ public class ReflectionBehavior extends Behavior
 		response.render(JavaScriptHeaderItem.forReference(REFLECTION_JS));
 
 		final StringBuilder sb = new StringBuilder();
-		for (final Component component : components)
+		for (final Component component : components) {
 			if (component.isVisibleInHierarchy())
 			{
 				sb.append(Javascript.show(component.getMarkupId(), reflectionOpacity,
 					reflectionHeight));
 				sb.append("\n");
 			}
+		}
 		response.render(OnLoadHeaderItem.forScript(sb.toString()));
 	}
 
@@ -195,7 +196,7 @@ public class ReflectionBehavior extends Behavior
 	 * Sets the reflection height. This is a percentage of the original image. A height of 50 means
 	 * that the reflection will be half the size of the original image, increasing the image size to
 	 * 150%. Set the value to null to reset to the default value.
-	 * 
+	 *
 	 * @param height
 	 *            the height of the reflection as a percentage of the original image, valid values
 	 *            range from 0 to 100.
@@ -207,7 +208,7 @@ public class ReflectionBehavior extends Behavior
 
 	/**
 	 * Sets the opacity of the reflection.
-	 * 
+	 *
 	 * @param opacity
 	 *            the opacity. Valid values range from 0 to 100.
 	 */

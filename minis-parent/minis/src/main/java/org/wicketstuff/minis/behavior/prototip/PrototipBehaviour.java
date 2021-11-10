@@ -28,14 +28,14 @@ import org.apache.wicket.request.resource.PackageResourceReference;
 
 /**
  * Prototip behavior
- * 
+ *
  * The component you add this behavior to will be the component which the tooltip appears for
- * 
+ *
  * note this does not work if you add the behavior to a panel
- * 
- * 
+ *
+ *
  * @author Richard Wilkinson
- * 
+ *
  */
 public class PrototipBehaviour extends Behavior
 {
@@ -65,7 +65,7 @@ public class PrototipBehaviour extends Behavior
 
 	/**
 	 * Provide a simple string as a tooltip
-	 * 
+	 *
 	 * @param tooltip
 	 */
 	public PrototipBehaviour(String tooltip)
@@ -75,7 +75,7 @@ public class PrototipBehaviour extends Behavior
 
 	/**
 	 * Provide a component to show as the tool tip (eg a panel)
-	 * 
+	 *
 	 * @param panel
 	 */
 	public PrototipBehaviour(Component panel)
@@ -87,7 +87,7 @@ public class PrototipBehaviour extends Behavior
 	/**
 	 * Add the required css and js files to the page Permission to distribute prototip files given
 	 * by prototip creator Nick Stakenburg (http://www.nickstakenburg.com)
-	 * 
+	 *
 	 * Also add the javascript to create the tooltip
 	 */
 	@Override
@@ -122,7 +122,7 @@ public class PrototipBehaviour extends Behavior
 	/**
 	 * override bind so that the component you add this behavior to becomes the component the
 	 * tooltip applies to
-	 * 
+	 *
 	 */
 	@Override
 	public void bind(Component component)
@@ -134,7 +134,7 @@ public class PrototipBehaviour extends Behavior
 
 	/**
 	 * Given an ajax request target, remove this tip from the page
-	 * 
+	 *
 	 * @param target
 	 */
 	public void remove(AjaxRequestTarget target)
@@ -149,7 +149,7 @@ public class PrototipBehaviour extends Behavior
 
 	/**
 	 * Given an ajax request target, hide this tip on the page
-	 * 
+	 *
 	 * @param target
 	 */
 	public void hide(AjaxRequestTarget target)
@@ -164,7 +164,7 @@ public class PrototipBehaviour extends Behavior
 
 	/**
 	 * Get string to add the prototip to the page
-	 * 
+	 *
 	 * @return the String
 	 */
 	protected String toJavascript()
@@ -247,8 +247,8 @@ public class PrototipBehaviour extends Behavior
 	}
 
 	/**
-	 * @param panel
-	 *            the panel to set
+	 * @param tooltipComponent
+	 *            tooltip component to set
 	 * @return this object
 	 */
 	public PrototipBehaviour setTooltipComponent(Component tooltipComponent)
@@ -289,7 +289,7 @@ public class PrototipBehaviour extends Behavior
 	/**
 	 * If you do not want this behavour to add the required javascript and css files to the header
 	 * set this to true (default false)
-	 * 
+	 *
 	 * @param overrideHeaderContributor
 	 *            the overrideHeaderContributor to set
 	 * @return this object
@@ -330,13 +330,13 @@ public class PrototipBehaviour extends Behavior
 	/**
 	 * There are 3 different js files which can be included: a normal uncompressed one a minified
 	 * one a minified and gziped one
-	 * 
+	 *
 	 * To override the default (the minified one) set this parameter
-	 * 
+	 *
 	 * This is a static method and as such affects all PrototipBehaviour in the system, this is so
 	 * that you do not have to set the type for every PrototipBehaviour that you use (which is
 	 * tedious)
-	 * 
+	 *
 	 * @param selectedJsType
 	 *            the selectedJsType to set
 	 */
@@ -347,7 +347,7 @@ public class PrototipBehaviour extends Behavior
 
 	/**
 	 * Is the javascript set to load 'onload' if false then it will be 'ondomready'
-	 * 
+	 *
 	 * @return
 	 */
 	public boolean isOnLoad()
@@ -357,7 +357,7 @@ public class PrototipBehaviour extends Behavior
 
 	/**
 	 * Is the javascript set to load 'onload' if false then it will be 'ondomready'
-	 * 
+	 *
 	 * @param onLoad
 	 */
 	public void setOnLoad(boolean onLoad)

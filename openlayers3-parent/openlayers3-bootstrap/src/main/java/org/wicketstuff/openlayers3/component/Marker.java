@@ -20,7 +20,7 @@ public class Marker extends GenericPanel<Color> {
      *
      * @param id
      *         Wicket element ID for the marker
-     * @param colorModel
+     * @param color
      *         Model with the color of the marker
      */
     public Marker(final String id, final IModel<Color> color) {
@@ -51,6 +51,7 @@ public class Marker extends GenericPanel<Color> {
 		return new IModel<String>() {
 			private static final long serialVersionUID = 1L;
 
+			@Override
 			public String getObject() {
 				return "background-color: " + getModelObject() + ";";
 			}

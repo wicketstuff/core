@@ -24,19 +24,16 @@ import java.lang.annotation.Target;
 
 /**
  * Specify the primary and alternate paths to mount a Page.
- * 
+ *
  * <p>
  * If no value (or an empty string) is provided, the AnnotatedMountScanner class will resolve a
  * value based on the page class (by default, <code>pageClass.getSimpleName()</code>).
- * 
+ *
  * <p>
  * The primary mount path is listed ahead of alternate paths in any list returned by
- * {@link org.wicketstuff.annotation.scan.AnnotatedMountScanner}. This is done because of the
- * implementation of
- * {@link org.apache.wicket.protocol.http.request.WebRequestCodingStrategy#getMountEncoder(org.apache.wicket.IRequestTarget)}
- * getMountEncoder() returns the first mount that matches the given Page. Thus, when determining
+ * {@link org.wicketstuff.annotation.scan.AnnotatedMountScanner}. Thus, when determining
  * which path to mount a page on, it always picks the first one found.
- * 
+ *
  * @author Doug Donohoe
  * @author Ronald Tetsuo Miura
  */

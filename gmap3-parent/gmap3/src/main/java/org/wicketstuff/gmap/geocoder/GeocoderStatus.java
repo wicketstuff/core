@@ -16,9 +16,9 @@ package org.wicketstuff.gmap.geocoder;
 
 /**
  * Possible values of return status field.
- * 
+ *
  * See <a href="https://developers.google.com/maps/documentation/geocoding/#StatusCodes">https://developers.google.com/maps/documentation/geocoding/#StatusCodes</a>.
- * @author Dieter Tremel <tremel@tremel-computer.de>
+ * @author Dieter Tremel (tremel@tremel-computer.de)
  */
 public enum GeocoderStatus {
 

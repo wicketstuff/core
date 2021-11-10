@@ -1,11 +1,11 @@
 /* Copyright (c) 2013 Martin Knopf
- * 
+ *
  * Licensed under the MIT license;
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://opensource.org/licenses/MIT
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -49,9 +49,9 @@ import org.wicketstuff.jwicket.JsOption;
  * <p/>
  * An instance of this class can be added to one and only one {@link Component}. Another
  * {@link Component} that should have exactly the same behavior needs it's own instance.
- * 
+ *
  * @author Martin Knopf
- * 
+ *
  */
 public class JQueryUiTooltip extends JQueryDurableAjaxBehavior
 {
@@ -81,7 +81,7 @@ public class JQueryUiTooltip extends JQueryDurableAjaxBehavior
 
 
 	/**
-	 * 
+	 *
 	 * @param customJQueryUiTooltipJs
 	 *            a {@link JQueryResourceReference} which should provide all jQuery UI libraries
 	 *            needed to use the jQuery UI tooltip widget
@@ -92,7 +92,7 @@ public class JQueryUiTooltip extends JQueryDurableAjaxBehavior
 	}
 
 	/**
-	 * 
+	 *
 	 * @param componentSelector
 	 *            the selector which will be used by jQuery to add the tooltip(s)
 	 * @param customJQueryUiTooltipJs
@@ -111,7 +111,7 @@ public class JQueryUiTooltip extends JQueryDurableAjaxBehavior
 
 	/**
 	 * Constructor for testing.
-	 * 
+	 *
 	 * @param widget
 	 */
 	protected JQueryUiTooltip(JQueryUiWidget widget)
@@ -126,7 +126,7 @@ public class JQueryUiTooltip extends JQueryDurableAjaxBehavior
 
 	/**
 	 * Factory method.
-	 * 
+	 *
 	 * @return a new instance of {@link JQueryUiTooltip} using jQuery UI 1.10.3
 	 */
 	public static JQueryUiTooltip tooltip_1_10_3()
@@ -135,9 +135,9 @@ public class JQueryUiTooltip extends JQueryDurableAjaxBehavior
 	}
 
 	/**
-	 * 
+	 *
 	 * Factory method.
-	 * 
+	 *
 	 * @param componentSelector
 	 *            the selector which will be used by jQuery to add the tooltip(s)
 	 * @return a new instance of {@link JQueryUiTooltip} using jQuery UI 1.10.3
@@ -204,16 +204,13 @@ public class JQueryUiTooltip extends JQueryDurableAjaxBehavior
 		{
 			return "#".concat(getComponent().getMarkupId());
 		}
-		else
-		{
-			return componentSelector;
-		}
+		return componentSelector;
 	}
 
 	/**
 	 * Adds the given CSS {@link ResourceReference} to the response for custom tooltip styling. If
 	 * no user {@link ResourceReference} is provided a default style will be used.
-	 * 
+	 *
 	 * @param cssResourceReference
 	 * @return
 	 */
@@ -226,7 +223,7 @@ public class JQueryUiTooltip extends JQueryDurableAjaxBehavior
 
 	/**
 	 * Turns of adding any jQuery UI CSS to the response (even the default one).
-	 * 
+	 *
 	 * @return
 	 */
 	public JQueryUiTooltip withoutCss()
@@ -242,7 +239,7 @@ public class JQueryUiTooltip extends JQueryDurableAjaxBehavior
 	 * Note: The <code>content</code> option has to stay in sync with the <code>items</code> option
 	 * (see <a href="http ://api.jqueryui
 	 * .com/tooltip/#option-content">http://api.jqueryui.com/tooltip/#option-content</a>).
-	 * 
+	 *
 	 * @param content
 	 *            a String containing the content of this tooltip (e.g.
 	 *            {@code <h1>tooltip content</h1>})
@@ -261,7 +258,7 @@ public class JQueryUiTooltip extends JQueryDurableAjaxBehavior
 	 * Note: The <code>content</code> option has to stay in sync with the <code>items</code> option
 	 * (see <a href="http ://api.jqueryui
 	 * .com/tooltip/#option-content">http://api.jqueryui.com/tooltip/#option-content</a>).
-	 * 
+	 *
 	 * @param content
 	 *            a {@link JsFunction} containing a JavaScript function which returns the content of
 	 *            this tooltip (e.g.
@@ -281,7 +278,7 @@ public class JQueryUiTooltip extends JQueryDurableAjaxBehavior
 	 * Note: The <code>content</code> option has to stay in sync with the <code>items</code> option
 	 * (see <a href="http ://api.jqueryui
 	 * .com/tooltip/#option-content">http://api.jqueryui.com/tooltip/#option-content</a>).
-	 * 
+	 *
 	 * @param content
 	 *            the {@link Component} whose markup will be used as the content of this tooltip
 	 * @return
@@ -293,10 +290,10 @@ public class JQueryUiTooltip extends JQueryDurableAjaxBehavior
 	}
 
 	/**
-	 * 
+	 *
 	 * Sets the <code>disabled</code> option of the tooltip widget like this:
 	 * <code>disabled:true</code>.
-	 * 
+	 *
 	 * @param disabled
 	 *            a boolean containing the disabled option of this tooltip
 	 * @return
@@ -308,9 +305,9 @@ public class JQueryUiTooltip extends JQueryDurableAjaxBehavior
 	}
 
 	/**
-	 * 
+	 *
 	 * Sets the <code>hide</code> option of the tooltip widget.
-	 * 
+	 *
 	 * @param hide
 	 *            see <a href="http://api.jqueryui.com/tooltip/#option-hide"
 	 *            >http://api.jqueryui.com/tooltip/#option-hide</a>
@@ -323,9 +320,9 @@ public class JQueryUiTooltip extends JQueryDurableAjaxBehavior
 	}
 
 	/**
-	 * 
+	 *
 	 * Sets the <code>hide</code> option of the tooltip widget.
-	 * 
+	 *
 	 * @param hide
 	 *            see <a href="http://api.jqueryui.com/tooltip/#option-hide"
 	 *            >http://api.jqueryui.com/tooltip/#option-hide</a>
@@ -338,9 +335,9 @@ public class JQueryUiTooltip extends JQueryDurableAjaxBehavior
 	}
 
 	/**
-	 * 
+	 *
 	 * Sets the <code>hide</code> option of the tooltip widget.
-	 * 
+	 *
 	 * @param hide
 	 *            see <a href="http://api.jqueryui.com/tooltip/#option-hide"
 	 *            >http://api.jqueryui.com/tooltip/#option-hide</a>
@@ -353,9 +350,9 @@ public class JQueryUiTooltip extends JQueryDurableAjaxBehavior
 	}
 
 	/**
-	 * 
+	 *
 	 * Sets the <code>hide</code> option of the tooltip widget.
-	 * 
+	 *
 	 * @param options
 	 *            see <a href="http://api.jqueryui.com/tooltip/#option-hide"
 	 *            >http://api.jqueryui.com/tooltip/#option-hide</a>
@@ -379,14 +376,14 @@ public class JQueryUiTooltip extends JQueryDurableAjaxBehavior
 	}
 
 	/**
-	 * 
+	 *
 	 * Sets the <code>items</code> option of the tooltip widget like this:
 	 * <code>items:'.element'</code>.
 	 * <p/>
 	 * Note: The <code>items</code> option has to stay in sync with the <code>content</code> option
 	 * (see <a href="http://api.jqueryui.com/tooltip/#option-items"
 	 * >http://api.jqueryui.com/tooltip/#option-items</a>).
-	 * 
+	 *
 	 * @param itemsSelector
 	 *            a String containing the selector(s) of the element(s) this tooltip should be
 	 *            applied to (e.g. .element)
@@ -399,12 +396,13 @@ public class JQueryUiTooltip extends JQueryDurableAjaxBehavior
 	}
 
 	/**
-	 * 
+	 *
 	 * Sets the <code>position</code> option of the tooltip widget like this:
 	 * <code>position:{my:'center'}</code>.
-	 * 
-	 * @param position
-	 *            a String containing the position object of this tooltip (e.g. {my:'center'})
+	 *
+	 * @param options
+	 *            see <a href="http://api.jqueryui.com/tooltip/#option-show" >
+	 *            http://api.jqueryui.com/tooltip/#option-show</a>
 	 * @return
 	 */
 	public JQueryUiTooltip setPosition(JsOption... options)
@@ -414,9 +412,9 @@ public class JQueryUiTooltip extends JQueryDurableAjaxBehavior
 	}
 
 	/**
-	 * 
+	 *
 	 * Sets the <code>show</code> option of the tooltip widget.
-	 * 
+	 *
 	 * @param show
 	 *            see <a href="http://api.jqueryui.com/tooltip/#option-show" >
 	 *            http://api.jqueryui.com/tooltip/#option-show</a>
@@ -429,9 +427,9 @@ public class JQueryUiTooltip extends JQueryDurableAjaxBehavior
 	}
 
 	/**
-	 * 
+	 *
 	 * Sets the <code>show</code> option of the tooltip widget.
-	 * 
+	 *
 	 * @param show
 	 *            see <a href="http://api.jqueryui.com/tooltip/#option-show" >
 	 *            http://api.jqueryui.com/tooltip/#option-show</a>
@@ -444,9 +442,9 @@ public class JQueryUiTooltip extends JQueryDurableAjaxBehavior
 	}
 
 	/**
-	 * 
+	 *
 	 * Sets the <code>show</code> option of the tooltip widget.
-	 * 
+	 *
 	 * @param show
 	 *            see <a href="http://api.jqueryui.com/tooltip/#option-show" >
 	 *            http://api.jqueryui.com/tooltip/#option-show</a>
@@ -459,9 +457,9 @@ public class JQueryUiTooltip extends JQueryDurableAjaxBehavior
 	}
 
 	/**
-	 * 
+	 *
 	 * Sets the <code>show</code> option of the tooltip widget.
-	 * 
+	 *
 	 * @param options
 	 *            see <a href="http://api.jqueryui.com/tooltip/#option-show" >
 	 *            http://api.jqueryui.com/tooltip/#option-show</a>
@@ -474,10 +472,10 @@ public class JQueryUiTooltip extends JQueryDurableAjaxBehavior
 	}
 
 	/**
-	 * 
+	 *
 	 * Sets the <code>tooltipClass</code> option of the tooltip widget which will be rendered like
 	 * this: <code>tooltipClass:'className'</code>.
-	 * 
+	 *
 	 * @param tooltipClass
 	 *            a String containing the tooltipClass option of this tooltip (e.g. className)
 	 * @return
@@ -490,7 +488,7 @@ public class JQueryUiTooltip extends JQueryDurableAjaxBehavior
 
 	/**
 	 * Sets the <code>track</code> option of the tooltip widget like this: <code>track:true</code> .
-	 * 
+	 *
 	 * @param track
 	 *            a boolean containing the track option of this tooltip
 	 * @return
@@ -504,7 +502,7 @@ public class JQueryUiTooltip extends JQueryDurableAjaxBehavior
 	/**
 	 * Sets the <code>close</code> event handler of the tooltip widget like this:
 	 * <code>close:function(event,ui){some code;}</code>.
-	 * 
+	 *
 	 * @param close
 	 *            a String containing the close event handler of this tooltip (e.g.
 	 *            <code>function(event,ui){some code;}</code>.)
@@ -519,7 +517,7 @@ public class JQueryUiTooltip extends JQueryDurableAjaxBehavior
 	/**
 	 * Sets the <code>create</code> event handler of the tooltip widget like this:
 	 * <code>create:function(event,ui){some code;}</code>.
-	 * 
+	 *
 	 * @param create
 	 *            a String containing the create event handler of this tooltip (e.g.
 	 *            <code>function(event,ui){some code;}</code>.)
@@ -534,7 +532,7 @@ public class JQueryUiTooltip extends JQueryDurableAjaxBehavior
 	/**
 	 * Sets the <code>open</code> event handler of the tooltip widget like this:
 	 * <code>open:function(event,ui){some code;}</code>.
-	 * 
+	 *
 	 * @param open
 	 *            a String containing the open event handler of this tooltip (e.g.
 	 *            <code>function(event,ui){some code;}</code>.)

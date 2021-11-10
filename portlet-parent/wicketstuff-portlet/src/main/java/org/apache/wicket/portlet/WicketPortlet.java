@@ -44,6 +44,7 @@ import javax.servlet.RequestDispatcher;
 
 import org.apache.commons.fileupload.portlet.PortletRequestContext;
 import org.apache.wicket.protocol.http.WicketFilter;
+import org.apache.wicket.settings.RequestCycleSettings;
 import org.apache.wicket.util.string.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -121,9 +122,7 @@ public class WicketPortlet extends GenericPortlet {
 	 *
 	 * <p>
 	 * This is also used in generating links by {@link PortletRequestContext} in
-	 * generating links, as the links have to be portal encoded links, but must
-	 * also still contain the original wicket url for use by Wicket (e.g.
-	 * {@link PortletRequestContext#encodeActionURL}).
+	 * generating links, as the links have to be portal encoded links.
 	 *
 	 * <p>
 	 * The default/buildin name of the parameter which stores the name of the
@@ -187,9 +186,9 @@ public class WicketPortlet extends GenericPortlet {
 
 	/**
 	 * Delegates to
-	 * {@link #processRequest(PortletRequest, PortletResponse, String, String)}.
+	 * {@link WicketPortlet#processRequest(PortletRequest, PortletResponse, PageType)}.
 	 *
-	 * @see #processRequest(PortletRequest, PortletResponse, String, String)
+	 * @WicketPortlet#processRequest(PortletRequest, PortletResponse, PageType)
 	 */
 	protected void doCustom(final RenderRequest request, final RenderResponse response) throws PortletException, IOException {
 		processRequest(request, response, PageType.CUSTOM);
@@ -197,9 +196,9 @@ public class WicketPortlet extends GenericPortlet {
 
 	/**
 	 * Delegates to
-	 * {@link #processRequest(PortletRequest, PortletResponse, String, String)}.
+	 * {@link WicketPortlet#processRequest(PortletRequest, PortletResponse, PageType)}.
 	 *
-	 * @see #processRequest(PortletRequest, PortletResponse, String, String)
+	 * @see WicketPortlet#processRequest(PortletRequest, PortletResponse, PageType)
 	 */
 	@Override
 	protected void doEdit(final RenderRequest request, final RenderResponse response) throws PortletException, IOException {
@@ -208,9 +207,9 @@ public class WicketPortlet extends GenericPortlet {
 
 	/**
 	 * Delegates to
-	 * {@link #processRequest(PortletRequest, PortletResponse, String, String)}.
+	 * {@link WicketPortlet#processRequest(PortletRequest, PortletResponse, PageType)}.
 	 *
-	 * @see #processRequest(PortletRequest, PortletResponse, String, String)
+	 * @see WicketPortlet#processRequest(PortletRequest, PortletResponse, PageType)
 	 */
 	@Override
 	protected void doHelp(final RenderRequest request, final RenderResponse response) throws PortletException, IOException {
@@ -219,9 +218,9 @@ public class WicketPortlet extends GenericPortlet {
 
 	/**
 	 * Delegates to
-	 * {@link #processRequest(PortletRequest, PortletResponse, String, String)}.
+	 * {@link WicketPortlet#processRequest(PortletRequest, PortletResponse, PageType)}.
 	 *
-	 * @see #processRequest(PortletRequest, PortletResponse, String, String)
+	 * @see WicketPortlet#processRequest(PortletRequest, PortletResponse, PageType)
 	 */
 	@Override
 	protected void doView(final RenderRequest request, final RenderResponse response) throws PortletException, IOException {
@@ -282,7 +281,6 @@ public class WicketPortlet extends GenericPortlet {
 	 * internal JavaServer processes. (I.e. it can come from a JSP or servlet
 	 * but not an HTML page.) Its value is an Object.
 	 *
-	 * @see PortletRequestContext#getLastEncodedPath()
 	 * @param request
 	 * @param pageType
 	 * @param defaultPage
@@ -333,15 +331,14 @@ public class WicketPortlet extends GenericPortlet {
 
 	/**
 	 * Delegates to
-	 * {@link #processRequest(PortletRequest, PortletResponse, String, String)}.
+	 * {@link WicketPortlet#processRequest(PortletRequest, PortletResponse, PageType)}.
 	 *
 	 * <p>
 	 * Stores the {@link ActionResponse} so that
-	 * {@link PortletEventService#broadcast} can send events using
+	 * PortletEventService#broadcast can send events using
 	 * {@link ActionResponse#setEvent}
 	 *
-	 * @see PortletEventService#broadcastToPortletListeners
-	 * @see #processRequest(PortletRequest, PortletResponse, String, String)
+	 * @see WicketPortlet#processRequest(PortletRequest, PortletResponse, PageType)
 	 */
 	@Override
 	public void processAction(final ActionRequest request, final ActionResponse response) throws PortletException, IOException {
@@ -357,7 +354,7 @@ public class WicketPortlet extends GenericPortlet {
 	 * The recorded url is then used in by wicket in the subsequnt 'VIEW'
 	 * requests by the portal, to render the correct Page.
 	 *
-	 * @see IRequestCycleSettings#REDIRECT_TO_RENDER
+	 * @see RequestCycleSettings.RenderStrategy#REDIRECT_TO_RENDER
 	 * @param wicketURL
 	 * @param request
 	 * @param response
@@ -448,72 +445,32 @@ public class WicketPortlet extends GenericPortlet {
 							responseState.clear();
 							continue;
 						}
-						else {
-							// internal Wicket redirection loop: unsure yet what
-							// to send out from
-							// here
-							// TODO: determine what kind of error (message or
-							// page) should be
-							// written out
-							// for now: no output available/written :(
-							responseState.clear();
-							break;
-						}
-					}
-					else {
+						// internal Wicket redirection loop: unsure yet what
+						// to send out from
+						// here
+						// TODO: determine what kind of error (message or
+						// page) should be
+						// written out
+						// for now: no output available/written :(
 						responseState.clear();
-						if (responseState.isResourceResponse()) {
-							// Formally, the Portlet 2.0 Spec doesn't support
-							// directly redirecting
-							// from serveResource. However, it is possible to
-							// write response headers
-							// to the ResourceResponse (using setProperty),
-							// which means the
-							// technical implementation of a response.redirect
-							// call might be
-							// "simulated" by writing out:
-
-							// a) setting response.setStatus(SC_FOUND)
-							// b) setting header "Location" to the
-							// redirectLocation
-
-							// Caveat 1:
-							// ResourceResponse.setStatus isn't supported
-							// either, but this can be
-							// done by setting the header property
-							// ResourceResponse.HTTP_STATUS_CODE
-
-							// Caveat 2: Actual handling of Response headers as
-							// set through
-							// PortletResponse.setProperty is completely
-							// optional by the Portlet
-							// Spec so it really depends on the portlet
-							// container implementation
-							// (and environment, e.g. consider using WSRP
-							// here...) if this will
-							// work.
-
-							// On Apache Pluto/Jetspeed-2, the above descibed
-							// handling *will* be
-							// implemented as expected!
-
-							// HttpServletResponse.SC_FOUND == 302, defined by
-							// Servlet API >= 2.4
-							response.setProperty(ResourceResponse.HTTP_STATUS_CODE, Integer.toString(302));
-							response.setProperty("Location", redirectLocation);
-						}
-						else {
-							response.reset();
-							response.setProperty("expiration-cache", "0");
-
-							PrintWriter writer = response.getWriter();
-							writer.append("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>");
-							writer.append("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">");
-							writer.append("<html><head><meta http-equiv=\"refresh\" content=\"0; url=").append(redirectLocation).append("\"/></head></html>");
-							writer.close();
-							break;
-						}
+						break;
 					}
+					responseState.clear();
+					if (!responseState.isResourceResponse()) {
+						response.reset();
+						response.setProperty("expiration-cache", "0");
+
+						PrintWriter writer = response.getWriter();
+						writer.append("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>");
+						writer.append("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">");
+						writer.append("<html><head><meta http-equiv=\"refresh\" content=\"0; url=").append(redirectLocation).append("\"/></head></html>");
+						writer.close();
+						break;
+					}
+					// HttpServletResponse.SC_FOUND == 302, defined by
+					// Servlet API >= 2.4
+					response.setProperty(ResourceResponse.HTTP_STATUS_CODE, Integer.toString(302));
+					response.setProperty("Location", redirectLocation);
 				}
 				else {
 					if (LOG.isDebugEnabled()) {
@@ -533,7 +490,6 @@ public class WicketPortlet extends GenericPortlet {
 	 *
 	 * @param request
 	 * @param response
-	 * @param requestType
 	 * @param pageType
 	 * @throws PortletException
 	 * @throws IOException
@@ -590,9 +546,9 @@ public class WicketPortlet extends GenericPortlet {
 
 	/**
 	 * Delegates to
-	 * {@link #processRequest(PortletRequest, PortletResponse, String, String)}.
+	 * {@link WicketPortlet#processRequest(PortletRequest, PortletResponse, PageType)}.
 	 *
-	 * @see #processRequest(PortletRequest, PortletResponse, String, String)
+	 * @see WicketPortlet#processRequest(PortletRequest, PortletResponse, PageType)
 	 */
 	@Override
 	public void serveResource(final ResourceRequest request, final ResourceResponse response) throws PortletException, IOException {
@@ -654,9 +610,7 @@ public class WicketPortlet extends GenericPortlet {
 				if (!requestUrl.startsWith("http")) {
 					return new URL(new URL(scheme + ":" + requestUrl), url).toString().substring(scheme.length() + 1);
 				}
-				else {
-					return new URL(new URL(requestUrl), url).getPath();
-				}
+				return new URL(new URL(requestUrl), url).getPath();
 			}
 			catch (Exception e) {
 			}

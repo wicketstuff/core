@@ -1,12 +1,12 @@
 /*
- * 
+ *
  * ==============================================================================
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -29,16 +29,16 @@ import org.wicketstuff.openlayers.proxy.WFSProxyBehavior;
 /**
  * @author mocleiri a <i>propertyName</i> parameter that can be used to adjust which columns are
  *         returned by the request.
- * 
+ *
  *         The default OpenLayers implementation does not support this as it needs the spatial data
  *         for the selection of a specific feature.
- * 
- * 
+ *
+ *
  *         However for some cases you don't need the spatial definition but want to know values for
  *         certain non spatial columns.
- * 
+ *
  *         This control lets you specify which specific columns you want returned (in GML).
- * 
+ *
  */
 public class GetSpecificFeature extends AbstractControl
 {
@@ -62,18 +62,20 @@ public class GetSpecificFeature extends AbstractControl
 	/**
 	 * @param layer
 	 *            the wms layer that is used to provide the bounding box.
+	 * @param wfsProxy
 	 * @param featureSelectionBehaviour
-	 *            this behaviour will be invoked with an &propertyValue parameter containing the
+	 *            this behaviour will be invoked with an &amp;propertyValue parameter containing the
 	 *            value retrieved through WFS.
-	 * @param proxyURL
+	 * @param wfsURL
 	 *            the full url including the ?url= if a proxy is being used.
-	 * @param the
+	 * @param featureTypePrefix
+	 * @param featureTypeUrl the
 	 *            wfs url
 	 * @param featureTypeName
 	 *            the name of the feature to be queried.
 	 * @param srsNumber
 	 *            the EPSG number.
-	 * @param the
+	 * @param propertyName the
 	 *            property to be included in the response. (typically this is a a primary key or
 	 *            unique id for the feature)
 	 */
@@ -100,7 +102,7 @@ public class GetSpecificFeature extends AbstractControl
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.wicketstuff.openlayers.api.control.AbstractControl#getJSadd(org.wicketstuff.openlayers
 	 * .IOpenLayersMap)
@@ -123,7 +125,7 @@ public class GetSpecificFeature extends AbstractControl
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.wicketstuff.openlayers.api.control.AbstractControl#getJSResourceReference()
 	 */
 	@Override

@@ -11,9 +11,9 @@ import org.wicketstuff.openlayers.js.Constructor;
 import org.wicketstuff.openlayers.js.ObjectLiteral;
 
 /**
- * 
+ *
  * @author Nino Martinez Wael (nino.martinez@jayway.dk)
- * 
+ *
  */
 public abstract class Layer
 {
@@ -63,15 +63,16 @@ public abstract class Layer
 
 	/**
 	 * A helper to build the { ... } options list from a map.
-	 * 
+	 *
 	 * @param options
 	 * @return
 	 */
 	protected String getJSOptionsMap(Map<String, String> options)
 	{
 
-		if (options == null || options.size() == 0)
+		if (options == null || options.size() == 0) {
 			return null;
+		}
 
 		ObjectLiteral builder = new ObjectLiteral();
 
@@ -88,9 +89,9 @@ public abstract class Layer
 
 	/**
 	 * A convience method for the common initialization case.
-	 * 
+	 *
 	 * @param javascriptTypeName
-	 * @param options
+	 * @param parameterList
 	 * @return the contextualized contstructor for the layer.
 	 */
 

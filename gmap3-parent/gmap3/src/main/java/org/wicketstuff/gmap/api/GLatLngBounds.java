@@ -1,12 +1,12 @@
 /*
- * 
+ *
  * ==============================================================================
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -16,6 +16,7 @@
 package org.wicketstuff.gmap.api;
 
 import java.util.StringTokenizer;
+
 import org.wicketstuff.gmap.js.Constructor;
 
 /**
@@ -62,9 +63,10 @@ public class GLatLngBounds implements GValue
     }
 
     /**
-     * @see wicket.contrib.gmap.api.GValue#getJSconstructor()
+     * @see GValue#getJSconstructor()
      */
-    public String getJSconstructor()
+    @Override
+	public String getJSconstructor()
     {
         return new Constructor("google.maps.LatLngBounds").add(sw.getJSconstructor()).add(ne.getJSconstructor())
                 .toJS();

@@ -19,32 +19,32 @@ import org.apache.wicket.util.lang.PackageName;
  * Extended PackageMapper with Named Parameter and HomePage support. Remember to add this mapper
  * before anyone else, so it will have low priority against top-level, more important mappers.
  * </p>
- * 
+ *
  * <p>
  * Usage:
- * 
+ *
  * <pre>
  * add(new ExtendedPackageMapper("${username}/static/${group}", Profile.class) {
- *          protected boolean validateParameters(PageParameters parameters) { 
- *             String username = parameters.get("username").toString(); 
+ *          protected boolean validateParameters(PageParameters parameters) {
+ *             String username = parameters.get("username").toString();
  *             String group = parameters.get("group").toString();
  *             return validUsername(username)
  *          }
  * });
  * </pre>
- * 
+ *
  * </p>
  * <p>
  * Users can then use URLs like:
  * <ul>
- * <li>http://localhost:8080/john/static/admin -> renders Profile page</li>
- * <li>http://localhost:8080/john/static/admin/Profile -> renders Profile page</li>
- * <li>http://localhost:8080/john/static/admin/Groups -> renders Groups page present in same package
+ * <li>http://localhost:8080/john/static/admin -&gt; renders Profile page</li>
+ * <li>http://localhost:8080/john/static/admin/Profile -&gt; renders Profile page</li>
+ * <li>http://localhost:8080/john/static/admin/Groups -&gt; renders Groups page present in same package
  * as <code>Profile</code></li>
  * </ul>
  * Parameters can be accessed as usual (PageParameters in constructor, for example)
  * </p>
- * 
+ *
  * @author Bruno Borges
  */
 public class ExtendedPackageMapper extends AbstractMapper
@@ -62,11 +62,11 @@ public class ExtendedPackageMapper extends AbstractMapper
 	 * <code>mountPath</code>. <code>homePage</code> is considered the Home Page for this mounted
 	 * path, in case the user does not indicate which page to render.
 	 * </p>
-	 * 
+	 *
 	 * <p>
 	 * Named parameters are optional and may be defined as the first mount segment
 	 * </p>
-	 * 
+	 *
 	 * @param mountPath
 	 *            in the form of "${some}/path/with/${named}/parameters"
 	 * @param homePage
@@ -82,6 +82,7 @@ public class ExtendedPackageMapper extends AbstractMapper
 		mountedMapper = new PackageMapper(packageName, pkgNameObj);
 	}
 
+	@Override
 	public Url mapHandler(IRequestHandler requestHandler)
 	{
 		Url url = mountedMapper.mapHandler(requestHandler);
@@ -118,7 +119,7 @@ public class ExtendedPackageMapper extends AbstractMapper
 	/**
 	 * Override this to validate parameters. Return true if this Mapper should handle the current
 	 * request based on your busines slogic
-	 * 
+	 *
 	 * @param parameters
 	 * @return true if this Mapper will handle the request. default: true
 	 */
@@ -127,6 +128,7 @@ public class ExtendedPackageMapper extends AbstractMapper
 		return true;
 	}
 
+	@Override
 	public IRequestHandler mapRequest(Request request)
 	{
 		Url url = request.getUrl();
@@ -233,13 +235,14 @@ public class ExtendedPackageMapper extends AbstractMapper
 
 	/**
 	 * Scores the compatibility of Request with this Mapper.
-	 * 
+	 *
 	 * <ul>
 	 * <li>+1 for segments count equals mountedSegments+1 (page referenced)</li>
 	 * <li>+1 for segments count equals mountedSegments</li>
 	 * <li>+2+(score/2) for static segments</li>
 	 * </ul>
 	 */
+	@Override
 	public int getCompatibilityScore(Request request)
 	{
 		Url url = request.getUrl();

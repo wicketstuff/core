@@ -1,6 +1,9 @@
 package org.wicketstuff.jwicket.ui.accordion;
 
 
+import java.io.Serializable;
+import java.util.List;
+
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -8,9 +11,6 @@ import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
-
-import java.io.Serializable;
-import java.util.List;
 
 
 /**	This is the base class for all variations of jQuery's Accordion effect.
@@ -28,14 +28,14 @@ import java.util.List;
 	   ...
 	}
 
-	IModel<List<MyEntity>> listModel;
+	IModel&lt;List&lt;MyEntity&gt;&gt; listModel;
 
 	add(new AbstractAccordion("accordion", listModel) {
-		protected abstract Component getHeader(final String id, final IModel<T> t) {
+		protected abstract Component getHeader(final String id, final IModel&lt;T&gt; t) {
 		   // Return a Wicket Component for the header part
 		}
 
-		protected abstract Component getContent(final String id, final IModel<T> t) {
+		protected abstract Component getContent(final String id, final IModel&lt;T&gt; t) {
 		   // Return a Wicket Component for the content part
 		}
 
@@ -60,14 +60,14 @@ public abstract class AbstractAccordion<T extends Serializable> extends Panel {
 
 	public AbstractAccordion(final String id, final IModel<? extends List<T>> list, final int expanded) {
 		super(id, list);
-		
+
 		ListView<T> repeater = new ListView<T>("repeater", list) {
 			private static final long serialVersionUID = 1L;
 			@Override
 			protected void populateItem(final ListItem<T> item) {
 				WebMarkupContainer headerAnchor = new WebMarkupContainer("headerAnchor");
 				headerAnchor.setOutputMarkupId(true);
-				headerAnchor.add(getHeader("header", item.getModel(), item.getIndex()).setOutputMarkupId(true));					
+				headerAnchor.add(getHeader("header", item.getModel(), item.getIndex()).setOutputMarkupId(true));
 				item.add(headerAnchor);
 
 				WebMarkupContainer jQueryContentAnchor = new WebMarkupContainer("jQueryContentAnchor");
@@ -76,7 +76,7 @@ public abstract class AbstractAccordion<T extends Serializable> extends Panel {
 
 				WebMarkupContainer contentAnchor = new WebMarkupContainer("contentAnchor");
 				contentAnchor.setOutputMarkupId(true);
-				contentAnchor.add(getContent("content", item.getModel(), item.getIndex()).setOutputMarkupId(true));					
+				contentAnchor.add(getContent("content", item.getModel(), item.getIndex()).setOutputMarkupId(true));
 				jQueryContentAnchor.add(contentAnchor);
 
 				item.setRenderBodyOnly(true);
@@ -90,8 +90,9 @@ public abstract class AbstractAccordion<T extends Serializable> extends Panel {
 
 		accordion.add(accordionBehavior = initAccordionBehavior());
 
-		if (expanded >= 0)
+		if (expanded >= 0) {
 			getAccordionBehavior().setActive(expanded);
+		}
 
 		add(accordion);
 	}
@@ -116,7 +117,7 @@ public abstract class AbstractAccordion<T extends Serializable> extends Panel {
 
 	protected abstract void onCollapse(final AjaxRequestTarget target, final Component headerToExpand, final Component contentToExpand, final int index);
 
-	
+
 	public int getCurrentExpandedIndex() {
 		return getAccordionBehavior().getCurrentExpandedIndex();
 	}

@@ -23,11 +23,11 @@ import org.wicketstuff.minis.model.IDetachCodec;
 
 /**
  * A hash set that can be converted between attached and detached states.
- * 
- * @see AbstractDetachableSet
+ *
+ * @see DetachableSet
  * @see AbstractDetachableCollection
  * @author Igor Vaynberg (ivaynberg)
- * 
+ *
  * @param <T>
  */
 public class DetachableHashSet<T> extends DetachableSet<T>

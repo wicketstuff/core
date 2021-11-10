@@ -533,7 +533,7 @@ public class WalterZornTips extends AbstractToolTip {
     /**
      * Sets the font size of the tooltip's content
      *
-     * @param px the time or a value <= 0 to revert to the default value
+     * @param px the time or a value &lt;= 0 to revert to the default value
      * @return this object
      */
     public WalterZornTips setFontsize(final int px) {
@@ -885,7 +885,7 @@ public class WalterZornTips extends AbstractToolTip {
     /**
      * Sets the width of the tooltip's box
      *
-     * @param px the width of the tooltip's box or a value <= 0 to restore the default value
+     * @param px the width of the tooltip's box or a value &lt;= 0 to restore the default value
      * @return this object
      */
     public WalterZornTips setWidth(final int px) {

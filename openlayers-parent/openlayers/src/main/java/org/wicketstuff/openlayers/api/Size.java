@@ -24,7 +24,7 @@ import org.wicketstuff.openlayers.js.Constructor;
 
 /**
  * http://dev.openlayers.org/apidocs/files/OpenLayers/BaseTypes/Size-js.html
- * 
+ *
  */
 public class Size implements Serializable
 {
@@ -62,8 +62,7 @@ public class Size implements Serializable
 
 	/**
 	 * create size as a variable.. Possibly to add to icon
-	 * 
-	 * @param map
+	 *
 	 * @return
 	 */
 	public String getJSadd()

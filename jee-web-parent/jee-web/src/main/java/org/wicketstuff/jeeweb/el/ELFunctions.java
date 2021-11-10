@@ -26,13 +26,13 @@ import org.wicketstuff.jeeweb.ajax.JEEWebGlobalAjaxHandler;
 
 /**
  * This class is used for JSPs and JSFs to render a URLs with EL expressions:
- * 
+ *
  * <pre>
  * ${wicket:url('mypackage.MyPage')}
- * and 
- * ${wicket:urlWithQuery('mypackage.MyPage','param1=value1&param2=value2')}
+ * and
+ * ${wicket:urlWithQuery('mypackage.MyPage','param1=value1&amp;param2=value2')}
  * </pre>
- * 
+ *
  * @author Tobias Soloschenko
  */
 public class ELFunctions
@@ -40,7 +40,7 @@ public class ELFunctions
 
 	/**
 	 * Creates a URL based on the given page and the given query
-	 * 
+	 *
 	 * @param page
 	 *            the page to be used within the link
 	 * @param query
@@ -61,7 +61,7 @@ public class ELFunctions
 
 	/**
 	 * Creates a URL based on the given page
-	 * 
+	 *
 	 * @param page
 	 *            the page to be used within the link
 	 * @return the URL
@@ -77,7 +77,7 @@ public class ELFunctions
 	/**
 	 * Gets the plan callback URL to process a request to the current rendered page with pre
 	 * rendered query arguments
-	 * 
+	 *
 	 * @param query
 	 *            the query
 	 * @return the plane callback URL
@@ -98,7 +98,7 @@ public class ELFunctions
 
 	/**
 	 * Gets the plan callback URL to process a request to the current rendered page
-	 * 
+	 *
 	 * @return the plane callback URL
 	 */
 	public static String ajaxCallbackUrl()
@@ -113,7 +113,7 @@ public class ELFunctions
 
 	/**
 	 * Creates a ajax callback function that processes a request to the current rendered page
-	 * 
+	 *
 	 * @return the callback function
 	 */
 	public static String ajaxGet()
@@ -124,7 +124,7 @@ public class ELFunctions
 	/**
 	 * Creates a ajax callback function that processes a request to the current rendered page.
 	 * It takes in input a query string.
-	 * 
+	 *
 	 * @param query
 	 *            the query to be send to the function
 	 * @return the callback function
@@ -133,10 +133,10 @@ public class ELFunctions
 	{
 		return "Wicket.Ajax.get({'u':'" + ajaxCallbackUrlWithQuery(query) + "'});";
 	}
-	
+
 	/**
 	 * Creates a ajax callback function to send a form via AJAX to the current rendered page.
-	 * 
+	 *
 	 * @param method
 	 * 			the request method that must be used (GET or POST).
 	 * @return the callback function

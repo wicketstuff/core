@@ -21,17 +21,17 @@ import java.io.Serializable;
 /**
  * This is a class for creating settings to be used with the prototip lib (the optional third
  * argument)
- * 
+ *
  * in all cases you do not need to worry about enclosing your strings in ' '
- * 
+ *
  * There is logic in place so that if you enter false or true (ie the boolean), or a number it will
  * not enclose your string in '', where as any other string it will
- * 
+ *
  * see http://www.nickstakenburg.com/projects/prototip/ for a better description of the options that
  * prototip uses
- * 
+ *
  * @author Richard Wilkinson
- * 
+ *
  */
 public class PrototipSettings implements Serializable
 {
@@ -56,11 +56,11 @@ public class PrototipSettings implements Serializable
 
 	/**
 	 * Generates the correct Javascript code to add as the third parameter to a prototip tooltip
-	 * 
+	 *
 	 * any title passed in here will override any title which is set in this object eg:
-	 * 
-	 * PrototipBehaviour title > PrototipSettings title
-	 * 
+	 *
+	 * PrototipBehaviour title &gt; PrototipSettings title
+	 *
 	 * @return Javascript String
 	 */
 	public String getOptionsString(String title)
@@ -72,51 +72,59 @@ public class PrototipSettings implements Serializable
 		}
 		if (closeButton != null)
 		{
-			if (options.length() > 0)
+			if (options.length() > 0) {
 				options.append(", ");
+			}
 			options.append("closeButton").append(":").append(closeButton);
 		}
 		if (duration != null)
 		{
-			if (options.length() > 0)
+			if (options.length() > 0) {
 				options.append(", ");
+			}
 			options.append("duration").append(":").append(duration);
 		}
 		if (delay != null)
 		{
-			if (options.length() > 0)
+			if (options.length() > 0) {
 				options.append(", ");
+			}
 			options.append("delay").append(":").append(delay);
 		}
 		if (effect != null)
 		{
-			if (options.length() > 0)
+			if (options.length() > 0) {
 				options.append(", ");
+			}
 			options.append("effect").append(": ").append(effect);
 			;
 		}
 		if (hideAfter != null)
 		{
-			if (options.length() > 0)
+			if (options.length() > 0) {
 				options.append(", ");
+			}
 			options.append("hideAfter").append(":").append(hideAfter);
 		}
 		if (hideOn != null)
 		{
-			if (options.length() > 0)
+			if (options.length() > 0) {
 				options.append(", ");
+			}
 			options.append("hideOn").append(":").append(hideOn);
 		}
 		if (hook != null)
 		{
-			if (options.length() > 0)
+			if (options.length() > 0) {
 				options.append(", ");
+			}
 			options.append("hook").append(":").append(hook);
 		}
 		if (offset_x != null && offset_y != null)
 		{
-			if (options.length() > 0)
+			if (options.length() > 0) {
 				options.append(", ");
+			}
 			options.append("offset")
 				.append(": { x:")
 				.append(offset_x)
@@ -126,44 +134,51 @@ public class PrototipSettings implements Serializable
 		}
 		if (showOn != null)
 		{
-			if (options.length() > 0)
+			if (options.length() > 0) {
 				options.append(", ");
+			}
 			options.append("showOn").append(": ").append(showOn);
 		}
 		if (target != null)
 		{
-			if (options.length() > 0)
+			if (options.length() > 0) {
 				options.append(", ");
+			}
 			options.append("target").append(": ").append(target);
 		}
 		if (title != null)
 		{
-			if (options.length() > 0)
+			if (options.length() > 0) {
 				options.append(", ");
+			}
 			options.append("title").append(": '").append(title).append("'");
 		}
 		else if (this.title != null)
 		{
-			if (options.length() > 0)
+			if (options.length() > 0) {
 				options.append(", ");
+			}
 			options.append("title").append(": ").append(this.title);
 		}
 		if (viewpoint != null)
 		{
-			if (options.length() > 0)
+			if (options.length() > 0) {
 				options.append(", ");
+			}
 			options.append("viewpoint").append(":").append(viewpoint);
 		}
 		if (fixed != null)
 		{
-			if (options.length() > 0)
+			if (options.length() > 0) {
 				options.append(", ");
+			}
 			options.append("fixed").append(":").append(fixed);
 		}
 		if (extraOptions != null)
 		{
-			if (options.length() > 0)
+			if (options.length() > 0) {
 				options.append(", ");
+			}
 			options.append(extraOptions);
 		}
 		if (options.length() > 0)
@@ -185,7 +200,7 @@ public class PrototipSettings implements Serializable
 
 	/**
 	 * you do not need to include the ' '
-	 * 
+	 *
 	 * @param className
 	 *            the className to set
 	 * @return this
@@ -206,7 +221,7 @@ public class PrototipSettings implements Serializable
 
 	/**
 	 * either false or true
-	 * 
+	 *
 	 * @param closeButton
 	 *            the closeButton to set
 	 * @return this
@@ -227,7 +242,7 @@ public class PrototipSettings implements Serializable
 
 	/**
 	 * duration of the effect, if used eg 0.3
-	 * 
+	 *
 	 * @param duration
 	 *            the duration to set
 	 * @return this
@@ -248,7 +263,7 @@ public class PrototipSettings implements Serializable
 
 	/**
 	 * eg false or true
-	 * 
+	 *
 	 * @param fixed
 	 *            the fixed to set
 	 * @return this
@@ -269,7 +284,7 @@ public class PrototipSettings implements Serializable
 
 	/**
 	 * seconds before tooltip appears eg 0.2
-	 * 
+	 *
 	 * @param delay
 	 *            the delay to set
 	 * @return this
@@ -290,9 +305,9 @@ public class PrototipSettings implements Serializable
 
 	/**
 	 * you do not need to include the ' '
-	 * 
+	 *
 	 * false, appear or blind, or others if they get enabled
-	 * 
+	 *
 	 * @param effect
 	 *            the effect to set
 	 * @return this
@@ -317,7 +332,7 @@ public class PrototipSettings implements Serializable
 
 	/**
 	 * false or a number eg 1.5
-	 * 
+	 *
 	 * @param hideAfter
 	 *            the hideAfter to set
 	 * @return this
@@ -338,7 +353,7 @@ public class PrototipSettings implements Serializable
 
 	/**
 	 * any event eg mouseout or false
-	 * 
+	 *
 	 * @param hideOn
 	 *            the hideOn to set
 	 * @return this
@@ -355,7 +370,7 @@ public class PrototipSettings implements Serializable
 
 	/**
 	 * eg: { element: 'element|target|tip|closeButton|.close', event: 'click|mouseover|mousemove' }
-	 * 
+	 *
 	 * @param element
 	 * @param event
 	 * @return this
@@ -380,8 +395,6 @@ public class PrototipSettings implements Serializable
 	}
 
 	/**
-	 * @param hook
-	 *            the hook to set
 	 * @return this
 	 */
 	public PrototipSettings setHookFalse()
@@ -392,15 +405,15 @@ public class PrototipSettings implements Serializable
 
 	/**
 	 * Set the hook, where you want
-	 * 
+	 *
 	 * eg:
-	 * 
+	 *
 	 * { target: 'topLeft|topRight|bottomLeft|bottomRight|
 	 * topMiddle|bottomMiddle|leftMiddle|rightMiddle', tip:
 	 * 'topLeft|topRight|bottomLeft|bottomRight| topMiddle|bottomMiddle|leftMiddle|rightMiddle' }
-	 * 
+	 *
 	 * for false use setHookFalse()
-	 * 
+	 *
 	 * @param target
 	 * @param tip
 	 * @return this
@@ -456,7 +469,7 @@ public class PrototipSettings implements Serializable
 
 	/**
 	 * Set both x and y offsets
-	 * 
+	 *
 	 * @param offset_x
 	 * @param offset_y
 	 * @return this
@@ -558,7 +571,7 @@ public class PrototipSettings implements Serializable
 	/**
 	 * Futureproofing - this allows you at add any string as an option (note you will need to take
 	 * care of ' and { } yourself
-	 * 
+	 *
 	 * @param extraOptions
 	 *            the extraOptions to set
 	 * @return this
@@ -571,7 +584,7 @@ public class PrototipSettings implements Serializable
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -600,131 +613,166 @@ public class PrototipSettings implements Serializable
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
 	public boolean equals(Object obj)
 	{
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		final PrototipSettings other = (PrototipSettings)obj;
 		if (className == null)
 		{
-			if (other.className != null)
+			if (other.className != null) {
 				return false;
+			}
 		}
-		else if (!className.equals(other.className))
+		else if (!className.equals(other.className)) {
 			return false;
+		}
 		if (closeButton == null)
 		{
-			if (other.closeButton != null)
+			if (other.closeButton != null) {
 				return false;
+			}
 		}
-		else if (!closeButton.equals(other.closeButton))
+		else if (!closeButton.equals(other.closeButton)) {
 			return false;
+		}
 		if (delay == null)
 		{
-			if (other.delay != null)
+			if (other.delay != null) {
 				return false;
+			}
 		}
-		else if (!delay.equals(other.delay))
+		else if (!delay.equals(other.delay)) {
 			return false;
+		}
 		if (duration == null)
 		{
-			if (other.duration != null)
+			if (other.duration != null) {
 				return false;
+			}
 		}
-		else if (!duration.equals(other.duration))
+		else if (!duration.equals(other.duration)) {
 			return false;
+		}
 		if (effect == null)
 		{
-			if (other.effect != null)
+			if (other.effect != null) {
 				return false;
+			}
 		}
-		else if (!effect.equals(other.effect))
+		else if (!effect.equals(other.effect)) {
 			return false;
+		}
 		if (extraOptions == null)
 		{
-			if (other.extraOptions != null)
+			if (other.extraOptions != null) {
 				return false;
+			}
 		}
-		else if (!extraOptions.equals(other.extraOptions))
+		else if (!extraOptions.equals(other.extraOptions)) {
 			return false;
+		}
 		if (fixed == null)
 		{
-			if (other.fixed != null)
+			if (other.fixed != null) {
 				return false;
+			}
 		}
-		else if (!fixed.equals(other.fixed))
+		else if (!fixed.equals(other.fixed)) {
 			return false;
+		}
 		if (hideAfter == null)
 		{
-			if (other.hideAfter != null)
+			if (other.hideAfter != null) {
 				return false;
+			}
 		}
-		else if (!hideAfter.equals(other.hideAfter))
+		else if (!hideAfter.equals(other.hideAfter)) {
 			return false;
+		}
 		if (hideOn == null)
 		{
-			if (other.hideOn != null)
+			if (other.hideOn != null) {
 				return false;
+			}
 		}
-		else if (!hideOn.equals(other.hideOn))
+		else if (!hideOn.equals(other.hideOn)) {
 			return false;
+		}
 		if (hook == null)
 		{
-			if (other.hook != null)
+			if (other.hook != null) {
 				return false;
+			}
 		}
-		else if (!hook.equals(other.hook))
+		else if (!hook.equals(other.hook)) {
 			return false;
+		}
 		if (offset_x == null)
 		{
-			if (other.offset_x != null)
+			if (other.offset_x != null) {
 				return false;
+			}
 		}
-		else if (!offset_x.equals(other.offset_x))
+		else if (!offset_x.equals(other.offset_x)) {
 			return false;
+		}
 		if (offset_y == null)
 		{
-			if (other.offset_y != null)
+			if (other.offset_y != null) {
 				return false;
+			}
 		}
-		else if (!offset_y.equals(other.offset_y))
+		else if (!offset_y.equals(other.offset_y)) {
 			return false;
+		}
 		if (showOn == null)
 		{
-			if (other.showOn != null)
+			if (other.showOn != null) {
 				return false;
+			}
 		}
-		else if (!showOn.equals(other.showOn))
+		else if (!showOn.equals(other.showOn)) {
 			return false;
+		}
 		if (target == null)
 		{
-			if (other.target != null)
+			if (other.target != null) {
 				return false;
+			}
 		}
-		else if (!target.equals(other.target))
+		else if (!target.equals(other.target)) {
 			return false;
+		}
 		if (title == null)
 		{
-			if (other.title != null)
+			if (other.title != null) {
 				return false;
+			}
 		}
-		else if (!title.equals(other.title))
+		else if (!title.equals(other.title)) {
 			return false;
+		}
 		if (viewpoint == null)
 		{
-			if (other.viewpoint != null)
+			if (other.viewpoint != null) {
 				return false;
+			}
 		}
-		else if (!viewpoint.equals(other.viewpoint))
+		else if (!viewpoint.equals(other.viewpoint)) {
 			return false;
+		}
 		return true;
 	}
 }

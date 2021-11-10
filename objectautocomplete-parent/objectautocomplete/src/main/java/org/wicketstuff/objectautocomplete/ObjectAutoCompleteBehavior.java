@@ -16,6 +16,9 @@
  */
 package org.wicketstuff.objectautocomplete;
 
+import java.io.Serializable;
+import java.util.Iterator;
+
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -35,12 +38,8 @@ import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.resource.CoreLibrariesContributor;
 
-import java.io.Serializable;
-import java.util.Iterator;
-
 /**
- * Behaviour for object auto completion using a slightly modified variant of {@see
- * org.apache.wicket.extensions.ajax.markup.html.autocomplete.AbstractAutoCompleteBehavior}
+ * Behaviour for object auto completion using a slightly modified variant of @see AbstractAutoCompleteBehavior
  *
  * An (hidden) element is required to store the object id which has been selected.
  *
@@ -132,6 +131,7 @@ public class ObjectAutoCompleteBehavior<O> extends AbstractAutoCompleteBehavior
 	{
 		IRequestHandler target = new IRequestHandler()
 		{
+			@Override
 			public void respond(IRequestCycle requestCycle)
 			{
 				WebResponse response = (WebResponse)requestCycle.getResponse();
@@ -165,6 +165,7 @@ public class ObjectAutoCompleteBehavior<O> extends AbstractAutoCompleteBehavior
 				}
 			}
 
+			@Override
 			public void detach(IRequestCycle requestCycle)
 			{
 			}

@@ -23,7 +23,7 @@ import org.apache.wicket.util.string.Strings;
 
 /**
  * Behavior that shows a veil over a component
- * 
+ *
  * @author Igor Vaynberg (ivaynberg)
  */
 public class Veil extends VeilResources
@@ -43,14 +43,15 @@ public class Veil extends VeilResources
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param cssClassName
 	 *            name of css class that will be used for the veil
 	 */
 	public Veil(final String cssClassName)
 	{
-		if (!Strings.isEmpty(cssClassName))
+		if (!Strings.isEmpty(cssClassName)) {
 			this.cssClassName = cssClassName;
+		}
 
 	}
 
@@ -61,21 +62,16 @@ public class Veil extends VeilResources
 	public void bind(final Component component)
 	{
 		super.bind(component);
-		if (this.component != null)
+		if (this.component != null) {
 			throw new IllegalStateException(
 				"This behavior is already bound to component. An instance of this behavior cannot be reused between components. Bound component: " +
 					this.component.toString());
+		}
 		this.component = component;
 	}
 
-	private String getCssClassName()
-	{
-		return cssClassName != null ? cssClassName : VeilResources.DEFAULT_CSS_CLASS_NAME;
-	}
-
-
 	/**
-	 * @see org.wicketstuff.minis.behavior.veil.VeilResources#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
+	 * @see org.wicketstuff.minis.behavior.veil.VeilResources#renderHead(Component, IHeaderResponse)
 	 */
 	@Override
 	public void renderHead(Component c, final IHeaderResponse response)

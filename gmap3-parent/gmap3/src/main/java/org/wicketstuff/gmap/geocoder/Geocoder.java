@@ -1,12 +1,12 @@
 /*
- * 
+ *
  * ==============================================================================
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -22,7 +22,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLEncoder;
 
-import com.github.openjson.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.gmap.GMap;
@@ -35,6 +34,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.openjson.JSONException;
 
 /**
  * Geocoder. See: https://developers.google.com/maps/documentation/geocoding/
@@ -66,7 +66,7 @@ public class Geocoder implements Serializable
      * The {@link ObjectMapper} ignores unknown properties when mapping from JSON
      * to POJO.<br/>
      * <b>Use</b> {@link #Geocoder(com.fasterxml.jackson.databind.ObjectMapper, java.lang.String) } to customize
-     * 
+     *
      * @param apiKey your Google Maps API-key
      */
     public Geocoder(String apiKey)
@@ -82,7 +82,7 @@ public class Geocoder implements Serializable
      *
      * @param mapper your customized ObjectMapper
      * @param apiKey your Google Maps API-key
-     * @see Geocoder#Geocoder()
+     * @see Geocoder#Geocoder(String)
      */
     public Geocoder(ObjectMapper mapper, String apiKey)
     {
@@ -94,7 +94,7 @@ public class Geocoder implements Serializable
      * Decode an response of an geocoder request to POJOs.<br/>
      * Following the successful mapping from JSON to POJO<br/>
      * all hits are available in {@link #geocoderResult}
-     * 
+     *
      * @param response
      *            - JSON response from Google Geocoder Service
      * @return firstHit - First hit of {@link #geocoderResult}
@@ -163,7 +163,7 @@ public class Geocoder implements Serializable
      * Only return the first element of {@link #geocoderResult} to be backward compatible.<br/>
      * After successful call of {@link #geocode(String)} you can get all results from
      * {@link #geocoderResult}
-     * 
+     *
      * @param address
      *            - Requested address
      * @return {@link GLatLng} - only first hit of the request
@@ -231,16 +231,16 @@ public class Geocoder implements Serializable
      * Convenience method to center and fit the zoom for an address, on the given map.
      * <p>
      * <b>Example:</b>
-     * 
+     *
      * <pre>
      * GMap myMap = GMap(&quot;wicketId&quot;);
      * new Geocoder().centerAndFitZoomForAdress(myMap, &quot;Frankfurt am Main&quot;);
      * </pre>
-     * 
+     *
      * <b>Result:</b><br/>
      * Frankfurt is centered and the zoom is suitable
      * </p>
-     * 
+     *
      * @param map
      *            - the map where the address should shown
      * @param address
