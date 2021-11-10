@@ -211,7 +211,7 @@
 	<!-- mocleiri: for distribution in to central repository sections in the main pom are not allowed -->
 
 	<properties>
-		<wicket.version>9.6.0-SNAPSHOT</wicket.version>
+		<wicket.version>9.6.0</wicket.version>
 
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
@@ -1017,7 +1017,7 @@
 							in the unnamed module.'-->
 							<link>https://ci.apache.org/projects/wicket/apidocs/9.x</link>
 							<link>https://docs.spring.io/spring/docs/5.1.x/javadoc-api</link>
-							<link>https://logback.qos.ch/apidocs</link>
+							<!-- <link>https://logback.qos.ch/apidocs</link> Commented due to certificate error -->
 						</links>
 						<skip>${javadoc.disabled}</skip>
 					</configuration>
