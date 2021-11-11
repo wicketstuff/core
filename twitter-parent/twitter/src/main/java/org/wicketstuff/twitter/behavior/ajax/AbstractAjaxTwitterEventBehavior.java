@@ -13,9 +13,9 @@ import org.slf4j.LoggerFactory;
 import org.wicketstuff.twitter.behavior.TwitterApiBehavior;
 
 /**
- * 
+ *
  * @author Till Freier
- * 
+ *
  */
 public abstract class AbstractAjaxTwitterEventBehavior extends AbstractDefaultAjaxBehavior
 {
@@ -33,7 +33,7 @@ public abstract class AbstractAjaxTwitterEventBehavior extends AbstractDefaultAj
 	private static final String REGION = "region";
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 
@@ -50,6 +50,7 @@ public abstract class AbstractAjaxTwitterEventBehavior extends AbstractDefaultAj
 
 	/**
 	 * @param js
+	 * @param urlVarName
 	 * @param param
 	 */
 	protected StringBuilder appendUrlParamter(final StringBuilder js, final String urlVarName,
@@ -79,9 +80,9 @@ public abstract class AbstractAjaxTwitterEventBehavior extends AbstractDefaultAj
 
 
 	/**
-	 * 
+	 *
 	 * @param target
-	 * @param requestParameters
+	 * @param event
 	 */
 	protected abstract void onEvent(AjaxRequestTarget target, final Event event);
 

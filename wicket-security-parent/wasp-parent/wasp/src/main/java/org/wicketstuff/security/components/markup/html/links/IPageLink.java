@@ -17,6 +17,7 @@
 package org.wicketstuff.security.components.markup.html.links;
 
 import org.apache.wicket.Page;
+import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.util.io.IClusterable;
 
 /**

@@ -18,17 +18,17 @@ package org.wicketstuff.rest.contenthandling;
 
 /**
  * General interface to implement object serializers/deserializers.
- * 
+ *
  * @author andrea del bene
- * 
+ *
  */
 public interface IObjectSerialDeserial<T>
 {
 
 	/**
 	 * Returns a given representation of the target object.
-	 * 
-	 * @param targetObject
+	 *
+	 * @param target
 	 *            the object to convert to the given format.
 	 * @param mimeType
 	 *            the target MIME type.
@@ -38,11 +38,9 @@ public interface IObjectSerialDeserial<T>
 
 	/**
 	 * Extract an object instance from a given source object.
-	 * 
-	 * @param <T>
-	 *            the source object type.
+	 *
 	 * @param source
-	 *            the source object.
+	 *            the source object of type <T>.
 	 * @param targetClass
 	 *            the type of the returned object.
 	 * @param mimeType

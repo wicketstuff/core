@@ -1007,7 +1007,6 @@
 						<maxmemory>256m</maxmemory>
 						<notimestamp>true</notimestamp>
 						<quiet>true</quiet>
-						<failOnError>false</failOnError>
 						<doclint>none</doclint>
 						<links>
 							<link>https://docs.oracle.com/en/java/javase/11/docs/api/</link>

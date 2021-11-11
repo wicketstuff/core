@@ -24,7 +24,7 @@ import org.apache.wicket.markup.html.WebPage;
 
 /**
  * A role-authorized, authenticated web application in just a few lines of code.
- * 
+ *
  * @author Jonathan Locke
  */
 public class MyAuthenticatedWebApplication extends AuthenticatedWebApplication
@@ -39,7 +39,7 @@ public class MyAuthenticatedWebApplication extends AuthenticatedWebApplication
 	}
 
 	/**
-	 * @see org.apache.wicket.authentication.AuthenticatedWebApplication#getWebSessionClass()
+	 * @see AuthenticatedWebApplication#getWebSessionClass()
 	 */
 	@Override
 	protected Class<? extends AbstractAuthenticatedWebSession> getWebSessionClass()
@@ -48,7 +48,7 @@ public class MyAuthenticatedWebApplication extends AuthenticatedWebApplication
 	}
 
 	/**
-	 * @see org.apache.wicket.authentication.AuthenticatedWebApplication#getSignInPageClass()
+	 * @see AuthenticatedWebApplication#getSignInPageClass()
 	 */
 	@Override
 	protected Class<? extends WebPage> getSignInPageClass()
@@ -57,7 +57,7 @@ public class MyAuthenticatedWebApplication extends AuthenticatedWebApplication
 	}
 
 	/**
-	 * @see org.apache.wicket.authentication.AuthenticatedWebApplication#init()
+	 * @see AuthenticatedWebApplication#init()
 	 */
 	@Override
 	protected void init()

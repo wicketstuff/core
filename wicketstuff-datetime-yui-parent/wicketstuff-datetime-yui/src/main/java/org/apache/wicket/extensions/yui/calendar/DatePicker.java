@@ -34,7 +34,6 @@ import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxEventBehavior;
-import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.datetime.markup.html.form.DateTextField;
@@ -287,7 +286,7 @@ public class DatePicker extends Behavior
 	}
 
 	/**
-	 * Renders yui & wicket calendar js module loading. It is done only once per page.
+	 * Renders yui &amp; wicket calendar js module loading. It is done only once per page.
 	 *
 	 * @param response
 	 *            header response

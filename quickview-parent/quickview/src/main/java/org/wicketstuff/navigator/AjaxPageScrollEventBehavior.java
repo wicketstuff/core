@@ -16,20 +16,20 @@
  */
 package org.wicketstuff.navigator;
 
-import org.wicketstuff.RepeaterUtil;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.attributes.AjaxCallListener;
 import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
+import org.wicketstuff.RepeaterUtil;
 
 /**
  * behavior that can be attached to page ,on page scroll event will be fired if
  * scroll-bar is moved to the the bottom of page.
  *
- * <strong>you need to call {@link this#addItemsForNextPage()} when you
+ * <strong>you need to call {@link AjaxScrollEventBehaviorBase#addItemsForNextPage(org.wicketstuff.IQuickView)} when you
  * implement
- * {@link this#onScroll(org.apache.wicket.ajax.AjaxRequestTarget)}</strong>
+ * {@link AjaxPageScrollEventBehavior#onScroll(org.apache.wicket.ajax.AjaxRequestTarget)}</strong>
  *
  *
  * @author Vineet Semwal
@@ -45,10 +45,10 @@ public abstract class AjaxPageScrollEventBehavior extends AjaxScrollEventBehavio
 
     /**
      * @return true if page scroll bar should be automatically provided,
-     * it assures document height is greater than window height by setting min-height on body 
+     * it assures document height is greater than window height by setting min-height on body
      * if document height is already greater than window height then it does nothing.
      * by default this method returns false.
-     * 
+     *
      */
     protected boolean forceScrollBarForPage() {
         return false;

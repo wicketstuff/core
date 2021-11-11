@@ -28,11 +28,11 @@ public abstract class FoundationInlineList extends FoundationBasePanel {
 	public FoundationInlineList(String id, List<String> titles) {
 		this(id, new ListModel<>(titles));
 	}
-	
+
 	/**
 	 * Create FoundationInlineList.
 	 * @param id - Wicket id.
-	 * @param titles - Model for the titles.
+	 * @param titlesModel - Model for the titles.
 	 */
 	public FoundationInlineList(String id, IModel<List<String>> titlesModel) {
 		super(id);
@@ -46,9 +46,9 @@ public abstract class FoundationInlineList extends FoundationBasePanel {
 				item.add(link);
 				link.add(new Label("text", item.getModelObject()));
 			}
-			
+
 		});
 	}
-	
+
 	public abstract AbstractLink createLink(String id, int idx);
 }

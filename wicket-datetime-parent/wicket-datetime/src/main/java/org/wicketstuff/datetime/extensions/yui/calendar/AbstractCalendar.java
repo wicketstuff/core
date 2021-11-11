@@ -37,14 +37,14 @@ import org.wicketstuff.datetime.extensions.yui.YuiLib;
  * </p>
  * <p>
  * An easy way to build upon this component is to override
- * {@link #appendToInit(String, String, String, StringBuffer)} and add event handlers etc. in the
+ * {@link #appendToInit(String, String, String, StringBuilder)} and add event handlers etc. in the
  * YUI widget's initialization function.
  * </p>
  * See <a href="http://developer.yahoo.com/yui/calendar/">YUI's calendar documentation</a> for more
  * info.
- * 
+ *
  * @author eelcohillenius
- * 
+ *
  * @see DatePicker
  */
 // TODO provide localization strings (base them on the messages of
@@ -57,7 +57,7 @@ public abstract class AbstractCalendar extends WebComponent
 
 	/**
 	 * Construct. Contributes packaged dependencies.
-	 * 
+	 *
 	 * @param id
 	 *            The component id
 	 */
@@ -68,7 +68,7 @@ public abstract class AbstractCalendar extends WebComponent
 
 	/**
 	 * Construct.
-	 * 
+	 *
 	 * @param id
 	 *            The component id
 	 * @param contributeDependencies
@@ -76,7 +76,7 @@ public abstract class AbstractCalendar extends WebComponent
 	 *            include the dependencies manually in your own page, e.g. when you want to keep
 	 *            them in your web application dir. To contribute yourself (in case you want to pass
 	 *            false), your page header should look like:
-	 * 
+	 *
 	 *            <pre>
 	 * 	 &lt;script type=&quot;text/javascript&quot; src=&quot;yahoo.js&quot;&gt;&lt;/script&gt;
 	 * 	 &lt;script type=&quot;text/javascript&quot; src=&quot;dom.js&quot;&gt;&lt;/script&gt;
@@ -97,7 +97,7 @@ public abstract class AbstractCalendar extends WebComponent
 	 * Gets the id of the javascript widget. Note that this is the non-namespaced id, so depending
 	 * on what you want to do with it, you may need to prepend 'YAHOO.wicket.' to it. Or you can
 	 * call {@link #getJavaScriptWidgetId()}.
-	 * 
+	 *
 	 * @return The javascript id
 	 * @see #getJavaScriptWidgetId()
 	 */
@@ -108,7 +108,7 @@ public abstract class AbstractCalendar extends WebComponent
 
 	/**
 	 * The name spaced id of the widget.
-	 * 
+	 *
 	 * @return The widget id
 	 * @see #getJavaScriptId()
 	 */
@@ -119,7 +119,7 @@ public abstract class AbstractCalendar extends WebComponent
 
 	/**
 	 * add header contributions for packaged resources.
-	 * 
+	 *
 	 * @param response
 	 *            the header response to contribute to
 	 */
@@ -137,7 +137,7 @@ public abstract class AbstractCalendar extends WebComponent
 	 * Append javascript to the initialization function for the YUI widget. Can be used by
 	 * subclasses to conveniently extend configuration without having to write a separate
 	 * contribution.
-	 * 
+	 *
 	 * @param markupId
 	 *            The markup id of the calendar component
 	 * @param javascriptId
@@ -158,7 +158,7 @@ public abstract class AbstractCalendar extends WebComponent
 	 * href="http://developer.yahoo.com/yui/calendar/">the widget's documentation</a> for the
 	 * available options. If you want to override/ remove properties, you obviously should call
 	 * <code>super.configureWidgetProperties(properties)</code>.
-	 * 
+	 *
 	 * @param widgetProperties
 	 *            the current widget properties
 	 */

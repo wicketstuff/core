@@ -8,8 +8,8 @@ import org.apache.wicket.util.resource.ResourceStreamNotFoundException;
 
 /**
  * Resource stream for images.
- * 
- * @author Michal Letynski <mikel@mikel.pl>
+ *
+ * @author Michal Letynski (mikel@mikel.pl)
  */
 public class FileResourceStream extends AbstractResourceStream
 {
@@ -34,6 +34,7 @@ public class FileResourceStream extends AbstractResourceStream
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public InputStream getInputStream() throws ResourceStreamNotFoundException
 	{
 		return inputStream;
@@ -42,6 +43,7 @@ public class FileResourceStream extends AbstractResourceStream
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void close() throws IOException
 	{
 		if (inputStream != null)

@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
  * <p/>
  * In a distributed application, the JSecurity Session data might not reside on the same host that
  * runs the Wicket application. In these cases the default
- * {@link org.apache.wicket.pageStore.DiskDataStore} used by Wicket is
+ * {@link org.apache.wicket.pageStore.DiskPageStore} used by Wicket is
  * not suitable. Instead Page state must be serialized to a mechanism that is 'cluster-friendly'.
  * <p/>
  * JSecurity's enterprise {@code Session}s are cluster-friendly, so storing pages in the
@@ -44,14 +44,14 @@ import org.slf4j.LoggerFactory;
  * href="http://en.wikipedia.org/wiki/Load_balancing_(computing)#Persistence">sticky sessions</a> -
  * the Wicket PageMap can be updated on one host which is then available for any next load-balanced
  * request on another host because the {@code Session} is clustered.
- * 
+ *
  * @author Les Hazlewood
  * @author <a href="http://sebthom.de/">Sebastian Thomschke</a>
  */
 public class SessionPageStore extends AbstractPersistentPageStore
 {
 	private static final Logger LOG = LoggerFactory.getLogger(SessionPageStore.class);
-	
+
 	private static final String PAGE_MAP_SESSION_KEY = SessionPageStore.class.getName() + "_PAGE_CACHE_MANAGER_SESSION_KEY";
 
 	protected static final int DEFAULT_MAX_PAGES = -1;
@@ -66,7 +66,7 @@ public class SessionPageStore extends AbstractPersistentPageStore
 	public SessionPageStore(String applicationName, final int maxPageMapSize)
 	{
 		super(applicationName);
-		
+
 		if (maxPageMapSize < -1)
 		{
 			MAX_PAGE_MAP_SIZE = DEFAULT_MAX_PAGES;
@@ -83,12 +83,12 @@ public class SessionPageStore extends AbstractPersistentPageStore
 	{
 		return MAX_PAGE_MAP_SIZE;
 	}
-	
+
 	@Override
 	public boolean supportsVersioning() {
 		return true;
 	}
-	
+
 	@Override
 	protected IManageablePage getPersistedPage(String sessionIdentifier, int pageId)
 	{
@@ -97,7 +97,7 @@ public class SessionPageStore extends AbstractPersistentPageStore
 		{
 			return getPageCacheManager(session).getPageCache().getPage(pageId);
 		}
-		
+
 		return null;
 	}
 
@@ -105,7 +105,7 @@ public class SessionPageStore extends AbstractPersistentPageStore
 	protected void removePersistedPage(String sessionIdentifier, IManageablePage page)
 	{
 		LOG.debug("Removing page with id [{}]", page.getPageId());
-		
+
 		Session session = getSession(sessionIdentifier, false);
 		if (session != null)
 		{
@@ -123,10 +123,12 @@ public class SessionPageStore extends AbstractPersistentPageStore
 		SerializedPage serializedPage = (SerializedPage) page;
 
 		Session session = getSession(sessionIdentifier, true);
-		
+
 		getPageCacheManager(session).getPageCache().storePages(serializedPage);
-		
-		if (LOG.isDebugEnabled()) LOG.debug("storePage {}", serializedPage.toString());
+
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("storePage {}", serializedPage.toString());
+		}
 	}
 
 	@Override
@@ -136,8 +138,9 @@ public class SessionPageStore extends AbstractPersistentPageStore
 		if (session != null)
 		{
 			final Object existing = session.removeAttribute(PAGE_MAP_SESSION_KEY);
-			if (existing != null)
+			if (existing != null) {
 				LOG.debug("Removed PageMap [{}] from the Session (destroying)", existing);
+			}
 		}
 	}
 
@@ -155,7 +158,7 @@ public class SessionPageStore extends AbstractPersistentPageStore
 	protected Session getSession(final String sessionIdentifier, boolean create)
 	{
 		Session session = null;
-		
+
 		final Subject currentSubject = SecurityUtils.getSubject();
 		if (currentSubject != null)
 		{
@@ -165,7 +168,7 @@ public class SessionPageStore extends AbstractPersistentPageStore
 			 * Subject acquisition in web apps is based on the incoming request, and so is Wicket's,
 			 * this should _always_ be the same. If not, something is seriously wrong:
 			 */
-			if (session != null && sessionIdentifier != null && !sessionIdentifier.equals(session.getId()))
+			if (session != null && sessionIdentifier != null && !sessionIdentifier.equals(session.getId())) {
 				throw new WicketRuntimeException(
 					"The specified Wicket sessionId [" +
 						sessionIdentifier +
@@ -176,8 +179,9 @@ public class SessionPageStore extends AbstractPersistentPageStore
 						getClass().getName() +
 						" implementation. " +
 						"If you're seeing this exception, ensure you have configured Shiro to use Enterprise Sessions and not (the default) HTTP-only Sessions.");
+			}
 		}
-		
+
 		return session;
 	}
 }

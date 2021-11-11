@@ -60,8 +60,9 @@ public class TinyMceBehavior extends Behavior
 	public void renderHead(Component component, IHeaderResponse response)
 	{
 		super.renderHead(component, response);
-		if (component == null)
+		if (component == null) {
 			throw new IllegalStateException("TinyMceBehavior is not bound to a component");
+		}
 
 		// TinyMce javascript:
 		response.render(JavaScriptHeaderItem.forReference(getTinyMCEReference()));
@@ -70,18 +71,18 @@ public class TinyMceBehavior extends Behavior
 				Collections.singletonList(component));
 		response.render(wrapTinyMceSettingsScript(renderOnDomReady, component));
 	}
-	
+
 	/**
 	 * Wrap the initialization script for TinyMCE into a HeaderItem. In this way we can control
 	 * when and how the script should be executed.
-	 * 
+	 *
 	 * @param settingScript
 	 * 			the actual initialization script for TinyMCE
 	 * @param component
-	 * 			the target component that must be decorated with TinyMCE 
+	 * 			the target component that must be decorated with TinyMCE
 	 * @return
 	 * 			the HeaderItem containing {@paramref settingScript}
-	 * 
+	 *
 	 */
 	protected HeaderItem wrapTinyMceSettingsScript(String settingScript, Component component){
 		return OnDomReadyHeaderItem.forScript(settingScript);
@@ -103,7 +104,7 @@ public class TinyMceBehavior extends Behavior
 			}
 		}
 
-		
+
 		script.append(";tinyMCE.init({" + settings.toJavaScript(mode, components) + " });\n");
 		rendered = true;
 
@@ -113,12 +114,14 @@ public class TinyMceBehavior extends Behavior
 	@Override
 	public void bind(Component component)
 	{
-		if (this.component != null)
+		if (this.component != null) {
 			throw new IllegalStateException(
 					"TinyMceBehavior can not bind to more than one component");
+		}
 		super.bind(component);
-		if (isMarkupIdRequired())
+		if (isMarkupIdRequired()) {
 			component.setOutputMarkupId(true);
+		}
 		this.component = component;
 	}
 
@@ -139,18 +142,17 @@ public class TinyMceBehavior extends Behavior
 	 * <p>
 	 * <strong>Note</strong>: The TinyMCE source cannot be lazily loaded via ajax. Therefore, adding
 	 * this in a {@link IHeaderContributor#renderHead(IHeaderResponse)} must be done in a component
-	 * that is not rendered via Ajax. If you wish to load this via Ajax, you can use the very hacky
-	 * workaround {@link #lazyLoadTinyMCEResource(IHeaderResponse)}.
+	 * that is not rendered via Ajax. If you wish to load this via Ajax,
 	 * </p>
-	 * 
+	 *
 	 * @return
 	 */
 	protected ResourceReference getTinyMCEReference()
 	{
 		Application app = Application.get();
-		if (RuntimeConfigurationType.DEVELOPMENT.equals(app.getConfigurationType()))
+		if (RuntimeConfigurationType.DEVELOPMENT.equals(app.getConfigurationType())) {
 			return TinyMCESettings.TINYMCE_JS_REF;
-		else
-			return TinyMCESettings.TINYMCE_JS_REF_MIN;
+		}
+		return TinyMCESettings.TINYMCE_JS_REF_MIN;
 	}
 }

@@ -26,7 +26,7 @@ import java.util.List;
  * https://developer.mozilla.org/en-US/docs/Web/API/Web_Video_Text_Tracks_Format#Cue_Settings<br>
  * http://dev.w3.org/html5/webvtt/<br>
  * http://www.jwplayer.com/html5/webvtt/
- * 
+ *
  * @author Tobias Soloschenko
  */
 public class WebVtt
@@ -44,7 +44,7 @@ public class WebVtt
 	 * Gets the description shown beside WEBVTT<br>
 	 * <br>
 	 * Note: A " - " is prefixed to the description and all \n's are replaced with " "
-	 * 
+	 *
 	 * @return the description the description
 	 */
 	public String getDescription()
@@ -56,10 +56,10 @@ public class WebVtt
 	 * Gets the description shown beside WEBVTT<br>
 	 * <br>
 	 * Note: A " - " is prefixed to the description and all \n's are replaced with " "
-	 * 
+	 *
 	 * @param description
 	 *            the description to be shown
-	 * 
+	 *
 	 * @return the vtt to perform further operations
 	 */
 	public WebVtt setDescription(String description)
@@ -70,7 +70,7 @@ public class WebVtt
 
 	/**
 	 * Gets the document note
-	 * 
+	 *
 	 * @return the document note
 	 */
 	public String getNote()
@@ -80,7 +80,7 @@ public class WebVtt
 
 	/**
 	 * Sets the document note
-	 * 
+	 *
 	 * @param note
 	 *            the note to be shown in the document
 	 * @return the vtt to perform further operations
@@ -93,8 +93,8 @@ public class WebVtt
 
 	/**
 	 * Adds a cue
-	 * 
-	 * @param VttCue
+	 *
+	 * @param vttCue
 	 *            the cue to be added
 	 */
 	public void addCue(VttCue vttCue)
@@ -104,7 +104,7 @@ public class WebVtt
 
 	/**
 	 * Removes a cue
-	 * 
+	 *
 	 * @param vttCue
 	 *            the cue to be removed
 	 */
@@ -115,7 +115,7 @@ public class WebVtt
 
 	/**
 	 * Removes a cue based on its index
-	 * 
+	 *
 	 * @param index
 	 *            the index of the cue to be removed
 	 */
@@ -126,7 +126,7 @@ public class WebVtt
 
 	/**
 	 * Adds a region
-	 * 
+	 *
 	 * @param vttRegion
 	 *            the region to be added
 	 */
@@ -137,7 +137,7 @@ public class WebVtt
 
 	/**
 	 * Removes a region
-	 * 
+	 *
 	 * @param vttRegion
 	 *            the region to be removed
 	 */
@@ -148,7 +148,7 @@ public class WebVtt
 
 	/**
 	 * Removes a region based on the given index
-	 * 
+	 *
 	 * @param index
 	 *            the index of the region to be removed
 	 */
@@ -159,7 +159,7 @@ public class WebVtt
 
 	/**
 	 * Creates the WebVTT document
-	 * 
+	 *
 	 * @return the WebVTT document as string
 	 */
 	public String create()

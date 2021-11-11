@@ -53,7 +53,7 @@ public abstract class AbstractSwarmStrategy extends ClassAuthorizationStrategy
 
 	/**
 	 * The currently logged in subject, note that at any time there is at most 1 subject logged in.
-	 * 
+	 *
 	 * @return the subject or null if no login has succeeded yet
 	 */
 	public Subject getSubject()
@@ -64,7 +64,7 @@ public abstract class AbstractSwarmStrategy extends ClassAuthorizationStrategy
 	/**
 	 * Performs the actual permission check at the {@link Hive}. This is equal to using
 	 * {@link #hasPermission(Permission, Subject)} with {@link #getSubject()}
-	 * 
+	 *
 	 * @param permission
 	 *            the permission to verify
 	 * @return true if the subject has or implies the permission, false otherwise
@@ -93,14 +93,15 @@ public abstract class AbstractSwarmStrategy extends ClassAuthorizationStrategy
 	@Override
 	public boolean isClassAuthorized(Class<?> clazz, WaspAction action)
 	{
-		if (hasPermission(new ComponentPermission(SecureComponentHelper.alias(clazz), action)))
+		if (hasPermission(new ComponentPermission(SecureComponentHelper.alias(clazz), action))) {
 			return true;
+		}
 		logMessage(getMessageSource());
 		return false;
 	}
 
 	/**
-	 * 
+	 *
 	 * @see org.wicketstuff.security.strategies.WaspAuthorizationStrategy#isComponentAuthenticated(org.apache.wicket.Component)
 	 */
 	@Override
@@ -110,15 +111,16 @@ public abstract class AbstractSwarmStrategy extends ClassAuthorizationStrategy
 	}
 
 	/**
-	 * 
+	 *
 	 * @see org.wicketstuff.security.strategies.WaspAuthorizationStrategy#isComponentAuthorized(org.apache.wicket.Component,
 	 *      org.wicketstuff.security.actions.WaspAction)
 	 */
 	@Override
 	public boolean isComponentAuthorized(Component component, WaspAction action)
 	{
-		if (hasPermission(new ComponentPermission(component, action)))
+		if (hasPermission(new ComponentPermission(component, action))) {
 			return true;
+		}
 		IAuthorizationMessageSource message = getMessageSource();
 		if (message != null)
 		{
@@ -129,7 +131,7 @@ public abstract class AbstractSwarmStrategy extends ClassAuthorizationStrategy
 	}
 
 	/**
-	 * 
+	 *
 	 * @see org.wicketstuff.security.strategies.WaspAuthorizationStrategy#isModelAuthenticated(org.apache.wicket.model.IModel,
 	 *      org.apache.wicket.Component)
 	 */
@@ -141,9 +143,9 @@ public abstract class AbstractSwarmStrategy extends ClassAuthorizationStrategy
 
 	/**
 	 * Checks if some action is granted on the model. Although {@link SwarmModel}s are preferred any
-	 * {@link ISecureModel} can be used, in that case it uses the {@link ISecureModel#toString()}
+	 * {@link ISecureModel} can be used, in that case it uses the {@link Object#toString()}
 	 * method as the name of the {@link DataPermission}
-	 * 
+	 *
 	 * @see org.wicketstuff.security.strategies.WaspAuthorizationStrategy#isModelAuthorized(ISecureModel,
 	 *      Component, WaspAction)
 	 */
@@ -151,12 +153,14 @@ public abstract class AbstractSwarmStrategy extends ClassAuthorizationStrategy
 	public boolean isModelAuthorized(ISecureModel<?> model, Component component, WaspAction action)
 	{
 		DataPermission permission;
-		if (model instanceof SwarmModel<?>)
+		if (model instanceof SwarmModel<?>) {
 			permission = new DataPermission(component, (SwarmModel<?>)model, (SwarmAction)action);
-		else
+		} else {
 			permission = new DataPermission(String.valueOf(model), action);
-		if (hasPermission(permission))
+		}
+		if (hasPermission(permission)) {
 			return true;
+		}
 		IAuthorizationMessageSource message = getMessageSource();
 		if (message != null)
 		{

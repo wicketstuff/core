@@ -39,24 +39,24 @@ import org.wicketstuff.lazymodel.reflect.Reflection;
 
 /**
  * A model for lazy evaluations:
- * 
+ *
  * <pre>
  * IModel&lt;String&gt; model = model(from(a).getB().getStrings().get(&quot;key&quot;));
- * 
+ *
  * model.setObject(&quot;value&quot;);
- * 
+ *
  * String string = model.getObject();
  * </pre>
- * 
+ *
  * Evaluations can be nested too:
- * 
+ *
  * <pre>
  * IModel&lt;C&gt; model = model(from(a).getB().getCs().get(from(d).getIndex()));
  * </pre>
- * 
+ *
  * @param T
  *            model object type
- * 
+ *
  * @author svenmeier
  */
 @SuppressWarnings("unchecked")
@@ -90,7 +90,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 
 	/**
 	 * Wrap this model in a {@link LoadableDetachableModel}.
-	 * 
+	 *
 	 * @return model wrapper
 	 */
 	public IModel<T> loadableDetachable() {
@@ -99,7 +99,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 
 	/**
 	 * Get the evaluation result's class.
-	 * 
+	 *
 	 * @return result class or {@code null} if it cannot be determined
 	 */
 	@Override
@@ -113,9 +113,10 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 
 	/**
 	 * Get the evaluation result's type.
-	 * 
+	 *
 	 * @return {@link Class}, {@link ParameterizedType} or {@code null} if not available
 	 */
+	@Override
 	public Type getObjectType() {
 		if (target == null) {
 			return null;
@@ -140,7 +141,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 
 	/**
 	 * LazyModel does not support field access.
-	 * 
+	 *
 	 * @return always {@code null}
 	 */
 	@Override
@@ -150,7 +151,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 
 	/**
 	 * Get the final getter of the evaluation.
-	 * 
+	 *
 	 * @return method representing a JavaBeans getter or {@code null}
 	 */
 	@Override
@@ -179,7 +180,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 
 	/**
 	 * Get the final setter of the evaluation.
-	 * 
+	 *
 	 * @return method representing a JavaBeans setter or {@code null}
 	 */
 	@Override
@@ -215,11 +216,12 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 
 	/**
 	 * Get the evaluation result.
-	 * 
+	 *
 	 * @return evaluation result
 	 * @throws WicketRuntimeException
 	 *             if this model is not bound to a target
 	 */
+	@Override
 	public T getObject() {
 		checkBound();
 
@@ -240,12 +242,13 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 
 	/**
 	 * Set the evaluation result.
-	 * 
-	 * @param evaluation
-	 *            result
+	 *
+	 * @param result
+	 *
 	 * @throws WicketRuntimeException
 	 *             if this model is not bound to a target
 	 */
+	@Override
 	public void setObject(T result) {
 		checkBound();
 
@@ -256,9 +259,8 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 			if (target instanceof IModel) {
 				((IModel<T>) target).setObject(result);
 				return;
-			} else {
-				throw new UnsupportedOperationException();
 			}
+			throw new UnsupportedOperationException();
 		}
 
 		if (target instanceof IModel) {
@@ -280,7 +282,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 
 	/**
 	 * Get the target of this evaluation.
-	 * 
+	 *
 	 * @return target, may be {@code null} if this model is not bound to a
 	 *         target
 	 */
@@ -290,7 +292,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 
 	/**
 	 * Bind this model to a new target.
-	 * 
+	 *
 	 * @param target
 	 *            target to bind to
 	 * @return bound model
@@ -301,7 +303,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 
 	/**
 	 * String representation of the evaluation.
-	 * 
+	 *
 	 * @see #getPath()
 	 */
 	@Override
@@ -324,7 +326,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 	 * <p>
 	 * For evaluations accessing simple properties only, the representation
 	 * equals the property expression of a corresponding {@link PropertyModel}.
-	 * 
+	 *
 	 * @return invoked method path
 	 * @throws WicketRuntimeException
 	 *             if this model is not bound
@@ -386,7 +388,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 
 	/**
 	 * Check that the evaluation is bound to a target.
-	 * 
+	 *
 	 * @throw {@link WicketRuntimeException} if not bound to a target
 	 */
 	private void checkBound() {
@@ -426,14 +428,13 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 		public boolean hasNext() {
 			if (stack instanceof Object[]) {
 				return index < ((Object[]) stack).length;
-			} else {
-				return stack != null && index == 0;
 			}
+			return stack != null && index == 0;
 		}
 
 		/**
 		 * Iterate to the next invocation on the given class.
-		 * 
+		 *
 		 * @param clazz
 		 *            class
 		 */
@@ -446,14 +447,14 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 
 			index += 1;
 
-			method = (Method) methodResolver.getMethod(clazz, id);
+			method = methodResolver.getMethod(clazz, id);
 			count = method.getParameterTypes().length;
 			index += count;
 		}
 
 		/**
 		 * Get the result for the current method.
-		 * 
+		 *
 		 * @param target
 		 *            target of method invocation
 		 * @return result
@@ -470,7 +471,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 			try {
 				if ((target instanceof List) && Reflection.isListIndex(method)) {
 					if (((List<?>) target).size() <= (Integer)args[0]) {
-						// evaluate invalid index as null as PropertyModel does it 
+						// evaluate invalid index as null as PropertyModel does it
 						return null;
 					}
 				}
@@ -482,7 +483,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 
 		/**
 		 * Set a result for the current method.
-		 * 
+		 *
 		 * @param target
 		 *            target of method invocation
 		 * @param result
@@ -503,7 +504,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 
 		/**
 		 * Fill the arguments of the current method in the given array.
-		 * 
+		 *
 		 * @param args
 		 *            arguments to fill
 		 */
@@ -522,7 +523,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 
 	/**
 	 * Start a lazy evaluation.
-	 * 
+	 *
 	 * @param target
 	 *            the target object
 	 * @return a result proxy for further evaluation
@@ -539,7 +540,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 
 	/**
 	 * Start a lazy evaluation.
-	 * 
+	 *
 	 * @param targetType
 	 *            class of target object
 	 * @return a result proxy for further evaluation
@@ -569,7 +570,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 
 	/**
 	 * Start a lazy evaluation.
-	 * 
+	 *
 	 * @param target
 	 *            model holding the target object
 	 * @return a result proxy for further evaluation
@@ -587,7 +588,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 
 		return (T) evaluation.proxy();
 	}
-	
+
 	/**
 	 * @return {@code null} if type cannot be detected
 	 */
@@ -607,7 +608,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 						.getGenericReturnType();
 			} catch (Exception fallThrough) {
 			}
-			
+
 			if (type instanceof TypeVariable) {
 				type = Reflection.resultType(model.getClass(), type);
 			}
@@ -618,7 +619,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 
 	/**
 	 * Create a model for the given evaluation result.
-	 * 
+	 *
 	 * @param result
 	 *            evaluation result
 	 * @return lazy model
@@ -626,10 +627,10 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 	public static <R> LazyModel<R> model(R result) {
 		return model(Evaluation.eval(result));
 	}
-		
+
 	/**
 	 * Create a model for the given evaluation.
-	 * 
+	 *
 	 * @param evaluation
 	 *            evaluation result
 	 * @return lazy model
@@ -672,7 +673,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 
 	/**
 	 * Get the method invocation path for an evaluation.
-	 * 
+	 *
 	 * @param result
 	 *            evaluation result
 	 * @return method invocation path
@@ -699,7 +700,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 
 	/**
 	 * A wrapper to make a lazy model also loadable detachable.
-	 * 
+	 *
 	 * @see LoadableDetachableModel
 	 */
 	private class LoadableDetachableWrapper extends LoadableDetachableModel<T>

@@ -21,7 +21,7 @@
 package org.wicketstuff.pageserializer.common.listener;
 
 /**
- * serialization listener which handles a thread local context 
+ * serialization listener which handles a thread local context
  * @author mosmann
  *
  * @param <T> context type
@@ -37,6 +37,9 @@ public abstract class ThreadLocalContextSerializationListener<T> implements ISer
 	 */
 	protected abstract T createContext(Object object);
 
+	/**
+	 * @see ISerializationListener#begin(Object)
+	 */
 	@Override
 	public final void begin(Object object)
 	{
@@ -45,9 +48,6 @@ public abstract class ThreadLocalContextSerializationListener<T> implements ISer
 		begin(context, object);
 	}
 
-	/**
-	 * @see ISerializationListener#begin(Object)
-	 */
 	protected abstract void begin(T context, Object object);
 
 	@Override
@@ -61,17 +61,20 @@ public abstract class ThreadLocalContextSerializationListener<T> implements ISer
 	 */
 	protected abstract void before(T context, int position, Object object);
 
+	/**
+	 * @see ISerializationListener#after(int, Object)
+	 */
 	@Override
 	public final void after(int position, Object object)
 	{
 		after(contextContainer.get(), position, object);
 	}
 
-	/**
-	 * @see ISerializationListener#after(int, Object)
-	 */
 	protected abstract void after(T context, int position, Object object);
 
+	/**
+	 * @see ISerializationListener#end(Object, Exception)
+	 */
 	@Override
 	public void end(Object object, Exception exception)
 	{
@@ -80,8 +83,5 @@ public abstract class ThreadLocalContextSerializationListener<T> implements ISer
 		end(context, object, exception);
 	}
 
-	/**
-	 * @see ISerializationListener#end(Object, RuntimeException)
-	 */
 	protected abstract void end(T context, Object object, Exception exception);
 }

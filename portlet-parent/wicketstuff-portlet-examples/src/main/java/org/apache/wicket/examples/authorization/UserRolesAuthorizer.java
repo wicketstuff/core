@@ -19,13 +19,14 @@ package org.apache.wicket.examples.authorization;
 import org.apache.wicket.Session;
 import org.apache.wicket.authroles.authorization.strategies.role.IRoleCheckingStrategy;
 import org.apache.wicket.authroles.authorization.strategies.role.Roles;
+import org.apache.wicket.authroles.authorization.strategies.role.annotations.AnnotationsRoleAuthorizationStrategy;
 
 
 /**
  * The authorizer we need to provide to the authorization strategy implementation
- * {@link org.apache.wicket.authorization.strategies.role.annotations.AnnotationsRoleAuthorizationStrategy}
+ * {@link AnnotationsRoleAuthorizationStrategy}
  * .
- * 
+ *
  * @author Eelco Hillenius
  */
 public class UserRolesAuthorizer implements IRoleCheckingStrategy
@@ -39,7 +40,7 @@ public class UserRolesAuthorizer implements IRoleCheckingStrategy
 	}
 
 	/**
-	 * @see org.apache.wicket.authorization.strategies.role.IRoleCheckingStrategy#hasAnyRole(Roles)
+	 * @see IRoleCheckingStrategy#hasAnyRole(Roles)
 	 */
 	@Override
 	public boolean hasAnyRole(Roles roles)

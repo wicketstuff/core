@@ -37,7 +37,7 @@ import org.apache.wicket.request.resource.PackageResourceReference;
  * </p>
  * <p>
  * An easy way to build upon this component is to override
- * {@link #appendToInit(String, String, String, StringBuffer)} and add event handlers etc. in the
+ * {@link #appendToInit(String, String, String, StringBuilder)} and add event handlers etc. in the
  * YUI widget's initialization function.
  * </p>
  * See <a href="http://developer.yahoo.com/yui/calendar/">YUI's calendar documentation</a> for more

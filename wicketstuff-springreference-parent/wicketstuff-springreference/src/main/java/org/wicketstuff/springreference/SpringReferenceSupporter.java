@@ -32,31 +32,31 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
  * </p>
  * <p>
  * Example:
- * 
+ *
  * <pre>
  * <code>
  *  public class App extends WebApplication {
  * 	&#64;Override
- * 	public Class<? extends Page> getHomePage() {
+ * 	public Class&lt;? extends Page&gt; getHomePage() {
  * 		return HomePage.class;
  * 	}
- * 
+ *
  * 	&#64;Override
  * 	protected void init() {
  * 		super.init();
- * 
+ *
  * 		getMarkupSettings().setDefaultMarkupEncoding(CharEncoding.UTF_8);
- * 
- * 		<b>SpringReferenceSupporter.register(this);</b> // <--
+ *
+ * 		<b>SpringReferenceSupporter.register(this);</b> // &lt;--
  * 	}
  * }
  * </code>
  * </pre>
- * 
+ *
  * </p>
- * 
+ *
  * @author akiraly
- * 
+ *
  */
 public class SpringReferenceSupporter extends AbstractSpringReferenceSupporter
 {
@@ -70,7 +70,7 @@ public class SpringReferenceSupporter extends AbstractSpringReferenceSupporter
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param applicationContext
 	 *            where the spring bean will be searched for, not null
 	 */
@@ -88,7 +88,7 @@ public class SpringReferenceSupporter extends AbstractSpringReferenceSupporter
 	 * {@link #register(Application, SpringReferenceSupporter)}. If you want to use
 	 * {@link SpringReference} you have to use one of the register methods in your wicket
 	 * applications init().
-	 * 
+	 *
 	 * @param application
 	 *            wicket web application, not null
 	 */
@@ -104,7 +104,7 @@ public class SpringReferenceSupporter extends AbstractSpringReferenceSupporter
 	/**
 	 * Registers the passed in supporter with the wicket application. This is the more sophisticated
 	 * variant of registration. Most users could go with {@link #register(WebApplication)}.
-	 * 
+	 *
 	 * @param application
 	 *            wicket application, not null
 	 * @param supporter

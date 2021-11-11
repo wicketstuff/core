@@ -27,21 +27,21 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Reflection utilities.
- * 
+ *
  * @author svenmeier
  */
 public final class Reflection
 {
 
 	private static Logger log = LoggerFactory.getLogger(Reflection.class);
-	
+
 	private Reflection()
 	{
 	}
 
 	/**
 	 * Get the resulting type of invoking a method.
-	 * 
+	 *
 	 * @param declaringType
 	 *            declaring class of the method
 	 * @param type
@@ -108,8 +108,8 @@ public final class Reflection
 
 	/**
 	 * Get the type for a class type variable.
-	 * 
-	 * @param previousType
+	 *
+	 * @param type
 	 *            the owning type
 	 * @param variable
 	 *            the variable
@@ -137,7 +137,7 @@ public final class Reflection
 
 	/**
 	 * Get the {@link Class} for a generic type.
-	 * 
+	 *
 	 * @param type
 	 *            {@link Class} or {@link ParameterizedType}
 	 * @return class class
@@ -171,7 +171,7 @@ public final class Reflection
 
 	/**
 	 * Is the given method a JavaBeans getter.
-	 * 
+	 *
 	 * @param method
 	 *            method to test
 	 * @return {@code true} if method is a getter
@@ -203,7 +203,7 @@ public final class Reflection
 
 	/**
 	 * Does the given method represent a {@link List} index.
-	 * 
+	 *
 	 * @param method
 	 *            method to test
 	 * @return {@code true} if list index
@@ -221,14 +221,14 @@ public final class Reflection
 
 		return false;
 	}
-	
+
 	/**
 	 * Allows backtracking of type variables.
 	 */
 	private static class BacktrackingParameterizedType implements ParameterizedType {
 
 		private Type declaringType;
-		
+
 		private ParameterizedType type;
 
 		public BacktrackingParameterizedType(Type declaringType, ParameterizedType type)

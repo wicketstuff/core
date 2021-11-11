@@ -17,12 +17,12 @@
 
 package org.wicketstuff.navigator;
 
-import org.wicketstuff.IQuickView;
+import java.util.List;
+
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.repeater.Item;
-
-import java.util.List;
+import org.wicketstuff.IQuickView;
 
 /**
  *  base ajax scroll event behavior which are extended by {@link AjaxPageScrollEventBehavior} and {@link AjaxComponentScrollEventBehavior}
@@ -42,7 +42,7 @@ public abstract class AjaxScrollEventBehaviorBase extends AjaxEventBehavior{
 
     /**
      * Listener method for the ajax scroll event
-     * when you implement this method call {@link this#addItemsForNextPage(org.wicketstuff.IQuickView)} to create items for next page/request
+     * when you implement this method call {@link AjaxScrollEventBehaviorBase#addItemsForNextPage(org.wicketstuff.IQuickView)} to create items for next page/request
      *
      * @param target
      *      the current request handler

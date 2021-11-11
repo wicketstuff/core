@@ -34,6 +34,7 @@ import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import wicket.contrib.tinymce4.TinyMceBehavior;
 
 /**
@@ -42,7 +43,6 @@ import wicket.contrib.tinymce4.TinyMceBehavior;
  *
  * @author Iulian-Corneliu Costan (iulian.costan@gmail.com)
  * @author Frank Bille Jensen (fbille@avaleo.net)
- * @see Plugin
  * @see Button
  */
 public class TinyMCESettings implements Serializable
@@ -361,13 +361,14 @@ public class TinyMCESettings implements Serializable
 			{
 				Component component = iterator.next();
 				buffer.append(component.getMarkupId());
-				if (iterator.hasNext())
+				if (iterator.hasNext()) {
 					buffer.append(", ");
+				}
 			}
 			buffer.append("\"");
-		}
-		else
+		} else {
 			LOG.warn("tinymce is set to \"exact\" mode but there are no components attached");
+		}
 	}
 
 	public TinyMCESettings addPlugins(String pluginName)

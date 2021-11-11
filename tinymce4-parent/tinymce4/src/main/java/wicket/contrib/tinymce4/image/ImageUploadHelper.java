@@ -1,7 +1,9 @@
 package wicket.contrib.tinymce4.image;
 
 import java.io.File;
+
 import javax.servlet.ServletContext;
+
 import org.apache.wicket.Session;
 import org.apache.wicket.markup.parser.XmlTag;
 import org.apache.wicket.protocol.http.WebApplication;
@@ -9,8 +11,8 @@ import org.apache.wicket.request.cycle.RequestCycle;
 
 /**
  * Image upload handler responsible for images operations.
- * 
- * @author Michal Letynski <mikel@mikel.pl>
+ *
+ * @author Michal Letynski (mikel@mikel.pl)
  */
 public class ImageUploadHelper
 {
@@ -26,7 +28,7 @@ public class ImageUploadHelper
 
 	/**
 	 * Get temporary directory path for storing temporary files for e.g images.
-	 * 
+	 *
 	 * @return temporary directory path for storing temporary files for e.g images.
 	 */
 	public static String getTemporaryDirPath()
@@ -38,7 +40,7 @@ public class ImageUploadHelper
 
 	/**
 	 * Create image xml tag which represets image html tag with proper url generated.
-	 * 
+	 *
 	 * @param pImageFileDescription
 	 *            - image file description.
 	 * @param pUrl

@@ -22,7 +22,7 @@ import org.apache.wicket.request.Request;
 
 /**
  * Session class for signin example. Holds and authenticates users.
- * 
+ *
  * @author Jonathan Locke
  */
 public final class SignInSession extends AuthenticatedWebSession
@@ -32,7 +32,7 @@ public final class SignInSession extends AuthenticatedWebSession
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param request
 	 */
 	protected SignInSession(Request request)
@@ -43,7 +43,7 @@ public final class SignInSession extends AuthenticatedWebSession
 	/**
 	 * Checks the given username and password, returning a User object if if the username and
 	 * password identify a valid user.
-	 * 
+	 *
 	 * @param username
 	 *            The username
 	 * @param password
@@ -85,7 +85,7 @@ public final class SignInSession extends AuthenticatedWebSession
 	}
 
 	/**
-	 * @see org.apache.wicket.authentication.AuthenticatedWebSession#getRoles()
+	 * @see AuthenticatedWebSession#getRoles()
 	 */
 	@Override
 	public Roles getRoles()

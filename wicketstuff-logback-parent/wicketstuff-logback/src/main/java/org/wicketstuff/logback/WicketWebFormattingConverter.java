@@ -22,21 +22,21 @@ import org.apache.wicket.request.cycle.RequestCycle;
 /**
  * <p>
  * A custom logback conversion word converter. By registering this converter (through
- * <code>&lt;conversionRule></code> element in logback config) and using the "%web" conversion word
+ * <code>&lt;conversionRule&gt;</code> element in logback config) and using the "%web" conversion word
  * in the logback encoder pattern wicket apps can produce web information (method, url, session id,
  * ...) in their log messages. If there is no request information available the placeholder is
  * replaced with an empty string in the final message.
  * </p>
- * 
+ *
  * <p>
  * Example logback configuration:
- * 
+ *
  * <pre>
  * <code>
  * {@literal
  * <conversionRule conversionWord="web"
  *     converterClass="org.wicketstuff.logback.WicketWebFormattingConverter" />
- * 
+ *
  * <appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
  *     <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
  *         <charset>UTF-8</charset>
@@ -49,9 +49,9 @@ import org.apache.wicket.request.cycle.RequestCycle;
  * }
  * </code>
  * </pre>
- * 
+ *
  * The above will result in log messages like this:
- * 
+ *
  * <pre>
  * <code>
  * 2011-02-21 14:18:26,281|INFO|"http-nio-8080"-exec-2|o.w.logback.examples.HomePage|28066|GET http://localhost:8080/wicketstuff-logback-examples/?null null null 127.0.0.1:59363 127.0.0.1:8080 null Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/534.13 (KHTML, like Gecko) Chrome/9.0.597.98 Safari/534.13
@@ -59,9 +59,9 @@ import org.apache.wicket.request.cycle.RequestCycle;
  * 	Logging is good - said the lumberjack.
  * </code>
  * </pre>
- * 
+ *
  * The full message format is available in the javadoc of {@link AbstractWebFormattingConverter}.
- * 
+ *
  * </p>
  * <p>
  * There are similar solutions using {@link Filter}-s, MDC and NDC to solve the same task (like
@@ -71,13 +71,13 @@ import org.apache.wicket.request.cycle.RequestCycle;
  * portion of requests result in actual logging. This solution only gets invoked when the logging
  * event is indeed producing a log message. It is on the "other side of the fence".
  * </p>
- * 
+ *
  * <p>
  * Implementation of {@link AbstractWebFormattingConverter} that uses wicket to locate the current
  * {@link HttpServletRequest} object in {@link #getRequest()} method. Registerable through
- * <code>&lt;conversionRule></code> element in logback config.
+ * <code>&lt;conversionRule&gt;</code> element in logback config.
  * </p>
- * 
+ *
  * @author akiraly
  */
 public class WicketWebFormattingConverter extends AbstractWebFormattingConverter
@@ -91,18 +91,21 @@ public class WicketWebFormattingConverter extends AbstractWebFormattingConverter
 	protected HttpServletRequest getRequest()
 	{
 		RequestCycle cycle = RequestCycle.get();
-		if (cycle == null)
+		if (cycle == null) {
 			return null;
+		}
 
 		Request request = cycle.getRequest();
 
-		if (request == null)
+		if (request == null) {
 			return null;
+		}
 
 		Object containerRequest = request.getContainerRequest();
 
-		if (!(containerRequest instanceof HttpServletRequest))
+		if (!(containerRequest instanceof HttpServletRequest)) {
 			return null;
+		}
 
 		return (HttpServletRequest)containerRequest;
 	}

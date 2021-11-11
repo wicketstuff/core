@@ -52,8 +52,8 @@ public class TablesComponentAsXlsHandler implements IRequestHandler
 	private Workbook workbook;
 
 	/**
-	 * @param tableComponent
 	 * @param filename
+	 * @param tableComponents
 	 */
 	public TablesComponentAsXlsHandler(String filename, Component... tableComponents)
 	{
@@ -65,6 +65,7 @@ public class TablesComponentAsXlsHandler implements IRequestHandler
 		this.filename = filename;
 	}
 
+	@Override
 	public void respond(IRequestCycle requestCycle)
 	{
 		try
@@ -102,6 +103,7 @@ public class TablesComponentAsXlsHandler implements IRequestHandler
 		}
 	}
 
+	@Override
 	public void detach(IRequestCycle requestCycle)
 	{
 		tableComponents = null;

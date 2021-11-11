@@ -31,8 +31,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Image upload panel which is responsible for showing image upload dialog and
  * its called when an image is requested.
- * 
- * @author Michal Letynski <mikel@mikel.pl>
+ *
+ * @author Michal Letynski (mikel@mikel.pl)
  */
 public class ImageUploadPanel extends Panel implements IRequestListener {
 
@@ -50,7 +50,7 @@ public class ImageUploadPanel extends Panel implements IRequestListener {
 
 	public ImageUploadPanel(String pId, String uploadFolderPath) {
 		super(pId);
-		
+
 		setOutputMarkupId(true);
 		add(modalWindow = new ModalWindow("imageUploadDialog"));
 		modalWindow.setTitle(new ResourceModel("title.label"));
@@ -67,7 +67,7 @@ public class ImageUploadPanel extends Panel implements IRequestListener {
 		add(imageUploadBehavior = new ImageUploadBehavior());
 		this.uploadFolderPath = uploadFolderPath;
 	}
-	
+
 	public ImageUploadPanel(String pId) {
 		this(pId,  ImageUploadHelper.getTemporaryDirPath());
 	}

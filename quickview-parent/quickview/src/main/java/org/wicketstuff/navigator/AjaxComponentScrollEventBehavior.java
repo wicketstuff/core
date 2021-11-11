@@ -17,19 +17,19 @@
 
 package org.wicketstuff.navigator;
 
-import org.wicketstuff.IQuickView;
-import org.wicketstuff.RepeaterUtil;
 import org.apache.wicket.Component;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.ajax.attributes.AjaxCallListener;
 import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
+import org.wicketstuff.IQuickView;
+import org.wicketstuff.RepeaterUtil;
 
 
 /**
  * behavior that can be attached to quickview's parent ,on scroll event will be fired if scroll-bar
  * is moved to the bottom,for this to happen,you must specify the parent to have scroll in css by defining overflow-y property.
  *
- *<strong>you need to call {@link this#addItemsForNextPage(IQuickView)} ()} when you implement {@link this#onScroll(org.apache.wicket.ajax.AjaxRequestTarget)}</strong>
+ *<strong>you need to call {@link AjaxComponentScrollEventBehavior#addItemsForNextPage(IQuickView)} ()} when you implement {@link AjaxComponentScrollEventBehavior#onScroll(org.apache.wicket.ajax.AjaxRequestTarget)}</strong>
  *
  *
  *  @author Vineet Semwal

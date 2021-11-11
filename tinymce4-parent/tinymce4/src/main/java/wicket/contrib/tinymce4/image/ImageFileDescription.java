@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 /**
  * Simple POJO which represents image characteristics.
- * 
- * @author Michal Letynski <mikel@mikel.pl>
+ *
+ * @author Michal Letynski (mikel@mikel.pl)
  */
 public class ImageFileDescription implements Serializable
 {

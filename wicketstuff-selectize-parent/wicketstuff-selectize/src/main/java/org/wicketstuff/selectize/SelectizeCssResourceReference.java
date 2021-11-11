@@ -20,7 +20,7 @@ import org.apache.wicket.request.resource.CssResourceReference;
 
 /**
  * Used to provide a representation by the given theme
- * 
+ *
  * @author Tobias Soloschenko
  *
  */
@@ -59,7 +59,7 @@ public class SelectizeCssResourceReference extends CssResourceReference
 	private static SelectizeCssResourceReference INSTANCE = null;
 
 	/**
-	 * @param Theme
+	 * @param theme
 	 *            the theme of the selectize component
 	 * @return the single instance of the resource reference
 	 */

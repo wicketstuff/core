@@ -36,9 +36,9 @@ import com.jamonapi.MonitorFactory;
  * monitors are kept in memory anyway so that shouldn't pose a problem. One can use the
  * {@link #clear()} method to remove all {@link Monitor}s from this repository.
  * </p>
- * 
+ *
  * @author lars
- * 
+ *
  */
 @SuppressWarnings("serial")
 public class JamonRepository implements Serializable, MonitoringRepository
@@ -49,7 +49,7 @@ public class JamonRepository implements Serializable, MonitoringRepository
 
 	/**
 	 * Returns all the {@link Monitor}s in this repository.
-	 * 
+	 *
 	 * @return List of all {@link Monitor}s or an empty list if there aren't any.
 	 */
 	List<Monitor> getAll()
@@ -60,22 +60,20 @@ public class JamonRepository implements Serializable, MonitoringRepository
 		{
 			return Arrays.asList(monitors);
 		}
-		else
-		{
-			return new ArrayList<Monitor>(0);
-		}
+		return new ArrayList<Monitor>(0);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.wicketstuff.jamon.monitor.MonitoringRepository#count()
 	 */
+	@Override
 	public int count()
 	{
 		return getAll().size();
 	}
 
 	/**
-	 * Removes all the {@link SerializableMonitor}s in this repository. This also propagates to the
+	 * Removes all the {@link Monitor}s in this repository. This also propagates to the
 	 * {@link MonitorFactory}.
 	 */
 	public static void clear()
@@ -86,6 +84,7 @@ public class JamonRepository implements Serializable, MonitoringRepository
 	/* (non-Javadoc)
 	 * @see org.wicketstuff.jamon.monitor.MonitoringRepository#findMonitorByLabel(java.lang.String)
 	 */
+	@Override
 	public Monitor findMonitorByLabel(String monitorLabel)
 	{
 		if (monitorLabel == null)
@@ -105,6 +104,7 @@ public class JamonRepository implements Serializable, MonitoringRepository
 	/* (non-Javadoc)
 	 * @see org.wicketstuff.jamon.monitor.MonitoringRepository#find(org.wicketstuff.jamon.monitor.MonitorSpecification)
 	 */
+	@Override
 	public List<Monitor> find(MonitorSpecification specification)
 	{
 		List<Monitor> result = new ArrayList<Monitor>();

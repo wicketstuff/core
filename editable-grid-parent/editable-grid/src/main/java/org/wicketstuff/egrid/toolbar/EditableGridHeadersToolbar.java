@@ -16,7 +16,7 @@ import org.apache.wicket.model.Model;
 import org.wicketstuff.egrid.component.EditableDataTable;
 import org.wicketstuff.egrid.component.EditableDataTable.CssAttributeBehavior;
 /**
- * 
+ *
  * @author Nadeem Mohammad
  *
  */
@@ -25,13 +25,11 @@ public class EditableGridHeadersToolbar<T, S> extends AbstractEditableGridToolba
 
 		private static final long serialVersionUID = 1L;
 
-		/**
+		/*
 		 * Constructor
-		 * 
-		 * @param <T>
-		 *            the column data type
+		 *
 		 * @param table
-		 *            data table this toolbar will be attached to
+		 *            data table this toolbar will be attached to, <T> is the type of column
 		 * @param stateLocator
 		 *            locator for the ISortState implementation used by sortable headers
 		 */
@@ -99,7 +97,7 @@ public class EditableGridHeadersToolbar<T, S> extends AbstractEditableGridToolba
 		/**
 		 * Factory method for sortable header components. A sortable header component must have id of
 		 * <code>headerId</code> and conform to markup specified in <code>HeadersToolbar.html</code>
-		 * 
+		 *
 		 * @param headerId
 		 *            header component id
 		 * @param property

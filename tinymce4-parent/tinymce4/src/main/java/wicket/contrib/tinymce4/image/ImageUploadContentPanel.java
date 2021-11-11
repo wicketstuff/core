@@ -3,6 +3,7 @@ package wicket.contrib.tinymce4.image;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
+
 import org.apache.commons.io.FilenameUtils;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
@@ -21,8 +22,8 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Image upload content panel which represents panel for adding images.
- * 
- * @author Michal Letynski <mikel@mikel.pl>
+ *
+ * @author Michal Letynski (mikel@mikel.pl)
  */
 public class ImageUploadContentPanel extends Panel
 {
@@ -31,7 +32,7 @@ public class ImageUploadContentPanel extends Panel
 	private static final Logger log = LoggerFactory.getLogger(ImageUploadContentPanel.class);
 	private static final FileExtensionValidator FILE_EXTENSION_VALIDATOR = new FileExtensionValidator();
 	private final String uploadFolderPath;
-	
+
 	public ImageUploadContentPanel(String pId, String customUploadFolderPath)
 	{
 		super(pId);
@@ -87,12 +88,12 @@ public class ImageUploadContentPanel extends Panel
 			}
 		});
 		add(form);
-			
-	}	
-	
+
+	}
+
 	public ImageUploadContentPanel(String pId)
 	{
-		this(pId, ImageUploadHelper.getTemporaryDirPath());		
+		this(pId, ImageUploadHelper.getTemporaryDirPath());
 	}
 
 	private static class FileExtensionValidator implements IValidator<List<FileUpload>>
@@ -101,6 +102,7 @@ public class ImageUploadContentPanel extends Panel
 		public static final List<String> extensions = Arrays.asList("jpg", "gif", "jpeg", "png",
 			"bmp");
 
+		@Override
 		public void validate(IValidatable<List<FileUpload>> pValidatables)
 		{
 			for (FileUpload image : pValidatables.getValue())
@@ -119,7 +121,7 @@ public class ImageUploadContentPanel extends Panel
 
 	/**
 	 * Method invoked after image upload.
-	 * 
+	 *
 	 * @param pTarget
 	 *            - ajax target
 	 * @param pImage

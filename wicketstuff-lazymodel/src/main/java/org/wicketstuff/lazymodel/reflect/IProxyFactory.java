@@ -33,7 +33,7 @@ public interface IProxyFactory {
 
 	/**
 	 * Create a proxy class for the given class.
-	 * 
+	 *
 	 * @param clazz
 	 *            class to proxy
 	 * @return proxy class
@@ -42,8 +42,8 @@ public interface IProxyFactory {
 
 	/**
 	 * Create a proxy instance.
-	 * 
-	 * @param proxyClazz
+	 *
+	 * @param proxyClass
 	 *            class of proxy
 	 * @param callback
 	 *            callback for invocations
@@ -54,7 +54,7 @@ public interface IProxyFactory {
 
 	/**
 	 * Get the callback for the given proxy.
-	 * 
+	 *
 	 * @param proxy
 	 *            proxy
 	 * @return callback or {@code null} if not a proxy

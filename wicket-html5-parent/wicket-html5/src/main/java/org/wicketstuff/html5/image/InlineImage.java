@@ -43,7 +43,7 @@ public class InlineImage extends WebComponent
 	 *
 	 * @param id
 	 *            the id
-	 * @param packageResourceStream
+	 * @param packageResourceReference
 	 *            the package resource stream of the image
 	 */
 	public InlineImage(String id, PackageResourceReference packageResourceReference)
@@ -58,7 +58,7 @@ public class InlineImage extends WebComponent
 	 *            the id
 	 * @param model
 	 *            the model of the inline image
-	 * @param packageResourceStream
+	 * @param packageResourceReference
 	 *            the package resource stream of the image
 	 */
 	public InlineImage(String id, IModel<?> model, PackageResourceReference packageResourceReference)

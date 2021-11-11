@@ -33,11 +33,11 @@ import com.jamonapi.MonitorFactory;
  * The responsibility of the {@link JamonMonitoredRequestCycleContext} is to add a monitor for all
  * actions that will cause pages or parts of pages to be rendered. <br>
  * The labels of the {@link Monitor}s come in these formats:
- * 
+ *
  * <ul>
  * <li>"PageName" - When a user navigates directly to a Page, for instance the HomePage, or a
  * bookmarked Page.</li>
- * <li>"PageName.toNextPage -> NextPage" - When the component toNextPage on the PageName page causes
+ * <li>"PageName.toNextPage -&gt; NextPage" - When the component toNextPage on the PageName page causes
  * the user to navigate to the "NextPage" page <b>and</b> this
  * {@link JamonMonitoredRequestCycleContext} has its property
  * {@link #includeSourceNameInMonitorLabel} set to <code>true</code>.</li>
@@ -45,12 +45,12 @@ import com.jamonapi.MonitorFactory;
  * <b>and</b> this {@link JamonMonitoredRequestCycleContext} has its property
  * {@link #includeSourceNameInMonitorLabel} set to <code>false</code>.</li>
  * </ul>
- * 
+ *
  * Any navigations from or to the {@link JamonAdminPage} is excluded from the Monitors.
  * </p>
- * 
+ *
  * @author lars
- * 
+ *
  */
 public class JamonMonitoredRequestCycleContext
 {
@@ -65,7 +65,7 @@ public class JamonMonitoredRequestCycleContext
 	/**
 	 * The source from where the request originated. This will typically be in the form of
 	 * PageName.component. Where component is the name of the component that was clicked.
-	 * 
+	 *
 	 */
 	private String source;
 
@@ -86,7 +86,7 @@ public class JamonMonitoredRequestCycleContext
 
 	/**
 	 * Construct.
-	 * 
+	 *
 	 * @param includeSourceNameInMonitorLabel
 	 *            whether or not to include the name of the {@link #source} in the Monitors label.
 	 */
@@ -121,7 +121,7 @@ public class JamonMonitoredRequestCycleContext
 
 	/**
 	 * Sets the {@link #source}.
-	 * 
+	 *
 	 * @param source
 	 *            The name of the source where the request originated from.
 	 */
@@ -132,7 +132,7 @@ public class JamonMonitoredRequestCycleContext
 
 	/**
 	 * Set the {@link #target}.
-	 * 
+	 *
 	 * @param destination
 	 *            The name of the page that was rendered.
 	 */
@@ -144,7 +144,7 @@ public class JamonMonitoredRequestCycleContext
 
 	/**
 	 * From which Page did the request come from? This is needed for creating the Monitor label.
-	 * 
+	 *
 	 * @param clazz
 	 */
 	public void comesFromPage(Class<? extends IRequestablePage> clazz)
@@ -174,10 +174,7 @@ public class JamonMonitoredRequestCycleContext
 		{
 			return String.format("%s", target);
 		}
-		else
-		{
-			return String.format("%s -> %s", source, target);
-		}
+		return String.format("%s -> %s", source, target);
 	}
 
 	public final void dontMonitorThisRequest()

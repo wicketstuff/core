@@ -25,9 +25,9 @@ import org.apache.wicket.model.IModel;
 
 /**
  * Implementation of IDataProvider that retrieves contacts from the contact database.
- * 
+ *
  * @author igor
- * 
+ *
  */
 public class ContactDataProvider implements IDataProvider<Contact>
 {
@@ -39,8 +39,8 @@ public class ContactDataProvider implements IDataProvider<Contact>
 	/**
 	 * retrieves contacts from database starting with index <code>first</code> and ending with
 	 * <code>first+count</code>
-	 * 
-	 * @see org.apache.wicket.markup.repeater.data.IDataProvider#iterator(int, int)
+	 *
+	 * @see org.apache.wicket.markup.repeater.data.IDataProvider#iterator(long, long)
 	 */
 	@Override
 	public Iterator<Contact> iterator(long first, long count)
@@ -51,7 +51,7 @@ public class ContactDataProvider implements IDataProvider<Contact>
 
 	/**
 	 * returns total number of contacts in the database
-	 * 
+	 *
 	 * @see org.apache.wicket.markup.repeater.data.IDataProvider#size()
 	 */
 	@Override
@@ -62,7 +62,7 @@ public class ContactDataProvider implements IDataProvider<Contact>
 
 	/**
 	 * wraps retrieved contact pojo with a wicket model
-	 * 
+	 *
 	 * @see org.apache.wicket.markup.repeater.data.IDataProvider#model(java.lang.Object)
 	 */
 	@Override

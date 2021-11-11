@@ -34,12 +34,12 @@ import ch.qos.logback.core.util.StatusPrinter;
  * <p>
  * {@link ServletContextListener} that can be used in web applications to define the location of the
  * logback configuration and optionally to inject the context path into the properties of logback
- * 
+ *
  * <p>
  * Should be the first listener to configure logback before using it. Location is defined in the
  * <code>logbackConfigLocation</code> context param. Snippet from web.xml:
  * </p>
- * 
+ *
  * <pre>
  * <code>
  * {@literal
@@ -48,13 +48,13 @@ import ch.qos.logback.core.util.StatusPrinter;
  *     <param-name>logbackConfigLocation</param-name>
  *     <param-value>/WEB-INF/log-sc.xml</param-value>
  * </context-param>
- * 
+ *
  * <!-- optional, needed if config wants to use the context path -->
  * <context-param>
  *     <param-name>logbackConfigContextPathKey</param-name>
  *     <param-value>contextPath</param-value>
  * </context-param>
- * 
+ *
  * <!-- mandatory, applies custom config location based on the value of
  *      logbackConfigLocation -->
  * <listener>
@@ -63,24 +63,24 @@ import ch.qos.logback.core.util.StatusPrinter;
  * }
  * </code>
  * </pre>
- * 
+ *
  * <p>
  * The above means that logback will be configured using the <code>/WEB-INF/log-sc.xml</code>
  * servlet context resource and <code>${contextPath}</code> can be used in the logback config as a
  * placeholder for the webapp's context path.
  * </p>
- * 
+ *
  * <p>
  * Placeholders (ex: ${user.home}) in <code>logbackConfigLocation</code> are supported. Location
  * examples:<br />
- * <code>/WEB-INF/log-sc.xml</code> (starts with '/') -> loaded from servlet context<br />
- * <code>classpath:foo/log-cp.xml</code> (starts with "classpath:") -> loaded from classpath<br />
- * <code>file:/D:/log-absfile.xml</code> (is a valid url) -> loaded as url<br />
- * <code>D:/log-absfile.xml</code> (is an absolute file path) -> loaded as absolute file<br />
- * <code>log-relfile.xml</code> (is a relative file path) -> loaded as file relative to the servlet
+ * <code>/WEB-INF/log-sc.xml</code> (starts with '/') -&gt; loaded from servlet context<br />
+ * <code>classpath:foo/log-cp.xml</code> (starts with "classpath:") -&gt; loaded from classpath<br />
+ * <code>file:/D:/log-absfile.xml</code> (is a valid url) -&gt; loaded as url<br />
+ * <code>D:/log-absfile.xml</code> (is an absolute file path) -&gt; loaded as absolute file<br />
+ * <code>log-relfile.xml</code> (is a relative file path) -&gt; loaded as file relative to the servlet
  * container working directory
  * </p>
- * 
+ *
  * @author akiraly
  */
 public class LogbackConfigListener implements ServletContextListener
@@ -106,6 +106,7 @@ public class LogbackConfigListener implements ServletContextListener
 	 */
 	public static final String LOCATION_PREFIX_CLASSPATH = "classpath:";
 
+	@Override
 	public void contextInitialized(ServletContextEvent sce)
 	{
 		ServletContext sc = sce.getServletContext();
@@ -126,7 +127,7 @@ public class LogbackConfigListener implements ServletContextListener
 
 	/**
 	 * Configures logback with the custom config location specified in the web.xml.
-	 * 
+	 *
 	 * @param sc
 	 *            represents the webapp, not null
 	 * @param lc
@@ -140,14 +141,16 @@ public class LogbackConfigListener implements ServletContextListener
 
 		String location = rawLocation;
 
-		if (location != null)
+		if (location != null) {
 			location = OptionHelper.substVars(location, lc);
+		}
 
 		if (location == null)
 		{
-			if (rawLocation != null)
+			if (rawLocation != null) {
 				sc.log("Can not configure logback. Location is null after substitution." +
 					" Maybe context param \"" + CONFIG_LOCATION_PARAM + "\" is not set correctly.");
+			}
 			return;
 		}
 
@@ -176,7 +179,7 @@ public class LogbackConfigListener implements ServletContextListener
 
 	/**
 	 * Reconfigures logback to use the config from the specified url.
-	 * 
+	 *
 	 * @param sc
 	 *            represents the webapp, not null
 	 * @param lc
@@ -194,8 +197,9 @@ public class LogbackConfigListener implements ServletContextListener
 		configurator.setContext(lc);
 		lc.stop();
 
-		if (contextPathKey != null)
+		if (contextPathKey != null) {
 			lc.putProperty(contextPathKey, getContextPath(sc));
+		}
 
 		try
 		{
@@ -213,7 +217,7 @@ public class LogbackConfigListener implements ServletContextListener
 	/**
 	 * Returns a normalized context path for the webapp. For the root webapp (context path ""),
 	 * {@link #CONTEXT_PATH_ROOT_VAL} is returned.
-	 * 
+	 *
 	 * @param sc
 	 *            represents the webapp, not null
 	 * @return normalized context path, not null, not empty
@@ -222,18 +226,20 @@ public class LogbackConfigListener implements ServletContextListener
 	{
 		String cp = sc.getContextPath();
 
-		if (cp.startsWith("/"))
+		if (cp.startsWith("/")) {
 			cp = cp.substring(1);
+		}
 
-		if ("".equals(cp))
+		if ("".equals(cp)) {
 			cp = CONTEXT_PATH_ROOT_VAL;
+		}
 
 		return cp;
 	}
 
 	/**
 	 * Converts the passed in location String to an URL.
-	 * 
+	 *
 	 * @param sc
 	 *            represents the webapp, not null
 	 * @param location
@@ -244,7 +250,7 @@ public class LogbackConfigListener implements ServletContextListener
 	{
 		URL url = null;
 
-		if (location.startsWith("/"))
+		if (location.startsWith("/")) {
 			try
 			{
 				url = sc.getResource(location);
@@ -253,13 +259,15 @@ public class LogbackConfigListener implements ServletContextListener
 			{
 				// NO-OP
 			}
+		}
 
-		if (url == null && location.startsWith(LOCATION_PREFIX_CLASSPATH))
+		if (url == null && location.startsWith(LOCATION_PREFIX_CLASSPATH)) {
 			url = Thread.currentThread()
 				.getContextClassLoader()
 				.getResource(location.substring(LOCATION_PREFIX_CLASSPATH.length()));
+		}
 
-		if (url == null)
+		if (url == null) {
 			try
 			{
 				url = new URL(location);
@@ -268,13 +276,15 @@ public class LogbackConfigListener implements ServletContextListener
 			{
 				// NO-OP
 			}
+		}
 
 		if (url == null)
 		{
 			File file = new File(location);
-			if (!file.isAbsolute())
+			if (!file.isAbsolute()) {
 				file = file.getAbsoluteFile();
-			if (file.isFile())
+			}
+			if (file.isFile()) {
 				try
 				{
 					url = file.toURI().normalize().toURL();
@@ -283,17 +293,20 @@ public class LogbackConfigListener implements ServletContextListener
 				{
 					// NO-OP
 				}
+			}
 		}
 
 		return url;
 	}
 
+	@Override
 	public void contextDestroyed(ServletContextEvent sce)
 	{
 		ILoggerFactory ilc = LoggerFactory.getILoggerFactory();
 
-		if (!(ilc instanceof LoggerContext))
+		if (!(ilc instanceof LoggerContext)) {
 			return;
+		}
 
 		LoggerContext lc = (LoggerContext)ilc;
 		lc.stop();

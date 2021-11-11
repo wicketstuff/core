@@ -19,8 +19,8 @@ package org.wicketstuff.jamon.request.cycle;
 import org.apache.wicket.MetaDataKey;
 
 /**
- * Metadata key for registering {@link #JamonMonitoredRequestCycleContext()}
- * 
+ * Metadata key for registering {@link JamonMonitoredRequestCycleContext}
+ *
  * @author René
  */
 public class JamonMonitoredRequestCycleContextKey

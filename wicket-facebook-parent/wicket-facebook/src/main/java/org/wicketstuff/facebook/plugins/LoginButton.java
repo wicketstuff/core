@@ -11,9 +11,9 @@ import org.wicketstuff.facebook.FacebookPermission;
 
 /**
  * https://developers.facebook.com/docs/reference/plugins/login/
- * 
+ *
  * @author Till Freier
- * 
+ *
  */
 public class LoginButton extends AbstractFacebookPlugin
 {
@@ -26,11 +26,13 @@ public class LoginButton extends AbstractFacebookPlugin
 		{
 			final StringBuilder str = new StringBuilder();
 
-			for (final FacebookPermission perm : permissions)
+			for (final FacebookPermission perm : permissions) {
 				str.append(perm.name().toLowerCase()).append(',');
+			}
 
-			if (str.length() > 0)
+			if (str.length() > 0) {
 				str.deleteCharAt(str.length() - 1);
+			}
 
 			return str.toString();
 		}
@@ -42,10 +44,6 @@ public class LoginButton extends AbstractFacebookPlugin
 	private List<FacebookPermission> permissions = Collections.emptyList();
 	private boolean showFaces = false;
 
-	/**
-	 * 
-	 * {@inheritDoc}
-	 */
 	public LoginButton(final String id)
 	{
 		super(id, "fb-login-button");
@@ -59,7 +57,7 @@ public class LoginButton extends AbstractFacebookPlugin
 	 * By default the Login button prompts users for their public information. If your application
 	 * needs to access other parts of the user's profile that may be private, your application can
 	 * request extended permissions
-	 * 
+	 *
 	 * @param id
 	 *            wicket-id
 	 * @param permissions
@@ -81,7 +79,7 @@ public class LoginButton extends AbstractFacebookPlugin
 
 	/**
 	 * @see FacebookPermission
-	 * 
+	 *
 	 */
 	public List<FacebookPermission> getPermissions()
 	{
@@ -95,7 +93,7 @@ public class LoginButton extends AbstractFacebookPlugin
 
 	/**
 	 * the maximum number of rows of profile pictures to display. Default value: 1.
-	 * 
+	 *
 	 * @param maxRows
 	 */
 	public void setMaxRows(final int maxRows)
@@ -113,7 +111,7 @@ public class LoginButton extends AbstractFacebookPlugin
 	}
 
 	/**
-	 * 
+	 *
 	 * @param showFaces
 	 *            whether to show faces underneath the Login button.
 	 */

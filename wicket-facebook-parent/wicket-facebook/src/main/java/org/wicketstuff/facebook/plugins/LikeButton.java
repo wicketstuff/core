@@ -7,9 +7,9 @@ import org.apache.wicket.model.PropertyModel;
 
 /**
  * https://developers.facebook.com/docs/reference/plugins/like/
- * 
+ *
  * @author Till Freier
- * 
+ *
  */
 public class LikeButton extends AbstractFacebookPlugin
 {
@@ -41,7 +41,7 @@ public class LikeButton extends AbstractFacebookPlugin
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 
@@ -53,16 +53,13 @@ public class LikeButton extends AbstractFacebookPlugin
 	private final IModel<?> url;
 
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public LikeButton(final String id)
 	{
 		this(id, Model.of());
 	}
 
 	/**
-	 * 
+	 *
 	 * @param id
 	 *            wicket-id
 	 * @param url
@@ -78,7 +75,7 @@ public class LikeButton extends AbstractFacebookPlugin
 
 
 	/**
-	 * 
+	 *
 	 * @param id
 	 *            wicket-id
 	 * @param url
@@ -126,7 +123,7 @@ public class LikeButton extends AbstractFacebookPlugin
 	}
 
 	/**
-	 * 
+	 *
 	 * @param displayVerb
 	 *            the verb to display on the button. Options: {@link LikeButtonAction}
 	 */
@@ -145,7 +142,7 @@ public class LikeButton extends AbstractFacebookPlugin
 	}
 
 	/**
-	 * 
+	 *
 	 * @param sendButton
 	 *            whether to include a Send button with the Like button.
 	 */
@@ -155,7 +152,7 @@ public class LikeButton extends AbstractFacebookPlugin
 	}
 
 	/**
-	 * 
+	 *
 	 * @param showFaces
 	 *            whether to display profile photos below the button (standard layout only)
 	 */

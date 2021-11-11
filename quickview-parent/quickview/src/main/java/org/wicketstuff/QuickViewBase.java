@@ -15,7 +15,17 @@
  */
 package org.wicketstuff;
 
-import org.apache.wicket.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+
+import org.apache.wicket.Application;
+import org.apache.wicket.Component;
+import org.apache.wicket.MarkupContainer;
+import org.apache.wicket.MetaDataKey;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.markup.head.IHeaderResponse;
@@ -27,8 +37,6 @@ import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.util.lang.Args;
-
-import java.util.*;
 
 /**
  * base class for {@link QuickView}
@@ -61,7 +69,8 @@ public abstract class QuickViewBase<T> extends RepeatingView implements IQuickVi
     }
 
 
-    public IQuickReuseStrategy getReuseStrategy() {
+    @Override
+	public IQuickReuseStrategy getReuseStrategy() {
         return reuseStrategy7;
     }
 
@@ -254,7 +263,7 @@ public abstract class QuickViewBase<T> extends RepeatingView implements IQuickVi
 
     /**
      * this iterator doesn't iterate through the elements in the order they are rendered in view,
-     * use {@link this#getItems()}
+     * use {@link QuickViewBase#getItems()}
      *
      * @return iterator
      */
@@ -552,7 +561,7 @@ public abstract class QuickViewBase<T> extends RepeatingView implements IQuickVi
     }
 
     /**
-     * same as {@link this#getItemsCount()} but takes into account hierarchy so if the view is not visible in hierarchy
+     * same as {@link QuickViewBase#getItemsCount()} but takes into account hierarchy so if the view is not visible in hierarchy
      * the returned value is zero else return the getItemsCount() value
      *
      * @return items count visible
@@ -623,7 +632,8 @@ public abstract class QuickViewBase<T> extends RepeatingView implements IQuickVi
      * @see org.apache.wicket.markup.html.navigation.paging.IPageable#setCurrentPage(long)
      */
 
-    public final void setCurrentPage(long page) {
+    @Override
+	public final void setCurrentPage(long page) {
         _setCurrentPage(page);
     }
 
@@ -704,7 +714,7 @@ public abstract class QuickViewBase<T> extends RepeatingView implements IQuickVi
      * this does 2 steps
      * <p/>
      * 1)creates children ,children will get the model object after iterating over objects passed as argument
-     * 2)adds children to View using {@link this#add(org.apache.wicket.Component...)}
+     * 2)adds children to View using {@link QuickViewBase#add(org.apache.wicket.Component...)}
      *
      * @param objects iterator of model objects for children
      * @return this
@@ -728,7 +738,7 @@ public abstract class QuickViewBase<T> extends RepeatingView implements IQuickVi
      * this does 2 steps
      * <p/>
      * 1)creates children ,children will get the model object after iterating over objects passed as argument
-     * 2)adds children to View using {@link this#addAtStart(org.apache.wicket.Component...)}
+     * 2)adds children to View using {@link QuickViewBase#addAtStart(org.apache.wicket.Component...)}
      * <p>
      * the respective items for objects will be displayed at start of the view in the order of passed objects
      *
@@ -750,7 +760,8 @@ public abstract class QuickViewBase<T> extends RepeatingView implements IQuickVi
     /**
      * {@inheritDoc}
      */
-    public List<Item<T>> addItemsForNextPage() {
+    @Override
+	public List<Item<T>> addItemsForNextPage() {
         List<Item<T>> list = new ArrayList<Item<T>>();
         long current = getCurrentPage();
 
@@ -797,7 +808,7 @@ public abstract class QuickViewBase<T> extends RepeatingView implements IQuickVi
     /**
      * adds items at start of view
      * <p>
-     * also see  {@link this#getItems()}
+     * also see  {@link QuickViewBase#getItems()}
      *
      * @param components
      * @return this

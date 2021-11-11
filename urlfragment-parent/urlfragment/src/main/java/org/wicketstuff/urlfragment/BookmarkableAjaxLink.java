@@ -24,7 +24,7 @@ import org.apache.wicket.model.IModel;
  * <p>
  * You can provide a default parameter to the constructors so it will be set automatically during
  * event handling. You can also set or remove parameters by yourself using
- * {@link #setFragmentParameter(String, Object)} or {@link #removeFragmentParameter(String)}.
+ * {@link UrlFragment#set(String, Object)} or {@link UrlFragment#removeParameter(String)}.
  * </p>
  *
  * @author Martin Knopf

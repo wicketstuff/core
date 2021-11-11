@@ -1,11 +1,11 @@
 /*
  * Copyright 2012 Igor Vaynberg
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this work except in compliance with
  * the License. You may obtain a copy of the License in the LICENSE file, or at:
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
@@ -15,6 +15,7 @@ package org.wicketstuff.select2;
 import java.util.Collection;
 
 import org.apache.wicket.model.IDetachable;
+
 import com.github.openjson.JSONException;
 import com.github.openjson.JSONStringer;
 
@@ -34,9 +35,9 @@ import com.github.openjson.JSONStringer;
  * For the most common usecase where each choice is rendered as a text string see
  * {@link StringTextChoiceProvider}.
  * </p>
- * 
+ *
  * @author igor
- * 
+ *
  * @param <T>
  *            type of choice object
  */
@@ -63,8 +64,6 @@ public abstract class ChoiceProvider<T> implements IDetachable
 	 *
 	 * @param object
 	 *            The object for which the id should be generated
-	 * @param index
-	 *            The index of the object in the choices list.
 	 * @return String
 	 */
 	public abstract String getIdValue(T object);
@@ -72,7 +71,7 @@ public abstract class ChoiceProvider<T> implements IDetachable
 	/**
 	 * Queries application for choices that match the search {@code term} and adds them to the
 	 * {@code response}
-	 * 
+	 *
 	 * @param term
 	 *            search term
 	 * @param page
@@ -84,25 +83,25 @@ public abstract class ChoiceProvider<T> implements IDetachable
 
 	/**
 	 * Converts the specified choice to Json.
-	 * 
+	 *
 	 * <p>
 	 * At the very least each choice should contain an {@code id} attribute. If no custom rendering
 	 * function is specified, the {@code text} attribute should also be provided
 	 * </p>
-	 * 
+	 *
 	 * <p>
 	 * Example: If mapping a User {Long id, String name} using default rendering the code should
 	 * look like this:
-	 * 
+	 *
 	 * <pre>
 	 * toJson(User choice, JSONWriter writer)
 	 * {
 	 * 	writer.key(&quot;id&quot;).value(choice.getId()).key(&quot;text&quot;).value(choice.getName());
 	 * }
 	 * </pre>
-	 * 
+	 *
 	 * </p>
-	 * 
+	 *
 	 * @param choice
 	 *            choice to convert
 	 * @param stringer
@@ -117,7 +116,7 @@ public abstract class ChoiceProvider<T> implements IDetachable
 	 * Converts a list of choice ids back into application's choice objects. When the choice
 	 * provider is attached to a single-select component the {@code ids} collection will contain
 	 * exactly one id, and a collection containing exactly one choice should be returned.
-	 * 
+	 *
 	 * @param ids
 	 *            collection containing choice ids
 	 * @return collection containing application choice objects

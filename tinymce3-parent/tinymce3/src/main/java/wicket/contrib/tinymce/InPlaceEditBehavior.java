@@ -19,16 +19,14 @@
 package wicket.contrib.tinymce;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.head.HeaderItem;
 import org.apache.wicket.markup.head.OnEventHeaderItem;
 
 import wicket.contrib.tinymce.settings.Button;
 import wicket.contrib.tinymce.settings.TinyMCESettings;
-import wicket.contrib.tinymce.settings.WicketSavePlugin;
 import wicket.contrib.tinymce.settings.TinyMCESettings.Position;
-import wicket.contrib.tinymce.settings.TinyMCESettings.Theme;
 import wicket.contrib.tinymce.settings.TinyMCESettings.Toolbar;
+import wicket.contrib.tinymce.settings.WicketSavePlugin;
 
 /**
  * This behavior adds in-place editing functionality to wicket components. In
@@ -43,9 +41,7 @@ public class InPlaceEditBehavior extends TinyMceBehavior
 	/**
 	 * Construct in-place-editing behavior to a component. It makes the content
 	 * of the component editable with a TinyMce WYSIWYG editor.
-	 * @param settings 
-	 * @param inPlaceSaveBehavior 
-	 * 
+	 *
 	 * @param settings
 	 *            TinyMceSettings for the editor when opened.
 	 * @param triggerComponent
@@ -53,13 +49,12 @@ public class InPlaceEditBehavior extends TinyMceBehavior
 	 *            that this behavior is added to editable. Can be the editable
 	 *            component itself, but can also be another component, e.g. a
 	 *            button. If set to null, you will have to start the editable
-	 *            state via a call to the javascriptfunction with name:
-	 *            {@link #getStartEditorScriptName()}
-	 * @param savePlugin 
+	 *            state via a call to the javascriptfunction with name
+	 * @param savePlugin
 	 */
 	public InPlaceEditBehavior(TinyMCESettings settings, Component triggerComponent, WicketSavePlugin savePlugin)
 	{
-		super(settings);	
+		super(settings);
 		componentMarkupId = triggerComponent.getMarkupId();
 
 		settings.add(savePlugin.getSaveButton(), Toolbar.first, Position.before);

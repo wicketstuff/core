@@ -25,7 +25,7 @@ import org.wicketstuff.jamon.monitor.AlwaysHitedMonitorSpecification;
 
 /**
  * Main page of the JAMon admin interface. The monitors are shown in a Pageable table.
- * 
+ *
  * @author lars
  *
  */
@@ -46,11 +46,11 @@ public class JamonAdminPage extends WebPage
 
 	/**
 	 * Construct.
-	 * 
+	 *
 	 * You are able to set rows per page by page parameter "items". Otherwise
 	 * {@link JamonMonitorTable#DEFAULT_ROWS_PER_PAGE default} size is used.
-	 * 
-	 * @param rowsPerPage
+	 *
+	 * @param parameters
 	 *            How many monitors per page should be rendered?
 	 */
 	public JamonAdminPage(PageParameters parameters)

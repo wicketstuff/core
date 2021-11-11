@@ -2,13 +2,14 @@ package wicket.contrib.tinymce4.image;
 
 import java.io.IOException;
 import java.io.InputStream;
+
 import org.apache.wicket.util.resource.AbstractResourceStream;
 import org.apache.wicket.util.resource.ResourceStreamNotFoundException;
 
 /**
  * Resource stream for images.
- * 
- * @author Michal Letynski <mikel@mikel.pl>
+ *
+ * @author Michal Letynski (mikel@mikel.pl)
  */
 public class FileResourceStream extends AbstractResourceStream
 {

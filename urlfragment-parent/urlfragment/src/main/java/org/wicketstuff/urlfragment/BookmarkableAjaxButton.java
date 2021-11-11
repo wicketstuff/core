@@ -23,8 +23,8 @@ import org.apache.wicket.model.IModel;
 /**
  * This is an {@link AjaxButton} with the ability to set and remove URL fragment parameters.
  * <p>
- * You can set or remove parameters using {@link #setFragmentParameter(String, Object)} or
- * {@link #removeFragmentParameter(String)} during your handling of the submit and error event.
+ * You can set or remove parameters using {@link UrlFragment#set(String, Object)} or
+ * {@link UrlFragment#removeParameter(String)} during your handling of the submit and error event.
  * </p>
  *
  * @author Martin Knopf

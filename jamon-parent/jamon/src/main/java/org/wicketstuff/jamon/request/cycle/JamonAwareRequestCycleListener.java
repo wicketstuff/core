@@ -16,16 +16,17 @@
  */
 package org.wicketstuff.jamon.request.cycle;
 
+import org.apache.wicket.Application;
+import org.apache.wicket.core.request.handler.BookmarkablePageRequestHandler;
+import org.apache.wicket.core.request.handler.BufferedResponseRequestHandler;
+import org.apache.wicket.core.request.handler.IPageClassRequestHandler;
+import org.apache.wicket.core.request.handler.IPageRequestHandler;
+import org.apache.wicket.core.request.handler.ListenerRequestHandler;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.component.IRequestablePage;
 import org.apache.wicket.request.cycle.IRequestCycleListener;
 import org.apache.wicket.request.cycle.RequestCycle;
-import org.apache.wicket.Application;
-import org.apache.wicket.core.request.handler.BookmarkablePageRequestHandler;
-import org.apache.wicket.core.request.handler.BufferedResponseRequestHandler;
-import org.apache.wicket.core.request.handler.IPageClassRequestHandler;
-import org.apache.wicket.core.request.handler.ListenerRequestHandler;
 
 import com.jamonapi.Monitor;
 
@@ -37,24 +38,24 @@ import com.jamonapi.Monitor;
  * </p>
  * <p>
  * The responsibility of the {@link JamonAwareRequestCycleListener} is to create the label of the
- * {@link Monitor} currently in use by the {@link JamonMonitoredRequestCycle}. The label consists of
+ * {@link Monitor} currently in use by the {@link JamonMonitoredRequestCycleContext}. The label consists of
  * the source from where a request originated from and the target to where it will resolve to. <br>
- * This class can only be used in combination with {@link JamonMonitoredRequestCycle}. If used by
+ * This class can only be used in combination with {@link JamonMonitoredRequestCycleContext}. If used by
  * itself an {@link IllegalStateException} will be thrown.
  * </p>
  * <p>
  * <b>Implementation limitations:</b> <br>
  * Only if the {@link RequestCycle} comes from an {@link BookmarkablePageRequestHandler} or an
  * {@link ListenerRequestHandler} <i>and</i> the eventual target of the
- * {@link RequestCycle} is an {@link PageRequestHandler} or an
+ * {@link RequestCycle} is an {@link IPageRequestHandler} or an
  * {@link BookmarkablePageRequestHandler} the Monitors are created. If you want to support more
  * types of targets you can extend this class and implement the methods
- * {@link #doResolveSourceLabel(IRequestHandler, JamonMonitoredRequestCycle)} and
- * {@link #doResolveTargetLabel(IRequestHandler, JamonMonitoredRequestCycle)}.
+ * {@link #doResolveSourceLabel(IRequestHandler, RequestCycle)} and
+ * {@link #doResolveTargetLabel(IRequestHandler, RequestCycle)}.
  * </p>
- * 
+ *
  * @author lars
- * 
+ *
  */
 public class JamonAwareRequestCycleListener implements IRequestCycleListener
 {
@@ -110,20 +111,20 @@ public class JamonAwareRequestCycleListener implements IRequestCycleListener
 	 * {@link IRequestHandler}s than this {@link JamonAwareRequestCycleListener} supports. See
 	 * {@link JamonAwareRequestCycleListener} javadoc for the currently supported types. Besides
 	 * this method subclasses should also consider implementing
-	 * {@link #doResolveTargetLabel(IRequestHandler, JamonMonitoredRequestCycle)}. <br>
+	 * {@link #doResolveTargetLabel(IRequestHandler, RequestCycle)}. <br>
 	 * Subclasses should at least call the following methods on the given
-	 * {@link JamonMonitoredRequestCycle}: <br>
+	 * {@link JamonMonitoredRequestCycleContext}: <br>
 	 * <ul>
-	 * <li>{@link JamonMonitoredRequestCycle#comesFromPage(Class)}</li>
-	 * <li>{@link JamonMonitoredRequestCycle#setSource(String)}</li>
+	 * <li>{@link JamonMonitoredRequestCycleContext#comesFromPage(Class)}</li>
+	 * <li>{@link JamonMonitoredRequestCycleContext#setSource(String)}</li>
 	 * </ul>
 	 * <br>
 	 * The default implementation of this method does nothing.
-	 * 
+	 *
 	 * @param requestHandler
 	 *            The request target of where the request originated from.
 	 * @param cycle
-	 *            The {@link JamonMonitoredRequestCycle}.
+	 *            The {@link JamonMonitoredRequestCycleContext}.
 	 */
 	protected void doResolveSourceLabel(IRequestHandler requestHandler, RequestCycle cycle)
 	{
@@ -134,16 +135,16 @@ public class JamonAwareRequestCycleListener implements IRequestCycleListener
 	 * {@link IRequestHandler}s than this {@link JamonAwareRequestCycleListener} supports. See
 	 * {@link JamonAwareRequestCycleListener} javadoc for the currently supported types. Besides
 	 * this method subclasses should also consider implementing
-	 * {@link #doResolveSourceLabel(IRequestHandler, JamonMonitoredRequestCycle)}. <br>
+	 * {@link #doResolveSourceLabel(IRequestHandler, RequestCycle)}. <br>
 	 * Subclasses should at least call the method
-	 * {@link JamonMonitoredRequestCycle#setTarget(Class)} on the given
-	 * {@link JamonMonitoredRequestCycle}. <br>
+	 * {@link JamonMonitoredRequestCycleContext#setTarget(Class)} on the given
+	 * {@link JamonMonitoredRequestCycleContext}. <br>
 	 * The default implementation of this method does nothing.
-	 * 
+	 *
 	 * @param requestHandler
 	 *            The request target of where the request will resolve to.
 	 * @param cycle
-	 *            The {@link JamonMonitoredRequestCycle}.
+	 *            The {@link JamonMonitoredRequestCycleContext}.
 	 */
 	protected void doResolveTargetLabel(IRequestHandler requestHandler, RequestCycle cycle)
 	{

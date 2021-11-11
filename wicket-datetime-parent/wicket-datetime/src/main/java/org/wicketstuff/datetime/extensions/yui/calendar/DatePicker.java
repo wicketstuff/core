@@ -60,16 +60,16 @@ import org.wicketstuff.datetime.markup.html.form.DateTextField;
  * only be used with components that either implement {@link ITextFormatProvider} or that use
  * {@link DateConverter} configured with an instance of {@link SimpleDateFormat} (like Wicket's
  * default configuration has).<br/>
- * 
+ *
  * To use, simply add a new instance to your component, which would typically a TextField, like
  * {@link DateTextField}.<br/>
- * 
+ *
  * The CalendarNavigator can be configured by overriding {@link #configure(java.util.Map, org.apache.wicket.markup.head.IHeaderResponse, java.util.Map)} and setting the
  * property or by returning <code>true</code> for {@link #enableMonthYearSelection()}.
- * 
+ *
  * @see <a
  *      href="http://developer.yahoo.com/yui/calendar/">http://developer.yahoo.com/yui/calendar/</a>
- * 
+ *
  * @author eelcohillenius
  */
 public class DatePicker extends Behavior
@@ -202,10 +202,10 @@ public class DatePicker extends Behavior
 	/**
 	 * Controls whether or not datepicker will contribute YUI libraries to the page as part of its
 	 * rendering lifecycle.
-	 * 
+	 *
 	 * There may be cases when the user wants to use their own version of YUI contribution code, in
 	 * those cases this method should be overridden to return <code>false</code>.
-	 * 
+	 *
 	 * @return a flag whether to contribute YUI libraries to the page. {@code true} by default.
 	 */
 	protected boolean includeYUILibraries()
@@ -289,8 +289,8 @@ public class DatePicker extends Behavior
 	}
 
 	/**
-	 * Renders yui & wicket calendar js module loading. It is done only once per page.
-	 * 
+	 * Renders yui &amp; wicket calendar js module loading. It is done only once per page.
+	 *
 	 * @param response
 	 *            header response
 	 */
@@ -329,7 +329,7 @@ public class DatePicker extends Behavior
 	 * Check that this behavior can get a date format out of the component it is coupled to. It
 	 * checks whether {@link #getDatePattern()} produces a non-null value. If that method returns
 	 * null, and exception will be thrown
-	 * 
+	 *
 	 * @param component
 	 *            the component this behavior is being coupled to
 	 * @throws UnableToDetermineFormatException
@@ -345,7 +345,7 @@ public class DatePicker extends Behavior
 
 	/**
 	 * Set widget property if the array is null and has a length greater than 0.
-	 * 
+	 *
 	 * @param widgetProperties
 	 * @param key
 	 * @param array
@@ -361,7 +361,7 @@ public class DatePicker extends Behavior
 
 	/**
 	 * Whether to position the date picker relative to the trigger icon.
-	 * 
+	 *
 	 * @return If true, the date picker is aligned with the left position of the icon, and with the
 	 *         top right under. If false, the date picker will skip positioning and will let you do
 	 *         the positioning yourself. Returns true by default.
@@ -378,7 +378,7 @@ public class DatePicker extends Behavior
 	 * available options. If you want to override/ remove properties, you should call
 	 * super.configure(properties) first. If you don't call that, be aware that you will have to
 	 * call {@link #localize(java.util.Map, org.apache.wicket.markup.head.IHeaderResponse, java.util.Map)} manually if you like localized strings to be added.
-	 * 
+	 *
 	 * @param widgetProperties
 	 *            the current widget properties
 	 * @param response
@@ -407,7 +407,7 @@ public class DatePicker extends Behavior
 	/**
 	 * Filter all empty elements (workaround for {@link DateFormatSymbols} returning arrays with
 	 * empty elements).
-	 * 
+	 *
 	 * @param stringArray
 	 *            array to filter
 	 * @return filtered array (without null or empty string elements)
@@ -432,7 +432,7 @@ public class DatePicker extends Behavior
 
 	/**
 	 * Gets the id of the component that the calendar widget will get attached to.
-	 * 
+	 *
 	 * @return The DOM id of the component
 	 */
 	protected final String getComponentMarkupId()
@@ -442,7 +442,7 @@ public class DatePicker extends Behavior
 
 	/**
 	 * Gets the date pattern to use for putting selected values in the coupled component.
-	 * 
+	 *
 	 * @return The date pattern
 	 */
 	protected String getDatePattern()
@@ -471,7 +471,7 @@ public class DatePicker extends Behavior
 	/**
 	 * Gets the escaped DOM id that the calendar widget will get attached to. All non word
 	 * characters (\W) will be removed from the string.
-	 * 
+	 *
 	 * @return The DOM id of the calendar widget - same as the component's markup id + 'Dp'}
 	 */
 	protected final String getEscapedComponentMarkupId()
@@ -481,7 +481,7 @@ public class DatePicker extends Behavior
 
 	/**
 	 * Gets the id of the icon that triggers the popup.
-	 * 
+	 *
 	 * @return The id of the icon
 	 */
 	protected final String getIconId()
@@ -491,7 +491,7 @@ public class DatePicker extends Behavior
 
 	/**
 	 * Gets the style of the icon that triggers the popup.
-	 * 
+	 *
 	 * @return The style of the icon, e.g. 'cursor: point' etc.
 	 */
 	protected String getIconStyle()
@@ -501,7 +501,7 @@ public class DatePicker extends Behavior
 
 	/**
 	 * Gets the title attribute of the datepicker icon
-	 * 
+	 *
 	 * @return text
 	 */
 	protected CharSequence getIconTitle()
@@ -511,7 +511,7 @@ public class DatePicker extends Behavior
 
 	/**
 	 * Gets the icon alt text for the datepicker icon
-	 * 
+	 *
 	 * @return text
 	 */
 	protected CharSequence getIconAltText()
@@ -521,7 +521,7 @@ public class DatePicker extends Behavior
 
 	/**
 	 * Gets the url for the popup button. Users can override to provide their own icon URL.
-	 * 
+	 *
 	 * @return the url to use for the popup button/ icon
 	 */
 	protected CharSequence getIconUrl()
@@ -533,7 +533,7 @@ public class DatePicker extends Behavior
 
 	/**
 	 * Gets the locale that should be used to configure this widget.
-	 * 
+	 *
 	 * @return By default the locale of the bound component.
 	 */
 	protected Locale getLocale()
@@ -558,7 +558,7 @@ public class DatePicker extends Behavior
 	 * href="http://developer.yahoo.com/yui/examples/calendar/japan/1.html">Japanese</a> examples
 	 * for more info.
 	 * </p>
-	 * 
+	 *
 	 * @param widgetProperties
 	 *            the current widget properties
 	 * @param response
@@ -634,7 +634,7 @@ public class DatePicker extends Behavior
 	 * calling the associated component's onchange JavaScript event handler. You can for instance
 	 * attach an {@link AjaxEventBehavior} to that component to get a call back to the server. The
 	 * default is true.
-	 * 
+	 *
 	 * @return if true, notifies the associated component when a date is selected
 	 */
 	protected boolean notifyComponentOnDateSelected()
@@ -645,7 +645,7 @@ public class DatePicker extends Behavior
 	/**
 	 * Makes a copy of the provided array and for each element copy the substring 0..len to the new
 	 * array
-	 * 
+	 *
 	 * @param array
 	 *            array to copy from
 	 * @param len
@@ -660,7 +660,7 @@ public class DatePicker extends Behavior
 	/**
 	 * Makes a copy of the provided array and for each element copy the substring 0..len to the new
 	 * array
-	 * 
+	 *
 	 * @param array
 	 *            array to copy from
 	 * @param start
@@ -697,7 +697,7 @@ public class DatePicker extends Behavior
 	/**
 	 * Indicates whether plain text is rendered or two select boxes are used to allow direct
 	 * selection of month and year.
-	 * 
+	 *
 	 * @return <code>true</code> if select boxes should be rendered to allow month and year
 	 *         selection.<br/>
 	 *         <code>false</code> to render just plain text.
@@ -709,7 +709,7 @@ public class DatePicker extends Behavior
 
 	/**
 	 * Indicates whether the calendar should be hidden after a date was selected.
-	 * 
+	 *
 	 * @return <code>true</code> (default) if the calendar should be hidden after the date selection <br/>
 	 *         <code>false</code> if the calendar should remain visible after the date selection.
 	 */
@@ -720,7 +720,7 @@ public class DatePicker extends Behavior
 
 	/**
 	 * Indicates whether the calendar should be shown when corresponding text input is clicked.
-	 * 
+	 *
 	 * @return <code>true</code> <br/>
 	 *         <code>false</code> (default)
 	 */
@@ -745,7 +745,7 @@ public class DatePicker extends Behavior
 	/**
 	 * Indicates whether the calendar should be hidden when the user clicks on an area of the
 	 * document outside of the dialog.
-	 * 
+	 *
 	 * @return <code>true</code> <br/>
 	 *         <code>false</code> (default)
 	 */
@@ -787,7 +787,7 @@ public class DatePicker extends Behavior
 
 	/**
 	 * Indicates whether the calendar should be rendered after it has been loaded.
-	 * 
+	 *
 	 * @return <code>true</code> if the calendar should be rendered after it has been loaded.<br/>
 	 *         <code>false</code> (default) if it's initially hidden.
 	 */
@@ -804,14 +804,14 @@ public class DatePicker extends Behavior
 	 * See <a href="http://developer.yahoo.com/yui/calendar/">the widget's documentation</a> for
 	 * more information about the YUI Calendar.<br/>
 	 * Example:
-	 * 
+	 *
 	 * <pre>
 	 * protected String getAdditionalJavaScript()
 	 * {
 	 * 	return &quot;${calendar}.addRenderer(\&quot;10/3\&quot;, ${calendar}.renderCellStyleHighlight1);&quot;;
 	 * }
 	 * </pre>
-	 * 
+	 *
 	 * @return a String containing additional JavaScript code
 	 */
 	protected String getAdditionalJavaScript()
@@ -829,7 +829,7 @@ public class DatePicker extends Behavior
 	}
 
 	/**
-	 * 
+	 *
 	 * @param map
 	 *            the key-value pairs to be serialized
 	 * @param json

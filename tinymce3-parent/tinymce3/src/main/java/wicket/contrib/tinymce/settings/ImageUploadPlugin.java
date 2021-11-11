@@ -4,8 +4,8 @@ import wicket.contrib.tinymce.image.ImageUploadPanel.ImageUploadBehavior;
 
 /**
  * Tiny MCE plugin for image upload.
- * 
- * @author Michal Letynski <mikel@mikel.pl>
+ *
+ * @author Michal Letynski (mikel@mikel.pl)
  */
 public class ImageUploadPlugin extends Plugin
 {

@@ -11,9 +11,9 @@ import org.wicketstuff.twitter.util.PageParameterUtil;
 
 /**
  * https://dev.twitter.com/docs/intents#tweet-intent
- * 
+ *
  * @author Till Freier
- * 
+ *
  */
 public class TweetLink extends AbstractIntentLink
 {
@@ -26,11 +26,9 @@ public class TweetLink extends AbstractIntentLink
 	private IModel<?> via;
 
 	/**
-	 * 
+	 *
 	 * @param id
 	 *            wicket-id
-	 * @param tweet
-	 *            tweet-id
 	 */
 	public TweetLink(final String id)
 	{
@@ -103,7 +101,7 @@ public class TweetLink extends AbstractIntentLink
 
 	/**
 	 * Add context to the pre-prepared status update by appending #hashtags. Omit the "#" symbol.
-	 * 
+	 *
 	 * @param hashTags
 	 *            the hashTags to set
 	 */
@@ -116,7 +114,7 @@ public class TweetLink extends AbstractIntentLink
 
 	/**
 	 * Add context to the pre-prepared status update by appending #hashtags. Omit the "#" symbol.
-	 * 
+	 *
 	 * @param hashTags
 	 *            the hashTags to set
 	 */
@@ -128,7 +126,7 @@ public class TweetLink extends AbstractIntentLink
 	/**
 	 * Associate this Tweet with a specific Tweet by indicating its status ID here. The originating
 	 * Tweet Author's screen name will be automatically prepended to the reply.
-	 * 
+	 *
 	 * @param inReplyTo
 	 *            the inReplyTo to set
 	 */
@@ -140,7 +138,7 @@ public class TweetLink extends AbstractIntentLink
 	/**
 	 * Associate this Tweet with a specific Tweet by indicating its status ID here. The originating
 	 * Tweet Author's screen name will be automatically prepended to the reply.
-	 * 
+	 *
 	 * @param inReplyTo
 	 *            the inReplyTo to set
 	 */
@@ -151,7 +149,7 @@ public class TweetLink extends AbstractIntentLink
 
 	/**
 	 * Suggest accounts related to the your content.
-	 * 
+	 *
 	 * @param related
 	 *            the related to set
 	 */
@@ -164,7 +162,7 @@ public class TweetLink extends AbstractIntentLink
 
 	/**
 	 * Suggest accounts related to the your content.
-	 * 
+	 *
 	 * @param related
 	 *            the related to set
 	 */
@@ -176,7 +174,7 @@ public class TweetLink extends AbstractIntentLink
 	/**
 	 * Users will still be able to edit the pre-prepared text. This field has a potential of 140
 	 * characters maximum, but consider the implications of other parameters like url and via.
-	 * 
+	 *
 	 * @param text
 	 *            the text to set
 	 */
@@ -188,7 +186,7 @@ public class TweetLink extends AbstractIntentLink
 	/**
 	 * Users will still be able to edit the pre-prepared text. This field has a potential of 140
 	 * characters maximum, but consider the implications of other parameters like url and via.
-	 * 
+	 *
 	 * @param text
 	 *            the text to set
 	 */
@@ -199,7 +197,7 @@ public class TweetLink extends AbstractIntentLink
 
 	/**
 	 * The provided URL will be shortened with t.co and appended to the end of the Tweet.
-	 * 
+	 *
 	 * @param tweetUrl
 	 *            the tweetUrl to set
 	 */
@@ -210,7 +208,7 @@ public class TweetLink extends AbstractIntentLink
 
 	/**
 	 * The provided URL will be shortened with t.co and appended to the end of the Tweet.
-	 * 
+	 *
 	 * @param tweetUrl
 	 *            the tweetUrl to set
 	 */
@@ -224,7 +222,7 @@ public class TweetLink extends AbstractIntentLink
 	 * end of the tweet with the text: "via @username" "Via" will be translated to the proper
 	 * locality of the posting user, if supported. Potentially drives new followers to the target
 	 * account.
-	 * 
+	 *
 	 * @param via
 	 *            the via to set
 	 */
@@ -238,7 +236,7 @@ public class TweetLink extends AbstractIntentLink
 	 * end of the tweet with the text: "via @username" "Via" will be translated to the proper
 	 * locality of the posting user, if supported. Potentially drives new followers to the target
 	 * account.
-	 * 
+	 *
 	 * @param via
 	 *            the via to set
 	 */
