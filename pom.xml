@@ -916,7 +916,7 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-deploy-plugin</artifactId>
 				<configuration>
-					<skip>${deployment.disabled}</skip>
+					<skip>${deployment.disabled}</skip>		
 				</configuration>
 			</plugin>
 			<plugin>
@@ -1122,8 +1122,6 @@
 						<verbose>false</verbose>
 						<fork>true</fork>
 						<useIncrementalCompilation>true</useIncrementalCompilation>
-
-
 					</configuration>
 				</plugin>
 				<plugin>
