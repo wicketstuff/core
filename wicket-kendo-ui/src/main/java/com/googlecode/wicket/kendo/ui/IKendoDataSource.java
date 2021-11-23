@@ -25,13 +25,6 @@ package com.googlecode.wicket.kendo.ui;
 public interface IKendoDataSource
 {
 	/**
-	 * Gets the unique token that acts as the script id.
-	 *
-	 * @return the token
-	 */
-	String getToken();
-
-	/**
 	 * Gets the data-source jQuery statement.
 	 *
 	 * @return the jQuery statement

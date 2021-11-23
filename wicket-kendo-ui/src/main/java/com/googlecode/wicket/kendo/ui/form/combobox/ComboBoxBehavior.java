@@ -96,21 +96,6 @@ public abstract class ComboBoxBehavior extends KendoUIBehavior implements IJQuer
 		return null;
 	}
 
-	/**
-	 * Gets the datasource token
-	 * 
-	 * @return the datasource token
-	 */
-	public String getDataSourceToken()
-	{
-		if (this.dataSource != null)
-		{
-			return this.dataSource.getToken();
-		}
-
-		return null;
-	}
-
 	// Events //
 
 	@Override

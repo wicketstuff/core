@@ -88,19 +88,13 @@ public class KendoDataSource extends Options implements IKendoDataSource
 	// Properties //
 
 	/**
-	 * Gets the data-source's javacript variable name (global scoped)
+	 * Gets the data-source's javacript variable name (global scope)
 	 *
 	 * @return the variable name (ie: window.myDataSource)
 	 */
 	public String getName()
 	{
 		return "window." + this.name;
-	}
-
-	@Override
-	public String getToken()
-	{
-		return "kendo-" + this.name;
 	}
 
 	/**
@@ -169,7 +163,7 @@ public class KendoDataSource extends Options implements IKendoDataSource
 	@Override
 	public String toScript()
 	{
-		return String.format("jQuery(function() { %s = new kendo.data.DataSource(%s); });", this.getName(), this.build());
+		return String.format("%s = new kendo.data.DataSource(%s);", this.getName(), this.build());
 	}
 
 	// Helpers //
@@ -276,7 +270,7 @@ public class KendoDataSource extends Options implements IKendoDataSource
 		@Override
 		public String toScript()
 		{
-			return String.format("jQuery(function() { %s = new kendo.data.HierarchicalDataSource(%s); });", this.getName(), this.build());
+			return String.format("%s = new kendo.data.HierarchicalDataSource(%s);", this.getName(), this.build());
 		}
 	}	
 }

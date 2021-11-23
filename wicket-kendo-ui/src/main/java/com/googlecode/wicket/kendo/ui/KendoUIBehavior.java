@@ -23,7 +23,6 @@ import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.markup.head.IHeaderResponse;
-import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.util.lang.Generics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -125,16 +124,16 @@ public class KendoUIBehavior extends JQueryBehavior implements IDestroyable
 	@Override
 	public void renderHead(Component component, IHeaderResponse response)
 	{
-		super.renderHead(component, response);
-
 		// Data Sources //
 		if (this.datasources != null)
 		{
 			for (IKendoDataSource datasource : this.datasources)
 			{
-				this.renderPriorityHeaderItem(JavaScriptHeaderItem.forScript(datasource.toScript(), datasource.getToken()), response);
+				this.renderOnDomReadyScript(datasource.toScript(), response); // #311, #333
 			}
 		}
+
+		super.renderHead(component, response);
 	}
 
 	/**

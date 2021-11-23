@@ -199,21 +199,6 @@ public class DropDownList<T> extends TextField<T> implements IJQueryWidget // NO
 	}
 
 	/**
-	 * Gets the template script token/id
-	 * 
-	 * @return the template script token/id
-	 */
-	public String getDataSourceToken()
-	{
-		if (this.widgetBehavior != null)
-		{
-			return this.widgetBehavior.getDataSourceToken();
-		}
-
-		return null;
-	}
-
-	/**
 	 * Gets the (inner) list width.
 	 *
 	 * @return the list width
