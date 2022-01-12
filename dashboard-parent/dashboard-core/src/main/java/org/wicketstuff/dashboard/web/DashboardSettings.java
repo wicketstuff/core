@@ -33,14 +33,16 @@ public class DashboardSettings {
 	private ResourceReference rtlCssReference = new PackageResourceReference(
 			DashboardSettings.class, "res/dashboard-rtl.css");
 	private ResourceReference jqueryUIReference = new PackageResourceReference(
-			DashboardSettings.class, "res/jquery-ui-1.12.1.min.js");
+			DashboardSettings.class, "res/jquery-ui-1.13.0.min.js");
 	private ResourceReference jqueryJsonReference = new PackageResourceReference(
 			DashboardSettings.class, "res/jquery.json-2.2.min.js");
 
 	private boolean includeJQueryUI = true;
-	private boolean includeJQueryJson = true;
+	@Deprecated(since = "9.8.0", forRemoval = true)
+	private boolean includeJQueryJson = false;
 	private boolean includeJavaScript = true;
 	private boolean includeCss = true;
+	@Deprecated(since = "9.8.0", forRemoval = true)
 	private boolean rtl = false;
 
 	/**
@@ -58,10 +60,12 @@ public class DashboardSettings {
 		return this;
 	}
 
+	@Deprecated(since = "9.8.0", forRemoval = true)
 	public boolean isIncludeJQueryJson() {
 		return includeJQueryJson;
 	}
 
+	@Deprecated(since = "9.8.0", forRemoval = true)
 	public void setIncludeJQueryJson(boolean includeJQueryJson) {
 		this.includeJQueryJson = includeJQueryJson;
 	}
@@ -129,10 +133,12 @@ public class DashboardSettings {
 		return this;
 	}
 
+	@Deprecated(since = "9.8.0", forRemoval = true)
 	public boolean isRtl() {
 		return rtl;
 	}
 
+	@Deprecated(since = "9.8.0", forRemoval = true)
 	public void setRtl(boolean rtl) {
 		this.rtl = rtl;
 	}

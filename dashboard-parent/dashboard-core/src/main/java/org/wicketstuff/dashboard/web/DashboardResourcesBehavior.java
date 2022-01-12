@@ -37,17 +37,13 @@ public class DashboardResourcesBehavior extends Behavior {
 			response.render(JavaScriptHeaderItem.forReference(settings.getJQueryUIReference()));
 		}
 
-		if (settings.isIncludeJQueryJson()) {
-			response.render(JavaScriptHeaderItem.forReference(settings.getJQueryJsonReference()));
-		}
-
 		if (settings.isIncludeJavaScript()) {
 			response.render(JavaScriptHeaderItem.forReference(settings.getJavaScriptReference()));
 		}
 
 		if (settings.isIncludeCss()) {
 			response.render(CssHeaderItem.forReference(settings.getCssReference()));
-			if (settings.isRtl()) {
+			if (component.getSession().isRtlLocale()) {
 				response.render(CssHeaderItem.forReference(settings.getRtlCssReference()));
 			}
 		}

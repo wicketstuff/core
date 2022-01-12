@@ -37,13 +37,15 @@ public class DashboardPanel extends GenericPanel<Dashboard> {
 	private static final long serialVersionUID = 1L;
 
 	private List<DashboardColumnPanel> columnPanels;
-	private IModel<Boolean> rtlModel;
 
 	public DashboardPanel(String id, IModel<Dashboard> model) {
 		super(id, model);
+	}
 
+	@Override
+	protected void onInitialize() {
+		super.onInitialize();
 		addColumnsPanel();
-
 		add(new DashboardResourcesBehavior());
 	}
 
@@ -73,8 +75,9 @@ public class DashboardPanel extends GenericPanel<Dashboard> {
 	 *
 	 * @param rtlModel
 	 */
+	@Deprecated(since = "9.8.0", forRemoval = true)
 	public DashboardPanel setRtlModel(IModel<Boolean> rtlModel) {
-		this.rtlModel = rtlModel;
+		//no-op
 		return this;
 	}
 
@@ -82,7 +85,7 @@ public class DashboardPanel extends GenericPanel<Dashboard> {
 	public void renderHead(IHeaderResponse response) {
 		super.renderHead(response);
 
-		if ((rtlModel != null) && (rtlModel.getObject() == Boolean.TRUE)) {
+		if (getWebSession().isRtlLocale()) {
 			response.render(CssHeaderItem.forReference(DashboardSettings.get().getRtlCssReference()));
 		}
 	}
