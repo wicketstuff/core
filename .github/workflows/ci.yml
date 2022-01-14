@@ -50,7 +50,10 @@ jobs:
           distribution: 'temurin'
           java-version: ${{ matrix.java }}
 
-      - name: Build & test 
+      - name: Build & test (& deploy) 
+        env:
+          CI_DEPLOY_USERNAME: ${{ secrets.CI_DEPLOY_USERNAME }}
+          CI_DEPLOY_PASSWORD: ${{ secrets.CI_DEPLOY_PASSWORD }}
         run: |
           echo "Event name: $EVENT_NAME"
           if [ $EVENT_NAME == "push" ]; then export MVN_COMMAND="deploy"; fi
