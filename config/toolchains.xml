@@ -7,7 +7,7 @@
 			<version>11</version>
 		</provides>
 		<configuration>
-			<jdkHome>/home/travis/openjdk11</jdkHome>
+			<jdkHome>${env.JAVA_HOME}</jdkHome>
 		</configuration>
 	</toolchain>
 </toolchains>
