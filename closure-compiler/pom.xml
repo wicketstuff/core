@@ -1,27 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-  <modelVersion>4.0.0</modelVersion>
+	<modelVersion>4.0.0</modelVersion>
 
-  <parent>
-    <groupId>org.wicketstuff</groupId>
-    <artifactId>wicketstuff-core</artifactId>
-    <version>9.8.0-SNAPSHOT</version>
-  </parent>
+	<parent>
+		<groupId>org.wicketstuff</groupId>
+		<artifactId>wicketstuff-core</artifactId>
+		<version>9.8.0-SNAPSHOT</version>
+	</parent>
 
-  <artifactId>wicketstuff-closure-compiler</artifactId>
+	<artifactId>wicketstuff-closure-compiler</artifactId>
 
-  <name>WicketStuff Closure Compiler Integration</name>
+	<name>WicketStuff Closure Compiler Integration</name>
 
-  <dependencies>
-    <dependency>
-      <groupId>com.google.javascript</groupId>
-      <artifactId>closure-compiler</artifactId>
-    </dependency>
+	<dependencies>
+		<dependency>
+			<groupId>com.google.javascript</groupId>
+			<artifactId>closure-compiler</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>com.google.protobuf</groupId>
 			<artifactId>protobuf-java</artifactId>
-			<version>3.8.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
@@ -31,18 +30,18 @@
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-engine</artifactId>
 		</dependency>
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>jul-to-slf4j</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.jetty.aggregate</groupId>
-      <artifactId>jetty-all</artifactId>
-        <classifier>uber</classifier>
-    </dependency>
-  </dependencies>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jul-to-slf4j</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty.aggregate</groupId>
+			<artifactId>jetty-all</artifactId>
+			<classifier>uber</classifier>
+		</dependency>
+	</dependencies>
 </project>

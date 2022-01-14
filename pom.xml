@@ -860,6 +860,11 @@
 				<version>${xstream.version}</version>
 			</dependency>
 			<dependency>
+				<groupId>com.google.protobuf</groupId>
+				<artifactId>protobuf-java</artifactId>
+				<version>3.19.3</version>
+			</dependency>
+			<dependency>
 				<groupId>org.hsqldb</groupId>
 				<artifactId>hsqldb</artifactId>
 				<version>${hsqldb.version}</version>
