@@ -29,6 +29,10 @@ jobs:
       matrix:
         java:
         - '11'
+    env:
+      MAVEN_OPTS: '-Xmx2g'
+      MVN_COMMAND: 'verify'
+      EVENT_NAME: ${{ github.event_name }}
     steps:
       - uses: actions/checkout@v2
 
@@ -43,11 +47,12 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v2
         with:
-          distribution: 'adopt'
+          distribution: 'temurin'
           java-version: ${{ matrix.java }}
 
       - name: Build & test 
-        env:
-          MAVEN_OPTS='-Xmx2g'
         run: |
-          mvn -s sonatype-settings.xml clean verify -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true -Dsource.skip=true -B -V
+          echo "Event name: $EVENT_NAME"
+          if [ $EVENT_NAME == "push" ]; then export MVN_COMMAND="deploy"; fi
+          cp ./config/toolchains.xml $HOME/.m2/
+          mvn -s sonatype-settings.xml $MVN_COMMAND -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true -Dsource.skip=true -B -V
