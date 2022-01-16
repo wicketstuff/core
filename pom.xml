@@ -236,7 +236,7 @@
 		<objenesis.version>3.2</objenesis.version>
 		<scala.version>2.13.8</scala.version>
 		<jackson.version>2.13.1</jackson.version>
-		<poi.version>5.1.0</poi.version>
+		<poi.version>5.2.0</poi.version>
 		<guava.version>29.0-jre</guava.version>
 		<wicket-webjars.version>3.0.0-M4</wicket-webjars.version>
 		<commons-io.version>2.6</commons-io.version>
