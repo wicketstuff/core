@@ -25,7 +25,6 @@ import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 
 
@@ -96,7 +95,7 @@ public class Tree extends DefaultAbstractTree
 
 		nodeLink.add(newNodeIcon(nodeLink, "icon", node));
 
-		nodeLink.add(new Label("label", new AbstractReadOnlyModel<String>()
+		nodeLink.add(new Label("label", new IModel<String>()
 		{
 			private static final long serialVersionUID = 1L;
 
@@ -115,8 +114,7 @@ public class Tree extends DefaultAbstractTree
 			private static final long serialVersionUID = 1L;
 
 			/**
-			 * @see org.apache.wicket.behavior.AbstractBehavior#onComponentTag(org.apache.wicket.
-			 *      Component, ComponentTag)
+			 * @see org.apache.wicket.behavior.Behavior#onComponentTag(Component, ComponentTag)
 			 */
 			@Override
 			public void onComponentTag(final Component component, final ComponentTag tag)
