@@ -1,1 +1,0 @@
-var datePickerDefaultShowDayState = new Array(true, '','');
