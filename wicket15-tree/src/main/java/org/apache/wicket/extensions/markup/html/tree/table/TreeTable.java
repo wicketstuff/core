@@ -32,7 +32,6 @@ import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Fragment;
-import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.resource.CssResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
@@ -96,12 +95,12 @@ public class TreeTable extends DefaultAbstractTree
 
 			nodeLink.add(newNodeIcon(nodeLink, "icon", node));
 
-			nodeLink.add(new Label("label", new AbstractReadOnlyModel<String>()
+			nodeLink.add(new Label("label", new IModel<String>()
 			{
 				private static final long serialVersionUID = 1L;
 
 				/**
-				 * @see AbstractReadOnlyModel#getObject()
+				 * @see IModel#getObject()
 				 */
 				@Override
 				public String getObject()

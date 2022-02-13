@@ -19,7 +19,7 @@
 	<groupId>org.wicketstuff</groupId>
 	<artifactId>wicket15-tree</artifactId>
 	<packaging>jar</packaging>
-	<version>8.0.1-SNAPSHOT</version>
+	<version>9.0.0-SNAPSHOT</version>
 	<name>Wicket 1.5 Tree component</name>
 	<description>A copy of the pre- Wicket-6.x Tree component from wicket-extensions</description>
 	<licenses>
@@ -35,15 +35,15 @@
 		<maven.compiler.optimize>true</maven.compiler.optimize>
 		<maven.compiler.showDeprecation>true</maven.compiler.showDeprecation>
 		<maven.compiler.showWarnings>true</maven.compiler.showWarnings>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.source>11</maven.compiler.source>
+		<maven.compiler.target>11</maven.compiler.target>
 		<!-- allowed values: R7, 1.0, 1.5, 2.0 or none -->
 		<jetty.version>9.4.7.v20170914</jetty.version>
 		<slf4j.version>1.7.25</slf4j.version>
 		<junit.version>4.12</junit.version>
 		<servlet-api.version>3.1.0</servlet-api.version>
 		<wtp.version>none</wtp.version>
-		<wicket.version>8.0.0</wicket.version>
+		<wicket.version>9.0.0</wicket.version>
 	</properties>
 	<scm>
 		<connection>scm:git:git@github.com:wicketstuff/wicket1.5-tree.git</connection>
@@ -280,15 +280,12 @@
 	</build>
 	<profiles>
 		<profile>
-			<id>Java 8</id>
+			<id>Java 11</id>
 			<activation>
-				<jdk>1.8</jdk>
+				<jdk>11</jdk>
 			</activation>
 			<properties>
-				<!-- Disable javadoc linter when building with Java 8
-				http://mail-archives.apache.org/mod_mbox/maven-users/201403.mbox/%3CCANWgJS5xHWiGE+Lecey+mZVbj9Via4JUWsaBeZtQr2aQNebupA@mail.gmail.com%3E
-				http://blog.joda.org/2014/02/turning-off-doclint-in-jdk-8-javadoc.html
-				-->
+				<!-- Disable javadoc linter when building with Java 11 -->
 				<additionalparam>-Xdoclint:-html</additionalparam>
 			</properties>
 		</profile>
