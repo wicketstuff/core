@@ -37,10 +37,9 @@
 		<maven.compiler.showWarnings>true</maven.compiler.showWarnings>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
-		<!-- allowed values: R7, 1.0, 1.5, 2.0 or none -->
-		<jetty.version>9.4.7.v20170914</jetty.version>
+		<jetty.version>9.4.44.v20210927</jetty.version>
 		<slf4j.version>1.7.25</slf4j.version>
-		<junit.version>4.12</junit.version>
+		<junit.version>4.13.2</junit.version>
 		<servlet-api.version>3.1.0</servlet-api.version>
 		<wtp.version>none</wtp.version>
 		<wicket.version>9.0.0</wicket.version>
@@ -66,15 +65,8 @@
 			</dependency>
 			<dependency>
 				<groupId>org.slf4j</groupId>
-				<artifactId>slf4j-log4j12</artifactId>
+				<artifactId>slf4j-simple</artifactId>
 				<version>${slf4j.version}</version>
-				<scope>test</scope>
-				<optional>true</optional>
-			</dependency>
-			<dependency>
-				<groupId>log4j</groupId>
-				<artifactId>log4j</artifactId>
-				<version>1.2.17</version>
 				<scope>test</scope>
 				<optional>true</optional>
 			</dependency>
@@ -115,11 +107,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
+			<artifactId>slf4j-simple</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
@@ -175,12 +163,11 @@
 				</excludes>
 			</testResource>
 		</testResources>
-		<pluginManagement>
 			<plugins>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.5.1</version>
+					<version>3.8.1</version>
 					<configuration>
 						<source>${maven.compiler.source}</source>
 						<target>${maven.compiler.target}</target>
@@ -216,7 +203,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-gpg-plugin</artifactId>
-					<version>1.6</version>
+					<version>3.0.1</version>
 					<configuration>
 						<useAgent>true</useAgent>
 					</configuration>
@@ -233,7 +220,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-javadoc-plugin</artifactId>
-					<version>2.10.4</version>
+					<version>3.3.2</version>
 					<configuration>
 						<quiet>true</quiet>
 					</configuration>
@@ -249,7 +236,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-release-plugin</artifactId>
-					<version>2.5.2</version>
+					<version>2.5.3</version>
 					<configuration>
 						<pushChanges>false</pushChanges>
 						<localCheckout>true</localCheckout>
@@ -258,14 +245,14 @@
 						<dependency>
 							<groupId>org.apache.maven.scm</groupId>
 							<artifactId>maven-scm-provider-gitexe</artifactId>
-							<version>1.9.4</version>
+							<version>1.12.2</version>
 						</dependency>
 					</dependencies>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-source-plugin</artifactId>
-					<version>2.4</version>
+					<version>3.2.1</version>
 					<executions>
 						<execution>
 							<id>attach-sources</id>
@@ -276,19 +263,6 @@
 					</executions>
 				</plugin>
 			</plugins>
-		</pluginManagement>
 	</build>
-	<profiles>
-		<profile>
-			<id>Java 11</id>
-			<activation>
-				<jdk>11</jdk>
-			</activation>
-			<properties>
-				<!-- Disable javadoc linter when building with Java 11 -->
-				<additionalparam>-Xdoclint:-html</additionalparam>
-			</properties>
-		</profile>
-    </profiles>
 
 </project>
