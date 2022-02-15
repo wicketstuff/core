@@ -168,7 +168,7 @@ public abstract class AutoCompleteBehavior extends JQueryUIBehavior implements I
 
 		public SelectEvent()
 		{
-			this.index = RequestCycleUtils.getQueryParameterValue("index").toInt(0) - 1;
+			this.index = RequestCycleUtils.getQueryParameterValue("index").toInt(0);
 		}
 
 		public int getIndex()
