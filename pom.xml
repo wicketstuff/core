@@ -44,7 +44,7 @@
 	</scm>
 
 	<properties>
-		<wicket.version>9.7.0</wicket.version>
+		<wicket.version>9.8.0</wicket.version>
 		<owasp-sanitizer.version>20191001.1</owasp-sanitizer.version>
 		<junit.version>5.8.1</junit.version>
 		<!-- allowed values: R7, 1.0, 1.5, 2.0 or none -->
