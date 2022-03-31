@@ -239,7 +239,7 @@
 		<poi.version>5.2.2</poi.version>
 		<guava.version>29.0-jre</guava.version>
 		<wicket-webjars.version>3.0.0-M4</wicket-webjars.version>
-		<commons-io.version>2.6</commons-io.version>
+		<commons-io.version>2.11.0</commons-io.version>
 		<xstream.version>1.4.19</xstream.version>
 		<hamcrest.version>2.2</hamcrest.version>
 		<commons-logging.version>1.2</commons-logging.version>
@@ -570,6 +570,11 @@
 				<groupId>commons-beanutils</groupId>
 				<artifactId>commons-beanutils</artifactId>
 				<version>${commons-beanutils.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-io</groupId>
+				<artifactId>commons-io</artifactId>
+				<version>${commons-io.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.commons</groupId>
