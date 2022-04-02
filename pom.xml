@@ -231,7 +231,7 @@
 		<slf4j.version>1.7.36</slf4j.version>
 		<logback.version>1.2.11</logback.version>
 		<log4j.version>2.17.2</log4j.version>
-		<spring.version>5.3.17</spring.version>
+		<spring.version>5.3.18</spring.version>
 		<cglib.version>3.3.0</cglib.version>
 		<objenesis.version>3.2</objenesis.version>
 		<scala.version>2.13.8</scala.version>
@@ -274,26 +274,26 @@
 		<jython-standalone.version>2.7.2</jython-standalone.version>
 		<!-- plugins -->
 		<maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
-		<maven-javadoc-plugin.version>3.2.0</maven-javadoc-plugin.version>
+		<maven-javadoc-plugin.version>3.3.2</maven-javadoc-plugin.version>
 		<maven-source-plugin.version>3.2.1</maven-source-plugin.version>
 		<maven-bundle-plugin.version>5.1.4</maven-bundle-plugin.version>
 		<maven-assembly-plugin.version>3.3.0</maven-assembly-plugin.version>
-		<maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+		<maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
 		<maven-eclipse-plugin.version>2.10</maven-eclipse-plugin.version>
 		<maven-help-plugin.version>3.2.0</maven-help-plugin.version>
-		<maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
+		<maven-jar-plugin.version>3.2.2</maven-jar-plugin.version>
 		<maven-resources-plugin.version>3.2.0</maven-resources-plugin.version>
-		<animal-sniffer-maven-plugin.version>1.20</animal-sniffer-maven-plugin.version>
+		<animal-sniffer-maven-plugin.version>1.21</animal-sniffer-maven-plugin.version>
 		<maven-pax-plugin.version>1.6.0</maven-pax-plugin.version>
-		<scala-maven-plugin.version>4.4.1</scala-maven-plugin.version>
+		<scala-maven-plugin.version>4.6.1</scala-maven-plugin.version>
 		<maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
 		<maven-deploy-plugin.version>3.0.0-M1</maven-deploy-plugin.version>
 		<maven-install-plugin.version>3.0.0-M1</maven-install-plugin.version>
-		<maven-site-plugin.version>3.9.1</maven-site-plugin.version>
-		<maven-war-plugin.version>3.3.1</maven-war-plugin.version>
-		<maven-release-plugin.version>3.0.0-M1</maven-release-plugin.version>
+		<maven-site-plugin.version>3.11.0</maven-site-plugin.version>
+		<maven-war-plugin.version>3.3.2</maven-war-plugin.version>
+		<maven-release-plugin.version>3.0.0-M5</maven-release-plugin.version>
 		<maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
-		<maven-pmd-plugin.version>3.14.0</maven-pmd-plugin.version>
+		<maven-pmd-plugin.version>3.16.0</maven-pmd-plugin.version>
 	</properties>
 
 	<prerequisites>

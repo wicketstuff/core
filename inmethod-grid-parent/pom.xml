@@ -17,7 +17,7 @@
 	</description>
 
 	<properties>
-		<wicket15-tree.version>8.0.0</wicket15-tree.version>
+		<wicket15-tree.version>9.0.0</wicket15-tree.version>
 	</properties>
 	<modules>
 		<module>inmethod-grid</module>
