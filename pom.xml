@@ -331,7 +331,6 @@
 		<module>plugin</module>
 		<module>portlet-parent</module>
 		<module>progressbar-parent</module>
-		<module>push-parent</module>
 		<module>quickview-parent</module>
 		<module>simile-timeline-parent</module>
 		<module>tinymce4-parent</module>
