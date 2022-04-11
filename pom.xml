@@ -211,7 +211,7 @@
 	<!-- mocleiri: for distribution in to central repository sections in the main pom are not allowed -->
 
 	<properties>
-		<wicket.version>9.9.0</wicket.version>
+		<wicket.version>9.9.1</wicket.version>
 
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
@@ -225,7 +225,7 @@
 
 		<hibernate.version>5.6.7.Final</hibernate.version>
 		<javassist.version>3.28.0-GA</javassist.version>
-		<jetty.version>9.4.45.v20220203</jetty.version>
+		<jetty.version>9.4.46.v20220331</jetty.version>
 		<sf-jung.version>2.1.1</sf-jung.version>
 		<shiro.version>1.9.0</shiro.version>
 		<slf4j.version>1.7.36</slf4j.version>
@@ -256,7 +256,7 @@
 		<jta.version>1.1</jta.version>
 		<hibernate-validator.version>7.0.4.Final</hibernate-validator.version>
 		<htmlcompressor.version>1.5.2</htmlcompressor.version>
-		<closure-compiler.version>v20220301</closure-compiler.version>
+		<closure-compiler.version>v20220405</closure-compiler.version>
 		<ibatis2-sqlmap.version>2.1.7.597</ibatis2-sqlmap.version>
 		<jts.version>1.13</jts.version>
 		<gson.version>2.9.0</gson.version>
@@ -267,9 +267,9 @@
 		<ehcache.version>3.10.0</ehcache.version>
 		<commons-dbcp2.version>2.9.0</commons-dbcp2.version>
 		<javaee-api.version>7.0</javaee-api.version>
-		<clojure.version>1.11.0</clojure.version>
+		<clojure.version>1.11.1</clojure.version>
 		<groovy.version>3.0.10</groovy.version>
-		<asm-util.version>9.2</asm-util.version>
+		<asm-util.version>9.3</asm-util.version>
 		<hsqldb.version>2.6.1</hsqldb.version>
 		<jython-standalone.version>2.7.2</jython-standalone.version>
 		<!-- plugins -->
@@ -287,7 +287,7 @@
 		<maven-pax-plugin.version>1.6.0</maven-pax-plugin.version>
 		<scala-maven-plugin.version>4.6.1</scala-maven-plugin.version>
 		<maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
-		<maven-deploy-plugin.version>3.0.0-M1</maven-deploy-plugin.version>
+		<maven-deploy-plugin.version>3.0.0-M2</maven-deploy-plugin.version>
 		<maven-install-plugin.version>3.0.0-M1</maven-install-plugin.version>
 		<maven-site-plugin.version>3.11.0</maven-site-plugin.version>
 		<maven-war-plugin.version>3.3.2</maven-war-plugin.version>
