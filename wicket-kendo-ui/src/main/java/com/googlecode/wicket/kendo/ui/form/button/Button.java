@@ -29,7 +29,7 @@ import com.googlecode.wicket.kendo.ui.KendoIcon;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class Button extends org.apache.wicket.markup.html.form.Button  implements IJQueryWidget
+public class Button extends org.apache.wicket.markup.html.form.Button implements IJQueryWidget
 {
 	private static final long serialVersionUID = 1L;
 
