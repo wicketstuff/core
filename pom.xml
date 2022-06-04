@@ -12,7 +12,7 @@
 
 	<groupId>com.googlecode.wicket-jquery-ui</groupId>
 	<artifactId>wicket-jquery-ui-parent</artifactId>
-	<version>9.8.1-SNAPSHOT</version>
+	<version>9.9.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<licenses>
