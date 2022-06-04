@@ -16,7 +16,7 @@ import com.googlecode.wicket.jquery.core.resource.JQueryUrlResourceReference;
 public class KendoAllResourceReference extends JQueryUrlResourceReference
 {
 	private static final long serialVersionUID = 1L;
-	private static final String KENDO_CDN_URL = "https://kendo.cdn.telerik.com/2021.3.1207/js/kendo.all.min.js";
+	private static final String KENDO_CDN_URL = "https://kendo.cdn.telerik.com/2022.2.510/js/kendo.all.min.js";
 	
 	private static final KendoAllResourceReference INSTANCE = new KendoAllResourceReference();
 

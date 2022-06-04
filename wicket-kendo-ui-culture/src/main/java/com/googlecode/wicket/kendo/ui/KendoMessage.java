@@ -25,6 +25,32 @@ import java.util.Locale;
  */
 public enum KendoMessage
 {
+	AR_AE("ar-AE"), // lf
+	AR_BH("ar-BH"), // lf
+	AR_DJ("ar-DJ"), // lf
+	AR_DZ("ar-DZ"), // lf
+	AR_EG("ar-EG"), // lf
+	AR_ER("ar-ER"), // lf
+	AR_IL("ar-IL"), // lf
+	AR_IQ("ar-IQ"), // lf
+	AR_JO("ar-JO"), // lf
+	AR_KM("ar-KM"), // lf
+	AR_KW("ar-KW"), // lf
+	AR_LB("ar-LB"), // lf
+	AR_LY("ar-LY"), // lf
+	AR_MA("ar-MA"), // lf
+	AR_MR("ar-MR"), // lf
+	AR_OM("ar-OM"), // lf
+	AR_PS("ar-PS"), // lf
+	AR_QA("ar-QA"), // lf
+	AR_SA("ar-SA"), // lf
+	AR_SD("ar-SD"), // lf
+	AR_SO("ar-SO"), // lf
+	AR_SS("ar-SS"), // lf
+	AR_SY("ar-SY"), // lf
+	AR_TD("ar-TD"), // lf
+	AR_TN("ar-TN"), // lf
+	AR_YE("ar-YE"), // lf
 	DE_AT("de-AT"), // lf
 	BG_BG("bg-BG"), // lf
 	CS_CZ("cs-CZ"), // lf
@@ -71,6 +97,7 @@ public enum KendoMessage
 	FR_ML("fr-ML"), // lf
 	FR_SN("fr-SN"), // lf
 	HE_IL("he-IL"), // lf
+	HR_HR("hr-HR"), // lf
 	HU_HU("hu-HU"), // lf
 	HY_AM("hy-AM"), // lf
 	IT_CH("it-CH"), // lf
