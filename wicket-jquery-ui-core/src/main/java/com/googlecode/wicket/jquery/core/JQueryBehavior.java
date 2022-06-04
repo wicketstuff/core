@@ -296,12 +296,12 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	 * Gets the jQuery statement.<br>
 	 * <b>Warning: </b> This method is *not* called by the behavior directly (only {@link #$()} is).
 	 *
-	 * @param options the list of options to be supplied to the current method
+	 * @param options the options to be supplied to the current method
 	 * @return the jQuery statement
 	 */
-	public String $(Object... options)
+	public String $(String options)
 	{
-		return this.$(Options.fromArray(options));
+		return JQueryBehavior.$(this.selector, this.method, options);
 	}
 
 	/**
@@ -313,19 +313,19 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	 */
 	public String $(Options options)
 	{
-		return this.$(options.toString());
+		return JQueryBehavior.$(this.selector, this.method, options.toString());
 	}
 
 	/**
 	 * Gets the jQuery statement.<br>
 	 * <b>Warning: </b> This method is *not* called by the behavior directly (only {@link #$()} is).
 	 *
-	 * @param options the options to be supplied to the current method
+	 * @param options the list of options to be supplied to the current method
 	 * @return the jQuery statement
 	 */
-	public String $(String options)
+	public String $(Object... options)
 	{
-		return JQueryBehavior.$(this.selector, this.method, options);
+		return JQueryBehavior.$(this.selector, this.method, Options.fromArray(options));
 	}
 
 	/**

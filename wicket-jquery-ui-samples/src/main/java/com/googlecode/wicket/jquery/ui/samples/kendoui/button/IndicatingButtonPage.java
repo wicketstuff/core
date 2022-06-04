@@ -55,9 +55,9 @@ public class IndicatingButtonPage extends AbstractButtonPage // NOSONAR
 			public boolean isDisabledOnClick()
 			{
 				/*
-				 * Warning: if true the button will not be send as part of the post because of its disabled state. Therefore Button#onSubmit() will not be reached, Form#onSubmit() should be used instead.
+				 * Caution: it seems that disabled buttons - after click - does not submit the form (anymore?)
 				 */
-				return true;
+				return false;
 			}
 		});
 

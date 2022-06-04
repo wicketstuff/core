@@ -79,25 +79,26 @@ public class AjaxIndicatingButtonBehavior extends ButtonBehavior
 	@Override
 	protected String $()
 	{
-		StringBuilder builder = new StringBuilder(super.$());
+		final StringBuilder builder = new StringBuilder(super.$());
+		final String selector = this.getSelector();
 
-		// busy indicator starts //
 		// caution: in specific cases, #getSelector may return a different selector that this.selector
-		builder.append("jQuery('").append(this.getSelector()).append("')").append(".click(function() { ");
+		builder.append("jQuery('").append(selector).append("')").append(".click(function() { ");
 		builder.append($(this.newOnClickOptions()));
 		builder.append(" }); ");
 
+		// busy indicator starts //
 		builder.append("jQuery(document).ajaxStart(function() { ");
 		builder.append($(this.newAjaxStartOptions()));
 		builder.append(" }); ");
 
 		// busy indicator stops //
 		builder.append("jQuery(document).ajaxStop(function() { ");
-		builder.append("jQuery('").append(this.selector).append(" .").append(KendoIcon.K_ICON).append("').remove(); "); // TODO: open issue (icon should be removed manually!)
-		builder.append("jQuery('").append(this.selector).append("').removeAttr('disabled'); "); // TODO: open issue ({enable: true} does not remove disabled attr!)
+		builder.append("jQuery('").append(selector).append(" .").append(KendoIcon.K_ICON).append("').remove(); "); // TODO: open issue (icon should be removed manually!)
+		builder.append("jQuery('").append(selector).append("').removeAttr('disabled'); "); // TODO: open issue ({enable: true} does not remove disabled attr!)
 		builder.append($(this.options));
 		builder.append(" }); ");
-
+		
 		return builder.toString();
 	}
 

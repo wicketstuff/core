@@ -54,7 +54,7 @@ public class AdvancedTabsPage extends AbstractTabsPage
 		form.add(this.buttons);
 
 		// Add-tab Buttons //
-		form.add(new com.googlecode.wicket.kendo.ui.form.button.AjaxButton("add") {
+		form.add(new AjaxButton("add") {
 
 			private static final long serialVersionUID = 1L;
 
