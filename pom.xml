@@ -211,7 +211,7 @@
 	<!-- mocleiri: for distribution in to central repository sections in the main pom are not allowed -->
 
 	<properties>
-		<wicket.version>9.11.0-SNAPSHOT</wicket.version>
+		<wicket.version>9.11.0</wicket.version>
 
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
@@ -224,18 +224,18 @@
 		<sources.disabled>false</sources.disabled>
 
 		<hibernate.version>5.6.8.Final</hibernate.version>
-		<javassist.version>3.28.0-GA</javassist.version>
-		<jetty.version>9.4.46.v20220331</jetty.version>
+		<javassist.version>3.29.0-GA</javassist.version>
+		<jetty.version>9.4.48.v20220622</jetty.version>
 		<sf-jung.version>2.1.1</sf-jung.version>
-		<shiro.version>1.9.0</shiro.version>
+		<shiro.version>1.9.1</shiro.version>
 		<slf4j.version>1.7.36</slf4j.version>
 		<logback.version>1.2.11</logback.version>
-		<log4j.version>2.17.2</log4j.version>
-		<spring.version>5.3.19</spring.version>
+		<log4j.version>2.18.0</log4j.version>
+		<spring.version>5.3.21</spring.version>
 		<cglib.version>3.3.0</cglib.version>
 		<objenesis.version>3.2</objenesis.version>
 		<scala.version>2.13.8</scala.version>
-		<jackson.version>2.13.2.2</jackson.version>
+		<jackson.version>2.13.3</jackson.version>
 		<poi.version>5.2.2</poi.version>
 		<guava.version>29.0-jre</guava.version>
 		<wicket-webjars.version>3.0.0-M4</wicket-webjars.version>
@@ -246,8 +246,8 @@
 		<javax.servlet-api.version>3.1.0</javax.servlet-api.version>
 		<junit.version>5.8.2</junit.version>
 		<easymock.version>4.3</easymock.version>
-		<mockito.version>4.5.1</mockito.version>
-		<testng.version>7.5</testng.version>
+		<mockito.version>4.6.1</mockito.version>
+		<testng.version>7.6.1</testng.version>
 		<commons-beanutils.version>1.9.4</commons-beanutils.version>
 		<commons-collections4.version>4.4</commons-collections4.version>
 		<commons-digester3.version>3.2</commons-digester3.version>
@@ -256,7 +256,7 @@
 		<jta.version>1.1</jta.version>
 		<hibernate-validator.version>7.0.4.Final</hibernate-validator.version>
 		<htmlcompressor.version>1.5.2</htmlcompressor.version>
-		<closure-compiler.version>v20220502</closure-compiler.version>
+		<closure-compiler.version>v20220601</closure-compiler.version>
 		<ibatis2-sqlmap.version>2.1.7.597</ibatis2-sqlmap.version>
 		<jts.version>1.13</jts.version>
 		<gson.version>2.9.0</gson.version>
@@ -268,7 +268,7 @@
 		<commons-dbcp2.version>2.9.0</commons-dbcp2.version>
 		<javaee-api.version>7.0</javaee-api.version>
 		<clojure.version>1.11.1</clojure.version>
-		<groovy.version>3.0.10</groovy.version>
+		<groovy.version>3.0.11</groovy.version>
 		<asm-util.version>9.3</asm-util.version>
 		<hsqldb.version>2.6.1</hsqldb.version>
 		<jython-standalone.version>2.7.2</jython-standalone.version>
@@ -647,16 +647,11 @@
 			</dependency>
 			<dependency>
 				<groupId>org.hibernate</groupId>
-				<artifactId>hibernate-entitymanager</artifactId>
-				<version>${hibernate.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-ehcache</artifactId>
 				<version>${hibernate.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.hibernate</groupId>
+				<groupId>org.hibernate.validator</groupId>
 				<artifactId>hibernate-validator</artifactId>
 				<version>${hibernate-validator.version}</version>
 			</dependency>
