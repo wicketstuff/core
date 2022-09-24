@@ -51,14 +51,13 @@ public class Start
 
 		server.addConnector(http);
 
-		Resource keystore = Resource.newClassPathResource("/keystore");
-
+		Resource keystore = Resource.newClassPathResource("/keystore.p12");
 		if (keystore != null && keystore.exists())
 		{
 			// if a keystore for a SSL certificate is available, start a SSL
 			// connector on port 8443.
 			// By default, the quickstart comes with a Apache Wicket Quickstart
-			// Certificate that expires about half way september 2021. Do not
+			// Certificate that expires about half way september 2031. Do not
 			// use this certificate anywhere important as the passwords are
 			// available in the source.
 
@@ -70,8 +69,7 @@ public class Start
 			HttpConfiguration https_config = new HttpConfiguration(http_config);
 			https_config.addCustomizer(new SecureRequestCustomizer());
 
-			ServerConnector https = new ServerConnector(server, new SslConnectionFactory(
-				sslContextFactory, "http/1.1"), new HttpConnectionFactory(https_config));
+			ServerConnector https = new ServerConnector(server, new SslConnectionFactory(sslContextFactory, "http/1.1"), new HttpConnectionFactory(https_config));
 			https.setPort(8443);
 			https.setIdleTimeout(500000);
 
