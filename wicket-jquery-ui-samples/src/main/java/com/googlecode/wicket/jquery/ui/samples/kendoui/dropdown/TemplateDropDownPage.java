@@ -38,7 +38,7 @@ public class TemplateDropDownPage extends AbstractDropDownPage
 			{
 				super.onInitialize();
 				
-				this.setListWidth(200);
+				this.setListWidth(220);
 			}
 
 			@Override
