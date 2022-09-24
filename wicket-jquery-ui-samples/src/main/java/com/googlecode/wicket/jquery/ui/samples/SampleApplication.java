@@ -18,7 +18,6 @@ import com.googlecode.wicket.jquery.ui.samples.jqueryui.droppable.DefaultDroppab
 import com.googlecode.wicket.jquery.ui.samples.jqueryui.effect.DefaultEffectPage;
 import com.googlecode.wicket.jquery.ui.samples.jqueryui.menu.DefaultMenuPage;
 import com.googlecode.wicket.jquery.ui.samples.jqueryui.plugins.FontSizePage;
-import com.googlecode.wicket.jquery.ui.samples.jqueryui.plugins.datepicker.RangeDatePickerPage;
 import com.googlecode.wicket.jquery.ui.samples.jqueryui.plugins.sfmenu.DefaultSfMenuPage;
 import com.googlecode.wicket.jquery.ui.samples.jqueryui.plugins.wysiwyg.WysiwygEditorPage;
 import com.googlecode.wicket.jquery.ui.samples.jqueryui.progressbar.ButtonProgressBarPage;
@@ -146,7 +145,6 @@ public class SampleApplication extends WebApplication
 
 		// Plugins //
 		this.mountPackage("/plugins", FontSizePage.class);
-		this.mountPackage("/plugins/datepicker", RangeDatePickerPage.class);
 		this.mountPackage("/plugins/sfmenu", DefaultSfMenuPage.class);
 		this.mountPackage("/plugins/wysiwyg", WysiwygEditorPage.class);
 

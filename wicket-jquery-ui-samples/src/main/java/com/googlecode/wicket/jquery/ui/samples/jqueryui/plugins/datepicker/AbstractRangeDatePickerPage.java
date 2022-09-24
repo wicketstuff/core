@@ -5,6 +5,10 @@ import java.util.List;
 
 import com.googlecode.wicket.jquery.ui.samples.JQuerySamplePage;
 
+/**
+ * @deprecated seems to not work with lastest jquery/jquery-ui, and the js plugin seems not maintained anymore 
+ */
+@Deprecated
 abstract class AbstractRangeDatePickerPage extends JQuerySamplePage
 {
 	private static final long serialVersionUID = 1L;

@@ -39,8 +39,9 @@ import com.googlecode.wicket.jquery.core.utils.DateUtils;
  * Provides a {@link FormComponentPanel} based on a {@link TextField} and a {@link RangeDatePicker}
  *
  * @author Sebastien Briquet - sebfz1
- *
+ * @deprecated seems to not work with lastest jquery/jquery-ui, and the js plugin seems not maintained anymore 
  */
+@Deprecated
 public class RangeDatePickerTextField extends FormComponentPanel<DateRange> implements IValueChangedListener
 {
 	private static final long serialVersionUID = 1L;

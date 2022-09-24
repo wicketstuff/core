@@ -34,8 +34,9 @@ import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
  * Provides the jQuery DatePicker behavior
  *
  * @author Sebastien Briquet - sebfz1
- *
+ * @deprecated seems to not work with lastest jquery/jquery-ui, and the js plugin seems not maintained anymore 
  */
+@Deprecated
 public class RangeDatePickerBehavior extends JQueryBehavior implements IJQueryAjaxAware
 {
 	private static final long serialVersionUID = 1L;

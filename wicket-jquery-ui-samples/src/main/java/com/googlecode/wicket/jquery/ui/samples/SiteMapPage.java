@@ -58,8 +58,6 @@ import com.googlecode.wicket.jquery.ui.samples.jqueryui.plugins.EmoticonsPage;
 import com.googlecode.wicket.jquery.ui.samples.jqueryui.plugins.FontSizePage;
 import com.googlecode.wicket.jquery.ui.samples.jqueryui.plugins.OptionSnippetPage;
 import com.googlecode.wicket.jquery.ui.samples.jqueryui.plugins.WidgetSnippetPage;
-import com.googlecode.wicket.jquery.ui.samples.jqueryui.plugins.datepicker.RangeDatePickerPage;
-import com.googlecode.wicket.jquery.ui.samples.jqueryui.plugins.datepicker.RangeDatePickerTextFieldPage;
 import com.googlecode.wicket.jquery.ui.samples.jqueryui.plugins.sfmenu.DefaultSfMenuPage;
 import com.googlecode.wicket.jquery.ui.samples.jqueryui.plugins.sfmenu.VerticalSfMenuPage;
 import com.googlecode.wicket.jquery.ui.samples.jqueryui.plugins.wysiwyg.WysiwygEditorPage;
@@ -274,8 +272,6 @@ public class SiteMapPage extends WebPage
 			PatternDateTimePickerPage.class,
 			PatternTimePickerPage.class,
 			RadioButtonPage.class,
-			RangeDatePickerPage.class,
-			RangeDatePickerTextFieldPage.class,
 			RangeSliderPage.class,
 			RendererAutoCompletePage.class,
 			RendererComboBoxPage.class,

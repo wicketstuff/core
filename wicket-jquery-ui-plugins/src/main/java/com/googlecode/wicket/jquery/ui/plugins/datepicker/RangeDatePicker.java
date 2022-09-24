@@ -31,7 +31,9 @@ import com.googlecode.wicket.jquery.core.event.IValueChangedListener;
  * https://github.com/foxrunsoftware/DatePicker/
  *
  * @author Sebastien Briquet - sebfz1
+ * @deprecated seems to not work with lastest jquery/jquery-ui, and the js plugin seems not maintained anymore 
  */
+@Deprecated
 public class RangeDatePicker extends JQueryGenericContainer<DateRange> implements IRangeDatePickerListener, IValueChangedListener
 {
 	private static final long serialVersionUID = 1L;

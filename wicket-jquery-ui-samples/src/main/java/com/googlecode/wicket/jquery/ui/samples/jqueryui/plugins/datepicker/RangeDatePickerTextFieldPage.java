@@ -18,6 +18,10 @@ import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import com.googlecode.wicket.jquery.ui.plugins.datepicker.DateRange;
 import com.googlecode.wicket.jquery.ui.plugins.datepicker.RangeDatePickerTextField;
 
+/**
+ * @deprecated seems to not work with lastest jquery/jquery-ui, and the js plugin seems not maintained anymore 
+ */
+@Deprecated
 public class RangeDatePickerTextFieldPage extends AbstractRangeDatePickerPage
 {
 	private static final long serialVersionUID = 1L;
