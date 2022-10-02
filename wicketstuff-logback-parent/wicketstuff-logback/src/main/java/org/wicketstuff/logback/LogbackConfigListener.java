@@ -27,6 +27,7 @@ import org.slf4j.LoggerFactory;
 import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.joran.JoranConfigurator;
 import ch.qos.logback.core.joran.spi.JoranException;
+import ch.qos.logback.core.spi.ScanException;
 import ch.qos.logback.core.util.OptionHelper;
 import ch.qos.logback.core.util.StatusPrinter;
 
@@ -142,7 +143,11 @@ public class LogbackConfigListener implements ServletContextListener
 		String location = rawLocation;
 
 		if (location != null) {
-			location = OptionHelper.substVars(location, lc);
+			try {
+				location = OptionHelper.substVars(location, lc);
+			} catch (ScanException e) {
+				sc.log("Unexpected ScanException", e);
+			}
 		}
 
 		if (location == null)

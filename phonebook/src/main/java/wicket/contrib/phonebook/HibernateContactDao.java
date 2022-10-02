@@ -21,13 +21,13 @@ package wicket.contrib.phonebook;
 import java.util.Iterator;
 import java.util.List;
 
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 
 /**
  * implements {@link ContactDao}.
- * 
+ *
  * @author igor
  */
 public class HibernateContactDao implements ContactDao
@@ -37,7 +37,7 @@ public class HibernateContactDao implements ContactDao
 
 	/**
 	 * Setter for session factory. Spring will use this to inject the session factory into the dao.
-	 * 
+	 *
 	 * @param factory
 	 *            hibernate session factory
 	 */
@@ -48,7 +48,7 @@ public class HibernateContactDao implements ContactDao
 
 	/**
 	 * Helper method for retrieving hibernate session
-	 * 
+	 *
 	 * @return hibernate session
 	 */
 	protected Session getSession()
@@ -58,45 +58,49 @@ public class HibernateContactDao implements ContactDao
 
 	/**
 	 * Load a {@link Contact} from the DB, given it's <tt>id</tt> .
-	 * 
+	 *
 	 * @param id
 	 *            The id of the Contact to load.
 	 * @return Contact
 	 */
+	@Override
 	public Contact load(long id)
 	{
-		return (Contact)getSession().get(Contact.class, Long.valueOf(id));
+		return getSession().get(Contact.class, Long.valueOf(id));
 	}
 
 	/**
 	 * Save the contact to the DB
-	 * 
+	 *
 	 * @param contact
 	 * @return persistent instance of contact
 	 */
+	@Override
 	public Contact save(Contact contact)
 	{
-		return (Contact)getSession().merge(contact);
+		return getSession().merge(contact);
 	}
 
 	/**
 	 * Delete a {@link Contact} from the DB, given it's <tt>id</tt>.
-	 * 
+	 *
 	 * @param id
 	 *            The id of the Contact to delete.
 	 */
+	@Override
 	public void delete(long id)
 	{
-		getSession().delete(load(id));
+		getSession().remove(load(id));
 	}
 
 	/**
 	 * Query the DB, using the supplied query details.
-	 * 
+	 *
 	 * @param qp
 	 *            Query Parameters to use.
 	 * @return The results of the query as an Iterator.
 	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public Iterator<Contact> find(final QueryParam qp, Contact filter)
 	{
@@ -106,9 +110,10 @@ public class HibernateContactDao implements ContactDao
 
 	/**
 	 * Return the number of Contacts in the DB.
-	 * 
+	 *
 	 * @return count
 	 */
+	@Override
 	public int count(Contact filter)
 	{
 		return ((Long)buildFindQuery(null, filter, true).uniqueResult()).intValue();
@@ -117,17 +122,18 @@ public class HibernateContactDao implements ContactDao
 	/**
 	 * Returns a list of unique last names
 	 */
-	@SuppressWarnings("unchecked")
+	@Override
 	public List<String> getUniqueLastNames()
 	{
 		return getSession().createQuery(
-			"select distinct target.lastname " + " from Contact target order by target.lastname")
+				"select distinct target.lastname " + " from Contact target order by target.lastname"
+				, String.class)
 			.list();
 	}
 
 	/**
 	 * builds a query object to satisfy the provided parameters
-	 * 
+	 *
 	 * @param qp
 	 *            sorting and paging criteria
 	 * @param filter
@@ -143,7 +149,7 @@ public class HibernateContactDao implements ContactDao
 		builder.setFilter(filter);
 		builder.setCount(count);
 		Query query = getSession().createQuery(builder.buildHql());
-		query.setParameters(builder.getParameters(), builder.getTypes());
+		builder.setParameters(query);
 		if (!count && qp != null)
 		{
 			query.setFirstResult((int)qp.getFirst()).setMaxResults((int)qp.getCount());

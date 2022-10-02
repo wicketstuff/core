@@ -81,7 +81,7 @@
 
 		<!-- HIBERNATE -->
 		<dependency>
-			<groupId>org.hibernate</groupId>
+			<groupId>org.hibernate.orm</groupId>
 			<artifactId>hibernate-ehcache</artifactId>
 		</dependency>
 		<dependency>

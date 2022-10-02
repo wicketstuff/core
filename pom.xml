@@ -223,20 +223,22 @@
 		<deployment.disabled>false</deployment.disabled>
 		<sources.disabled>false</sources.disabled>
 
-		<hibernate.version>5.6.8.Final</hibernate.version>
-		<javassist.version>3.29.0-GA</javassist.version>
+		<hibernate.version>6.1.3.Final</hibernate.version>
+		<hibernate-ehcache.version>6.0.0.Alpha7</hibernate-ehcache.version>
+		<hibernate-validator.version>8.0.0.Final</hibernate-validator.version>
+		<javassist.version>3.29.2-GA</javassist.version>
 		<jetty.version>9.4.49.v20220914</jetty.version>
 		<sf-jung.version>2.1.1</sf-jung.version>
 		<shiro.version>1.9.1</shiro.version>
-		<slf4j.version>1.7.36</slf4j.version>
-		<logback.version>1.2.11</logback.version>
-		<log4j.version>2.18.0</log4j.version>
+		<slf4j.version>2.0.3</slf4j.version>
+		<logback.version>1.4.1</logback.version>
+		<log4j.version>2.19.0</log4j.version>
 		<spring.version>5.3.23</spring.version>
 		<cglib.version>3.3.0</cglib.version>
-		<objenesis.version>3.2</objenesis.version>
-		<scala.version>2.13.8</scala.version>
-		<jackson.version>2.13.3</jackson.version>
-		<poi.version>5.2.2</poi.version>
+		<objenesis.version>3.3</objenesis.version>
+		<scala.version>2.13.9</scala.version>
+		<jackson.version>2.13.4</jackson.version>
+		<poi.version>5.2.3</poi.version>
 		<guava.version>29.0-jre</guava.version>
 		<wicket-webjars.version>3.0.0-M4</wicket-webjars.version>
 		<commons-io.version>2.11.0</commons-io.version>
@@ -244,9 +246,9 @@
 		<hamcrest.version>2.2</hamcrest.version>
 		<commons-logging.version>1.2</commons-logging.version>
 		<javax.servlet-api.version>3.1.0</javax.servlet-api.version>
-		<junit.version>5.8.2</junit.version>
+		<junit.version>5.9.1</junit.version>
 		<easymock.version>4.3</easymock.version>
-		<mockito.version>4.6.1</mockito.version>
+		<mockito.version>4.8.0</mockito.version>
 		<testng.version>7.6.1</testng.version>
 		<commons-beanutils.version>1.9.4</commons-beanutils.version>
 		<commons-collections4.version>4.4</commons-collections4.version>
@@ -254,24 +256,23 @@
 		<commons-lang3.version>3.12.0</commons-lang3.version>
 		<validation-api.version>2.0.1.Final</validation-api.version>
 		<jta.version>1.1</jta.version>
-		<hibernate-validator.version>7.0.4.Final</hibernate-validator.version>
 		<htmlcompressor.version>1.5.2</htmlcompressor.version>
-		<closure-compiler.version>v20220601</closure-compiler.version>
+		<closure-compiler.version>v20220905</closure-compiler.version>
 		<ibatis2-sqlmap.version>2.1.7.597</ibatis2-sqlmap.version>
 		<jts.version>1.13</jts.version>
-		<gson.version>2.9.0</gson.version>
+		<gson.version>2.9.1</gson.version>
 		<wicket-bootstrap-core.version>4.0.4</wicket-bootstrap-core.version> <!-- 4.0.x is required for openlayers-3 (bootstrap3) -->
-		<jasperreports.version>6.19.1</jasperreports.version>
+		<jasperreports.version>6.20.0</jasperreports.version>
 		<bcprov.version>1.67</bcprov.version>
-		<joda-time.version>2.10.14</joda-time.version>
-		<ehcache.version>3.10.0</ehcache.version>
+		<joda-time.version>2.11.2</joda-time.version>
+		<ehcache.version>3.10.1</ehcache.version>
 		<commons-dbcp2.version>2.9.0</commons-dbcp2.version>
 		<javaee-api.version>7.0</javaee-api.version>
 		<clojure.version>1.11.1</clojure.version>
-		<groovy.version>3.0.11</groovy.version>
+		<groovy.version>3.0.13</groovy.version>
 		<asm-util.version>9.3</asm-util.version>
-		<hsqldb.version>2.6.1</hsqldb.version>
-		<jython-standalone.version>2.7.2</jython-standalone.version>
+		<hsqldb.version>2.7.0</hsqldb.version>
+		<jython-standalone.version>2.7.3</jython-standalone.version>
 		<!-- plugins -->
 		<maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
 		<maven-javadoc-plugin.version>3.3.2</maven-javadoc-plugin.version>
@@ -641,14 +642,14 @@
 				<version>${jta.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.hibernate</groupId>
+				<groupId>org.hibernate.orm</groupId>
 				<artifactId>hibernate-core</artifactId>
 				<version>${hibernate.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.hibernate</groupId>
+				<groupId>org.hibernate.orm</groupId>
 				<artifactId>hibernate-ehcache</artifactId>
-				<version>${hibernate.version}</version>
+				<version>${hibernate-ehcache.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.hibernate.validator</groupId>

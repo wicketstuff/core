@@ -42,7 +42,7 @@ public class HibernateContactFinderQueryBuilderTest
 		builder.setFilter(filter);
 	}
 
-    @Test
+	@Test
 	public void testCountsQueryResultsWhenRequested() throws Exception
 	{
 		builder.setCount(true);
@@ -50,7 +50,7 @@ public class HibernateContactFinderQueryBuilderTest
 		assertTrue(hql.startsWith("select count(*) from Contact target where 1=1 "));
 	}
 
-    @Test
+	@Test
 	public void testDoesNotCountResults() throws Exception
 	{
 		builder.setCount(false);
@@ -58,7 +58,7 @@ public class HibernateContactFinderQueryBuilderTest
 		assertTrue(hql.startsWith("from Contact target where 1=1 "));
 	}
 
-    @Test
+	@Test
 	public void testFilterCannotBeNull() throws Exception
 	{
 		try
@@ -72,7 +72,7 @@ public class HibernateContactFinderQueryBuilderTest
 		}
 	}
 
-    @Test
+	@Test
 	public void testFiltersByFirstName() throws Exception
 	{
 		filter.setFirstname("James");
@@ -81,7 +81,7 @@ public class HibernateContactFinderQueryBuilderTest
 		assertEquals(StandardBasicTypes.STRING, builder.getTypes()[0]);
 	}
 
-    @Test
+	@Test
 	public void testFiltersByLastName() throws Exception
 	{
 		filter.setLastname("Bond");
@@ -90,7 +90,7 @@ public class HibernateContactFinderQueryBuilderTest
 		assertEquals(StandardBasicTypes.STRING, builder.getTypes()[0]);
 	}
 
-    @Test
+	@Test
 	public void testFiltersByPhone() throws Exception
 	{
 		filter.setPhone("+12345");
@@ -99,7 +99,7 @@ public class HibernateContactFinderQueryBuilderTest
 		assertEquals(StandardBasicTypes.STRING, builder.getTypes()[0]);
 	}
 
-    @Test
+	@Test
 	public void testFiltersByEmail() throws Exception
 	{
 		filter.setEmail("james@bond.com");
@@ -108,28 +108,28 @@ public class HibernateContactFinderQueryBuilderTest
 		assertEquals(StandardBasicTypes.STRING, builder.getTypes()[0]);
 	}
 
-    @Test
+	@Test
 	public void testOrdersAscendingByFirstName() throws Exception
 	{
 		builder.setQueryParam(new QueryParam(0, 10, "firstname", true));
 		assertTrue(builder.buildHql().endsWith("order by upper(target.firstname) asc"));
 	}
 
-    @Test
+	@Test
 	public void testOrdersDescendingByLastName() throws Exception
 	{
 		builder.setQueryParam(new QueryParam(0, 10, "lastname", false));
 		assertTrue(builder.buildHql().endsWith("order by upper(target.lastname) desc"));
 	}
 
-    @Test
+	@Test
 	public void testDoesNotOrderIfSortParameterIsNotDefined() throws Exception
 	{
 		builder.setQueryParam(new QueryParam(0, 10));
 		assertTrue(builder.buildHql().endsWith("from Contact target where 1=1 "));
 	}
 
-    @Test
+	@Test
 	public void testOrdersIfCountIsNotRequested() throws Exception
 	{
 		builder.setQueryParam(new QueryParam(0, 10, "lastname", false));

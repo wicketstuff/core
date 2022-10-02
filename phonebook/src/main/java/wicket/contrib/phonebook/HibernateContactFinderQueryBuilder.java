@@ -21,7 +21,8 @@ package wicket.contrib.phonebook;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.type.AbstractSingleColumnStandardBasicType;
+import org.hibernate.query.BindableType;
+import org.hibernate.query.Query;
 import org.hibernate.type.StandardBasicTypes;
 
 
@@ -31,7 +32,7 @@ import org.hibernate.type.StandardBasicTypes;
 public class HibernateContactFinderQueryBuilder
 {
 	private List<String> parameters;
-	private List<AbstractSingleColumnStandardBasicType<?>> types;
+	private List<BindableType<?>> types;
 	private boolean count;
 	private Contact filter = new Contact();
 	private QueryParam queryParam;
@@ -39,7 +40,7 @@ public class HibernateContactFinderQueryBuilder
 	public String buildHql()
 	{
 		parameters = new ArrayList<String>();
-		types = new ArrayList<AbstractSingleColumnStandardBasicType<?>>();
+		types = new ArrayList<BindableType<?>>();
 		StringBuilder hql = new StringBuilder();
 		addCountClause(hql);
 		hql.append("from Contact target where 1=1 ");
@@ -101,13 +102,19 @@ public class HibernateContactFinderQueryBuilder
 		this.count = count;
 	}
 
+	public void setParameters(Query q) {
+		for (int i = 0; i < parameters.size(); ++i) {
+			q.setParameter(i, parameters.get(i), types.get(i));
+		}
+	}
+
 	public String[] getParameters()
 	{
 		return parameters.toArray(new String[0]);
 	}
 
-	public AbstractSingleColumnStandardBasicType<?>[] getTypes()
+	public BindableType<?>[] getTypes()
 	{
-		return types.toArray(new AbstractSingleColumnStandardBasicType[types.size()]);
+		return types.toArray(new BindableType[types.size()]);
 	}
 }
