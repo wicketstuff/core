@@ -211,7 +211,7 @@
 	<!-- mocleiri: for distribution in to central repository sections in the main pom are not allowed -->
 
 	<properties>
-		<wicket.version>9.12.0-SNAPSHOT</wicket.version>
+		<wicket.version>9.12.0</wicket.version>
 
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
@@ -229,15 +229,15 @@
 		<javassist.version>3.29.2-GA</javassist.version>
 		<jetty.version>9.4.49.v20220914</jetty.version>
 		<sf-jung.version>2.1.1</sf-jung.version>
-		<shiro.version>1.9.1</shiro.version>
+		<shiro.version>1.10.0</shiro.version>
 		<slf4j.version>2.0.3</slf4j.version>
-		<logback.version>1.4.3</logback.version>
+		<logback.version>1.4.4</logback.version>
 		<log4j.version>2.19.0</log4j.version>
 		<spring.version>5.3.23</spring.version>
 		<cglib.version>3.3.0</cglib.version>
 		<objenesis.version>3.3</objenesis.version>
-		<scala.version>2.13.9</scala.version>
-		<jackson.version>2.13.4</jackson.version>
+		<scala.version>2.13.10</scala.version>
+		<jackson.version>2.14.0-rc2</jackson.version>
 		<poi.version>5.2.3</poi.version>
 		<guava.version>29.0-jre</guava.version>
 		<wicket-webjars.version>3.0.0-M4</wicket-webjars.version>
@@ -247,7 +247,7 @@
 		<commons-logging.version>1.2</commons-logging.version>
 		<javax.servlet-api.version>3.1.0</javax.servlet-api.version>
 		<junit.version>5.9.1</junit.version>
-		<easymock.version>4.3</easymock.version>
+		<easymock.version>5.0.0</easymock.version>
 		<mockito.version>4.8.0</mockito.version>
 		<testng.version>7.6.1</testng.version>
 		<commons-beanutils.version>1.9.4</commons-beanutils.version>
@@ -257,15 +257,15 @@
 		<validation-api.version>2.0.1.Final</validation-api.version>
 		<jta.version>1.1</jta.version>
 		<htmlcompressor.version>1.5.2</htmlcompressor.version>
-		<closure-compiler.version>v20220905</closure-compiler.version>
+		<closure-compiler.version>v20221004</closure-compiler.version>
 		<ibatis2-sqlmap.version>2.1.7.597</ibatis2-sqlmap.version>
 		<jts.version>1.13</jts.version>
 		<gson.version>2.9.1</gson.version>
 		<wicket-bootstrap-core.version>4.0.4</wicket-bootstrap-core.version> <!-- 4.0.x is required for openlayers-3 (bootstrap3) -->
 		<jasperreports.version>6.20.0</jasperreports.version>
 		<bcprov.version>1.67</bcprov.version>
-		<joda-time.version>2.11.2</joda-time.version>
-		<ehcache.version>3.10.1</ehcache.version>
+		<joda-time.version>2.12.0</joda-time.version>
+		<ehcache.version>3.10.2</ehcache.version>
 		<commons-dbcp2.version>2.9.0</commons-dbcp2.version>
 		<javaee-api.version>7.0</javaee-api.version>
 		<clojure.version>1.11.1</clojure.version>
