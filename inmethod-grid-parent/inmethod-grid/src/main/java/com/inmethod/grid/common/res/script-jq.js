@@ -538,7 +538,9 @@ InMethod.XTable.prototype = {
 		
   		var headContainer1 = this.getElement("div", "imxt-head-container1");
   		var headContainer2 = this.getElement("div", "imxt-head-container2");
-  		var bodyContainer1 = this.getElement("div", "imxt-body-container1");  				  		
+  		var bodyContainer1 = this.getElement("div", "imxt-body-container1");
+
+		bodyContainer1.style.width = topContainer.offsetWidth + "px";
 	
 		var padding = (bodyContainer1.offsetWidth - bodyContainer1.clientWidth);
 
