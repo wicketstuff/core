@@ -21,9 +21,10 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,12 +34,12 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.mockito.InOrder;
-import org.testng.annotations.Test;
 import org.wicketstuff.IQuickView;
 import org.wicketstuff.IRepeaterUtil;
 import org.wicketstuff.ItemsNavigationStrategy;
 import org.wicketstuff.QuickView;
 import org.wicketstuff.QuickViewBase;
+import org.wicketstuff.WicketTest;
 
 /**
  *
@@ -46,7 +47,7 @@ import org.wicketstuff.QuickViewBase;
  *
  */
 public class AjaxItemsNavigatorTest extends TesterBase {
-	@Test(groups = { "wicketTests" })
+	@WicketTest
 	public void constructor_1() {
 		IQuickView repeater = mock(IQuickView.class);
 		final AjaxRequestTarget target = mock(AjaxRequestTarget.class);
@@ -55,23 +56,24 @@ public class AjaxItemsNavigatorTest extends TesterBase {
 		assertEquals(navigator.getRepeater(), repeater);
 	}
 
-	@Test(groups = { "wicketTests" }, expectedExceptions = RuntimeException.class)
+	@WicketTest
 	public void constructor_2() {
-		IQuickView repeater = mock(IQuickView.class);
-		final AjaxRequestTarget target = mock(AjaxRequestTarget.class);
-		final List<Item> items = mock(List.class);
+		assertThrows(RuntimeException.class, () -> {
+			IQuickView repeater = mock(IQuickView.class);
+			final AjaxRequestTarget target = mock(AjaxRequestTarget.class);
+			final List<Item> items = mock(List.class);
 
-		boolean isException = false;
+			boolean isException = false;
 
-		AjaxItemsNavigator navigator = new AjaxItemsNavigator("nav", null);
-
+			AjaxItemsNavigator navigator = new AjaxItemsNavigator("nav", null);
+		});
 	}
 
 	/**
 	 * when current page< pages count
 	 */
 
-	@Test(groups = { "wicketTests" })
+	@WicketTest
 	public void OnStatefulEvent_1() {
 		IQuickView quickView = mock(IQuickView.class);
 		final AjaxRequestTarget target = mock(AjaxRequestTarget.class);
@@ -93,7 +95,7 @@ public class AjaxItemsNavigatorTest extends TesterBase {
 	 * parent not null ,OutputMarkupPlaceholderTag set to true reuse stategy is
 	 * correct
 	 */
-	@Test(groups = { "wicketTests" })
+	@WicketTest
 	public void onBeforeRender_1() {
 		WebMarkupContainer parent = new WebMarkupContainer("parent");
 		IDataProvider data = mock(IDataProvider.class);
@@ -110,7 +112,7 @@ public class AjaxItemsNavigatorTest extends TesterBase {
 		navigator.onBeforeRender();
 	}
 
-	@Test(groups = { "wicketTests" })
+	@WicketTest
 	public void onBeforeRender_2() {
 		WebMarkupContainer parent = new WebMarkupContainer("parent");
 		IDataProvider data = mock(IDataProvider.class);
@@ -129,7 +131,7 @@ public class AjaxItemsNavigatorTest extends TesterBase {
 		assertTrue(navigator.isProperInitializationCheckDone());
 	}
 
-	@Test(groups = { "wicketTests" })
+	@WicketTest
 	public void repeaterNotProperlyInitializedForItemsNavigation() {
 		IQuickView quickView = mock(IQuickView.class);
 		final IRepeaterUtil util = mock(IRepeaterUtil.class);
@@ -148,7 +150,7 @@ public class AjaxItemsNavigatorTest extends TesterBase {
 		order.verify(util, times(1)).outPutMarkupIdNotTrue(quickView);
 	}
 
-	@Test(groups = { "wicketTests" })
+	@WicketTest
 	public void doProperInitializationCheck() {
 		IQuickView quickView = mock(IQuickView.class);
 		final IRepeaterUtil util = mock(IRepeaterUtil.class);

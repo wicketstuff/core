@@ -16,13 +16,14 @@
 
 package org.wicketstuff;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.apache.wicket.markup.repeater.IItemFactory;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.mockito.Mockito;
-import org.testng.Assert;
-import org.testng.annotations.Test;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -33,22 +34,22 @@ import java.util.List;
  */
 public class ItemsNavigationStrategyTest extends AbstractItemsNavigationStrategyTest {
 
-    @Test(groups = {"wicketTests"})
+    @WicketTest
     public void addItems_1() {
         super.assertAddItems(new ItemsNavigationStrategy());
     }
 
-    @Test(groups = {"wicketTests"})
+    @WicketTest
     public void isPaging_1() {
         super.assertIsPartialUpdatesSupported(new ItemsNavigationStrategy());
     }
 
-    @Test(groups = {"wicketTests"})
+    @WicketTest
     public void pageCreatedOnReRender_1() {
-        Assert.assertTrue(new ItemsNavigationStrategy().getPageCreatedOnRender() == 0);
+        assertTrue(new ItemsNavigationStrategy().getPageCreatedOnRender() == 0);
     }
 
-    @Test(groups = {"wicketTests"})
+    @WicketTest
     public void getItems_1() {
         IQuickReuseStrategy strategy = new ItemsNavigationStrategy();
         List<Integer> list = new ArrayList<Integer>();
@@ -69,10 +70,7 @@ public class ItemsNavigationStrategyTest extends AbstractItemsNavigationStrategy
         newModels.add(model2);
 
         Iterator<Item<Integer>> actual = strategy.getItems(factory, newModels.iterator(), null);
-        Assert.assertEquals(actual.next(), item1);
-        Assert.assertEquals(actual.next(), item2);
-
+        assertEquals(actual.next(), item1);
+        assertEquals(actual.next(), item2);
     }
-
-
 }

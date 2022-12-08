@@ -16,30 +16,31 @@
  */
 package org.wicketstuff.navigator;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
 import org.apache.wicket.ajax.attributes.IAjaxCallListener;
 import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.testng.Assert;
-import org.testng.annotations.Test;
 import org.wicketstuff.RepeaterUtil;
+import org.wicketstuff.WicketTest;
 
 /**
  * @author Vineet Semwal
  *
  */
 public class AjaxPageScrollEventBehaviorTest extends TesterBase {
-	@Test(groups = { "wicketTests" })
+	@WicketTest
 	public void getPrecondition() {
 		WebMarkupContainer parent = new WebMarkupContainer("parent");
 		AjaxPageScrollEventBehavior.PageScrollListener listener = new AjaxPageScrollEventBehavior.PageScrollListener();
 		String actual = listener.getPrecondition(parent).toString();
 		String expected = "return " + RepeaterUtil.get().isPageScrollBarAtBottom();
-		Assert.assertEquals(actual, expected);
-
+		assertEquals(actual, expected);
 	}
 
-	@Test(groups = { "wicketTests" })
+	@WicketTest
 	public void updateAjaxAttributes() {
 		AjaxPageScrollEventBehavior behavior = new AjaxPageScrollEventBehavior() {
 			@Override
@@ -54,6 +55,6 @@ public class AjaxPageScrollEventBehaviorTest extends TesterBase {
 				isAdded = true;
 			}
 		}
-		Assert.assertTrue(isAdded);
+		assertTrue(isAdded);
 	}
 }

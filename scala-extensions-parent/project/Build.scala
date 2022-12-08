@@ -14,7 +14,7 @@ object WicketScalaParent extends Build
 	val JUnitDep      = "junit" % "junit" % "4.11" % "test->default"
 	val Specs1Dep     = "org.specs2" % "specs2_2.10" % "1.14" % "test->default"
 	val ServletDep    = "javax.servlet" % "servlet-api" % "2.5"
-	val Slf4jLog4jDep = "org.slf4j" % "slf4j-log4j12" % "1.7.5"
+	val Slf4jLog4jDep = "org.slf4j" % "slf4j-reload4j" % "2.0.5"
 	val WicketDep     = "org.apache.wicket" % "wicket-core" % WicketVersion
 	val WicketExtensionsDep = "org.apache.wicket" % "wicket-extensions" % WicketVersion
 	val WicketDatetimeDep = "org.apache.wicket" % "wicket-datetime" % WicketVersion

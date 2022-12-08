@@ -1,27 +1,23 @@
 package org.wicketstuff;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.apache.wicket.Component;
 import org.apache.wicket.MarkupContainer;
-import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.repeater.Item;
-import org.apache.wicket.markup.repeater.data.IDataProvider;
-import org.apache.wicket.model.Model;
 import org.mockito.Mockito;
-import org.testng.Assert;
-import org.testng.annotations.Test;
 
 import java.util.*;
 
-@Test(groups = {"wicketTests"})
 public class SynchronizerTest {
 
     /**
      * components not empty  and repeater's parent is added to another component which is added to A.R.T
      */
-    @Test(groups = {"wicketTests"})
+    @WicketTest
     public void Synchronizer_isParentAdded_1() {
         final IPartialPageRequestHandler target = Mockito.mock(IPartialPageRequestHandler.class);
         WebMarkupContainer one = Mockito.mock(WebMarkupContainer.class);
@@ -39,7 +35,7 @@ public class SynchronizerTest {
         };
         Synchronizer spy = Mockito.spy(synchronizer);
         boolean result = spy.isParentAddedInPartialPageRequestHandler();
-        Assert.assertTrue(result);
+        assertTrue(result);
         Mockito.verify(spy).addNewChildVisitor(one, parent);
         Mockito.verify(spy, Mockito.never()).addNewChildVisitor(two, parent);
 
@@ -49,7 +45,7 @@ public class SynchronizerTest {
     /**
      * components not empty  and repeater's parent is added directly in requesthandler
      */
-    @Test(groups = {"wicketTests"})
+    @WicketTest
     public void Synchronizer_isParentAdded_2() {
         final IPartialPageRequestHandler target = Mockito.mock(IPartialPageRequestHandler.class);
         List cs = new ArrayList();
@@ -63,7 +59,7 @@ public class SynchronizerTest {
         Synchronizer synchronizer = new Synchronizer(parent, target);
         Synchronizer spy = Mockito.spy(synchronizer);
         boolean result = spy.isParentAddedInPartialPageRequestHandler();
-        Assert.assertTrue(result);
+        assertTrue(result);
         Mockito.verify(spy, Mockito.never()).addNewChildVisitor(one, one);
         Mockito.verify(spy, Mockito.never()).addNewChildVisitor(two, one);
 
@@ -73,7 +69,7 @@ public class SynchronizerTest {
     /**
      * components is empty  and repeater's parent is added directly in A.R.T
      */
-    @Test(groups = {"wicketTests"})
+    @WicketTest
     public void Synchronizer_isParentAdded_3() {
         final IPartialPageRequestHandler target = Mockito.mock(IPartialPageRequestHandler.class);
         List cs = new ArrayList();
@@ -89,14 +85,14 @@ public class SynchronizerTest {
         };
         Synchronizer spy = Mockito.spy(synchronizer);
         boolean result = spy.isParentAddedInPartialPageRequestHandler();
-        Assert.assertTrue(result);
+        assertTrue(result);
         Mockito.verify(spy, Mockito.never()).addNewChildVisitor(Mockito.any(MarkupContainer.class), Mockito.any(MarkupContainer.class));
     }
 
     /**
      * parent not added in AjaxRequestTarget
      */
-    @Test(groups = {"utilTests"})
+    @UtilTest
     public void submit_1() {
         IPartialPageRequestHandler requestHandler = Mockito.mock(IPartialPageRequestHandler.class);
         final MarkupContainer parent = Mockito.mock(MarkupContainer.class);
@@ -117,7 +113,7 @@ public class SynchronizerTest {
     /**
      * parent added in AjaxRequestTarget
      */
-    @Test(groups = {"utilTests"})
+    @UtilTest
     public void Synchronizer_submit_2() {
         final MarkupContainer parent = Mockito.mock(MarkupContainer.class);
         IPartialPageRequestHandler requestHandler = Mockito.mock(IPartialPageRequestHandler.class);

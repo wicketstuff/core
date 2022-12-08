@@ -11,4 +11,4 @@ Setting up an eclipse project:
 Required dependencies:
 - Wicket
 - Wasp
-- any slf logging implementation (e.g. slf4j-log4j12 with log4j)
+- any slf logging implementation (e.g. slf4j-reload4j with log4j)

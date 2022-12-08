@@ -16,8 +16,8 @@
  */
 package org.wicketstuff.javaee.naming.global;
 
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
 
 /**
  * The container has to register one JNDI global entry for every local and remote business interface implemented by the EJB and its no-interface view.
@@ -36,9 +36,9 @@ public class GlobalJndiNamingStrategyTest {
 
     @Test
     public void nameAccordingToSpecification() {
-        Assert.assertEquals(namingStrategy.calculateName(null, String.class),
+        assertEquals(namingStrategy.calculateName(null, String.class),
                 "java:global/appname/modulename/java.lang.String");
-        Assert.assertEquals(namingStrategy.calculateName("beanname", String.class),
+        assertEquals(namingStrategy.calculateName("beanname", String.class),
                 "java:global/appname/modulename/beanname!java.lang.String");
     }
 }

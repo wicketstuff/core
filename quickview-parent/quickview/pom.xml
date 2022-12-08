@@ -56,12 +56,8 @@ Copyright 2012 Vineet Semwal
         </dependency>
 
         <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <scope>test</scope>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
         </dependency>
-
-
     </dependencies>
-
 </project>

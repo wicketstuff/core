@@ -16,19 +16,21 @@
  */
 package org.wicketstuff.navigator;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.wicketstuff.IQuickView;
+import org.wicketstuff.WicketTest;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.mock.MockApplication;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.protocol.http.WebApplication;
-import org.apache.wicket.util.tester.WicketTester;
 import org.mockito.Mockito;
-import org.testng.Assert;
-import org.testng.annotations.Test;
 
 import static org.mockito.Mockito.mock;
 
@@ -38,30 +40,34 @@ import static org.mockito.Mockito.mock;
  */
 public class MoreLabelTest {
 
-    @Test(groups = {"wicketTests"})
+    @WicketTest
     public void constructor_1(){
         IModel model= Mockito.mock(IModel.class);
         ItemsNavigatorBase navigator=Mockito.mock(ItemsNavigatorBase.class);
          MoreLabel label=new MoreLabel("id",model,navigator)  ;
-        Assert.assertEquals(label.getNavigator(),navigator);
-        Assert.assertTrue(label.getOutputMarkupId());
+        assertEquals(label.getNavigator(),navigator);
+        assertTrue(label.getOutputMarkupId());
 
     }
-    @Test(groups = {"wicketTests"},expectedExceptions = IllegalArgumentException.class)
+
+    @WicketTest
     public void constructor_2(){
-        IModel model= Mockito.mock(IModel.class);
-         MoreLabel label=new MoreLabel("id",model,null) ;
+        assertThrows(IllegalArgumentException.class, () -> {
+            IModel model= Mockito.mock(IModel.class);
+            MoreLabel label=new MoreLabel("id",model,null) ;
+        });
     }
-    @Test(groups = {"wicketTests"})
+
+    @WicketTest
     public void newOnClickBehavior(){
         IModel model= Mockito.mock(IModel.class);
         ItemsNavigatorBase navigator=Mockito.mock(ItemsNavigatorBase.class);
         MoreLabel label=new MoreLabel("id",model,navigator)  ;
         AjaxEventBehavior behavior=label.newOnClickBehavior();
-        Assert.assertEquals(behavior.getEvent(), "click");
+        assertEquals(behavior.getEvent(), "click");
     }
 
-    @Test(groups = {"wicketTests"})
+    @WicketTest
     public void newOnClickBehavior_onclick(){
         IModel model= Mockito.mock(IModel.class);
         ItemsNavigatorBase navigator=Mockito.mock(ItemsNavigatorBase.class);
@@ -83,7 +89,7 @@ public class MoreLabelTest {
      * current page=2 pages=4
      */
 
-    @Test(groups = {"wicketTests"})
+    @WicketTest
     public void onConfigure_1() {
         final String id = "id";
         final long currentpage = 2,pages = 4;
@@ -95,14 +101,14 @@ public class MoreLabelTest {
         IModel model=Mockito.mock(IModel.class);
         MoreLabel more = new MoreLabel(id,model, navigator);
         more.onConfigure();
-        Assert.assertTrue(more.isVisible());
+        assertTrue(more.isVisible());
     }
 
     /**
      * current page=3 pages=4
      */
 
-    @Test(groups = {"wicketTests"})
+    @WicketTest
     public void onConfigure_2() {
         final String id = "id";
         final long currentpage = 3,pages = 4;
@@ -114,14 +120,14 @@ public class MoreLabelTest {
         IModel model=Mockito.mock(IModel.class);
         MoreLabel more = new MoreLabel(id,model, navigator);
         more.onConfigure();
-        Assert.assertFalse(more.isVisible());
+        assertFalse(more.isVisible());
     }
 
     /**
      * current page=4 pages=4
      */
 
-    @Test(groups = {"wicketTests"})
+    @WicketTest
     public void onConfigure_3() {
         final String id = "id";
         final long currentpage = 4,pages = 4;
@@ -133,13 +139,13 @@ public class MoreLabelTest {
         IModel model=Mockito.mock(IModel.class);
         MoreLabel more = new MoreLabel(id,model, navigator);
         more.onConfigure();
-        Assert.assertFalse(more.isVisible());
+        assertFalse(more.isVisible());
     }
     /**
      * current page=5 pages=4
      */
 
-    @Test(groups = {"wicketTests"})
+    @WicketTest
     public void onConfigure_4() {
         final String id = "id";
         final long currentpage = 5,pages = 4;
@@ -151,10 +157,10 @@ public class MoreLabelTest {
         IModel model=Mockito.mock(IModel.class);
         MoreLabel more = new MoreLabel(id,model, navigator);
         more.onConfigure();
-        Assert.assertFalse(more.isVisible());
+        assertFalse(more.isVisible());
     }
 
-    @Test(groups = {"wicketTests"})
+    @WicketTest
     public void renderHead_1(){
         IHeaderResponse response=Mockito.mock(IHeaderResponse.class);
         ItemsNavigatorBase navigator = Mockito.mock(ItemsNavigatorBase.class);

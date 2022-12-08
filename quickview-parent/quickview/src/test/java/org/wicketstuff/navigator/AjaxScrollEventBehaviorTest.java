@@ -1,16 +1,17 @@
 package org.wicketstuff.navigator;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.wicketstuff.IQuickView;
-import org.apache.wicket.ajax.AjaxRequestHandler;
+import org.wicketstuff.WicketTest;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.mock.MockApplication;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.util.tester.WicketTester;
+import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mockito;
-import org.testng.Assert;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Test;
 
 /**
  * @author Vineet Semwal
@@ -18,7 +19,7 @@ import org.testng.annotations.Test;
 public class AjaxScrollEventBehaviorTest {
     WicketTester tester;
 
-    @BeforeTest
+    @BeforeEach
     void setup() {
         tester = new WicketTester(createMockApplication());
         scrolled = false;
@@ -31,7 +32,7 @@ public class AjaxScrollEventBehaviorTest {
 
     private boolean scrolled = false;
 
-    @Test(groups = {"wicketTests"})
+    @WicketTest
     public void constructor() {
         AjaxScrollEventBehaviorBase behavior = new AjaxScrollEventBehaviorBase() {
             @Override
@@ -39,10 +40,10 @@ public class AjaxScrollEventBehaviorTest {
 
             }
         };
-        Assert.assertEquals(behavior.getEvent(), "scroll");
+        assertEquals(behavior.getEvent(), "scroll");
     }
 
-    @Test(groups = {"wicketTests"})
+    @WicketTest
     public void onScroll() {
         WebMarkupContainer container = new WebMarkupContainer("id");
         AjaxScrollEventBehaviorBase behavior = new AjaxScrollEventBehaviorBase() {
@@ -55,10 +56,10 @@ public class AjaxScrollEventBehaviorTest {
         container.add(behavior);
         tester.startComponentInPage(container);
         tester.executeAjaxEvent(container, "scroll");
-        Assert.assertTrue(scrolled);
+        assertTrue(scrolled);
     }
 
-    @Test(groups = {"wicketTests"})
+    @WicketTest
     public void addItemsForNextPage() {
         IQuickView quickView = Mockito.mock(IQuickView.class);
         AjaxScrollEventBehaviorBase behavior = new AjaxScrollEventBehaviorBase() {

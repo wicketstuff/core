@@ -16,13 +16,14 @@
 
 package org.wicketstuff;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.apache.wicket.markup.repeater.IItemFactory;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.mockito.Mockito;
-import org.testng.Assert;
-import org.testng.annotations.Test;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -33,17 +34,18 @@ import java.util.List;
  */
 public class DefaultQuickReuseStrategyTest extends AbstractPagingNavigationStrategyTest {
 
-    @Test(groups = {"wicketTests"}, expectedExceptions = IRepeaterUtil.ReuseStrategyNotSupportedException.class)
+    @WicketTest
     public void addItems_1() {
-        super.assertAddItems(new DefaultQuickReuseStrategy());
+        assertThrows(IRepeaterUtil.ReuseStrategyNotSupportedException.class
+                , () -> super.assertAddItems(new DefaultQuickReuseStrategy()));
     }
 
-    @Test(groups = {"wicketTests"})
+    @WicketTest
     public void isPaging_1() {
         super.assertIsPartialUpdatesSupported(new DefaultQuickReuseStrategy());
     }
 
-    @Test(groups = {"wicketTests"})
+    @WicketTest
     public void getPageCreatedOnReRender_1() {
         super.assertPageCreatedOnReRender(new DefaultQuickReuseStrategy());
     }
@@ -51,7 +53,7 @@ public class DefaultQuickReuseStrategyTest extends AbstractPagingNavigationStrat
     /**
      * existing items empty
      */
-    @Test(groups = {"wicketTests"})
+    @WicketTest
     public void getItems_1() {
         IQuickReuseStrategy strategy = new DefaultQuickReuseStrategy();
         List<Integer> list = new ArrayList<Integer>();
@@ -72,10 +74,9 @@ public class DefaultQuickReuseStrategyTest extends AbstractPagingNavigationStrat
         newModels.add(model2);
 
         Iterator<Item<Integer>> actual = strategy.getItems(factory, newModels.iterator(), existingItems.iterator());
-        Assert.assertEquals(actual.next(), item1);
-        Assert.assertEquals(actual.next(), item2);
+        assertEquals(actual.next(), item1);
+        assertEquals(actual.next(), item2);
         Mockito.verify(factory, Mockito.times(1)).newItem(index, model1);
         Mockito.verify(factory, Mockito.times(1)).newItem(index2, model2);
-
     }
 }

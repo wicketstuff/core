@@ -16,17 +16,29 @@
  */
 package org.wicketstuff.navigator;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import javax.servlet.ServletContext;
+
 import org.wicketstuff.QuickMockApplication;
 import org.wicketstuff.RepeaterUtil;
+import org.wicketstuff.WicketTest;
+import org.apache.wicket.ThreadContext;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.attributes.AjaxCallListener;
 import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
 import org.apache.wicket.ajax.attributes.IAjaxCallListener;
 import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.mock.MockApplication;
+import org.apache.wicket.mock.MockWebResponse;
 import org.apache.wicket.protocol.http.WebApplication;
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.apache.wicket.protocol.http.mock.MockHttpServletRequest;
+import org.apache.wicket.protocol.http.mock.MockHttpSession;
+import org.apache.wicket.protocol.http.mock.MockServletContext;
+import org.apache.wicket.protocol.http.servlet.ServletWebRequest;
+import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.request.cycle.RequestCycleContext;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 
 /**
  *
@@ -35,37 +47,50 @@ import org.testng.annotations.Test;
  */
 public class AjaxComponentScrollEventBehaviorTest {
 
-    @Test(groups = {"wicketTests"})
-    public void  getPrecondition(){
-        WebMarkupContainer parent=new WebMarkupContainer("parent");
+    @WicketTest
+    public void  getPrecondition() {
+        WebMarkupContainer parent = new WebMarkupContainer("parent");
         parent.setMarkupId("parent");
-      AjaxComponentScrollEventBehavior.ParentScrollListener listener=new AjaxComponentScrollEventBehavior.ParentScrollListener();
-       String actual= listener.getPrecondition(parent).toString();
-      String expected="return "+ RepeaterUtil.get().isComponentScrollBarAtBottom(parent);
-        Assert.assertEquals(actual,expected);
-
+        AjaxComponentScrollEventBehavior.ParentScrollListener listener = new AjaxComponentScrollEventBehavior.ParentScrollListener();
+        String actual = listener.getPrecondition(parent).toString();
+        String expected = "return "+ RepeaterUtil.get().isComponentScrollBarAtBottom(parent);
+        assertEquals(actual,expected);
     }
 
-    @Test(groups = {"wicketTests"})
+    @WicketTest
     public void updateAjaxAttributes(){
-    AjaxComponentScrollEventBehavior behavior=new AjaxComponentScrollEventBehavior(){
-        @Override
-        protected void onScroll(AjaxRequestTarget target) {
-        }
-    };
-        AjaxRequestAttributes attributes=new AjaxRequestAttributes();
-        behavior.updateAjaxAttributes(attributes);
-        boolean  isAdded=false;
-        for(IAjaxCallListener listener:attributes.getAjaxCallListeners())
-        {
-            if(listener instanceof AjaxComponentScrollEventBehavior.ParentScrollListener){
-              isAdded=true;
+        AjaxComponentScrollEventBehavior behavior = new AjaxComponentScrollEventBehavior() {
+            @Override
+            protected void onScroll(AjaxRequestTarget target) {
             }
-    }
-        Assert.assertTrue(isAdded);
+        };
+        AjaxRequestAttributes attributes = new AjaxRequestAttributes();
+        behavior.updateAjaxAttributes(attributes);
+        boolean isAdded = false;
+        for(IAjaxCallListener listener:attributes.getAjaxCallListeners()) {
+            if (listener instanceof AjaxComponentScrollEventBehavior.ParentScrollListener) {
+              isAdded = true;
+            }
+        }
+        assertTrue(isAdded);
     }
 
-    public static WebApplication createApplication(){
-        return new QuickMockApplication();
+    @BeforeAll
+    static void createApplication() {
+        WebApplication app = new QuickMockApplication();
+        app.setName("quickview");
+        ServletContext ctx = new MockServletContext(app, null);
+        app.setServletContext(ctx);
+        ThreadContext.setApplication(app);
+        app.initApplication();
+        ServletWebRequest req = new ServletWebRequest(new MockHttpServletRequest(app, new MockHttpSession(ctx), ctx), "");
+        RequestCycleContext rctx = new RequestCycleContext(req, new MockWebResponse(), app.getRootRequestMapper(), app.getExceptionMapperProvider().get());
+        ThreadContext.setRequestCycle(new RequestCycle(rctx));
+    }
+
+    @AfterAll
+    static void dropApplication() {
+        ThreadContext.setApplication(null);
+        ThreadContext.setRequestCycle(null);
     }
 }

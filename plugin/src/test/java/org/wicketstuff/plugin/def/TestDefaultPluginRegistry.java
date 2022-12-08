@@ -1,16 +1,16 @@
 package org.wicketstuff.plugin.def;
 
-import static org.testng.Assert.assertSame;
-import static org.testng.Assert.assertTrue;
-import static org.testng.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.Externalizable;
 import java.io.Serializable;
 import java.util.HashSet;
 
 import org.apache.wicket.WicketRuntimeException;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * @since 1.4
@@ -28,7 +28,7 @@ public class TestDefaultPluginRegistry
 // Other Methods
 // **********************************************************************************************************************
 
-	@BeforeTest
+	@BeforeEach
 	protected void setUp() throws Exception
 	{
 		registry = new DefaultPluginRegistry();

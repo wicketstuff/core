@@ -16,15 +16,18 @@
 
 package org.wicketstuff;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
 import org.apache.wicket.markup.repeater.IItemFactory;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.mock.MockApplication;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.util.tester.WicketTester;
+import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mockito;
-import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
 
 import java.util.Iterator;
 
@@ -38,7 +41,7 @@ public class AbstractItemsNavigationStrategyTest {
         return tester;
     }
 
-    @BeforeMethod
+    @BeforeEach
     public void setup() {
         tester = new WicketTester(createMockApplication());
     }
@@ -60,19 +63,17 @@ public class AbstractItemsNavigationStrategyTest {
         Iterator<Item> actual = strategy.addItems(startIndex, factory, newModels);
         Mockito.verify(factory, Mockito.times(1)).newItem(startIndex, model1);
         Mockito.verify(factory, Mockito.times(1)).newItem(index2, model2);
-        Assert.assertEquals(actual.next(), item1);
-        Assert.assertEquals(actual.next(), item2);
-        Assert.assertFalse(actual.hasNext());
+        assertEquals(actual.next(), item1);
+        assertEquals(actual.next(), item2);
+        assertFalse(actual.hasNext());
 
     }
 
     public void assertIsPartialUpdatesSupported(IQuickReuseStrategy strategy) {
-        Assert.assertTrue(strategy.isPartialUpdatesSupported());
+        assertTrue(strategy.isPartialUpdatesSupported());
     }
 
     private static WebApplication createMockApplication() {
         return new MockApplication();
     }
-
-
 }

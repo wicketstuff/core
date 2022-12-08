@@ -16,28 +16,27 @@
 
 package org.wicketstuff;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Vineet Semwal
  */
 public class QuickReuseIfModelsEqualStrategyTest extends AbstractPagingNavigationStrategyTest {
-
-    @Test(groups = {"wicketTests"})
+    @WicketTest
     public void isPaging_1() {
         super.assertIsPartialUpdatesSupported(new QuickReuseIfModelsEqualStrategy());
     }
 
-    @Test(groups = {"wicketTests"})
+    @WicketTest
     public void pageCreatedOnReRender_1() {
         super.assertPageCreatedOnReRender(new QuickReuseIfModelsEqualStrategy());
     }
 
-    @Test(groups = {"wicketTests"}, expectedExceptions = IRepeaterUtil.ReuseStrategyNotSupportedException.class)
+    @WicketTest
     public void addItems_1() {
-        super.assertAddItems(new QuickReuseIfModelsEqualStrategy());
+        assertThrows(IRepeaterUtil.ReuseStrategyNotSupportedException.class
+                , () -> super.assertAddItems(new QuickReuseIfModelsEqualStrategy()));
     }
-
-
 }

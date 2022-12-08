@@ -1,14 +1,14 @@
 package org.wicketstuff.async.components;
 
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.apache.wicket.ajax.AbstractAjaxTimerBehavior;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.util.tester.FormTester;
 import org.apache.wicket.util.tester.WicketTester;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class ProgressButtonTest {
 
@@ -23,7 +23,7 @@ public class ProgressButtonTest {
     private WicketTester tester;
     private TestPage page;
 
-    @BeforeMethod
+    @BeforeEach
     public void setUp() throws Exception {
         tester = new WicketTester();
         page = new TestPage();
@@ -47,9 +47,9 @@ public class ProgressButtonTest {
 
         FormTester formTester = tester.newFormTester("form");
         formTester.submit("button");
-        
+
         page.waitForTaskToComplete();
-        
+
         assertTrue(result[0]);
         assertTrue(page.isTaskStart());
         assertFalse(page.isTaskCancel());

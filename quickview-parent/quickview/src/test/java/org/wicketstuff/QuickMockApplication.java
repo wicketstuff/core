@@ -2,13 +2,10 @@ package org.wicketstuff;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
-import org.apache.wicket.ajax.AjaxRequestHandler;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
 import org.apache.wicket.mock.MockApplication;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 /**

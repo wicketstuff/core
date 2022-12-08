@@ -15,6 +15,10 @@
  */
 package org.wicketstuff;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.ComponentTag;
@@ -27,9 +31,8 @@ import org.apache.wicket.markup.repeater.data.ListDataProvider;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.util.tester.WicketTester;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.testng.Assert;
-import org.testng.annotations.Test;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,22 +42,22 @@ import java.util.List;
  */
 public class RepeaterUtilTest {
 
-    @Test(groups = {"utilTests"})
+    @UtilTest
     public void get_1() {
         WicketTester tester = new WicketTester(createMockApplication());
         RepeaterUtil util = RepeaterUtil.get();
         RepeaterUtil util2 = RepeaterUtil.get();
-        Assert.assertNotNull(util);
-        Assert.assertTrue(util == util2);
+        assertNotNull(util);
+        assertTrue(util == util2);
     }
 
-    @Test(groups = {"utilTests"})
+    @UtilTest
     public void prepend_1() {
         WicketTester tester = new WicketTester(createMockApplication());
         final String child = "child", parent = "parent", tag = "div", start = "start", end = "end";
         String actual = RepeaterUtil.get().prepend(tag, child, parent, start, end);
         String expected = "QuickView.prepend('div','child','parent','start','end');";
-        Assert.assertEquals(actual.trim(), expected.trim());
+        assertEquals(actual.trim(), expected.trim());
     }
 
 
@@ -62,7 +65,7 @@ public class RepeaterUtilTest {
      * test without boundaries
      */
 
-    @Test(groups = {"utilTests"})
+    @UtilTest
     public void prepend_2() {
         QuickMockApplication app = new QuickMockApplication();
         WicketTester tester = new WicketTester(app);
@@ -92,14 +95,14 @@ public class RepeaterUtilTest {
         String expected = String.format("QuickView.prepend('%s','%s','%s','','');", TestQuickViewContainer.TAG_NAME,
                 newItemAtStart.getMarkupId(), parent.getMarkupId());
         String actual = RepeaterUtil.get().prepend(newItemAtStart, parent, null, null);
-        Assert.assertEquals(actual.trim(), expected.trim());
+        assertEquals(actual.trim(), expected.trim());
     }
 
 
     /**
      * test with boundaries
      */
-    @Test(groups = {"utilTests"})
+    @UtilTest
     public void prepend_3() {
         QuickMockApplication app = new QuickMockApplication();
         WicketTester tester = new WicketTester(app);
@@ -133,14 +136,14 @@ public class RepeaterUtilTest {
         String expected = String.format("QuickView.prepend('%s','%s','%s','start','end');", TestQuickViewContainer.TAG_NAME,
                 newItemAtStart.getMarkupId(), panel.getMarkupId());
         String actual = RepeaterUtil.get().prepend(newItemAtStart, panel, start, end);
-        Assert.assertEquals(actual.trim(), expected.trim());
+        assertEquals(actual.trim(), expected.trim());
     }
 
     /**
      * check with testpanel2
      */
 
-    @Test(groups = {"utilTests"})
+    @UtilTest
     public void getComponentTag_2() {
 
         QuickMockApplication app = new QuickMockApplication();
@@ -169,24 +172,24 @@ public class RepeaterUtilTest {
         Item newItem = new Item("363", 37, new Model());
         quickView.add(newItem);
         ComponentTag actual = RepeaterUtil.get().getComponentTag(newItem);
-        Assert.assertEquals(actual.getName(), TestQuickViewContainer.TAG_NAME);
+        assertEquals(actual.getName(), TestQuickViewContainer.TAG_NAME);
     }
 
 
-    @Test(groups = {"utilTests"})
+    @UtilTest
     public void append_1() {
         WicketTester tester = new WicketTester(createMockApplication());
         final String child = "child", parent = "parent", tag = "div", start = "start20", end = "end30";
         String call = RepeaterUtil.get().append(tag, child, parent, start, end);
         String expected = "QuickView.append('div','child','parent','start20','end30');";
-        Assert.assertEquals(call, expected);
+        assertEquals(call, expected);
     }
 
 
     /**
      * test without boundaries
      */
-    @Test(groups = {"utilTests"})
+    @UtilTest
     public void append_2() {
         QuickMockApplication app = new QuickMockApplication();
         WicketTester tester = new WicketTester(app);
@@ -215,14 +218,14 @@ public class RepeaterUtilTest {
         String expected = String.format("QuickView.append('%s','%s','%s','','');",
                 TestQuickViewContainer.TAG_NAME, newItem.getMarkupId(), parent.getMarkupId());
         String actual = RepeaterUtil.get().append(newItem, parent, null, null);
-        Assert.assertEquals(actual.trim(), expected.trim());
+        assertEquals(actual.trim(), expected.trim());
     }
 
 
     /**
      * test with boundaries
      */
-    @Test(groups = {"utilTests"})
+    @UtilTest
     public void append_3() {
         QuickMockApplication app = new QuickMockApplication();
         WicketTester tester = new WicketTester(app);
@@ -256,18 +259,18 @@ public class RepeaterUtilTest {
                 TestQuickViewContainer.TAG_NAME, newItem.getMarkupId(),
                 panel.getMarkupId(), start.getMarkupId(), end.getMarkupId());
         String actual = RepeaterUtil.get().append(newItem, panel, start, end);
-        Assert.assertEquals(actual.trim(), expected.trim());
+        assertEquals(actual.trim(), expected.trim());
     }
 
-    @Test(groups = {"utilTests"})
+    @UtilTest
     public void removeItem_1() {
         final String itemId = "67", parentId = "p1";
         final String expected = "QuickView.removeItem('67','p1');";
         final String actual = RepeaterUtil.get().removeItem(itemId, parentId);
-        Assert.assertEquals(actual.trim(), expected.trim());
+        assertEquals(actual.trim(), expected.trim());
     }
 
-    @Test(groups = {"utilTests"})
+    @UtilTest
     public void removeItem() {
         final String itemMarkupId = "76";
         Item item = Mockito.mock(Item.class);
@@ -276,71 +279,75 @@ public class RepeaterUtilTest {
         parent.setMarkupId("p1");
         final String actual = RepeaterUtil.get().removeItem(item, parent);
         final String expected = "QuickView.removeItem('76','p1');";
-        Assert.assertEquals(actual.trim(), expected.trim());
+        assertEquals(actual.trim(), expected.trim());
     }
 
 
-    @Test(groups = {"utilTests"})
+    @UtilTest
     public void scrollToTop() {
         final String repeaterMarkupId = "quick";
         final String expected = "QuickView.scrollToTop('quick');";
         final String actual = RepeaterUtil.get().scrollToTop(repeaterMarkupId);
-        Assert.assertEquals(actual.trim(), expected.trim());
+        assertEquals(actual.trim(), expected.trim());
     }
 
-    @Test(groups = {"utilTests"})
+    @UtilTest
     public void scrollToBottom() {
         final String repeaterMarkupId = "quick";
         final String expected = "QuickView.scrollToBottom('quick');";
         final String actual = RepeaterUtil.get().scrollToBottom(repeaterMarkupId);
-        Assert.assertEquals(actual.trim(), expected.trim());
+        assertEquals(actual.trim(), expected.trim());
     }
 
-    @Test(groups = {"utilTests"})
+    @UtilTest
     public void scrollTo_1() {
         final int height = 7;
         final String repeaterMarkupId = "quick";
         final String expected = "QuickView.scrollTo('quick',7);";
         final String actual = RepeaterUtil.get().scrollTo(repeaterMarkupId, height);
-        Assert.assertEquals(actual.trim(), expected.trim());
+        assertEquals(actual.trim(), expected.trim());
     }
 
-    @Test(groups = {"utilTests"})
+    @UtilTest
     public void scrollTo_2() {
         final int height = 9;
         final String repeaterMarkupId = "quick";
         final String expected = "QuickView.scrollTo('quick',9);";
         final String actual = RepeaterUtil.get().scrollTo(repeaterMarkupId, height);
-        Assert.assertEquals(actual.trim(), expected.trim());
+        assertEquals(actual.trim(), expected.trim());
     }
 
     /**
      * integer overflow
      */
-    @Test(groups = {"utilTests"}, expectedExceptions = IllegalArgumentException.class)
+    @UtilTest
     public void safeLongToInt_1() {
-        long val = (long) Integer.MAX_VALUE + 1l;
-        RepeaterUtil.get().safeLongToInt(val);
+        assertThrows(IllegalArgumentException.class, () -> {
+            long val = (long) Integer.MAX_VALUE + 1l;
+            RepeaterUtil.get().safeLongToInt(val);
+        });
     }
 
     /**
      * integer overflow
      */
-    @Test(groups = {"utilTests"}, expectedExceptions = IllegalArgumentException.class)
+    @UtilTest
     public void safeLongToInt_2() {
-        long val = (long) Integer.MIN_VALUE - (long) 1;
-        RepeaterUtil.get().safeLongToInt(val);
+        assertThrows(IllegalArgumentException.class, () -> {
+            long val = (long) Integer.MIN_VALUE - (long) 1;
+            RepeaterUtil.get().safeLongToInt(val);
+        });
     }
 
     /**
      * integer doesn't overflow
      */
-    @Test(groups = {"utilTests"})
+    @UtilTest
     public void safeLongToInt_3() {
         int min = RepeaterUtil.get().safeLongToInt(Integer.MIN_VALUE);
-        Assert.assertEquals(min, Integer.MIN_VALUE);
+        assertEquals(min, Integer.MIN_VALUE);
         int max = RepeaterUtil.get().safeLongToInt(Integer.MAX_VALUE);
-        Assert.assertEquals(max, Integer.MAX_VALUE);
+        assertEquals(max, Integer.MAX_VALUE);
     }
 
     private static WebApplication createMockApplication() {
@@ -348,17 +355,19 @@ public class RepeaterUtilTest {
         return app;
     }
 
-    @Test(groups = {"utilTests"}, expectedExceptions = RepeaterUtil.ReuseStrategyNotSupportedException.class)
+    @UtilTest
     public void reuseStategyNotSupportedForItemsNavigation_1() {
-        IQuickView quickView = Mockito.mock(IQuickView.class);
-        IQuickReuseStrategy strategy = Mockito.mock(IQuickReuseStrategy.class);
-        Mockito.when(strategy.isPartialUpdatesSupported()).thenReturn(false);
-        Mockito.when(quickView.getReuseStrategy()).thenReturn(strategy);
-        RepeaterUtil.get().reuseStategyNotSupportedForItemsNavigation(quickView);
+        assertThrows(RepeaterUtil.ReuseStrategyNotSupportedException.class, () -> {
+            IQuickView quickView = Mockito.mock(IQuickView.class);
+            IQuickReuseStrategy strategy = Mockito.mock(IQuickReuseStrategy.class);
+            Mockito.when(strategy.isPartialUpdatesSupported()).thenReturn(false);
+            Mockito.when(quickView.getReuseStrategy()).thenReturn(strategy);
+            RepeaterUtil.get().reuseStategyNotSupportedForItemsNavigation(quickView);
+        });
     }
 
 
-    @Test(groups = {"utilTests"})
+    @UtilTest
     public void reuseStategyNotSupportedForItemsNavigation_5() {
         IQuickView quickView = Mockito.mock(IQuickView.class);
         IQuickReuseStrategy strategy = Mockito.mock(IQuickReuseStrategy.class);
@@ -369,22 +378,24 @@ public class RepeaterUtilTest {
     }
 
 
-    @Test(groups = {"utilTests"}, expectedExceptions = RepeaterUtil.OutputMarkupIdNotTrueException.class)
+    @UtilTest
     public void outPutMarkupIdNotTrue_1() {
-        IDataProvider data = Mockito.mock(IDataProvider.class);
-        IQuickReuseStrategy strategy = Mockito.mock(IQuickReuseStrategy.class);
-        Mockito.when(strategy.isPartialUpdatesSupported()).thenReturn(true);
-        QuickView quickView = new QuickView("id", data, strategy) {
-            @Override
-            protected void populate(Item item) {
-            }
-        };
-        WebMarkupContainer parent = new WebMarkupContainer("parent");
-        parent.add(quickView);
-        RepeaterUtil.get().outPutMarkupIdNotTrue(quickView);
+        assertThrows(RepeaterUtil.OutputMarkupIdNotTrueException.class, () -> {
+            IDataProvider data = Mockito.mock(IDataProvider.class);
+            IQuickReuseStrategy strategy = Mockito.mock(IQuickReuseStrategy.class);
+            Mockito.when(strategy.isPartialUpdatesSupported()).thenReturn(true);
+            QuickView quickView = new QuickView("id", data, strategy) {
+                @Override
+                protected void populate(Item item) {
+                }
+            };
+            WebMarkupContainer parent = new WebMarkupContainer("parent");
+            parent.add(quickView);
+            RepeaterUtil.get().outPutMarkupIdNotTrue(quickView);
+        });
     }
 
-    @Test(groups = {"utilTests"})
+    @UtilTest
     public void outPutMarkupIdNotTrue_2() {
         IDataProvider data = Mockito.mock(IDataProvider.class);
         IQuickReuseStrategy strategy = Mockito.mock(IQuickReuseStrategy.class);
@@ -400,7 +411,7 @@ public class RepeaterUtilTest {
         RepeaterUtil.get().outPutMarkupIdNotTrue(quickView);
     }
 
-    @Test(groups = {"utilTests"})
+    @UtilTest
     public void outPutMarkupIdNotTrue_3() {
         IDataProvider data = Mockito.mock(IDataProvider.class);
         IQuickReuseStrategy strategy = Mockito.mock(IQuickReuseStrategy.class);
@@ -420,7 +431,7 @@ public class RepeaterUtilTest {
     /**
      * parent=null,reuse= paging
      */
-    @Test(groups = {"utilTests"})
+    @UtilTest
     public void parentNotSuitable_1() {
         IQuickView quickView = Mockito.mock(IQuickView.class);
         IQuickReuseStrategy strategy = Mockito.mock(IQuickReuseStrategy.class);
@@ -433,34 +444,38 @@ public class RepeaterUtilTest {
     /**
      * parent=null,reuse= not paging
      */
-    @Test(groups = {"utilTests"}, expectedExceptions = RepeaterUtil.QuickViewNotAddedToParentException.class)
+    @UtilTest
     public void parentNotSuitable_2() {
-        IQuickView quickView = Mockito.mock(IQuickView.class);
-        IQuickReuseStrategy strategy = Mockito.mock(IQuickReuseStrategy.class);
-        Mockito.when(strategy.isPartialUpdatesSupported()).thenReturn(true);
-        Mockito.when(quickView.getReuseStrategy()).thenReturn(strategy);
-        RepeaterUtil.get().parentNotSuitable(quickView);
+        assertThrows(RepeaterUtil.QuickViewNotAddedToParentException.class, () -> {
+            IQuickView quickView = Mockito.mock(IQuickView.class);
+            IQuickReuseStrategy strategy = Mockito.mock(IQuickReuseStrategy.class);
+            Mockito.when(strategy.isPartialUpdatesSupported()).thenReturn(true);
+            Mockito.when(quickView.getReuseStrategy()).thenReturn(strategy);
+            RepeaterUtil.get().parentNotSuitable(quickView);
+        });
     }
 
     /**
      * parent=page,reuse= not paging
      */
-    @Test(groups = {"utilTests"}, expectedExceptions = RepeaterUtil.QuickViewNotAddedToParentException.class)
+    @UtilTest
     public void parentNotSuitable_3() {
-        IQuickReuseStrategy strategy = Mockito.mock(IQuickReuseStrategy.class);
-        Mockito.when(strategy.isPartialUpdatesSupported()).thenReturn(true);
-        WebPage parent = Mockito.mock(WebPage.class);
-        IQuickView quickView = Mockito.mock(IQuickView.class);
-        Mockito.when(quickView.getParent()).thenReturn(parent);
-        Mockito.when(quickView.getReuseStrategy()).thenReturn(strategy);
-        RepeaterUtil.get().parentNotSuitable(quickView);
+        assertThrows(RepeaterUtil.QuickViewNotAddedToParentException.class, () -> {
+            IQuickReuseStrategy strategy = Mockito.mock(IQuickReuseStrategy.class);
+            Mockito.when(strategy.isPartialUpdatesSupported()).thenReturn(true);
+            WebPage parent = Mockito.mock(WebPage.class);
+            IQuickView quickView = Mockito.mock(IQuickView.class);
+            Mockito.when(quickView.getParent()).thenReturn(parent);
+            Mockito.when(quickView.getReuseStrategy()).thenReturn(strategy);
+            RepeaterUtil.get().parentNotSuitable(quickView);
+        });
     }
 
 
     /**
      * parent children size=1,reuse= not paging
      */
-    @Test(groups = {"utilTests"})
+    @UtilTest
     public void parentNotSuitable_6() {
         IQuickReuseStrategy strategy = Mockito.mock(IQuickReuseStrategy.class);
         Mockito.when(strategy.isPartialUpdatesSupported()).thenReturn(true);
@@ -473,20 +488,20 @@ public class RepeaterUtilTest {
     }
 
 
-    @Test(groups = {"utilTests"})
+    @UtilTest
     public void isComponentScrollBarAtBottom() {
         WebMarkupContainer c = new WebMarkupContainer("parent");
         c.setMarkupId("parent");
         String actual = RepeaterUtil.get().isComponentScrollBarAtBottom(c);
         String expected = "QuickView.isComponentScrollBarAtBottom('parent');";
-        Assert.assertEquals(actual, expected);
+        assertEquals(actual, expected);
     }
 
-    @Test(groups = {"utilTests"})
+    @UtilTest
     public void isPageScrollBarAtBottom() {
         String actual = RepeaterUtil.get().isPageScrollBarAtBottom();
         String expected = "QuickView.isPageScrollBarAtBottom();";
-        Assert.assertEquals(actual, expected);
+        assertEquals(actual, expected);
     }
 
 

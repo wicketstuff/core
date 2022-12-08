@@ -16,13 +16,15 @@
 
 package org.wicketstuff;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.apache.wicket.Page;
 import org.apache.wicket.markup.repeater.IItemFactory;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.util.tester.WicketTester;
+import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mockito;
-import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
 
 import java.util.Iterator;
 
@@ -36,13 +38,13 @@ public class AbstractPagingNavigationStrategyTest {
         return tester;
     }
 
-    @BeforeMethod
+    @BeforeEach
     public void setup() {
         tester = new WicketTester(new TestApplication());
     }
 
     public void assertIsPartialUpdatesSupported(IQuickReuseStrategy strategy) {
-        Assert.assertFalse(strategy.isPartialUpdatesSupported());
+        assertFalse(strategy.isPartialUpdatesSupported());
     }
 
     public void assertAddItems(IQuickReuseStrategy strategy) {
@@ -53,7 +55,7 @@ public class AbstractPagingNavigationStrategyTest {
     }
 
     public void assertPageCreatedOnReRender(IQuickReuseStrategy strategy) {
-        Assert.assertTrue(strategy.getPageCreatedOnRender() < 0);
+        assertTrue(strategy.getPageCreatedOnRender() < 0);
     }
 
     public class TestApplication extends WebApplication {

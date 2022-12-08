@@ -1,19 +1,19 @@
 package org.wicketstuff.navigator;
 
 import org.apache.wicket.util.tester.WicketTester;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 
 public abstract class TesterBase {
 	private static WicketTester tester;
 
-	@BeforeClass
-	private static void init() {
+	@BeforeAll
+	static void init() {
 		tester = new WicketTester();
 	}
 
-	@AfterClass
-	private static void cleanup() {
+	@AfterAll
+	static void cleanup() {
 		if (tester != null) {
 			tester.destroy();
 		}

@@ -1,17 +1,18 @@
 package org.wicketstuff.async.task;
 
-import static org.testng.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.concurrent.TimeUnit;
 
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class DefaultTaskManagerTest {
 
     private DefaultTaskManager taskManager;
 
-    @BeforeMethod
+    @BeforeEach
     public void setUp() throws Exception {
         taskManager = new DefaultTaskManager() {
             @Override
@@ -28,25 +29,26 @@ public class DefaultTaskManagerTest {
         };
     }
 
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test
     public void testTaskRemovalRemoved() throws Exception {
+        assertThrows(IllegalArgumentException.class, () -> {
+            final String testId = "test";
+            final long removalMilliseconds = 200L;
+            final double sleepMultiplier = 2d;
 
-        final String testId = "test";
-        final long removalMilliseconds = 200L;
-        final double sleepMultiplier = 2d;
+            assertTrue(sleepMultiplier > 1d);
 
-        assertTrue(sleepMultiplier > 1d);
+            taskManager.makeOrRenewContainer(testId, removalMilliseconds, TimeUnit.MILLISECONDS);
 
-        taskManager.makeOrRenewContainer(testId, removalMilliseconds, TimeUnit.MILLISECONDS);
+            Thread.sleep((long) (removalMilliseconds * sleepMultiplier));
 
-        Thread.sleep((long) (removalMilliseconds * sleepMultiplier));
+            // Since the implementation is built on top of weak references, GC must be triggered manually
+            // Depending of the JVM implementation, this test might unfortunately fail
+            taskManager.cleanUp();
+            System.gc();
 
-        // Since the implementation is built on top of weak references, GC must be triggered manually
-        // Depending of the JVM implementation, this test might unfortunately fail
-        taskManager.cleanUp();
-        System.gc();
-
-        taskManager.getContainerOrFail(testId);
+            taskManager.getContainerOrFail(testId);
+        });
     }
 
     @Test
@@ -90,8 +92,6 @@ public class DefaultTaskManagerTest {
         System.gc();
 
         taskManager.getContainerOrFail(testId);
-
-
     }
 
     @Test
