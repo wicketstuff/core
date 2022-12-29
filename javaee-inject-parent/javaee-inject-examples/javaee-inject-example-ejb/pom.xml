@@ -14,7 +14,7 @@
 		<javadoc.disabled>true</javadoc.disabled>
 		<deployment.disabled>true</deployment.disabled>
 		<sources.disabled>true</sources.disabled>
-		<maven-ejb-plugin.version>3.1.0</maven-ejb-plugin.version>
+		<maven-ejb-plugin.version>3.2.1</maven-ejb-plugin.version>
 	</properties>
 
 	<build>
@@ -43,4 +43,3 @@
 		</dependency>
 	</dependencies>
 </project>
-
