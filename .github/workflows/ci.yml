@@ -17,9 +17,9 @@ name: 'Test WicketStuff'
 on:
   workflow_dispatch:
   push:
-    branches: [ master ]
+    branches: [ "wicket-9.x" ]
   pull_request:
-    branches: [ master ]
+    branches: [ "wicket-9.x" ]
 
 jobs:
   test:
@@ -34,10 +34,10 @@ jobs:
       MVN_COMMAND: 'verify'
       EVENT_NAME: ${{ github.event_name }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Cache Local Maven Repository
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
@@ -45,7 +45,7 @@ jobs:
             ${{ runner.os }}-maven-
 
       - name: Setup Java
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: ${{ matrix.java }}
