@@ -27,12 +27,11 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.glassfish</groupId>
-            <artifactId>javax.servlet</artifactId>
-            <version>${version.glassfish}</version>
-            <scope>test</scope>
-        </dependency>
+	    <dependency>
+		    <groupId>jakarta.servlet</groupId>
+			<artifactId>jakarta.servlet-api</artifactId>
+			<scope>test</scope>
+		</dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
@@ -42,13 +41,6 @@
             <artifactId>junit-jupiter-engine</artifactId>
         </dependency>
     </dependencies>
-
-    <repositories>
-        <repository>
-            <id>java.net</id>
-            <url>http://download.java.net/maven/2</url>
-        </repository>
-    </repositories>
 
     <build>
         <resources>

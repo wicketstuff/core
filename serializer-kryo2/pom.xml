@@ -38,23 +38,39 @@
 			<artifactId>jetty-all</artifactId>
 			<classifier>uber</classifier>
 		</dependency>
+        <dependency>
+          <groupId>jakarta.servlet</groupId>
+          <artifactId>jakarta.servlet-api</artifactId>
+          <scope>test</scope>
+        </dependency>
 	</dependencies>
 
-	<build>
-		<plugins>
-			<plugin>
-				<!-- USAGE: mvn license:check OR mvn license:format -->
-				<groupId>com.mycila.maven-license-plugin</groupId>
-				<artifactId>maven-license-plugin</artifactId>
-				<configuration>
-					<header>${header.location}</header>
-					<excludes>
-						<exclude>src/test/java/**.tree</exclude>
-					</excludes>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+    <build>
+      <plugins>
+        <plugin>
+          <!-- USAGE: mvn license:check OR mvn license:format -->
+          <groupId>com.mycila.maven-license-plugin</groupId>
+          <artifactId>maven-license-plugin</artifactId>
+          <configuration>
+            <header>${header.location}</header>
+            <excludes>
+              <exclude>src/test/java/**.tree</exclude>
+            </excludes>
+          </configuration>
+        </plugin>
+            
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <configuration>
+            <argLine>
+              --add-opens java.base/java.lang=ALL-UNNAMED
+              --add-opens java.base/java.util=ALL-UNNAMED
+            </argLine>
+          </configuration>
+        </plugin>            
+      </plugins>
+    </build>
 
 	<properties>
 		<header.location>lic/header.txt</header.location>

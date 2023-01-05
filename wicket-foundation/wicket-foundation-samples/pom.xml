@@ -36,6 +36,11 @@
 			<artifactId>jetty-all</artifactId>
 			<classifier>uber</classifier>
 		</dependency>
+        <dependency>
+          <groupId>jakarta.servlet</groupId>
+          <artifactId>jakarta.servlet-api</artifactId>
+          <scope>test</scope>
+        </dependency>        
     </dependencies>
 
 </project>
