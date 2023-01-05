@@ -28,7 +28,7 @@ jobs:
     strategy:
       matrix:
         java:
-        - '11'
+        - '17'
     env:
       MAVEN_OPTS: '-Xmx2g'
       MVN_COMMAND: 'verify'
