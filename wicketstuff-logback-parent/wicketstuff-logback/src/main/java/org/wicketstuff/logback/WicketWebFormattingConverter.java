@@ -13,8 +13,8 @@
  */
 package org.wicketstuff.logback;
 
-import javax.servlet.Filter;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.Filter;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.cycle.RequestCycle;

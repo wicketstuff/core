@@ -21,7 +21,6 @@ import java.util.List;
 
 import org.apache.wicket.Page;
 import org.apache.wicket.protocol.http.WebApplication;
-import org.apache.wicket.response.filter.ServerAndClientTimeFilter;
 
 /**
  * Application class for tree examples.
@@ -87,8 +86,6 @@ public class TreeApplication extends WebApplication
 	protected void init()
 	{
 		getDebugSettings().setDevelopmentUtilitiesEnabled(true);
-
-		getRequestCycleSettings().addResponseFilter(new ServerAndClientTimeFilter());
 	}
 
 	/**

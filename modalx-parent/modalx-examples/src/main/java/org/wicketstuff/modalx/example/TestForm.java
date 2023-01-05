@@ -30,8 +30,6 @@ public class TestForm extends ModalFormPanel
 		super(iModalContentWindow, iWindowCloseListener);
 
 		person = iPerson;
-
-		setTitle("Personal Details");
 	}
 
 	/**
@@ -61,8 +59,7 @@ public class TestForm extends ModalFormPanel
 			{
 				MessageBox.show(
 					target,
-					"It's <i>easy</i> to show a message box from a modal form without needing to explicitly add extra ModalWindow div's to the form's markup.",
-					"ModalX MessageBox from a form");
+					"It's <i>easy</i> to show a message box from a modal form without needing to explicitly add extra ModalWindow div's to the form's markup.");
 			}
 		});
 		form.add(new AjaxLink<Void>("showFormDefSource")
@@ -85,8 +82,7 @@ public class TestForm extends ModalFormPanel
 						+ "    public void addFormComponents() {\n"
 						+ "        form.add(new RequiredTextField(\"firstName\",\n            new PropertyModel(person, \"firstName\")).setLabel(new Model(\"First Name\")));\n"
 						+ "        form.add(new RequiredTextField(\"lastName\", \n            new PropertyModel(person, \"lastName\")).setLabel(new Model(\"Last Name\")));\n"
-						+ "        etc.,\n" + "    }\n" + "}" + "</pre>\n",
-					"Defining a ModalX Form class is easy!", 840, 400);
+						+ "        etc.,\n" + "    }\n" + "}" + "</pre>\n");
 			}
 		});
 
@@ -104,8 +100,7 @@ public class TestForm extends ModalFormPanel
 						+ "TestForm testForm = new TestForm(allocateModalWindow(), null, person);\n\n"
 						+ "testForm.show(target);"
 						+ "</pre>\n\n"
-						+ "Desktop application developers will notice how similar this looks to opening a form in MFC, .NET, OWL, Swing etc.,",
-					"Opening ModalX Forms is easy!", 840, 400);
+						+ "Desktop application developers will notice how similar this looks to opening a form in MFC, .NET, OWL, Swing etc.,");
 			}
 		});
 	}

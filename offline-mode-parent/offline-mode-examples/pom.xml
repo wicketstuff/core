@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicketstuff-offline-mode-parent</artifactId>
-		<version>9.13.0-SNAPSHOT</version>
+		<version>10.0.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>wicketstuff-offline-mode-examples</artifactId>
@@ -51,9 +51,9 @@
             <classifier>uber</classifier>
 		</dependency>
 		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<version>${javax.servlet-api.version}</version><!--$NO-MVN-MAN-VER$ -->
+			<groupId>jakarta.servlet</groupId>
+			<artifactId>jakarta.servlet-api</artifactId>
+			<version>${jakarta.servlet-api.version}</version><!--$NO-MVN-MAN-VER$ -->
 		</dependency>
 	</dependencies>
 

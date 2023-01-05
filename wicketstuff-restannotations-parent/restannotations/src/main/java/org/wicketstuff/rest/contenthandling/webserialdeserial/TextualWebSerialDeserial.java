@@ -16,9 +16,9 @@
  */
 package org.wicketstuff.rest.contenthandling.webserialdeserial;
 
-import java.io.IOException;
+import jakarta.servlet.ServletResponse;
 
-import javax.servlet.ServletResponse;
+import java.io.IOException;
 
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.request.http.WebRequest;

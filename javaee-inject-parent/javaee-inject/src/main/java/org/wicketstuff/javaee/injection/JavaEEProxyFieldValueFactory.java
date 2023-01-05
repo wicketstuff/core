@@ -16,16 +16,16 @@
  */
 package org.wicketstuff.javaee.injection;
 
+import jakarta.annotation.Resource;
+import jakarta.ejb.EJB;
+import jakarta.ejb.Stateful;
+import jakarta.persistence.PersistenceUnit;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.concurrent.ConcurrentHashMap;
-
-import javax.annotation.Resource;
-import javax.ejb.EJB;
-import javax.ejb.Stateful;
-import javax.persistence.PersistenceUnit;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.apache.wicket.injection.IFieldValueFactory;
 import org.apache.wicket.proxy.IProxyTargetLocator;
@@ -46,7 +46,7 @@ import org.wicketstuff.javaee.naming.StandardJndiNamingStrategy;
 public class JavaEEProxyFieldValueFactory implements IFieldValueFactory
 {
 
-	private final ConcurrentHashMap<IProxyTargetLocator, Object> cache = new ConcurrentHashMap<IProxyTargetLocator, Object>();
+	private final ConcurrentHashMap<IProxyTargetLocator, Object> cache = new ConcurrentHashMap<>();
 	private final IJndiNamingStrategy namingStrategy;
 
 	/**

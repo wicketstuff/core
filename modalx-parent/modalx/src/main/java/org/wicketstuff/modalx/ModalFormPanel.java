@@ -180,8 +180,6 @@ public class ModalFormPanel extends ModalContentPanel
 		super(iModalContentWindow, iWindowCloseListener);
 
 		windowCloseListener = iWindowCloseListener;
-
-		setInitialWidth(400);
 	}
 
 }

@@ -1,7 +1,6 @@
 package org.wicketstuff.scala.model
 
 import org.apache.wicket.model.{CompoundPropertyModel, IModel, PropertyModel}
-import org.apache.wicket.util.time.Duration
 import org.wicketstuff.scala.WicketSpec
 
 import scala.concurrent.TimeoutException
@@ -27,7 +26,7 @@ class ScalaModelSpec
 
   test("Future model with timeout") {
     val model: FutureModel[String] = futureM({
-      Duration.milliseconds(1500).sleep()
+	  Thread.sleep(1500)
       "result"
     }, 500.millis)
     val result = Try(model.getObject)

@@ -1,6 +1,6 @@
 package org.wicketstuff.osgi.inject.impl;
 
-import javax.servlet.ServletContext;
+import jakarta.servlet.ServletContext;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.protocol.http.WebApplication;

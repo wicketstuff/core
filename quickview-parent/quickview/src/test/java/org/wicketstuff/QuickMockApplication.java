@@ -34,14 +34,11 @@ public class QuickMockApplication extends MockApplication {
             }
 
             @Override
-            public void onAfterRespond(Map<String, Component> map, AjaxRequestTarget.IJavaScriptResponse response) {
-
-
+            public void onAfterRespond(Map<String, Component> map, AjaxRequestTarget response) {
             }
         };
         getAjaxRequestTargetListeners().add(listener);
 
     }
-
 
 }

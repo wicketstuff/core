@@ -16,6 +16,8 @@
  */
 package org.apache.wicket.portlet;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 import java.util.Base64;
 import java.util.Iterator;
 import java.util.Map;
@@ -26,7 +28,6 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.RenderURL;
 import javax.portlet.ResourceURL;
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.IRequestListener;

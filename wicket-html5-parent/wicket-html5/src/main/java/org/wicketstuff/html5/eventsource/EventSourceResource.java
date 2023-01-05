@@ -16,12 +16,12 @@
  */
 package org.wicketstuff.html5.eventsource;
 
+import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.time.Duration;
-
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.request.Response;

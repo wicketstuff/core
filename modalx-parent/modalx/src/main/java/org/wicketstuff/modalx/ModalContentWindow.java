@@ -12,11 +12,14 @@
  */
 package org.wicketstuff.modalx;
 
-import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
+import java.util.Optional;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.extensions.ajax.markup.html.modal.ModalDialog;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
+import org.apache.wicket.util.io.IClusterable;
 
 // -[Class]-
 
@@ -27,7 +30,7 @@ import org.apache.wicket.request.resource.ResourceReference;
  * 
  * @author Chris Colman
  */
-public class ModalContentWindow extends ModalWindow
+public class ModalContentWindow extends ModalDialog
 {
 	private static final long serialVersionUID = 1L;
 
@@ -39,6 +42,8 @@ public class ModalContentWindow extends ModalWindow
 
 	protected ModalMgr modalMgr;
 
+        protected WindowClosedCallback windowClosedCallback;
+        
 	// -[Methods]-
 
 	/**
@@ -54,7 +59,6 @@ public class ModalContentWindow extends ModalWindow
 	 */
 	public void initStyles()
 	{
-		setCssClassName("w_vegas");
 	}
 
 	@Override
@@ -73,24 +77,34 @@ public class ModalContentWindow extends ModalWindow
 
 		modalMgr = iModalMgr;
 
-		// Set sizes of this ModalWindow. You can also do this from the invoking
-		// component
-		// but its not a bad idea to set some good default values.
-		setInitialWidth(450);
-		setInitialHeight(300);
-
-		setCssClassName(ModalWindow.CSS_CLASS_GRAY);
-
-		if (maskBehind)
-			setMaskType(ModalWindow.MaskType.SEMI_TRANSPARENT);
-		else
-			setMaskType(ModalWindow.MaskType.TRANSPARENT);
-
-		setUseInitialHeight(false);
-		setResizable(false);
-
 		// Derived classes should call seStyles in their initStyles() override
 		initStyles();
 	}
 
+        
+    public void setWindowClosedCallback(final WindowClosedCallback callback) {
+        this.windowClosedCallback = callback;
+    }
+
+    @Override
+    public ModalDialog close(AjaxRequestTarget target) {
+        Optional.ofNullable(windowClosedCallback).ifPresent(w -> w.onClose(target));
+        return super.close(target);
+    }
+    
+    /**
+     * Callback called after the window has been closed. If no callback instance is specified using
+     * {@link BaseModal#setWindowClosedCallback(BaseModal.WindowClosedCallback)}, no ajax
+     * request will be fired.
+     */
+    @FunctionalInterface
+    public interface WindowClosedCallback extends IClusterable {
+
+        /**
+         * Called after the window has been closed.
+         *
+         * @param target {@link org.apache.wicket.ajax.AjaxRequestTarget} instance bound with the ajax request.
+         */
+        void onClose(AjaxRequestTarget target);
+    }        
 }

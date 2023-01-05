@@ -9,6 +9,7 @@ import org.apache.wicket.request.Response;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.http.WebRequest;
 import org.apache.wicket.core.util.string.JavaScriptUtils;
+import org.apache.wicket.util.value.AttributeMap;
 
 /**
  * When a single item is (rendered using Ajax this behavior makes sure that it has the prelight
@@ -31,7 +32,7 @@ public final class AttachPrelightBehavior extends Behavior
 		AbstractGrid<?, ?, ?> grid = component.findParent(AbstractGrid.class);
 		if (request.isAjax() && !grid.isRendering())
 		{
-			JavaScriptUtils.writeOpenTag(response);
+			JavaScriptUtils.writeOpenTag(response, new AttributeMap());
 			response.write("var e = Wicket.$('" + component.getMarkupId() + "');");
 			response.write("var id = '" + grid.getMarkupId() + "';");
 			response.write("var m = InMethod.XTableManager.instance;");

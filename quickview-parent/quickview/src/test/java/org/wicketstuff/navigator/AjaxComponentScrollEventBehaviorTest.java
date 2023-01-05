@@ -19,7 +19,7 @@ package org.wicketstuff.navigator;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import javax.servlet.ServletContext;
+import jakarta.servlet.ServletContext;
 
 import org.wicketstuff.QuickMockApplication;
 import org.wicketstuff.RepeaterUtil;

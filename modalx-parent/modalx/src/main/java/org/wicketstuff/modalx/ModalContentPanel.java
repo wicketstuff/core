@@ -14,6 +14,7 @@
 package org.wicketstuff.modalx;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.extensions.ajax.markup.html.modal.ModalDialog;
 import org.apache.wicket.markup.html.panel.Panel;
 
 
@@ -38,24 +39,6 @@ public class ModalContentPanel extends Panel
 
 
 	private static final long serialVersionUID = 1L;
-
-
-	/**
-	 * The title to be shown in the ModalContentWindow's caption.
-	 */
-	private String title;
-
-
-	/**
-	 * Initial width of the form.
-	 */
-	private int initialWidth = 300;
-
-
-	/**
-	 * Initial height of the form.
-	 */
-	private int initialHeight = 300;
 
 	protected IWindowCloseListener windowCloseListener;
 
@@ -85,63 +68,12 @@ public class ModalContentPanel extends Panel
 	}
 
 	/**
-	 * Sets initialHeight
-	 */
-	public void setInitialHeight(int initialHeight)
-	{
-		this.initialHeight = initialHeight;
-	}
-
-	/**
-	 * Returns initialHeight
-	 */
-	public int getInitialHeight()
-	{
-		return initialHeight;
-	}
-
-	/**
-	 * Sets initialWidth
-	 */
-	public void setInitialWidth(int initialWidth)
-	{
-		this.initialWidth = initialWidth;
-	}
-
-	/**
-	 * Returns initialWidth
-	 */
-	public int getInitialWidth()
-	{
-		return initialWidth;
-	}
-
-	/**
-	 * Sets title
-	 */
-	public void setTitle(String title)
-	{
-		this.title = title;
-	}
-
-	/**
-	 * Returns title
-	 */
-	public String getTitle()
-	{
-		return title;
-	}
-
-	/**
 	 * Get the ModalContentWindow to show this ModalContentPanel.
 	 */
 	public void show(AjaxRequestTarget target)
 	{
 		// no reason why we can't auto assign the content panel's content ID from the modal window
 		modalContentWindow.setContent(this);
-		modalContentWindow.setTitle(title);
-		modalContentWindow.setInitialWidth(initialWidth);
-		modalContentWindow.setInitialHeight(initialHeight);
 
 		// Set up the callback mechanism if we have a valid windowCloseListener
 		if (windowCloseListener != null)
@@ -150,6 +82,7 @@ public class ModalContentPanel extends Panel
 			{
 				private static final long serialVersionUID = 1L;
 
+                                @Override
 				public void onClose(AjaxRequestTarget target)
 				{
 					ModalMgr modalMgr = modalContentWindow.getModalMgr();
@@ -166,6 +99,7 @@ public class ModalContentPanel extends Panel
 			{
 				private static final long serialVersionUID = 1L;
 
+                                @Override
 				public void onClose(AjaxRequestTarget target)
 				{
 					ModalMgr modalMgr = modalContentWindow.getModalMgr();
@@ -181,7 +115,7 @@ public class ModalContentPanel extends Panel
 		if (modalContentWindow.getModalMgr() != null)
 			modalContentWindow.getModalMgr().preShow(this);
 		
-		modalContentWindow.show(target);
+		modalContentWindow.open(target);
 	}
 
 	/**
@@ -192,7 +126,7 @@ public class ModalContentPanel extends Panel
 	public ModalContentPanel(ModalContentWindow iModalContentWindow,
 		IWindowCloseListener iWindowCloseListener)
 	{
-		super(iModalContentWindow.getContentId());
+		super(ModalDialog.CONTENT_ID);
 
 		modalContentWindow = iModalContentWindow;
 

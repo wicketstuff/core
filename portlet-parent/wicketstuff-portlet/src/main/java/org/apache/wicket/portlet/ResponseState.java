@@ -16,6 +16,11 @@
  */
 package org.apache.wicket.portlet;
 
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.WriteListener;
+import jakarta.servlet.http.Cookie;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -45,10 +50,6 @@ import javax.portlet.MimeResponse;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.ResourceResponse;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.WriteListener;
-import javax.servlet.http.Cookie;
 
 /**
  * Temporarily holds the current state of a Wicket response when invoked from
@@ -614,7 +615,7 @@ public class ResponseState {
 
 		if (cookies != null) {
 			for (Cookie cookie : cookies) {
-				response.addProperty(cookie);
+				//response.addProperty(cookie);
 			}
 			cookies = null;
 		}

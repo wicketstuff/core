@@ -16,14 +16,14 @@
  */
 package org.apache.wicket.portlet;
 
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponseWrapper;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Locale;
-
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletResponseWrapper;
 
 /**
  * General class for all Portal responses, wrapping Servlet responses with
@@ -92,24 +92,8 @@ public class PortletServletResponseWrapper extends HttpServletResponseWrapper {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String encodeRedirectUrl(final String url) {
-		return encodeRedirectURL(url);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	public String encodeRedirectURL(final String url) {
 		return url;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String encodeUrl(final String url) {
-		return encodeURL(url);
 	}
 
 	/**
@@ -303,13 +287,5 @@ public class PortletServletResponseWrapper extends HttpServletResponseWrapper {
 	@Override
 	public void setStatus(final int statusCode) {
 		responseState.setStatus(statusCode);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void setStatus(final int statusCode, final String message) {
-		responseState.setStatus(statusCode, message);
 	}
 }

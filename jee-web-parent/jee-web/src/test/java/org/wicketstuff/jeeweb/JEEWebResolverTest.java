@@ -19,10 +19,10 @@ package org.wicketstuff.jeeweb;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.io.File;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.http.HttpServlet;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.http.HttpServlet;
+import java.io.File;
 
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.protocol.http.mock.MockServletContext;

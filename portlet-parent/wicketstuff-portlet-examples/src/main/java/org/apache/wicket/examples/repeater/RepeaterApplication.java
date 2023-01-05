@@ -18,7 +18,6 @@ package org.apache.wicket.examples.repeater;
 
 import org.apache.wicket.Page;
 import org.apache.wicket.protocol.http.WebApplication;
-import org.apache.wicket.response.filter.ServerAndClientTimeFilter;
 
 /**
  * application class for repeater examples application
@@ -45,8 +44,6 @@ public class RepeaterApplication extends WebApplication
 	protected void init()
 	{
 		getDebugSettings().setDevelopmentUtilitiesEnabled(true);
-
-		getRequestCycleSettings().addResponseFilter(new ServerAndClientTimeFilter());
 
 		getMarkupSettings().setStripWicketTags(true);
 	}

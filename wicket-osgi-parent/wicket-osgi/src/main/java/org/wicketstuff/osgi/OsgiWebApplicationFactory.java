@@ -1,9 +1,9 @@
 package org.wicketstuff.osgi;
 
+import jakarta.servlet.ServletContext;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
-
-import javax.servlet.ServletContext;
 
 import org.apache.wicket.protocol.http.IWebApplicationFactory;
 import org.apache.wicket.protocol.http.WebApplication;

@@ -8,8 +8,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.IRequestListener;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
-import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow.WindowClosedCallback;
+import org.apache.wicket.extensions.ajax.markup.html.modal.ModalDialog;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
@@ -44,7 +43,7 @@ public class ImageUploadPanel extends Panel implements IRequestListener
 	private static final ResourceReference IMAGE_UPLOAD_CSS_RESOURCE = new CssResourceReference(
 			ImageUploadPanel.class, "imageUpload.css");
 
-	private ModalWindow modalWindow;
+	private ModalDialog modalWindow;
 	private ImageUploadBehavior imageUploadBehavior;
 	private final String uploadFolderPath;
 
@@ -52,18 +51,14 @@ public class ImageUploadPanel extends Panel implements IRequestListener
 		super(pId);
 
 		setOutputMarkupId(true);
-		add(modalWindow = new ModalWindow("imageUploadDialog"));
-		modalWindow.setTitle(new ResourceModel("title.label"));
-		modalWindow.setInitialHeight(100);
-		modalWindow.setInitialWidth(350);
-		modalWindow.setWindowClosedCallback(new WindowClosedCallback() {
-			private static final long serialVersionUID = 1L;
+		add(modalWindow = new ModalDialog("imageUploadDialog"){
 
-			@Override
-			public void onClose(AjaxRequestTarget pTarget) {
-				resetModalContent();
-			}
-		});
+                    @Override
+                    public ModalDialog close(AjaxRequestTarget target) {
+                        resetModalContent();
+                        return super.close(target);
+                    }
+                });
 		add(imageUploadBehavior = new ImageUploadBehavior());
 		this.uploadFolderPath = uploadFolderPath;
 	}
@@ -73,7 +68,7 @@ public class ImageUploadPanel extends Panel implements IRequestListener
 	}
 
 	public void resetModalContent() {
-		modalWindow.setContent(new EmptyPanel(modalWindow.getContentId()));
+		modalWindow.setContent(new EmptyPanel(ModalDialog.CONTENT_ID));
 	}
 
 	/**
@@ -85,7 +80,7 @@ public class ImageUploadPanel extends Panel implements IRequestListener
 		@Override
 		protected void respond(AjaxRequestTarget pTarget) {
 			ImageUploadContentPanel content = new ImageUploadContentPanel(
-					modalWindow.getContentId(), uploadFolderPath) {
+					ModalDialog.CONTENT_ID, uploadFolderPath) {
 				private static final long serialVersionUID = 1L;
 
 				@Override
@@ -105,7 +100,7 @@ public class ImageUploadPanel extends Panel implements IRequestListener
 			modalWindow.setContent(content);
 			// Remember cursor position - it's needed for IE
 			pTarget.appendJavaScript("saveBookmark();");
-			modalWindow.show(pTarget);
+			modalWindow.open(pTarget);
 		}
 
 		public String getCallbackName() {

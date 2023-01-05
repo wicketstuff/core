@@ -16,17 +16,16 @@
  */
 package org.wicketstuff.datetime.examples.bean.validation;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-
 import org.wicketstuff.datetime.examples.bean.validation.constraint.ValidPassword;
-
-import javax.validation.constraints.Email;
 
 public class Person implements Serializable
 {

@@ -18,6 +18,9 @@ package org.wicketstuff.nashorn.resource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import jakarta.servlet.ReadListener;
+import jakarta.servlet.ServletInputStream;
+
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,8 +29,6 @@ import java.io.Writer;
 import java.util.concurrent.TimeUnit;
 
 import javax.script.Bindings;
-import javax.servlet.ReadListener;
-import javax.servlet.ServletInputStream;
 
 import org.apache.wicket.protocol.http.mock.MockHttpServletRequest;
 import org.apache.wicket.request.resource.IResource.Attributes;
@@ -103,7 +104,7 @@ public class NashornResourceReferenceTest extends WicketTestCase
 			nashornResourceReference.getScheduledExecutorService().awaitTermination(10000,
 				TimeUnit.SECONDS);
 		}
-		assertEquals("4", wicketTester.getLastResponseAsString());
+		assertEquals("4.0", wicketTester.getLastResponseAsString());
 	}
 	private class MockInputStream extends ServletInputStream
 	{

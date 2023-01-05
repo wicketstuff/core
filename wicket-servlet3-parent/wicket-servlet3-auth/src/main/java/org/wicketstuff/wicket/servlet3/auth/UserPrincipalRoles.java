@@ -15,9 +15,9 @@
  */
 package org.wicketstuff.wicket.servlet3.auth;
 
-import java.util.Iterator;
+import jakarta.servlet.http.HttpServletRequest;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.Iterator;
 
 import org.apache.wicket.authroles.authorization.strategies.role.Roles;
 import org.apache.wicket.request.cycle.RequestCycle;

@@ -18,6 +18,8 @@
  */
 package wicket.contrib.phonebook.web.page;
 
+import java.util.Map;
+
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Page;
 import org.apache.wicket.markup.html.basic.Label;
@@ -25,7 +27,6 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.apache.wicket.util.collections.MicroMap;
 import org.apache.wicket.util.string.interpolator.MapVariableInterpolator;
 
 import wicket.contrib.phonebook.Contact;
@@ -78,7 +79,7 @@ public class DeleteContactPage extends BasePage
 				final Contact deleted = getContact();
 				contactDao.delete(deleted.getId());
 				String msg = MapVariableInterpolator.interpolate(
-					getLocalizer().getString("status.deleted", this), new MicroMap<String, String>(
+					getLocalizer().getString("status.deleted", this), Map.of(
 						"name", deleted.getFullName()));
 				getSession().info(msg);
 				setResponsePage(backPage);
@@ -99,7 +100,7 @@ public class DeleteContactPage extends BasePage
 			{
 				String msg = MapVariableInterpolator.interpolate(
 					getLocalizer().getString("status.cancelled", this),
-					new MicroMap<String, String>("name", getContact().getFullName()));
+					Map.of("name", getContact().getFullName()));
 				getSession().info(msg);
 				setResponsePage(backPage);
 			}

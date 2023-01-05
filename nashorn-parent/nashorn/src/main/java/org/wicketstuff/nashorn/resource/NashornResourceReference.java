@@ -28,7 +28,7 @@ import org.apache.commons.io.output.NullWriter;
 import org.apache.wicket.request.resource.IResource;
 import org.apache.wicket.request.resource.IResource.Attributes;
 
-import jdk.nashorn.api.scripting.ClassFilter;
+import org.openjdk.nashorn.api.scripting.ClassFilter;
 
 import org.apache.wicket.request.resource.ResourceReference;
 

@@ -16,11 +16,13 @@
  */
 package org.wicketstuff.jeeweb.jsp;
 
-import java.io.IOException;
+import static jakarta.servlet.jsp.tagext.Tag.SKIP_BODY;
 
-import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.JspWriter;
-import javax.servlet.jsp.tagext.TagSupport;
+import jakarta.servlet.jsp.JspException;
+import jakarta.servlet.jsp.JspWriter;
+import jakarta.servlet.jsp.tagext.TagSupport;
+
+import java.io.IOException;
 
 import org.apache.wicket.Page;
 import org.apache.wicket.core.util.lang.WicketObjects;

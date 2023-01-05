@@ -16,9 +16,9 @@
  */
 package org.wicketstuff.security.login.http;
 
-import java.util.Base64;
+import jakarta.servlet.http.HttpServletResponse;
 
-import javax.servlet.http.HttpServletResponse;
+import java.util.Base64;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.RestartResponseAtInterceptPageException;

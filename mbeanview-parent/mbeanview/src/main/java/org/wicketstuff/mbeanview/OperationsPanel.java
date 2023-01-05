@@ -30,7 +30,7 @@ import javax.management.ObjectName;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
-import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
+import org.apache.wicket.extensions.ajax.markup.html.modal.ModalDialog;
 import org.apache.wicket.feedback.FencedFeedbackPanel;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
@@ -53,7 +53,7 @@ public class OperationsPanel extends Panel
 
 	private final ObjectName objectName;
 
-	private ModalWindow modalOutput;
+	private ModalDialog modalOutput;
 
 	public OperationsPanel(String id, final IModel<MBeanServer> server,
 		final ObjectName objectName, MBeanOperationInfo[] beanOperationInfos)
@@ -62,9 +62,7 @@ public class OperationsPanel extends Panel
 
 		this.objectName = objectName;
 
-		add(modalOutput = new ModalWindow("modalOutput"));
-		modalOutput.setTitle("Operation result view.");
-		modalOutput.setCookieName("modalOutput");
+		add(modalOutput = new ModalDialog("modalOutput"));
 
 		Form<Void> form = new Form<Void>("form");
 		add(form);
@@ -119,10 +117,9 @@ public class OperationsPanel extends Panel
 						e.printStackTrace(pw);
 						returnList.add(sw.toString());
 
-						modalOutput.setTitle("Failure");
-						modalOutput.setContent(new DataViewPanel(modalOutput.getContentId(),
+						modalOutput.setContent(new DataViewPanel(ModalDialog.CONTENT_ID,
 							Model.ofList(returnList)));
-						modalOutput.show(target);
+						modalOutput.open(target);
 					}
 
 					@Override
@@ -135,10 +132,9 @@ public class OperationsPanel extends Panel
 						}
 						else
 						{
-							modalOutput.setTitle("Success");
-							modalOutput.setContent(new DataViewPanel(modalOutput.getContentId(),
+							modalOutput.setContent(new DataViewPanel(ModalDialog.CONTENT_ID,
 								Model.of((Serializable)returnObj)));
-							modalOutput.show(target);
+							modalOutput.open(target);
 						}
 					}
 				});

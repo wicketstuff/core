@@ -16,6 +16,8 @@
  */
 package org.apache.wicket.portlet;
 
+import jakarta.servlet.RequestDispatcher;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -40,9 +42,9 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
-import javax.servlet.RequestDispatcher;
 
-import org.apache.commons.fileupload.portlet.PortletRequestContext;
+import org.apache.commons.fileupload2.portlet.PortletRequestContext;
+
 import org.apache.wicket.protocol.http.WicketFilter;
 import org.apache.wicket.settings.RequestCycleSettings;
 import org.apache.wicket.util.string.Strings;

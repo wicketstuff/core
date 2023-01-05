@@ -16,9 +16,9 @@
  */
 package org.wicketstuff.javaee.example.dao;
 
-import java.util.List;
+import jakarta.ejb.Local;
 
-import javax.ejb.Local;
+import java.util.List;
 
 import org.wicketstuff.javaee.example.model.Contact;
 

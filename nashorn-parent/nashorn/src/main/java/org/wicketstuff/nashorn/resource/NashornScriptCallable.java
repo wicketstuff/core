@@ -27,8 +27,8 @@ import javax.script.SimpleScriptContext;
 
 import org.apache.wicket.request.resource.IResource.Attributes;
 
-import jdk.nashorn.api.scripting.ClassFilter;
-import jdk.nashorn.api.scripting.NashornScriptEngineFactory;
+import org.openjdk.nashorn.api.scripting.ClassFilter;
+import org.openjdk.nashorn.api.scripting.NashornScriptEngineFactory;
 
 /**
  * The script callable setup the script environment and evaluates the given script. If the script is

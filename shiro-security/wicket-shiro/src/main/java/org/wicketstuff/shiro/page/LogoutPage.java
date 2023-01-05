@@ -16,7 +16,7 @@
  */
 package org.wicketstuff.shiro.page;
 
-import javax.servlet.http.Cookie;
+import jakarta.servlet.http.Cookie;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;

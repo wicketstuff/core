@@ -16,11 +16,11 @@
  */
 package org.wicketstuff.javaee.example.dao;
 
-import java.util.List;
+import jakarta.ejb.Stateless;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import java.util.List;
 
 import org.wicketstuff.javaee.example.model.Contact;
 

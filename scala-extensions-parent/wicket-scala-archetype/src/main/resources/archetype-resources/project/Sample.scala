@@ -30,7 +30,7 @@ object Dependencies {
   )
 
   val Provided = Seq(
-    "javax.servlet" % "javax.servlet-api" % "3.0.1" % "provided"
+    "jakarta.servlet" % "jakarta.servlet-api" % "6.0.0" % "provided"
   )
 }
 

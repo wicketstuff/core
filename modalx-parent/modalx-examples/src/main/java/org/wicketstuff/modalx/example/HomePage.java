@@ -54,8 +54,7 @@ public class HomePage extends ModalXPage implements IWindowCloseListener
 			{
 				MessageBox.show(
 					target,
-					"Bringing up a MessageBox is as <i>simple</i> as calling:\n\n<pre>MessageBox.show(target, message, title);</pre>\n\nfrom any page or panel. ModalX <b>kindly auto sizes</b> the height for you so that you're not left with excessive white space.",
-					"ModalX MessageBox Title");
+					"Bringing up a MessageBox is as <i>simple</i> as calling:\n\n<pre>MessageBox.show(target, message, title);</pre>\n\nfrom any page or panel. ModalX <b>kindly auto sizes</b> the height for you so that you're not left with excessive white space.");
 			}
 		});
 
@@ -70,8 +69,7 @@ public class HomePage extends ModalXPage implements IWindowCloseListener
 					target,
 					"This is a <h2>Taller</h2> version of the short message box test.\n\nModalX kindly auto sizes the height for you so that you're not left with excessive white space."
 						+ "\n\nLines breaks can be created using the classic <pre>\\n\\n</pre> combination.\n\nI'm using lots of line breaks to make this MessageBox tall."
-						+ "\n\nYou can set the size of each individual MessageBox by specifying the width parameter in the show method or you can set the default width of all MessageBoxS by calling\n\n<pre>MessageBox.setDefaultWidth(int width)</pre>",
-					"ModalX MessageBox Title");
+						+ "\n\nYou can set the size of each individual MessageBox by specifying the width parameter in the show method or you can set the default width of all MessageBoxS by calling\n\n<pre>MessageBox.setDefaultWidth(int width)</pre>");
 			}
 		});
 
@@ -99,8 +97,8 @@ public class HomePage extends ModalXPage implements IWindowCloseListener
 					target,
 					"This message box demonstrates the use of a 'Modal Result', a term borrowed from the desktop application development world. ModalResult can be queried after a form is closed to determine which button was used to close it. \n\nIt also demonstrates the use of the IWindowCloseListener interface."
 						+ "\n\nThe HomePage implements IWindowCloseListener interface and so will be notified when this form is closed and then it can check the modal result status of the closed form."
-						+ "\n\nAre you feeling positive?", "ModalX ModalResult Feature", 400, 200,
-					true, MessageBox.MB_YES_NO_CANCEL, HomePage.this);
+						+ "\n\nAre you feeling positive?",
+					MessageBox.MB_YES_NO_CANCEL, HomePage.this);
 			}
 		});
 
@@ -111,6 +109,7 @@ public class HomePage extends ModalXPage implements IWindowCloseListener
 	 * ModalFormPanel (including MessageBox) is closed. Pass the listener into the constructor of
 	 * the ModelFormPanel or MessageBox
 	 */
+        @Override
 	public void windowClosed(Panel panel, AjaxRequestTarget target)
 	{
 		if (panel instanceof ModalFormPanel)

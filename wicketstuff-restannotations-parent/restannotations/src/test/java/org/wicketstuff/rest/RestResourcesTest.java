@@ -20,12 +20,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import jakarta.servlet.http.Cookie;
+
 import java.io.BufferedReader;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Collections;
 
-import javax.servlet.http.Cookie;
 import javax.xml.bind.JAXB;
 import javax.xml.transform.stream.StreamResult;
 

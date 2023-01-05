@@ -45,7 +45,7 @@ public class ResourceDecorationApplication extends WebApplication
 			new CssResourceReference(HomePage.class, "footer.css"),
 			new CssResourceReference(HomePage.class, "header.css"));
 
-		setHeaderResponseDecorator(new IHeaderResponseDecorator()
+		getHeaderResponseDecorators().add(new IHeaderResponseDecorator()
 		{
 			@Override
 			public IHeaderResponse decorate(IHeaderResponse response)

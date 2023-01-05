@@ -19,7 +19,7 @@ package org.apache.wicket.examples.ajax.builtin.modal;
 import org.apache.wicket.PageReference;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
-import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
+import org.apache.wicket.extensions.ajax.markup.html.modal.ModalDialog;
 import org.apache.wicket.extensions.markup.html.form.datetime.LocalDateTimeField;
 import org.apache.wicket.markup.html.WebPage;
 
@@ -37,7 +37,7 @@ public class ModalContent1Page extends WebPage
 	 * @param modalWindowPage
 	 * @param window
 	 */
-	public ModalContent1Page(final PageReference modalWindowPage, final ModalWindow window)
+	public ModalContent1Page(final PageReference modalWindowPage, final ModalDialog window)
 	{
 		add(new AjaxLink<Void>("closeOK")
 		{
@@ -67,26 +67,16 @@ public class ModalContent1Page extends WebPage
 
 		add(new LocalDateTimeField("dateTimeField"));
 
-		final ModalWindow modal;
-		add(modal = new ModalWindow("modal"));
+		final ModalDialog modal;
+		add(modal = new ModalDialog("modal"){
 
-		modal.setCookieName("modal window 2");
-
-		modal.setResizable(false);
-		modal.setInitialWidth(30);
-		modal.setInitialHeight(15);
-		modal.setWidthUnit("em");
-		modal.setHeightUnit("em");
-
-		modal.setCssClassName(ModalWindow.CSS_CLASS_GRAY);
-
-		modal.setPageCreator(() -> new ModalContent2Page(modal));
-
-		modal.setCloseButtonCallback(target -> {
+                    @Override
+                    public ModalDialog close(final AjaxRequestTarget target) {
 			target.appendJavaScript("alert('You can\\'t close this modal window using close button."
 				+ " Use the link inside the window instead.');");
-			return false;
-		});
+                        return this;
+                    }
+                });
 
 		add(new AjaxLink<Void>("open")
 		{
@@ -95,7 +85,7 @@ public class ModalContent1Page extends WebPage
 			@Override
 			public void onClick(AjaxRequestTarget target)
 			{
-				modal.show(target);
+				modal.open(target);
 			}
 		});
 

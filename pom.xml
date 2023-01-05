@@ -6,7 +6,7 @@
 	<groupId>org.wicketstuff</groupId>
 	<artifactId>wicketstuff-core</artifactId>
 	<packaging>pom</packaging>
-	<version>9.13.0-SNAPSHOT</version>
+	<version>10.0.0-SNAPSHOT</version>
 	<name>WicketStuff Core Parent</name>
 	<description>
 		WicketStuff Core Parent is the parent project for all of the core WicketStuff projects.  It tries
@@ -211,10 +211,10 @@
 	<!-- mocleiri: for distribution in to central repository sections in the main pom are not allowed -->
 
 	<properties>
-		<wicket.version>9.13.0-SNAPSHOT</wicket.version>
+		<wicket.version>10.0.0-M1-SNAPSHOT</wicket.version>
 
-		<maven.compiler.source>11</maven.compiler.source>
-		<maven.compiler.target>11</maven.compiler.target>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -233,7 +233,7 @@
 		<slf4j.version>2.0.6</slf4j.version>
 		<logback.version>1.4.5</logback.version>
 		<log4j.version>2.19.0</log4j.version>
-		<spring.version>5.3.24</spring.version>
+		<spring.version>6.0.3</spring.version>
 		<cglib.version>3.3.0</cglib.version>
 		<objenesis.version>3.3</objenesis.version>
 		<scala.version>2.13.10</scala.version>
@@ -245,7 +245,7 @@
 		<xstream.version>1.4.20</xstream.version>
 		<hamcrest.version>2.2</hamcrest.version>
 		<commons-logging.version>1.2</commons-logging.version>
-		<javax.servlet-api.version>3.1.0</javax.servlet-api.version>
+		<jakarta.servlet-api.version>6.0.0</jakarta.servlet-api.version>
 		<junit.version>5.9.1</junit.version>
 		<easymock.version>5.0.1</easymock.version>
 		<mockito.version>4.11.0</mockito.version>
@@ -253,8 +253,8 @@
 		<commons-collections4.version>4.4</commons-collections4.version>
 		<commons-digester3.version>3.2</commons-digester3.version>
 		<commons-lang3.version>3.12.0</commons-lang3.version>
-		<validation-api.version>2.0.1.Final</validation-api.version>
-		<jta.version>1.1</jta.version>
+		<validation-api.version>3.0.2</validation-api.version>
+		<jta.version>2.0.1</jta.version>
 		<htmlcompressor.version>1.5.2</htmlcompressor.version>
 		<closure-compiler.version>v20221102</closure-compiler.version>
 		<ibatis2-sqlmap.version>2.1.7.597</ibatis2-sqlmap.version>
@@ -266,9 +266,9 @@
 		<joda-time.version>2.12.2</joda-time.version>
 		<ehcache.version>3.10.8</ehcache.version>
 		<commons-dbcp2.version>2.9.0</commons-dbcp2.version>
-		<javaee-api.version>7.0</javaee-api.version>
+		<jakartaee-api.version>10.0.0</jakartaee-api.version>
 		<clojure.version>1.11.1</clojure.version>
-		<groovy.version>3.0.14</groovy.version>
+		<groovy.version>4.0.7</groovy.version>
 		<asm-util.version>9.4</asm-util.version>
 		<hsqldb.version>2.7.1</hsqldb.version>
 		<jython-standalone.version>2.7.3</jython-standalone.version>
@@ -509,9 +509,9 @@
 
 			<!-- TESTING / DEV -->
 			<dependency>
-				<groupId>javax.servlet</groupId>
-				<artifactId>javax.servlet-api</artifactId>
-				<version>${javax.servlet-api.version}</version>
+				<groupId>jakarta.servlet</groupId>
+				<artifactId>jakarta.servlet-api</artifactId>
+				<version>${jakarta.servlet-api.version}</version>
 				<scope>provided</scope>
 			</dependency>
 			<dependency>
@@ -619,8 +619,8 @@
 
 			<!-- HIBERNATE -->
 			<dependency>
-				<groupId>javax.validation</groupId>
-				<artifactId>validation-api</artifactId>
+				<groupId>jakarta.validation</groupId>
+				<artifactId>jakarta.validation-api</artifactId>
 				<version>${validation-api.version}</version>
 			</dependency>
 			<dependency>
@@ -630,8 +630,8 @@
 				<scope>runtime</scope>
 			</dependency>
 			<dependency>
-				<groupId>javax.transaction</groupId>
-				<artifactId>jta</artifactId>
+				<groupId>jakarta.transaction</groupId>
+				<artifactId>jakarta.transaction-api</artifactId>
 				<version>${jta.version}</version>
 			</dependency>
 			<dependency>

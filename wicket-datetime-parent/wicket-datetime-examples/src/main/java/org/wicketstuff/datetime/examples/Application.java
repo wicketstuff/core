@@ -3,9 +3,7 @@ package org.wicketstuff.datetime.examples;
 import org.apache.wicket.Page;
 import org.apache.wicket.bean.validation.BeanValidationConfiguration;
 import org.apache.wicket.protocol.http.WebApplication;
-import org.apache.wicket.settings.SecuritySettings;
-import org.apache.wicket.util.crypt.ClassCryptFactory;
-import org.apache.wicket.util.crypt.NoCrypt;
+import org.apache.wicket.util.crypt.NoCryptFactory;
 import org.wicketstuff.datetime.examples.dates.DatesPage;
 
 public class Application extends WebApplication
@@ -32,8 +30,7 @@ public class Application extends WebApplication
 		// has the java security classes required by Crypt installed
 		// and we want them to be able to run the examples out of the
 		// box.
-		getSecuritySettings().setCryptFactory(
-			new ClassCryptFactory(NoCrypt.class, SecuritySettings.DEFAULT_ENCRYPTION_KEY));
+		getSecuritySettings().setCryptFactory(new NoCryptFactory());
 
 		getDebugSettings().setDevelopmentUtilitiesEnabled(true);
 		new BeanValidationConfiguration().configure(this);

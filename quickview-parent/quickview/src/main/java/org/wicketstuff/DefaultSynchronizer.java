@@ -43,7 +43,7 @@ public class DefaultSynchronizer extends Synchronizer implements AjaxRequestTarg
     }
 
     @Override
-    public void onAfterRespond(Map<String, Component> map, AjaxRequestTarget.IJavaScriptResponse response) {
+    public void onAfterRespond(Map<String, Component> map, AjaxRequestTarget target) {
     }
 
     @Override

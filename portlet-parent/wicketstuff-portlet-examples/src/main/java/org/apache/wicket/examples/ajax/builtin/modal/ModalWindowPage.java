@@ -19,7 +19,7 @@ package org.apache.wicket.examples.ajax.builtin.modal;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.examples.ajax.builtin.BasePage;
-import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
+import org.apache.wicket.extensions.ajax.markup.html.modal.ModalDialog;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.PropertyModel;
 
@@ -41,17 +41,16 @@ public class ModalWindowPage extends BasePage
 		 * First modal window
 		 */
 
-		final ModalWindow modal1;
-		add(modal1 = new ModalWindow("modal1"));
+		final ModalDialog modal1;
+		add(modal1 = new ModalDialog("modal1"){
 
-		modal1.setCookieName("modal-1");
-
-		modal1.setPageCreator(() -> new ModalContent1Page(ModalWindowPage.this.getPageReference(), modal1));
-		modal1.setWindowClosedCallback(target -> target.add(result));
-		modal1.setCloseButtonCallback(target -> {
+                    @Override
+                    public ModalDialog close(AjaxRequestTarget target) {
 			setResult("Modal window 1 - close button");
-			return true;
-		});
+                        return super.close(target);
+                    }
+                    
+                });
 
 		add(new AjaxLink<Void>("showModal1")
 		{
@@ -60,7 +59,7 @@ public class ModalWindowPage extends BasePage
 			@Override
 			public void onClick(AjaxRequestTarget target)
 			{
-				modal1.show(target);
+				modal1.open(target);
 			}
 		});
 
@@ -68,19 +67,18 @@ public class ModalWindowPage extends BasePage
 		 * Second modal window
 		 */
 
-		final ModalWindow modal2;
-		add(modal2 = new ModalWindow("modal2"));
+		final ModalDialog modal2;
+		add(modal2 = new ModalDialog("modal2"){
 
-		modal2.setContent(new ModalPanel1(modal2.getContentId()));
-		modal2.setTitle("Modal window\n'panel\" content.");
-		modal2.setCookieName("modal-2");
-
-		modal2.setCloseButtonCallback(target -> {
+                    @Override
+                    public ModalDialog close(AjaxRequestTarget target) {
 			setResult("Modal window 2 - close button");
-			return true;
-		});
+                        target.add(result);
+                        return super.close(target);
+                    }
+                });
 
-		modal2.setWindowClosedCallback(target -> target.add(result));
+		modal2.setContent(new ModalPanel1(ModalDialog.CONTENT_ID));
 
 		add(new AjaxLink<Void>("showModal2")
 		{
@@ -89,7 +87,7 @@ public class ModalWindowPage extends BasePage
 			@Override
 			public void onClick(AjaxRequestTarget target)
 			{
-				modal2.show(target);
+				modal2.open(target);
 			}
 		});
 	}
