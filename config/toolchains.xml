@@ -10,4 +10,13 @@
 			<jdkHome>${env.JAVA_HOME}</jdkHome>
 		</configuration>
 	</toolchain>
+	<toolchain>
+		<type>jdk</type>
+		<provides>
+			<version>17</version>
+		</provides>
+		<configuration>
+			<jdkHome>${env.JAVA_HOME}</jdkHome>
+		</configuration>
+	</toolchain>
 </toolchains>

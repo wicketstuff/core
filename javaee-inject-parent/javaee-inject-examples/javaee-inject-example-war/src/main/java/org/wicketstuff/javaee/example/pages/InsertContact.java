@@ -16,7 +16,7 @@
  */
 package org.wicketstuff.javaee.example.pages;
 
-import javax.ejb.EJB;
+import jakarta.ejb.EJB;
 
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Form;

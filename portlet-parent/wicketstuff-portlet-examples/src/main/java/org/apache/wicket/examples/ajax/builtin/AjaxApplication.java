@@ -19,7 +19,6 @@ package org.apache.wicket.examples.ajax.builtin;
 import org.apache.wicket.Page;
 import org.apache.wicket.examples.WicketExampleApplication;
 import org.apache.wicket.examples.ajax.builtin.modal.ModalWindowPage;
-import org.apache.wicket.response.filter.AjaxServerAndClientTimeFilter;
 
 
 /**
@@ -45,8 +44,6 @@ public class AjaxApplication extends WicketExampleApplication
 		getApplicationSettings().setUploadProgressUpdatesEnabled(true);
 
 		getResourceSettings().setThrowExceptionOnMissingResource(false);
-
-		getRequestCycleSettings().addResponseFilter(new AjaxServerAndClientTimeFilter());
 
 		getDebugSettings().setAjaxDebugModeEnabled(true);
 

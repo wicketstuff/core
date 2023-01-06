@@ -215,43 +215,16 @@ public class MessageBox extends ModalFormPanel
 	/**
 	 * Describe here
 	 */
-	public static MessageBox showFixedHeight(AjaxRequestTarget target, String message,
-		String title, int width, int height)
-	{
-		return MessageBox.show(target, message, title, width, height, false, MessageBox.MB_OK, null);
-	}
-
-	/**
-	 * Describe here
-	 */
 	public static MessageBox show(AjaxRequestTarget target, String message)
 	{
-		return MessageBox.show(target, message, "Warning");
+		return MessageBox.show(target, message, MessageBox.MB_OK, null);
 	}
 
 	/**
 	 * Describe here
 	 */
-	public static MessageBox show(AjaxRequestTarget target, String message, String title)
-	{
-		return MessageBox.show(target, message, title, defaultWidth, 240);
-	}
-
-	/**
-	 * Describe here
-	 */
-	public static MessageBox show(AjaxRequestTarget target, String message, String title,
-		int width, int height)
-	{
-		return MessageBox.show(target, message, title, width, height, true, MessageBox.MB_OK, null);
-	}
-
-
-	/**
-	 * Describe here
-	 */
-	public static MessageBox show(AjaxRequestTarget target, String message, String title,
-		int width, int height, boolean autoHeight, int buttonConfig,
+	public static MessageBox show(AjaxRequestTarget target, String message,
+		int buttonConfig,
 		IWindowCloseListener iWindowCloseListener)
 	{
 		Page page = target.getPage();
@@ -263,14 +236,9 @@ public class MessageBox extends ModalFormPanel
 
 		ModalMgr modalMgr = (ModalMgr)page;
 
-		MessageBox messageBox = new MessageBox(modalMgr.allocateModalWindow(), message, title,
+		MessageBox messageBox = new MessageBox(modalMgr.allocateModalWindow(), message,
 			buttonConfig, iWindowCloseListener);
 
-		messageBox.setTitle(title);
-		messageBox.modalContentWindow.setResizable(false);
-		messageBox.setInitialWidth(width);
-		messageBox.modalContentWindow.setUseInitialHeight(!autoHeight);
-		messageBox.setInitialHeight(height);
 		messageBox.show(target);
 
 		return messageBox;
@@ -279,13 +247,12 @@ public class MessageBox extends ModalFormPanel
 	/**
 	 * Constructs the object
 	 */
-	public MessageBox(ModalContentWindow iModalContentWindow, String iMessage, String iTitle,
+	public MessageBox(ModalContentWindow iModalContentWindow, String iMessage,
 		int iButtonConfig, IWindowCloseListener iWindowCloseListener)
 	{
 		super(iModalContentWindow, iWindowCloseListener);
 
 		message = iMessage;
-		setTitle(iTitle);
 		buttonConfig = iButtonConfig;
 	}
 

@@ -12,11 +12,11 @@
  */
 package org.wicketstuff.jasperreports.examples;
 
+import jakarta.servlet.ServletContext;
+
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.servlet.ServletContext;
 
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;

@@ -13,7 +13,7 @@
  */
 package org.wicketstuff.springreference;
 
-import javax.servlet.ServletContext;
+import jakarta.servlet.ServletContext;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.MetaDataKey;

@@ -16,7 +16,7 @@
  */
 package org.wicketstuff.javaee;
 
-import javax.persistence.Persistence;
+import jakarta.persistence.Persistence;
 
 import org.apache.wicket.proxy.IProxyTargetLocator;
 

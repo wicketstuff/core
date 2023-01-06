@@ -17,7 +17,6 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.string.StringValueConversionException;
-import org.wicketstuff.modalx.IWicketModalVisit;
 import org.wicketstuff.modalx.ModalContentWindow;
 import org.wicketstuff.modalx.ModalContentPanel;
 import org.wicketstuff.modalx.ModalMgr;
@@ -80,8 +79,6 @@ public class ModalXPage extends WebPage implements ModalMgr
 			Form<Void> form = new Form<Void>("wrapperForm_" + m);
 			add(form);
 			ModalContentWindow modalWindow = new ModalContentWindow(this, "modalWindow_" + m, true);
-			modalWindow.setInitialWidth(600);
-			modalWindow.setInitialHeight(400);
 			form.add(modalWindow);
 			modalContentWindows[m] = modalWindow;
 		}

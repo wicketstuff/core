@@ -15,10 +15,10 @@
  */
 package org.wicketstuff.wicket.servlet3.auth;
 
-import java.security.Principal;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 
 import org.apache.wicket.Session;
 import org.apache.wicket.authroles.authentication.AuthenticatedWebSession;

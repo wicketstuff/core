@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.wicketstuff</groupId>
         <artifactId>sitemap-xml-parent</artifactId>
-        <version>9.13.0-SNAPSHOT</version>
+        <version>10.0.0-SNAPSHOT</version>
     </parent>
     <name>wicketstuff-sitemap-xml</name>
     <packaging>jar</packaging>
@@ -18,8 +18,8 @@
             <artifactId>commons-lang3</artifactId>
         </dependency>
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
         </dependency>
     </dependencies>
 

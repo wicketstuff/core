@@ -16,9 +16,9 @@
  */
 package org.wicketstuff.restutils.http;
 
-import java.io.IOException;
+import jakarta.servlet.http.HttpServletRequest;
 
-import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.wicket.request.Request;

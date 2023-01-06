@@ -26,7 +26,6 @@ import org.apache.wicket.protocol.http.mock.MockServletContext;
 import org.apache.wicket.request.http.WebRequest;
 import org.junit.jupiter.api.Test;
 
-import org.wicketstuff.restutils.http.HttpUtils;
 import org.wicketstuff.restutils.test.BufferedMockRequest;
 
 public class HttpUtilsTest

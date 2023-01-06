@@ -17,7 +17,7 @@
 		<version.junit>5.3.1</version.junit>
 		<version.log4j>2.17.0</version.log4j>
 		<version.slf4j>1.7.5</version.slf4j>
-		<version.scalatest-maven-plugin>1.0-RC2</version.scalatest-maven-plugin>
+		<version.scalatest-maven-plugin>2.2.0</version.scalatest-maven-plugin>
 		<version.scala-maven-plugin>3.1.6</version.scala-maven-plugin>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -41,8 +41,8 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
+			<groupId>jakarta.servlet</groupId>
+			<artifactId>jakarta.servlet-api</artifactId>
 			<version>3.0.1</version>
 		</dependency>
 		<dependency>
@@ -124,7 +124,7 @@
 						<jvmArg>-Xmx1024m</jvmArg>
 					</jvmArgs>
 					<args>
-						<arg>-target:jvm-1.6</arg>
+						<arg>-release:17</arg>
 						<arg>-deprecation</arg>
 						<!--arg>-optimise</arg-->
 						<arg>-unchecked</arg>

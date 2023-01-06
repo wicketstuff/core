@@ -16,11 +16,10 @@
  */
 package org.apache.wicket.examples.bean.validation.constraint;
 
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
+
 import java.util.regex.Pattern;
-
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
-
 
 public class ValidPasswordValidator implements ConstraintValidator<ValidPassword, String>
 {

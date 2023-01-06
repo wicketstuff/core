@@ -25,7 +25,7 @@ import javax.management.ObjectName;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
-import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
+import org.apache.wicket.extensions.ajax.markup.html.modal.ModalDialog;
 import org.apache.wicket.feedback.FencedFeedbackPanel;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
@@ -46,15 +46,14 @@ public class AttributeValuesPanel extends Panel
 
 	private static final long serialVersionUID = 1L;
 
-	private ModalWindow modalOutput;
+	private ModalDialog modalOutput;
 
 	public AttributeValuesPanel(String id, final IModel<MBeanServer> server,
 		final ObjectName objectName, MBeanAttributeInfo[] beanAttributeInfos)
 	{
 		super(id, server);
 
-		add(modalOutput = new ModalWindow("modalOutput"));
-		modalOutput.setCookieName("modalOutput");
+		add(modalOutput = new ModalDialog("modalOutput"));
 
 		Form<Void> form = new Form<Void>("form");
 		add(form);
@@ -87,9 +86,8 @@ public class AttributeValuesPanel extends Panel
 					@Override
 					public void onClick(AjaxRequestTarget target)
 					{
-						modalOutput.setContent(new DataViewPanel(modalOutput.getContentId(), model));
-						modalOutput.setTitle(info.getName());
-						modalOutput.show(target);
+						modalOutput.setContent(new DataViewPanel(ModalDialog.CONTENT_ID, model));
+						modalOutput.open(target);
 					}
 
 					@Override

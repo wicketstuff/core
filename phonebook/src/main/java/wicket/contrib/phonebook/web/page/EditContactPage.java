@@ -18,6 +18,8 @@
  */
 package wicket.contrib.phonebook.web.page;
 
+import java.util.Map;
+
 import org.apache.wicket.Page;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
@@ -27,7 +29,6 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.apache.wicket.util.collections.MicroMap;
 import org.apache.wicket.util.string.interpolator.MapVariableInterpolator;
 import org.apache.wicket.validation.validator.EmailAddressValidator;
 import org.apache.wicket.validation.validator.StringValidator;
@@ -116,7 +117,7 @@ public class EditContactPage extends BasePage
 			Contact contact = (Contact)getForm().getModelObject();
 			contactDao.save(contact);
 			String msg = MapVariableInterpolator.interpolate(
-				getLocalizer().getString("status.save", this), new MicroMap<String, String>("name",
+				getLocalizer().getString("status.save", this), Map.of("name",
 					contact.getFullName()));
 			getSession().info(msg);
 			setResponsePage(backPage);

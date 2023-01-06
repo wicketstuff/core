@@ -1,8 +1,8 @@
 package wicket.contrib.tinymce.image;
 
-import java.io.File;
+import jakarta.servlet.ServletContext;
 
-import javax.servlet.ServletContext;
+import java.io.File;
 
 import org.apache.wicket.Session;
 import org.apache.wicket.markup.parser.XmlTag;

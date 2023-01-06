@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.wicketstuff.scala</groupId>
 		<artifactId>scala-extensions-parent</artifactId>
-		<version>9.13.0-SNAPSHOT</version>
+		<version>10.0.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>wicketstuff-scala</artifactId>
@@ -20,8 +20,8 @@
 			<artifactId>scala-library</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
+			<groupId>jakarta.servlet</groupId>
+			<artifactId>jakarta.servlet-api</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.scalatest</groupId>
