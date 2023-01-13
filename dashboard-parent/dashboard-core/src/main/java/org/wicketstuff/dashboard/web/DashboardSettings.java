@@ -34,16 +34,10 @@ public class DashboardSettings {
 			DashboardSettings.class, "res/dashboard-rtl.css");
 	private ResourceReference jqueryUIReference = new PackageResourceReference(
 			DashboardSettings.class, "res/jquery-ui-1.13.0.min.js");
-	private ResourceReference jqueryJsonReference = new PackageResourceReference(
-			DashboardSettings.class, "res/jquery.json-2.2.min.js");
 
 	private boolean includeJQueryUI = true;
-	@Deprecated(since = "9.8.0", forRemoval = true)
-	private boolean includeJQueryJson = false;
 	private boolean includeJavaScript = true;
 	private boolean includeCss = true;
-	@Deprecated(since = "9.8.0", forRemoval = true)
-	private boolean rtl = false;
 
 	/**
 	 * Private constructor, use {@link #get()} instead.
@@ -58,16 +52,6 @@ public class DashboardSettings {
 	public DashboardSettings setIncludeJQueryUI(boolean includeJQueryUI) {
 		this.includeJQueryUI = includeJQueryUI;
 		return this;
-	}
-
-	@Deprecated(since = "9.8.0", forRemoval = true)
-	public boolean isIncludeJQueryJson() {
-		return includeJQueryJson;
-	}
-
-	@Deprecated(since = "9.8.0", forRemoval = true)
-	public void setIncludeJQueryJson(boolean includeJQueryJson) {
-		this.includeJQueryJson = includeJQueryJson;
 	}
 
 	public boolean isIncludeJavaScript() {
@@ -97,15 +81,6 @@ public class DashboardSettings {
 		return this;
 	}
 
-	public ResourceReference getJQueryJsonReference() {
-		return jqueryJsonReference;
-	}
-
-	public DashboardSettings setJQueryJsonReference(ResourceReference jqueryJsonReference) {
-		this.jqueryJsonReference = jqueryJsonReference;
-		return this;
-	}
-
 	public ResourceReference getJavaScriptReference() {
 		return javaScriptReference;
 	}
@@ -131,16 +106,6 @@ public class DashboardSettings {
 	public DashboardSettings setRtlCssReference(ResourceReference rtlCssReference) {
 		this.rtlCssReference = rtlCssReference;
 		return this;
-	}
-
-	@Deprecated(since = "9.8.0", forRemoval = true)
-	public boolean isRtl() {
-		return rtl;
-	}
-
-	@Deprecated(since = "9.8.0", forRemoval = true)
-	public void setRtl(boolean rtl) {
-		this.rtl = rtl;
 	}
 
 	/**

@@ -70,17 +70,6 @@ public class DashboardPanel extends GenericPanel<Dashboard> {
 		}
 	}
 
-	/**
-	 * Use this method if you want to add RightToLeft support.
-	 *
-	 * @param rtlModel
-	 */
-	@Deprecated(since = "9.8.0", forRemoval = true)
-	public DashboardPanel setRtlModel(IModel<Boolean> rtlModel) {
-		//no-op
-		return this;
-	}
-
 	@Override
 	public void renderHead(IHeaderResponse response) {
 		super.renderHead(response);
