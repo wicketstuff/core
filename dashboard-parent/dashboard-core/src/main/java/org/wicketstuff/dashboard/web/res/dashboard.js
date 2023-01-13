@@ -6,21 +6,17 @@ function serializeWidgetLocations() {
 		$(this).children().each(function(i) {
 			var widgetId = $(this).attr("id");
 			var widget = widgetId.substring(7); // "widget-".length
-			// create item object for current panel  
+			// create item object for current panel
 			var item = {
 				column : column,
-				widget : widget, 
+				widget : widget,
 				sortIndex : i
 			};
 
-			// push item object into items array  
+			// push item object into items array
 			items.push(item);
 		});
 	});
-
 	// pass items variable to server to save state
-	var data = $.toJSON(items);
-//	alert(data);
-	
-	return data;
+	return JSON.stringify(items);
 }
