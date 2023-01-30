@@ -31,7 +31,6 @@ import org.apache.wicket.markup.repeater.data.ListDataProvider;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.util.tester.WicketTester;
-import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
@@ -264,6 +263,7 @@ public class RepeaterUtilTest {
 
     @UtilTest
     public void removeItem_1() {
+        WicketTester tester = new WicketTester(createMockApplication());
         final String itemId = "67", parentId = "p1";
         final String expected = "QuickView.removeItem('67','p1');";
         final String actual = RepeaterUtil.get().removeItem(itemId, parentId);
@@ -503,6 +503,4 @@ public class RepeaterUtilTest {
         String expected = "QuickView.isPageScrollBarAtBottom();";
         assertEquals(actual, expected);
     }
-
-
 }
