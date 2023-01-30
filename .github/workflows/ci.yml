@@ -25,6 +25,7 @@ jobs:
   test:
     name: Java ${{ matrix.java }} Test
     runs-on: ubuntu-latest
+    environment: CI_DEPLOY
     strategy:
       matrix:
         java:
