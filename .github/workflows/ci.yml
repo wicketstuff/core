@@ -51,12 +51,12 @@ jobs:
           java-version: ${{ matrix.java }}
 
       - name: Build & test (& deploy) 
-        environment:
+        env:
           CI_DEPLOY_USERNAME: ${{ secrets.CI_DEPLOY_USERNAME }}
           CI_DEPLOY_PASSWORD: ${{ secrets.CI_DEPLOY_PASSWORD }}
           test:               'AAAAAAAAAAAAAAAAA'
         run: |
-          echo "Event name: $EVENT_NAME  --> $test, $CI_DEPLOY_USERNAME"
+          echo "Event name: ${EVENT_NAME}  --> ${test}, ${CI_DEPLOY_USERNAME}"
           if [ $EVENT_NAME == "push" ]; then export MVN_COMMAND="deploy"; fi
           cp ./config/toolchains.xml $HOME/.m2/
           mvn -s sonatype-settings.xml $MVN_COMMAND -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true -Dsource.skip=true -B -V
