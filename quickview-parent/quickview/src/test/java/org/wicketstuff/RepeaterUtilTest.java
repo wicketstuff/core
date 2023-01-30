@@ -490,6 +490,7 @@ public class RepeaterUtilTest {
 
     @UtilTest
     public void isComponentScrollBarAtBottom() {
+        WicketTester tester = new WicketTester(createMockApplication());
         WebMarkupContainer c = new WebMarkupContainer("parent");
         c.setMarkupId("parent");
         String actual = RepeaterUtil.get().isComponentScrollBarAtBottom(c);
