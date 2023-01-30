@@ -100,7 +100,7 @@ public abstract class ViewEventListener extends AbstractDefaultAjaxBehavior {
         String viewJson = params.getParameterValue("view").toString();
 
         ViewEvent viewEvent = null;
-        JsonElement viewParsed = new JsonParser().parse(viewJson);
+        JsonElement viewParsed = JsonParser.parseString(viewJson);
         if(!(viewParsed instanceof JsonNull)) {
             viewEvent = new ViewEvent(viewParsed.getAsJsonObject());
         }

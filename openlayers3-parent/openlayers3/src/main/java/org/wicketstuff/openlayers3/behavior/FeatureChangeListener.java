@@ -81,7 +81,7 @@ public abstract class FeatureChangeListener extends AbstractDefaultAjaxBehavior 
         String properties = params.getParameterValue("properties").toString();
 
         JsonObject propertiesJson = null;
-        JsonElement propertiesParsed = new JsonParser().parse(properties);
+        JsonElement propertiesParsed = JsonParser.parseString(properties);
         if (!(propertiesParsed instanceof JsonNull)) {
             propertiesJson = propertiesParsed.getAsJsonObject();
         }
