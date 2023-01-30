@@ -25,6 +25,7 @@ jobs:
   test:
     name: Java ${{ matrix.java }} Test
     runs-on: ubuntu-latest
+    environment: CI_DEPLOY
     strategy:
       matrix:
         java:
@@ -50,7 +51,7 @@ jobs:
           distribution: 'temurin'
           java-version: ${{ matrix.java }}
 
-      - name: Build & test (& deploy) 
+      - name: Build & test (& deploy)
         env:
           CI_DEPLOY_USERNAME: ${{ secrets.CI_DEPLOY_USERNAME }}
           CI_DEPLOY_PASSWORD: ${{ secrets.CI_DEPLOY_PASSWORD }}
