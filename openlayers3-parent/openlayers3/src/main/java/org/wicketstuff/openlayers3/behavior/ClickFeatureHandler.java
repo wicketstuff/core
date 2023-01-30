@@ -89,7 +89,7 @@ public abstract class ClickFeatureHandler extends AbstractDefaultAjaxBehavior {
         String properties = params.getParameterValue("properties").toString();
 
         JsonObject propertiesJson = null;
-        JsonElement propertiesParsed = new JsonParser().parse(properties);
+        JsonElement propertiesParsed = JsonParser.parseString(properties);
         if (!(propertiesParsed instanceof JsonNull)) {
             propertiesJson = propertiesParsed.getAsJsonObject();
         }
@@ -110,7 +110,7 @@ public abstract class ClickFeatureHandler extends AbstractDefaultAjaxBehavior {
     @Override
     public void renderHead(final Component component, final IHeaderResponse response) {
         super.renderHead(component, response);
-        
+
         final Map<String, CharSequence> params = new HashMap<String, CharSequence>();
         params.put("callbackUrl", getCallbackUrl());
         params.put("clickHandlerId", (counter++).toString());

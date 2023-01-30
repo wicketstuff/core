@@ -103,13 +103,13 @@ public abstract class ViewEventFeaturesListener extends AbstractDefaultAjaxBehav
         String featuresJson = params.getParameterValue("features").toString();
 
         ViewEvent viewEvent = null;
-        JsonElement viewParsed = new JsonParser().parse(viewJson);
+        JsonElement viewParsed = JsonParser.parseString(viewJson);
         if(!(viewParsed instanceof JsonNull)) {
             viewEvent = new ViewEvent(viewParsed.getAsJsonObject());
         }
 
         JsonArray features= null;
-        JsonElement featuresParsed = new JsonParser().parse(featuresJson);
+        JsonElement featuresParsed = JsonParser.parseString(featuresJson);
         if(!(featuresParsed instanceof JsonNull)) {
             features = featuresParsed.getAsJsonArray();
         }

@@ -96,7 +96,7 @@ public abstract class VectorFeatureDataLoadedListener extends AbstractDefaultAja
         String featuresJson = params.getParameterValue("features").toString();
 
         JsonArray features = null;
-        JsonElement featuresParsed = new JsonParser().parse(featuresJson);
+        JsonElement featuresParsed = JsonParser.parseString(featuresJson);
         if (!(featuresParsed instanceof JsonNull)) {
             features = featuresParsed.getAsJsonArray();
         }
