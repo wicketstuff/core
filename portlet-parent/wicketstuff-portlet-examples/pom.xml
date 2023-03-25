@@ -17,7 +17,7 @@
 		<!-- allowed values: R7, 1.0, 1.5, 2.0 or none -->
 		<wtp.version>2.0</wtp.version>
 		<jakarta.ws.rs-api.version>3.1.0</jakarta.ws.rs-api.version>
-		<jersey.version>3.1.0</jersey.version>
+		<jersey.version>3.1.1</jersey.version>
 	</properties>
 
 	<dependencies>
