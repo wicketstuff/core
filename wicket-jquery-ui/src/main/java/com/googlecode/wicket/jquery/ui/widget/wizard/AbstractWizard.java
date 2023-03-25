@@ -383,7 +383,7 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 	}
 
 	@Override
-	protected final void onError(AjaxRequestTarget target, DialogButton button)
+	protected void onError(AjaxRequestTarget target, DialogButton button)
 	{
 		target.add(this.feedback);
 	}

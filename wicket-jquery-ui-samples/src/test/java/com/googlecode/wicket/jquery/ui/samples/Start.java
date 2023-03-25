@@ -61,6 +61,7 @@ public class Start
 			// use this certificate anywhere important as the passwords are
 			// available in the source.
 
+			@SuppressWarnings("deprecation")
 			SslContextFactory sslContextFactory = new SslContextFactory();
 			sslContextFactory.setKeyStoreResource(keystore);
 			sslContextFactory.setKeyStorePassword("wicket");
