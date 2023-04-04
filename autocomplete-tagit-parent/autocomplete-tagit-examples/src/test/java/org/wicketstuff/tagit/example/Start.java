@@ -16,13 +16,31 @@
  */
 package org.wicketstuff.tagit.example;
 
-import org.eclipse.jetty.server.Connector;
+import java.lang.management.ManagementFactory;
+
+import javax.management.MBeanServer;
+
+import org.apache.wicket.protocol.ws.javax.WicketServerEndpointConfig;
+import org.eclipse.jetty.jmx.MBeanContainer;
 import org.eclipse.jetty.server.HttpConfiguration;
 import org.eclipse.jetty.server.HttpConnectionFactory;
 import org.eclipse.jetty.server.SecureRequestCustomizer;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.server.SslConnectionFactory;
+import org.eclipse.jetty.server.session.DefaultSessionCache;
+import org.eclipse.jetty.server.session.FileSessionDataStore;
+import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.util.resource.Resource;
+import org.eclipse.jetty.util.ssl.SslContextFactory;
+import org.eclipse.jetty.webapp.WebAppContext;
+import org.eclipse.jetty.websocket.jakarta.server.config.JakartaWebSocketServletContainerInitializer;
+
+
+import java.time.Duration;
+
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.util.resource.Resource;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
 import org.eclipse.jetty.webapp.WebAppContext;
@@ -32,6 +50,7 @@ public class Start
 
 	public static void main(final String[] args) throws Exception
 	{
+		System.setProperty("wicket.configuration", "development");
 		Server server = new Server();
 
 		HttpConfiguration http_config = new HttpConfiguration();
@@ -55,7 +74,7 @@ public class Start
 			// use this certificate anywhere important as the passwords are
 			// available in the source.
 
-			SslContextFactory sslContextFactory = new SslContextFactory();
+			SslContextFactory.Server sslContextFactory = new SslContextFactory.Server();
 			sslContextFactory.setKeyStoreResource(keystore);
 			sslContextFactory.setKeyStorePassword("wicket");
 			sslContextFactory.setKeyManagerPassword("wicket");
@@ -80,28 +99,34 @@ public class Start
 		bb.setContextPath("/");
 		bb.setWar("src/main/webapp");
 
+		// uncomment next lines if you want to test with session persistence
+//		DefaultSessionCache sessionCache = new DefaultSessionCache(bb.getSessionHandler());
+//		FileSessionDataStore sessionStore = new FileSessionDataStore();
+//		sessionStore.setStoreDir(new File("./jetty-session-data"));
+//		sessionCache.setSessionDataStore(sessionStore);
+//		bb.getSessionHandler().setSessionCache(sessionCache);
+
+		ServletContextHandler contextHandler = ServletContextHandler.getServletContextHandler(bb.getServletContext());
+		JakartaWebSocketServletContainerInitializer.configure(contextHandler,
+				(servletContext, container) -> container.addEndpoint(new WicketServerEndpointConfig()));
+
+		// uncomment next line if you want to test with JSESSIONID encoded in the urls
+//		((AbstractSessionManager) bb.getSessionHandler().getSessionManager()).setUsingCookies(false);
+
+		server.setHandler(bb);
 
 		// START JMX SERVER
 		// MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
 		// MBeanContainer mBeanContainer = new MBeanContainer(mBeanServer);
-		// server.getContainer().addEventListener(mBeanContainer);
-		// mBeanContainer.start();
-
-		server.setHandler(bb);
+		// server.addEventListener(mBeanContainer);
+		// server.addBean(mBeanContainer);
 
 		try
 		{
-			System.out.println(">>> STARTING EMBEDDED JETTY SERVER, PRESS ANY KEY TO STOP");
 			server.start();
-			System.in.read();
-			System.out.println(">>> STOPPING EMBEDDED JETTY SERVER");
-			// while (System.in.available() == 0) {
-			// Thread.sleep(5000);
-			// }
-			server.stop();
 			server.join();
 		}
-		catch (final Exception e)
+		catch (Exception e)
 		{
 			e.printStackTrace();
 			System.exit(100);

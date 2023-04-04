@@ -16,8 +16,6 @@
 
 	<url>http://wicketstuff.org</url>
 
-	<!-- mocleiri: moved modules definition into the build-java5-modules and
-		build-java6-modules profiles -->
 	<licenses>
 		<license>
 			<name>The Apache Software License, Version 2.0</name>
@@ -186,6 +184,53 @@
 				</repository>
 			</repositories>
 		</profile>
+		<profile>
+			<id>eclipse-m2e</id>
+			<build>
+				<pluginManagement>
+					<plugins>
+						<plugin>
+							<groupId>org.eclipse.m2e</groupId>
+							<artifactId>lifecycle-mapping</artifactId>
+							<version>1.0.0</version>
+							<configuration>
+								<lifecycleMappingMetadata>
+									<pluginExecutions>
+										<pluginExecution>
+											<pluginExecutionFilter>
+												<groupId>org.apache.maven.plugins</groupId>
+												<artifactId>maven-toolchains-plugin</artifactId>
+												<versionRange>[1.0,)</versionRange>
+												<goals>
+													<goal>toolchain</goal>
+												</goals>
+											</pluginExecutionFilter>
+											<action>
+												<ignore>true</ignore>
+											</action>
+										</pluginExecution>
+										<pluginExecution>
+											<pluginExecutionFilter>
+												<groupId>net.alchim31.maven</groupId>
+												<artifactId>scala-maven-plugin</artifactId>
+												<versionRange>[3.2.2,)</versionRange>
+												<goals>
+													<goal>compile</goal>
+													<goal>testCompile</goal>
+												</goals>
+											</pluginExecutionFilter>
+											<action>
+												<ignore>true</ignore>
+											</action>
+										</pluginExecution>
+									</pluginExecutions>
+								</lifecycleMappingMetadata>
+							</configuration>
+						</plugin>
+							</plugins>
+				</pluginManagement>
+			</build>
+		</profile>
 	</profiles>
 
 	<issueManagement>
@@ -199,7 +244,7 @@
 			<post>users@wicket.apache.org</post>
 			<subscribe>users-subscribe@wicket.apache.org</subscribe>
 			<unsubscribe>users-unsubscribe@wicket.apache.org</unsubscribe>
-			<archive>http://www.nabble.com/Wicket---User-f13976.html</archive>
+			<archive>https://lists.apache.org/list.html?users@wicket.apache.org</archive>
 		</mailingList>
 	</mailingLists>
 
@@ -228,7 +273,6 @@
 		<hibernate-validator.version>8.0.0.Final</hibernate-validator.version>
 		<javassist.version>3.29.2-GA</javassist.version>
 		<jetty.version>11.0.14</jetty.version>
-		<jetty-uber.version>9.4.51.v20230217</jetty-uber.version>
 		<sf-jung.version>2.1.1</sf-jung.version>
 		<shiro.version>1.11.0</shiro.version>
 		<slf4j.version>2.0.7</slf4j.version>
@@ -447,6 +491,11 @@
 			</dependency>
 			<dependency>
 				<groupId>org.apache.wicket</groupId>
+				<artifactId>wicket-native-websocket-javax</artifactId>
+				<version>${wicket.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.wicket</groupId>
 				<artifactId>wicket</artifactId>
 				<version>${wicket.version}</version>
 				<type>test-jar</type>
@@ -552,11 +601,22 @@
 				<scope>test</scope>
 			</dependency>
 			<dependency>
-				<groupId>org.eclipse.jetty.aggregate</groupId>
-				<artifactId>jetty-all</artifactId>
-				<version>${jetty-uber.version}</version>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-webapp</artifactId>
+				<version>${jetty.version}</version>
 				<scope>test</scope>
-				<classifier>uber</classifier>
+			</dependency>
+			<dependency>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-jmx</artifactId>
+				<version>${jetty.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.eclipse.jetty.websocket</groupId>
+				<artifactId>websocket-jakarta-server</artifactId>
+				<version>${jetty.version}</version>
+				<scope>test</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
@@ -974,44 +1034,6 @@
 		<pluginManagement>
 			<plugins>
 				<plugin>
-					<groupId>org.eclipse.m2e</groupId>
-					<artifactId>lifecycle-mapping</artifactId>
-					<version>1.0.0</version>
-					<configuration>
-						<lifecycleMappingMetadata>
-							<pluginExecutions>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>org.apache.maven.plugins</groupId>
-										<artifactId>maven-toolchains-plugin</artifactId>
-										<versionRange>[1.0,)</versionRange>
-										<goals>
-											<goal>toolchain</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<ignore>true</ignore>
-									</action>
-								</pluginExecution>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>net.alchim31.maven</groupId>
-										<artifactId>scala-maven-plugin</artifactId>
-										<versionRange>[3.2.2,)</versionRange>
-										<goals>
-											<goal>compile</goal>
-											<goal>testCompile</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<ignore>true</ignore>
-									</action>
-								</pluginExecution>
-							</pluginExecutions>
-						</lifecycleMappingMetadata>
-					</configuration>
-				</plugin>
-				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-javadoc-plugin</artifactId>
 					<version>${maven-javadoc-plugin.version}</version>
@@ -1129,7 +1151,6 @@
 					<configuration>
 						<release>${maven.compiler.source}</release>
 						<debug>true</debug>
-						<optimize>true</optimize>
 						<showDeprecation>true</showDeprecation>
 						<showWarnings>true</showWarnings>
 						<verbose>false</verbose>
