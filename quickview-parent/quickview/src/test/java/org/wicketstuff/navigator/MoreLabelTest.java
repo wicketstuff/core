@@ -30,6 +30,8 @@ import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.mock.MockApplication;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.util.tester.WicketTester;
+import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mockito;
 
 import static org.mockito.Mockito.mock;
@@ -39,56 +41,59 @@ import static org.mockito.Mockito.mock;
  *
  */
 public class MoreLabelTest {
+    WicketTester tester;
 
-    @WicketTest
-    public void constructor_1(){
-        IModel model= Mockito.mock(IModel.class);
-        ItemsNavigatorBase navigator=Mockito.mock(ItemsNavigatorBase.class);
-         MoreLabel label=new MoreLabel("id",model,navigator)  ;
-        assertEquals(label.getNavigator(),navigator);
-        assertTrue(label.getOutputMarkupId());
-
+    @BeforeEach
+    void setup() {
+        tester = new WicketTester(createMockApplication());
     }
 
     @WicketTest
-    public void constructor_2(){
+    public void constructor_1() {
+        IModel model = Mockito.mock(IModel.class);
+        ItemsNavigatorBase navigator = Mockito.mock(ItemsNavigatorBase.class);
+        MoreLabel label = new MoreLabel("id", model, navigator);
+        assertEquals(label.getNavigator(), navigator);
+        assertTrue(label.getOutputMarkupId());
+    }
+
+    @WicketTest
+    public void constructor_2() {
         assertThrows(IllegalArgumentException.class, () -> {
-            IModel model= Mockito.mock(IModel.class);
-            MoreLabel label=new MoreLabel("id",model,null) ;
+            IModel model = Mockito.mock(IModel.class);
+            MoreLabel label = new MoreLabel("id", model, null);
         });
     }
 
     @WicketTest
-    public void newOnClickBehavior(){
-        IModel model= Mockito.mock(IModel.class);
-        ItemsNavigatorBase navigator=Mockito.mock(ItemsNavigatorBase.class);
-        MoreLabel label=new MoreLabel("id",model,navigator)  ;
-        AjaxEventBehavior behavior=label.newOnClickBehavior();
+    public void newOnClickBehavior() {
+        IModel model = Mockito.mock(IModel.class);
+        ItemsNavigatorBase navigator = Mockito.mock(ItemsNavigatorBase.class);
+        MoreLabel label=new MoreLabel("id",model,navigator);
+        AjaxEventBehavior behavior = label.newOnClickBehavior();
         assertEquals(behavior.getEvent(), "click");
     }
 
     @WicketTest
-    public void newOnClickBehavior_onclick(){
-        IModel model= Mockito.mock(IModel.class);
-        ItemsNavigatorBase navigator=Mockito.mock(ItemsNavigatorBase.class);
-        MoreLabel label=new MoreLabel("id",model,navigator){
-
+    public void newOnClickBehavior_onclick() {
+        IModel model = Mockito.mock(IModel.class);
+        ItemsNavigatorBase navigator = Mockito.mock(ItemsNavigatorBase.class);
+        MoreLabel label = new MoreLabel("id", model, navigator){
             @Override
             protected void onClick(AjaxRequestTarget target) {
             }
         };
-         AjaxRequestTarget target=Mockito.mock(AjaxRequestTarget.class);
-         MoreLabel spy=Mockito.spy(label);
-         MoreLabel.OnClickBehavior behavior=(MoreLabel.OnClickBehavior)spy.newOnClickBehavior() ;
-          behavior.onEvent(target);
-           Mockito.verify(spy,Mockito.times(1)).onClick(target);
+        AjaxRequestTarget target = Mockito.mock(AjaxRequestTarget.class);
+        MoreLabel spy = Mockito.spy(label);
+        MoreLabel.OnClickBehavior behavior = (MoreLabel.OnClickBehavior)spy.newOnClickBehavior() ;
+        behavior.onEvent(target);
+        Mockito.verify(spy, Mockito.times(1)).onClick(target);
     }
 
 
     /**
      * current page=2 pages=4
      */
-
     @WicketTest
     public void onConfigure_1() {
         final String id = "id";
@@ -96,7 +101,7 @@ public class MoreLabelTest {
         ItemsNavigatorBase navigator = Mockito.mock(ItemsNavigatorBase.class);
         IQuickView repeater = mock(IQuickView.class);
         Mockito.when(repeater.getCurrentPage()).thenReturn(currentpage);
-        Mockito.when(repeater.getPageCount()).thenReturn(pages) ;
+        Mockito.when(repeater.getPageCount()).thenReturn(pages);
         Mockito.when(navigator.getRepeater()).thenReturn(repeater);
         IModel model=Mockito.mock(IModel.class);
         MoreLabel more = new MoreLabel(id,model, navigator);
@@ -161,7 +166,7 @@ public class MoreLabelTest {
     }
 
     @WicketTest
-    public void renderHead_1(){
+    public void renderHead_1() {
         IHeaderResponse response=Mockito.mock(IHeaderResponse.class);
         ItemsNavigatorBase navigator = Mockito.mock(ItemsNavigatorBase.class);
         IQuickView repeater = mock(IQuickView.class);
