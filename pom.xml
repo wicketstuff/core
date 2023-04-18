@@ -268,7 +268,7 @@
 		<deployment.disabled>false</deployment.disabled>
 		<sources.disabled>false</sources.disabled>
 
-		<hibernate.version>6.2.0.CR4</hibernate.version>
+		<hibernate.version>6.2.1.Final</hibernate.version>
 		<hibernate-ehcache.version>6.0.0.Alpha7</hibernate-ehcache.version>
 		<hibernate-validator.version>8.0.0.Final</hibernate-validator.version>
 		<javassist.version>3.29.2-GA</javassist.version>
@@ -278,7 +278,7 @@
 		<slf4j.version>2.0.7</slf4j.version>
 		<logback.version>1.4.6</logback.version>
 		<log4j.version>2.20.0</log4j.version>
-		<spring.version>6.0.7</spring.version>
+		<spring.version>6.0.8</spring.version>
 		<cglib.version>3.3.0</cglib.version>
 		<objenesis.version>3.3</objenesis.version>
 		<scala.version>2.13.10</scala.version>
@@ -293,7 +293,7 @@
 		<jakarta.servlet-api.version>6.0.0</jakarta.servlet-api.version>
 		<junit.version>5.9.2</junit.version>
 		<easymock.version>5.1.0</easymock.version>
-		<mockito.version>5.2.0</mockito.version>
+		<mockito.version>5.3.0</mockito.version>
 		<commons-beanutils.version>1.9.4</commons-beanutils.version>
 		<commons-collections4.version>4.4</commons-collections4.version>
 		<commons-digester3.version>3.2</commons-digester3.version>
@@ -301,14 +301,14 @@
 		<validation-api.version>3.0.2</validation-api.version>
 		<jta.version>2.0.1</jta.version>
 		<htmlcompressor.version>1.5.2</htmlcompressor.version>
-		<closure-compiler.version>v20230228</closure-compiler.version>
+		<closure-compiler.version>v20230411</closure-compiler.version>
 		<ibatis2-sqlmap.version>2.1.7.597</ibatis2-sqlmap.version>
 		<jts.version>1.13</jts.version>
 		<gson.version>2.10.1</gson.version>
 		<wicket-bootstrap-core.version>4.0.4</wicket-bootstrap-core.version> <!-- 4.0.x is required for openlayers-3 (bootstrap3) -->
 		<jasperreports.version>6.20.1</jasperreports.version>
 		<bcprov.version>1.70</bcprov.version>
-		<joda-time.version>2.12.4</joda-time.version>
+		<joda-time.version>2.12.5</joda-time.version>
 		<ehcache.version>3.10.8</ehcache.version>
 		<commons-dbcp2.version>2.9.0</commons-dbcp2.version>
 		<jakartaee-api.version>10.0.0</jakartaee-api.version>
@@ -318,27 +318,27 @@
 		<hsqldb.version>2.7.1</hsqldb.version>
 		<jython-standalone.version>2.7.3</jython-standalone.version>
 		<!-- plugins -->
-		<maven-surefire-plugin.version>3.0.0-M7</maven-surefire-plugin.version>
-		<maven-javadoc-plugin.version>3.4.1</maven-javadoc-plugin.version>
+		<maven-surefire-plugin.version>3.0.0</maven-surefire-plugin.version>
+		<maven-javadoc-plugin.version>3.5.0</maven-javadoc-plugin.version>
 		<maven-source-plugin.version>3.2.1</maven-source-plugin.version>
 		<maven-bundle-plugin.version>5.1.8</maven-bundle-plugin.version>
-		<maven-assembly-plugin.version>3.4.2</maven-assembly-plugin.version>
-		<maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
+		<maven-assembly-plugin.version>3.5.0</maven-assembly-plugin.version>
+		<maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
 		<maven-eclipse-plugin.version>2.10</maven-eclipse-plugin.version>
-		<maven-help-plugin.version>3.3.0</maven-help-plugin.version>
+		<maven-help-plugin.version>3.4.0</maven-help-plugin.version>
 		<maven-jar-plugin.version>3.3.0</maven-jar-plugin.version>
-		<maven-resources-plugin.version>3.3.0</maven-resources-plugin.version>
-		<animal-sniffer-maven-plugin.version>1.22</animal-sniffer-maven-plugin.version>
+		<maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
+		<animal-sniffer-maven-plugin.version>1.23</animal-sniffer-maven-plugin.version>
 		<maven-pax-plugin.version>1.6.0</maven-pax-plugin.version>
-		<scala-maven-plugin.version>4.8.0</scala-maven-plugin.version>
+		<scala-maven-plugin.version>4.8.1</scala-maven-plugin.version>
 		<maven-clean-plugin.version>3.2.0</maven-clean-plugin.version>
 		<maven-deploy-plugin.version>3.1.1</maven-deploy-plugin.version>
 		<maven-install-plugin.version>3.1.1</maven-install-plugin.version>
 		<maven-site-plugin.version>4.0.0-M3</maven-site-plugin.version>
 		<maven-war-plugin.version>3.3.2</maven-war-plugin.version>
-		<maven-release-plugin.version>3.0.0-M7</maven-release-plugin.version>
+		<maven-release-plugin.version>3.0.0</maven-release-plugin.version>
 		<maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
-		<maven-pmd-plugin.version>3.19.0</maven-pmd-plugin.version>
+		<maven-pmd-plugin.version>3.20.0</maven-pmd-plugin.version>
 	</properties>
 
 	<prerequisites>
