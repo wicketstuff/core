@@ -431,6 +431,7 @@
 	</dependencies>
 
 	<repositories>
+		<!-- Required for jasperreports-specific version of openpdf -->
 		<repository>
 			<id>jaspersoft-third-party</id>
 			<url>https://jaspersoft.jfrog.io/jaspersoft/third-party-ce-artifacts/</url>
