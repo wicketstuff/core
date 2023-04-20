@@ -12,10 +12,6 @@
 	<name>Apache Wicket - Portlet Support</name>
 	<description />
 
-	<properties>
-		<portlet-api.version>3.0.1</portlet-api.version>
-	</properties>
-
 	<dependencies>
 
 		<!-- WICKET DEPENDENCIES -->
@@ -33,6 +29,18 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<dependency>
+			<!-- FIXME TODO temporary, wicket version doesn't have `portlet` -->
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-fileupload2</artifactId>
+			<version>2.0-SNAPSHOT</version>
+			<exclusions>
+				<exclusion>
+					<groupId>javax.portlet</groupId>
+					<artifactId>portlet-api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 		<dependency>
 			<groupId>javax.portlet</groupId>
 			<artifactId>portlet-api</artifactId>

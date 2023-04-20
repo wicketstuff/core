@@ -39,4 +39,7 @@
 		</developer>
 	</developers>
 
+	<properties>
+		<portlet-api.version>3.0.1</portlet-api.version>
+	</properties>
 </project>
