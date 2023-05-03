@@ -11,7 +11,7 @@
   <name>Wicket Bundle</name>
 
   <packaging>bundle</packaging>
-  
+
   <description>
 	A module that creates a .jar from the classes in wicket, wicket-util and wicket-request modules in order
   to create a valid OSGi bundle of the wicket framework.
@@ -43,24 +43,6 @@
 
   <build>
     <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <configuration>
-          <descriptors>
-            <descriptor>src/assembly/sources.xml</descriptor>
-          </descriptors>
-        </configuration>
-        <executions>
-          <execution>
-            <id>make-sources</id>
-            <phase>package</phase>
-            <goals>
-              <goal>single</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
       <plugin>
         <groupId>org.apache.felix</groupId>
         <artifactId>maven-bundle-plugin</artifactId>
