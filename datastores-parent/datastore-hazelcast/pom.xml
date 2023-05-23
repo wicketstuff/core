@@ -13,7 +13,7 @@
 	<description>An implementation of Apache Wicket's IPageStore that uses Hazelcast as a backend</description>
 
 	<properties>
-		<hazelcast.version>5.2.1</hazelcast.version>
+		<hazelcast.version>5.3.0</hazelcast.version>
 	</properties>
 	<dependencies>
 
