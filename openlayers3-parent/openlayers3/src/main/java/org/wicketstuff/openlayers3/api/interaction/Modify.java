@@ -1,6 +1,5 @@
 package org.wicketstuff.openlayers3.api.interaction;
 
-import java.io.Serializable;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -11,7 +10,7 @@ import org.wicketstuff.openlayers3.api.style.Style;
 /**
  * Provides an object that models a map modify interaction.
  */
-public class Modify extends Interaction implements Serializable {
+public class Modify extends Interaction {
 
     /**
      * Features for this interaction.

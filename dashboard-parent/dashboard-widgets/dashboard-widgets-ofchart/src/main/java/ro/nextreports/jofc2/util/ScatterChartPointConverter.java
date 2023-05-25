@@ -23,7 +23,6 @@ import com.thoughtworks.xstream.io.path.PathTrackingWriter;
 
 public class ScatterChartPointConverter extends ConverterBase<Point> {
 
-	@SuppressWarnings("unchecked")
 	public boolean canConvert(Class c) {
 		return ScatterChart.Point.class.isAssignableFrom(c);
 	}

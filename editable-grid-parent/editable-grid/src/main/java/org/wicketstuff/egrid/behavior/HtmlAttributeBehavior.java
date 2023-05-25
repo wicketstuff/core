@@ -5,13 +5,12 @@ import java.util.Map.Entry;
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
-import org.apache.wicket.util.io.IClusterable;
 import org.apache.wicket.util.string.Strings;
 import org.apache.wicket.util.value.IValueMap;
 import org.wicketstuff.egrid.attribute.Attribute;
 import org.wicketstuff.egrid.attribute.HTMLAttribute;
 
-public class HtmlAttributeBehavior extends Behavior implements IClusterable
+public class HtmlAttributeBehavior extends Behavior
 {
 
 	private static final long serialVersionUID = 1L;

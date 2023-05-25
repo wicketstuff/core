@@ -7,7 +7,6 @@ import ro.nextreports.jofc2.model.elements.NullElement;
 
 public class NullConverter extends ConverterBase<NullElement> {
 
-	@SuppressWarnings("unchecked")
 	public boolean canConvert(Class type) {
 		return NullElement.class.isAssignableFrom(type);
 	}

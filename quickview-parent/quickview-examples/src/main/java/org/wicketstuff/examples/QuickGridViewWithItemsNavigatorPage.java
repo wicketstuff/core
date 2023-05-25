@@ -18,7 +18,6 @@ package org.wicketstuff.examples;
 
 import org.wicketstuff.ItemsNavigationStrategy;
 import org.wicketstuff.QuickGridView;
-import org.wicketstuff.ReuseAllStrategy;
 import org.wicketstuff.navigator.AjaxItemsNavigator;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;

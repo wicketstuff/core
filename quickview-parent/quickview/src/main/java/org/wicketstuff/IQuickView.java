@@ -15,11 +15,9 @@
  */
 package org.wicketstuff;
 
-import org.apache.wicket.Component;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.markup.html.navigation.paging.IPageable;
 import org.apache.wicket.markup.repeater.Item;
-import org.apache.wicket.request.component.IRequestableComponent;
 
 import java.util.List;
 

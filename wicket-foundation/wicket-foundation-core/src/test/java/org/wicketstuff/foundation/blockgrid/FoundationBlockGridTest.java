@@ -11,9 +11,6 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.tester.TagTester;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.jupiter.api.Test;
-import org.wicketstuff.foundation.blockgrid.BlockGridOptions;
-import org.wicketstuff.foundation.blockgrid.BlockGridType;
-import org.wicketstuff.foundation.blockgrid.FoundationBlockGrid;
 
 public class FoundationBlockGridTest {
 
@@ -21,7 +18,7 @@ public class FoundationBlockGridTest {
 	public void testParagraph() {
 		WicketTester tester = new WicketTester();
 		List<String> list = Arrays.asList("foo", "bar", "baz");
-		List<BlockGridOptions> optionsList = Arrays.asList(new BlockGridOptions(BlockGridType.SMALL_BLOCK_GRID, 3), 
+		List<BlockGridOptions> optionsList = Arrays.asList(new BlockGridOptions(BlockGridType.SMALL_BLOCK_GRID, 3),
 				new BlockGridOptions(BlockGridType.MEDIUM_BLOCK_GRID, 4), new BlockGridOptions(BlockGridType.LARGE_BLOCK_GRID, 5));
 		FoundationBlockGrid<String> grid = new FoundationBlockGrid<String>("id", optionsList, list) {
 
@@ -44,7 +41,7 @@ public class FoundationBlockGridTest {
 		assertEquals(3, tester.getTagsByWicketId("parent").size());
 		assertEquals(3, tester.getTagsByWicketId("paragraph").size());
 	}
-	
+
 	@Test
 	public void testImage() {
 		WicketTester tester = new WicketTester();

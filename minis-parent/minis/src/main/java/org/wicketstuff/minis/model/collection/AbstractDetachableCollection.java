@@ -27,39 +27,39 @@ import org.wicketstuff.minis.model.IDetachCodec;
  * A collection that can be converted between attached and detached state via calls to
  * {@link #attach()} and {@link #detach()}. Elements are converted between the two states using the
  * specified {@link IDetachCodec}.
- * 
+ *
  * This collection allows the use of real objects, and yet has the convenience of a small session
  * footprint.
- * 
+ *
  * If the collection is detached, invocation of any method from {@link Collection} will cause this
  * collection to be attached.
- * 
+ *
  * NOTICE: During the conversion to either state N method calls are invoked on the
  * {@link IDetachCodec}, one for each element in the collection. This can cause a performance
  * problem in certain situations.
- * 
+ *
  * Example
- * 
+ *
  * <pre>
- * 
+ *
  * class SelectUsersPanel extends Panel {
- * 
+ *
  *   // codec to transcode user object to and from its detached state
  *   private static final IDetachCodec&lt;User&gt; userCodec=new IDetachCodec&lt;User&gt; {
  *     public Serializable detach(User object) { return object.getId(); }
  *     public User attach(Serializable object) { return UserDao.get().userForId(object); }
  *   }
- * 
+ *
  *   // collection used to store selected user objects
  *   private final DetachableHashSet&lt;User&gt; selected=new DetachableHashSet&lt;User&gt;(userCodec);
- *    
+ *
  *    protected void onDetach() {
  *      // this will shrink the size of selected collection before the page is stored in session.
  *      // the collection will be attached automatically when some method is invoked on it.
- *      selected.detach(); 
+ *      selected.detach();
  *      super.onDetach();
  *    }
- * 
+ *
  *    public SelectUsersPanel (String id) {
  * 		super(id);
  * 	    Form form=new Form(&quot;form&quot;);
@@ -74,15 +74,14 @@ import org.wicketstuff.minis.model.IDetachCodec;
  *      }
  * 	    ...
  *    }
- * 
+ *
  * </pre>
- * 
+ *
  * @author Igor Vaynberg (ivaynberg)
- * 
+ *
  * @param <T>
  */
-public abstract class AbstractDetachableCollection<T> implements Collection<T>, IDetachable,
-	Serializable
+public abstract class AbstractDetachableCollection<T> implements Collection<T>, IDetachable
 {
 	private static final long serialVersionUID = 1L;
 
@@ -93,7 +92,7 @@ public abstract class AbstractDetachableCollection<T> implements Collection<T>, 
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param codec
 	 *            codec that will be used to transcode elements between attached and detached states
 	 */
@@ -172,7 +171,7 @@ public abstract class AbstractDetachableCollection<T> implements Collection<T>, 
 	/**
 	 * Returns collection used to store elements in attached state. If this collection is currently
 	 * detached it will be attached.
-	 * 
+	 *
 	 * @return collection used to store elements in attached state
 	 */
 	protected Collection<T> getAttachedStore()
@@ -193,7 +192,7 @@ public abstract class AbstractDetachableCollection<T> implements Collection<T>, 
 
 	/**
 	 * Creates a collection used to store elements in attached state
-	 * 
+	 *
 	 * @return collection used to store elements in attached state
 	 */
 	protected abstract Collection<T> newAttachedStore();

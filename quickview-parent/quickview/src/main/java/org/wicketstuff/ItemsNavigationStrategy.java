@@ -19,13 +19,9 @@ package org.wicketstuff;
 import org.apache.wicket.markup.repeater.DefaultItemReuseStrategy;
 import org.apache.wicket.markup.repeater.IItemFactory;
 import org.apache.wicket.markup.repeater.Item;
-import org.apache.wicket.markup.repeater.ReuseIfModelsEqualStrategy;
-import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.model.IModel;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 /**
  * this strategy supports addition of new items without the need to re-render the view  .

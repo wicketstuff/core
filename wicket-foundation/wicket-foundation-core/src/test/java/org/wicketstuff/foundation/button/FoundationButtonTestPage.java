@@ -2,8 +2,6 @@ package org.wicketstuff.foundation.button;
 
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Form;
-import org.wicketstuff.foundation.button.FoundationAjaxButton;
-import org.wicketstuff.foundation.button.FoundationAjaxSubmitLink;
 
 public class FoundationButtonTestPage extends WebPage {
 
@@ -20,5 +18,5 @@ public class FoundationButtonTestPage extends WebPage {
 		add(form);
 		form.add(btn);
 	}
-	
+
 }

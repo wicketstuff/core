@@ -3,8 +3,6 @@ package org.wicketstuff.examples.gmap.controls;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.wicketstuff.examples.gmap.WicketExamplePage;
 import org.wicketstuff.gmap.GMap;
-import org.wicketstuff.gmap.GMap.ZoomInBehavior;
-import org.wicketstuff.gmap.GMap.ZoomOutBehavior;
 
 /**
  * Demonstrates how to control the map via clicks on labels.

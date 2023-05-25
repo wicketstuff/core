@@ -23,12 +23,11 @@ import org.apache.wicket.authorization.strategies.page.SimplePageAuthorizationSt
 import org.apache.wicket.examples.WicketExampleApplication;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
-import org.apache.wicket.settings.RequestCycleSettings;
 
 
 /**
  * Application class for the library example.
- * 
+ *
  * @author Jonathan Locke
  */
 public final class LibraryApplication extends WicketExampleApplication

@@ -1,6 +1,5 @@
 package org.wicketstuff.openlayers3.api.source.tile;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +12,7 @@ import com.google.common.base.Joiner;
  * <p/>
  * @see <a href="http://openlayers.org/en/latest/apidoc/ol.source.TileArcGISRest.html">http://openlayers.org/en/latest/apidoc/ol.source.TileArcGISRest.html</a>
  */
-public class TileArcGISRest extends TileSource implements Serializable {
+public class TileArcGISRest extends TileSource {
 
     private String url;
 

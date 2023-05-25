@@ -22,7 +22,6 @@ import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.wicketstuff.objectautocomplete.ObjectAutoCompleteBuilder;
 import org.wicketstuff.objectautocomplete.ObjectReadOnlyRenderer;

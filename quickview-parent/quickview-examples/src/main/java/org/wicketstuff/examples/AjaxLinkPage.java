@@ -29,7 +29,6 @@ import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.markup.repeater.data.ListDataProvider;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**

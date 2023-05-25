@@ -20,13 +20,12 @@ import org.apache.wicket.Component;
 import org.apache.wicket.examples.tree.Foo;
 import org.apache.wicket.examples.tree.FooPanel;
 import org.apache.wicket.extensions.markup.html.repeater.tree.AbstractTree;
-import org.apache.wicket.model.IDetachable;
 import org.apache.wicket.model.IModel;
 
 /**
  * @author Sven Meier
  */
-public class PanelContent extends Content implements IDetachable
+public class PanelContent extends Content
 {
 	private static final long serialVersionUID = 1L;
 

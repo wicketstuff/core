@@ -23,7 +23,6 @@ import com.thoughtworks.xstream.io.path.PathTrackingWriter;
 
 public class PieChartSliceConverter extends ConverterBase<Slice> {
 
-	@SuppressWarnings("unchecked")
 	public boolean canConvert(Class c) {
 		return PieChart.Slice.class.isAssignableFrom(c);
 	}
@@ -35,6 +34,6 @@ public class PieChartSliceConverter extends ConverterBase<Slice> {
 		writeNode(writer, "tip", o.getTip(), true);
 		writeNode(writer, "highlight", o.getHighlight(), false);
 		writeNode(writer, "text", o.getText(), true);
-        writeNode(writer, "on-click", o.getOnClick(), true);
+		writeNode(writer, "on-click", o.getOnClick(), true);
 	}
 }

@@ -21,9 +21,6 @@ import java.util.Date;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.PropertyModel;
-import org.wicketstuff.datetime.extensions.yui.calendar.DateField;
-import org.wicketstuff.datetime.extensions.yui.calendar.DateTimeField;
-import org.wicketstuff.datetime.extensions.yui.calendar.TimeField;
 
 /**
  * Demonstrates components from the wicket-date project and a bunch of locale fiddling.

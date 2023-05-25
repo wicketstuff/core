@@ -10,8 +10,6 @@ import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.wicketstuff.datatables.options.Options;
 import org.wicketstuff.datatables.res.DataTablesBootstrapCssReference;
 import org.wicketstuff.datatables.res.DataTablesBootstrapJsReference;
-import org.wicketstuff.datatables.res.DataTablesScrollerJsReference;
-import org.wicketstuff.datatables.res.DataTablesSelectJsReference;
 
 /**
  *

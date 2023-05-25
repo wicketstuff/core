@@ -4,7 +4,6 @@ import java.util.Iterator;
 
 import org.apache.wicket.model.IDetachable;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.util.io.IClusterable;
 
 /**
  * Interface used to provide data to data views. This interface allows to create a paged DataGrid
@@ -61,7 +60,7 @@ import org.apache.wicket.util.io.IClusterable;
  *
  * @author Matej Knopp
  */
-public interface IDataSource<T> extends IDetachable, IClusterable
+public interface IDataSource<T> extends IDetachable
 {
 
 	/**

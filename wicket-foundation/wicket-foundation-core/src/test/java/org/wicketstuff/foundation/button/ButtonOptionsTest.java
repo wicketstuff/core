@@ -1,12 +1,6 @@
 package org.wicketstuff.foundation.button;
 
 import org.junit.jupiter.api.Test;
-import org.wicketstuff.foundation.button.ButtonColor;
-import org.wicketstuff.foundation.button.ButtonExpansion;
-import org.wicketstuff.foundation.button.ButtonOptions;
-import org.wicketstuff.foundation.button.ButtonRadius;
-import org.wicketstuff.foundation.button.ButtonSize;
-import org.wicketstuff.foundation.button.ButtonState;
 
 public class ButtonOptionsTest {
 

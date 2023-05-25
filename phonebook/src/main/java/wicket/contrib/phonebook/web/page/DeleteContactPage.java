@@ -18,6 +18,8 @@
  */
 package wicket.contrib.phonebook.web.page;
 
+import java.util.Map;
+
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Page;
 import org.apache.wicket.markup.html.basic.Label;
@@ -25,7 +27,6 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.apache.wicket.util.collections.MicroMap;
 import org.apache.wicket.util.string.interpolator.MapVariableInterpolator;
 
 import wicket.contrib.phonebook.Contact;
@@ -33,7 +34,7 @@ import wicket.contrib.phonebook.ContactDao;
 
 /**
  * Delete the Contact.
- * 
+ *
  * @author igor
  */
 public class DeleteContactPage extends BasePage
@@ -47,7 +48,7 @@ public class DeleteContactPage extends BasePage
 	 * Constructor. Display the summary (names) before asking for confirmation. Note that if you
 	 * don't need the page to be bookmarkable, you can use whatever constructor you need, such as is
 	 * done here.
-	 * 
+	 *
 	 * @param backPage
 	 *            The page that the user was on before coming here
 	 * @param contact
@@ -78,8 +79,7 @@ public class DeleteContactPage extends BasePage
 				final Contact deleted = getContact();
 				contactDao.delete(deleted.getId());
 				String msg = MapVariableInterpolator.interpolate(
-					getLocalizer().getString("status.deleted", this), new MicroMap<String, String>(
-						"name", deleted.getFullName()));
+					getLocalizer().getString("status.deleted", this), Map.of("name", deleted.getFullName()));
 				getSession().info(msg);
 				setResponsePage(backPage);
 			}
@@ -99,7 +99,7 @@ public class DeleteContactPage extends BasePage
 			{
 				String msg = MapVariableInterpolator.interpolate(
 					getLocalizer().getString("status.cancelled", this),
-					new MicroMap<String, String>("name", getContact().getFullName()));
+					Map.of("name", getContact().getFullName()));
 				getSession().info(msg);
 				setResponsePage(backPage);
 			}
@@ -110,7 +110,7 @@ public class DeleteContactPage extends BasePage
 
 	/**
 	 * Type-safe way to retrieve the contact from the page's model
-	 * 
+	 *
 	 * @return <code>Contact</code> instance stored in model
 	 */
 	private Contact getContact()

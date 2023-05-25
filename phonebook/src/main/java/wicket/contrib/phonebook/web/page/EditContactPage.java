@@ -18,6 +18,8 @@
  */
 package wicket.contrib.phonebook.web.page;
 
+import java.util.Map;
+
 import org.apache.wicket.Page;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
@@ -27,7 +29,6 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.apache.wicket.util.collections.MicroMap;
 import org.apache.wicket.util.string.interpolator.MapVariableInterpolator;
 import org.apache.wicket.validation.validator.EmailAddressValidator;
 import org.apache.wicket.validation.validator.StringValidator;
@@ -37,9 +38,9 @@ import wicket.contrib.phonebook.ContactDao;
 
 /**
  * Edit the Contact. Display details if an existing contact, then persist them if saved.
- * 
+ *
  * @author igor
- * 
+ *
  */
 public class EditContactPage extends BasePage
 {
@@ -51,7 +52,7 @@ public class EditContactPage extends BasePage
 	/**
 	 * Constructor. Create or edit the contact. Note that if you don't need the page to be
 	 * bookmarkable, you can use whatever constructor you need, such as is done here.
-	 * 
+	 *
 	 * @param backPage
 	 *            The page that the user was on before coming here
 	 * @param contactModel
@@ -116,8 +117,8 @@ public class EditContactPage extends BasePage
 			Contact contact = (Contact)getForm().getModelObject();
 			contactDao.save(contact);
 			String msg = MapVariableInterpolator.interpolate(
-				getLocalizer().getString("status.save", this), new MicroMap<String, String>("name",
-					contact.getFullName()));
+				getLocalizer().getString("status.save", this),
+				Map.of("name", contact.getFullName()));
 			getSession().info(msg);
 			setResponsePage(backPage);
 		}

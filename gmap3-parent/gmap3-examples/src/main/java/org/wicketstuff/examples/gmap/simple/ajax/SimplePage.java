@@ -2,7 +2,6 @@ package org.wicketstuff.examples.gmap.simple.ajax;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
-import org.apache.wicket.markup.html.link.Link;
 import org.wicketstuff.examples.gmap.WicketExamplePage;
 import org.wicketstuff.gmap.GMapHeaderContributor;
 

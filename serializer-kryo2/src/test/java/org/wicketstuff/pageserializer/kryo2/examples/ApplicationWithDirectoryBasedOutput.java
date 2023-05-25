@@ -25,7 +25,6 @@ import java.util.UUID;
 
 import org.apache.wicket.Page;
 import org.apache.wicket.protocol.http.WebApplication;
-import org.apache.wicket.util.file.Files;
 import org.apache.wicket.util.lang.Bytes;
 import org.wicketstuff.pageserializer.common.analyze.AnalyzingSerializationListener;
 import org.wicketstuff.pageserializer.common.analyze.ComponentIdAsLabel;
@@ -57,13 +56,13 @@ public class ApplicationWithDirectoryBasedOutput extends WebApplication {
 	@Override
 	protected void init() {
 		super.init();
-		
+
 			File outputDirectory = tempDirectory("kryo2-reports");
 			System.out.println("Reports in: "+outputDirectory);
 
 			DirectoryBasedReportOutput output = new DirectoryBasedReportOutput(outputDirectory);
-			
-			// output of report of type sizes, sorted tree report (by size), aggregated tree 
+
+			// output of report of type sizes, sorted tree report (by size), aggregated tree
 			ISerializedObjectTreeProcessor typeAndSortedTreeAndCollapsedSortedTreeProcessors = TreeProcessors.listOf(
 				new TypeSizeReport(output.with(Keys.withNameAndFileExtension("typesize", "txt"))),
 				new SortedTreeSizeReport(output.with(Keys.withNameAndFileExtension("treesize", "txt"))),

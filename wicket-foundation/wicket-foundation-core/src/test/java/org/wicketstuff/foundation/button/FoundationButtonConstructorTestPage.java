@@ -5,18 +5,15 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.string.StringValue;
-import org.wicketstuff.foundation.button.ButtonOptions;
-import org.wicketstuff.foundation.button.FoundationAjaxButton;
-import org.wicketstuff.foundation.button.FoundationSubmitLink;
 
 public class FoundationButtonConstructorTestPage extends WebPage {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	public FoundationButtonConstructorTestPage(PageParameters params) {
 		Form<Void> form = new Form<>("form");
 		add(form);
-		
+
 		StringValue sv = params.get("buttonType");
 		if (sv.toString().equals("FoundationAjaxButton")) {
 			form.add(new FoundationAjaxButton("btn1", form, new ButtonOptions()));

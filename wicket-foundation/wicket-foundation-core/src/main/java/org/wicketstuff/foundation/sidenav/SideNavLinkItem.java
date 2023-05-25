@@ -1,23 +1,21 @@
 package org.wicketstuff.foundation.sidenav;
 
-import java.io.Serializable;
-
 /**
  * SideNavItem implementation for links.
  * @author ilkka
  *
  */
-public class SideNavLinkItem implements SideNavItem, Serializable {
+public class SideNavLinkItem implements SideNavItem {
 
 	private static final long serialVersionUID = 1L;
 
 	private boolean active;
 	private String title;
-	
+
 	public SideNavLinkItem(String title) {
 		this.title = title;
 	}
-	
+
 	public SideNavLinkItem(String title, boolean active) {
 		this.active = active;
 		this.title = title;

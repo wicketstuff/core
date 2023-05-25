@@ -12,10 +12,6 @@ import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
-import org.wicketstuff.select2.ApplicationSettings;
-import org.wicketstuff.select2.Response;
-import org.wicketstuff.select2.Select2MultiChoice;
-import org.wicketstuff.select2.StringTextChoiceProvider;
 
 public class Issue644Page extends WebPage implements IGenericComponent<Collection<String>, Issue644Page> {
 	private static final long serialVersionUID = 1L;
@@ -30,7 +26,6 @@ public class Issue644Page extends WebPage implements IGenericComponent<Collectio
 		Form<Void> frm = new Form<>("frm");
 		add(frm.add(feedback.setOutputMarkupId(true)));
 
-		//setModel(new CollectionModel<>(HomePage.KNOWN_USERS));
 		StringTextChoiceProvider provider = new StringTextChoiceProvider() {
 			private static final long serialVersionUID = 1L;
 

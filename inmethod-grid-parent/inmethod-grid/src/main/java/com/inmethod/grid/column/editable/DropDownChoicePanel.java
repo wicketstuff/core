@@ -26,15 +26,15 @@ public class DropDownChoicePanel<M, I, P, S> extends EditableCellPanel<M, I, P, 
 
 	private static final String DropDownChoice_ID = "DropDownChoice";
 
-	protected class DefaultDropDownChoice<P> extends DropDownChoice<P> {
+	protected class DefaultDropDownChoice<T> extends DropDownChoice<T> {
 		private static final long serialVersionUID = 1L;
 
-		protected DefaultDropDownChoice(String id, IModel<P> object, IModel<? extends List<P>> choices) {
+		protected DefaultDropDownChoice(String id, IModel<T> object, IModel<? extends List<T>> choices) {
 			super(id, object, choices);
 		}
 
-		protected DefaultDropDownChoice(String id, IModel<P> object, IModel<? extends List<P>> choices,
-				IChoiceRenderer<P> renderer) {
+		protected DefaultDropDownChoice(String id, IModel<T> object, IModel<? extends List<T>> choices,
+				IChoiceRenderer<T> renderer) {
 			super(id, object, choices, renderer);
 		}
 

@@ -18,12 +18,7 @@ package org.wicketstuff;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.MarkupContainer;
-import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.ComponentTag;
-import org.apache.wicket.markup.repeater.Item;
-
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * @author Vineet Semwal

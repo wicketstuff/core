@@ -1,11 +1,9 @@
 package org.wicketstuff.openlayers3.api.format;
 
-import java.io.Serializable;
-
 /**
  * Provides an object that models a GeoJSON format for providing feature data.
  */
-public class GeoJsonFormat extends FeatureFormat implements Serializable {
+public class GeoJsonFormat extends FeatureFormat {
 
     /**
      * The default projection for this format.

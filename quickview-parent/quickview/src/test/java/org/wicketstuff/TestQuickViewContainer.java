@@ -17,15 +17,11 @@ package org.wicketstuff;
 
 import org.wicketstuff.navigator.AjaxItemsNavigator;
 import org.wicketstuff.navigator.ItemsNavigatorBase;
-import org.apache.wicket.MarkupContainer;
-import org.apache.wicket.markup.IMarkupResourceStreamProvider;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.link.AbstractLink;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.IMarkupSourcingStrategy;
 import org.apache.wicket.markup.html.panel.PanelMarkupSourcingStrategy;
-import org.apache.wicket.util.resource.IResourceStream;
-import org.apache.wicket.util.resource.StringResourceStream;
 
 /**
  * @author Vineet Semwal

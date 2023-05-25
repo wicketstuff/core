@@ -207,9 +207,8 @@ public class YuiDependencyResolver implements Serializable
 				}
 			}
 
-			try
+			try (RandomAccessFile raf = new RandomAccessFile(scriptFile, "r"))
 			{
-				RandomAccessFile raf = new RandomAccessFile(scriptFile, "r");
 				byte[] bytes = new byte[(int)raf.length()];
 				raf.read(bytes);
 				String contents = new String(bytes);

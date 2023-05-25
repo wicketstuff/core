@@ -1,20 +1,11 @@
 package org.wicketstuff.examples.gmap.info.advanced;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.IMarkupResourceStreamProvider;
 import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
-import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.protocol.http.BufferedWebResponse;
-import org.apache.wicket.request.Response;
-import org.apache.wicket.request.cycle.RequestCycle;
-import org.apache.wicket.util.resource.IResourceStream;
-import org.apache.wicket.util.resource.StringResourceStream;
 import org.wicketstuff.examples.gmap.WicketExamplePage;
 import org.wicketstuff.gmap.GMap;
 import org.wicketstuff.gmap.api.GEvent;
@@ -81,15 +72,15 @@ public class HomePage extends WicketExamplePage
                     Component c = new InfoPanel(INFOPANEL, i);
                     i++;
                     c.setOutputMarkupId(true);
-                    
+
                     //Add or replace it on the hiddenContainer
                     hiddenContainersInfoPanel.addOrReplace(c);
-                    
+
                     infoWindow = new GInfoWindow(gLatLng, c);
                     map.addOverlay(infoWindow);
                     feedback.info("InfoWindow " + infoWindow.getId() + " was added");
                     target.add(feedback);
-                    
+
                     //add the hiddenContainer to be repainted
                     target.add(hiddenContainersInfoPanel);
                     // IMPORTANT: you must have the InfoWindow already added to the map

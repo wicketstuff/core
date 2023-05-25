@@ -32,16 +32,15 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
-import org.apache.wicket.resource.JQueryResourceReference;
 
 /**
  * A WebRTC component to create a video conference based on SimpleWebRTC.
- * 
+ *
  * http://www.html5rocks.com/en/tutorials/webrtc/basics/<br>
  * https://github.com/andyet/signalmaster<br>
  * https://github.com/HenrikJoreteg/SimpleWebRTC<br>
  * https://github.com/HenrikJoreteg/webrtc.js
- * 
+ *
  * @author Tobias Soloschenko
  *
  */
@@ -113,7 +112,7 @@ public abstract class WebRTC extends WebMarkupContainer
 	/**
 	 * Configures the given video for web rtc. If the video and mic are rejected for usage a dummy
 	 * picture is going to be shown.
-	 * 
+	 *
 	 * @return the configured video
 	 */
 	private Video configureVideo()
@@ -127,7 +126,7 @@ public abstract class WebRTC extends WebMarkupContainer
 	/**
 	 * Gets the resource reference which is going to be shown if the access to the mic and the cam
 	 * is not allowed by the user.
-	 * 
+	 *
 	 * @return the resource reference to be used if no access to mic and the cam is not allowed
 	 */
 	protected ResourceReference getNoVideoResourceReference()
@@ -138,14 +137,14 @@ public abstract class WebRTC extends WebMarkupContainer
 	/**
 	 * Gets the local video id of the video element which is going to display the local video
 	 * recording
-	 * 
+	 *
 	 * @return the id of the local video
 	 */
 	public abstract Video getLocalVideo();
 
 	/**
 	 * Gets the room name to which the users are joining
-	 * 
+	 *
 	 * @return the room name
 	 */
 	public abstract String getRoomName();
@@ -154,7 +153,7 @@ public abstract class WebRTC extends WebMarkupContainer
 	 * Gets the url of the signal server based on socket.io. Important the URL must not contain a
 	 * namespace like /socket.io at the end, because the signal server then never calls the connect
 	 * event.
-	 * 
+	 *
 	 * @return the url of the socket io server
 	 */
 	public abstract String getSocketIOUrl();
@@ -162,7 +161,7 @@ public abstract class WebRTC extends WebMarkupContainer
 	/**
 	 * If the debug mode is enabled - this is causing the uncompressed version of the javascript
 	 * files is going to be loaded
-	 * 
+	 *
 	 * @return if the debug mode is enabled
 	 */
 	public Boolean isDebug()
@@ -173,7 +172,7 @@ public abstract class WebRTC extends WebMarkupContainer
 	/**
 	 * Sets the debug mode to be enabled - this is causing the uncompressed version of the
 	 * javascript files is going to be loaded
-	 * 
+	 *
 	 * @param debug
 	 *            if the debug mode is enabled
 	 */
@@ -184,7 +183,7 @@ public abstract class WebRTC extends WebMarkupContainer
 
 	/**
 	 * If the volume bars are enabled or disabled
-	 * 
+	 *
 	 * @return if the volume bars are enabled or disabled
 	 */
 	public Boolean getVolumeBars()
@@ -194,7 +193,7 @@ public abstract class WebRTC extends WebMarkupContainer
 
 	/**
 	 * Sets the volume bars to be enabled or disabled
-	 * 
+	 *
 	 * @param volumeBars
 	 *            if the volume bars are enabled or disabled
 	 */
@@ -205,7 +204,7 @@ public abstract class WebRTC extends WebMarkupContainer
 
 	/**
 	 * Gets the frames per seconds which are going to be used for the videos
-	 * 
+	 *
 	 * @return the frames per seconds
 	 */
 	public Integer getFramesPerSeconds()
@@ -215,7 +214,7 @@ public abstract class WebRTC extends WebMarkupContainer
 
 	/**
 	 * Sets the frames per seconds which are going to be used for the videos
-	 * 
+	 *
 	 * @param framesPerSeconds
 	 *            the frames per seconds as short
 	 */
@@ -226,7 +225,7 @@ public abstract class WebRTC extends WebMarkupContainer
 
 	/**
 	 * Gets the max width of the videos - if the width is smaller less band width is used
-	 * 
+	 *
 	 * @return the max width of the videos
 	 */
 	public Integer getMaxWidth()
@@ -236,7 +235,7 @@ public abstract class WebRTC extends WebMarkupContainer
 
 	/**
 	 * Sets the max width of the videos - if the width is smaller less band width is used
-	 * 
+	 *
 	 * @param maxWidth
 	 *            the max width the videos should be
 	 */
@@ -247,7 +246,7 @@ public abstract class WebRTC extends WebMarkupContainer
 
 	/**
 	 * Gets the max height of the videos - if the height is smaller less band width is used
-	 * 
+	 *
 	 * @return the max height of the videos
 	 */
 	public Integer getMaxHeight()
@@ -257,7 +256,7 @@ public abstract class WebRTC extends WebMarkupContainer
 
 	/**
 	 * Sets the max height of the videos - if the height is smaller less band width is used
-	 * 
+	 *
 	 * @param maxHeight
 	 *            the max height the videos should be
 	 */
@@ -270,7 +269,7 @@ public abstract class WebRTC extends WebMarkupContainer
 	 * Override this to provide an error page if video / audio is not available. If only audio is
 	 * available getNoVideoResourceReference() is called and the image received by this method is
 	 * shown.
-	 * 
+	 *
 	 * @return the page if video / audio is not available
 	 */
 	public Class<? extends Page> getErrorPage()

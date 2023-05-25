@@ -3,7 +3,6 @@ package org.wicketstuff.async.task;
 import org.apache.wicket.model.IDetachable;
 import org.apache.wicket.model.LoadableDetachableModel;
 
-import java.io.Serializable;
 import java.util.concurrent.*;
 
 /**
@@ -13,7 +12,7 @@ import java.util.concurrent.*;
  * a {@link ITaskManager}. A task manager is in general not serializable and this would therefore break the Wicket
  * contract of a model this representation is based on.
  */
-public abstract class AbstractTaskContainer implements Serializable, IDetachable {
+public abstract class AbstractTaskContainer implements IDetachable {
 
     private final String id;
 

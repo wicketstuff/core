@@ -5,7 +5,6 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.PropertyModel;
 import org.wicketstuff.examples.gmap.WicketExamplePage;
 import org.wicketstuff.gmap.GMap;
-import org.wicketstuff.gmap.GMap.SetMapTypeBehavior;
 import org.wicketstuff.gmap.api.GMapType;
 import org.wicketstuff.gmap.event.MapTypeChangedListener;
 

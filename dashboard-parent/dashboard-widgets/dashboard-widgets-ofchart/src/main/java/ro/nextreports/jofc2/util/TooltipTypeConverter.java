@@ -29,7 +29,6 @@ public class TooltipTypeConverter implements SingleValueConverter {
 		return o.toString();
 	}
 
-	@SuppressWarnings("unchecked")
 	public boolean canConvert(Class arg0) {
 		return Type.class.isAssignableFrom(arg0);
 	}

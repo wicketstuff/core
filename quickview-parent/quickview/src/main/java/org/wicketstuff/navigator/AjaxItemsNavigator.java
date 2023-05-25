@@ -17,8 +17,6 @@
 package org.wicketstuff.navigator;
 
 import org.wicketstuff.IQuickView;
-import org.apache.wicket.markup.head.CssHeaderItem;
-import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
