@@ -60,7 +60,7 @@ import org.wicketstuff.lazymodel.reflect.Reflection;
  * @author svenmeier
  */
 @SuppressWarnings("unchecked")
-public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
+public class LazyModel<T> implements IObjectClassAwareModel<T>,
 		IObjectTypeAwareModel<T>, IPropertyReflectionAwareModel<T> {
 
 	private static final long serialVersionUID = 1L;

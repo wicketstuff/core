@@ -35,7 +35,6 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 import org.wicketstuff.datetime.StyleDateConverter;
-import org.wicketstuff.datetime.extensions.yui.calendar.DatePicker;
 import org.wicketstuff.datetime.markup.html.form.DateTextField;
 
 /**
@@ -80,7 +79,7 @@ public class DatesPage1 extends WebPage
 
 		/**
 		 * Construct.
-		 * 
+		 *
 		 * @param id
 		 *            component id
 		 */
@@ -111,7 +110,7 @@ public class DatesPage1 extends WebPage
 			});
 			setChoiceRenderer(new LocaleChoiceRenderer());
 			setDefaultModel(new PropertyModel<>(DatesPage1.this, "selectedLocale"));
-			
+
 			add(new FormComponentUpdatingBehavior());
 		}
 

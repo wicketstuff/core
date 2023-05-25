@@ -1,7 +1,6 @@
 package org.wicketstuff.foundation;
 
 import org.junit.jupiter.api.Test;
-import org.wicketstuff.foundation.CatalogPage;
 
 public class CatalogPageTest extends AbstractPageTest
 {
@@ -12,5 +11,5 @@ public class CatalogPageTest extends AbstractPageTest
 		tester.startPage(CatalogPage.class);
 		tester.assertRenderedPage(CatalogPage.class);
 	}
-	
+
 }

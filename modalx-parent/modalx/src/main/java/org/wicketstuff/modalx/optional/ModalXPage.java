@@ -5,7 +5,7 @@
 
 /**
  * � 2006, 2009. Step Ahead Software Pty Ltd. All rights reserved.
- * 
+ *
  * Source file created and managed by Javelin (TM) Step Ahead Software.
  * To maintain code and model synchronization you may directly edit code in method bodies
  * and any sections starting with the 'Keep_*' marker. Make all other changes via Javelin.
@@ -29,7 +29,7 @@ import org.wicketstuff.modalx.ModalMgr;
  * allow fast integration of ModalX. If it is not possible ot introduce this class into the Page
  * class hierarchy then simply make an existing class in the hierarchy implement the ModalMgr
  * interface and copy methods and attributes from this class to that class.
- * 
+ *
  * @author Chris Colman
  */
 public class ModalXPage extends WebPage implements ModalMgr
@@ -65,7 +65,7 @@ public class ModalXPage extends WebPage implements ModalMgr
 // -[Methods]-
 
 	/**
- * 
+ *
  */
 	public ModalXPage(final PageParameters iParameters) throws StringValueConversionException
 	{
@@ -91,7 +91,7 @@ public class ModalXPage extends WebPage implements ModalMgr
 	public void preShow(ModalContentPanel modalContentPanel)
 	{
 		// Do something prior to showing the modal - perhaps set the variation etc.,
-		
+
 		// To implement previous trackModalVisit behaviour call
 		// modalContentPanel.createModalVisit(); and do whatever you previously did with the
 		// IWicketModalVisit object that was created

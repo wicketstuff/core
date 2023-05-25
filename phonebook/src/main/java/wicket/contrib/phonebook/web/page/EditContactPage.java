@@ -38,9 +38,9 @@ import wicket.contrib.phonebook.ContactDao;
 
 /**
  * Edit the Contact. Display details if an existing contact, then persist them if saved.
- * 
+ *
  * @author igor
- * 
+ *
  */
 public class EditContactPage extends BasePage
 {
@@ -52,7 +52,7 @@ public class EditContactPage extends BasePage
 	/**
 	 * Constructor. Create or edit the contact. Note that if you don't need the page to be
 	 * bookmarkable, you can use whatever constructor you need, such as is done here.
-	 * 
+	 *
 	 * @param backPage
 	 *            The page that the user was on before coming here
 	 * @param contactModel
@@ -117,8 +117,8 @@ public class EditContactPage extends BasePage
 			Contact contact = (Contact)getForm().getModelObject();
 			contactDao.save(contact);
 			String msg = MapVariableInterpolator.interpolate(
-				getLocalizer().getString("status.save", this), Map.of("name",
-					contact.getFullName()));
+				getLocalizer().getString("status.save", this),
+				Map.of("name", contact.getFullName()));
 			getSession().info(msg);
 			setResponsePage(backPage);
 		}

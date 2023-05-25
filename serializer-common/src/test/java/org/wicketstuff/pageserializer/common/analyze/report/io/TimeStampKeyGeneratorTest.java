@@ -27,7 +27,6 @@ import java.util.Date;
 import java.util.Locale;
 
 import org.junit.jupiter.api.Test;
-import org.wicketstuff.pageserializer.common.analyze.report.io.TimeStampKeyGenerator;
 
 public class TimeStampKeyGeneratorTest {
 

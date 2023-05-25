@@ -1,4 +1,4 @@
-/* 
+/*
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -42,7 +42,6 @@ import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.json.JSONFunction;
 import org.apache.wicket.ajax.markup.html.form.AjaxCheckBox;
-import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.model.IModel;
@@ -57,7 +56,7 @@ public class HomePage extends WebPage {
 
     private static final long serialVersionUID = 1L;
     private static final Logger log = LoggerFactory.getLogger(HomePage.class);
-    
+
     private ChartLibLoaderBehavior chartLibLoader;
     private Boolean stackedPercent = false;
     private Chart chartBar;

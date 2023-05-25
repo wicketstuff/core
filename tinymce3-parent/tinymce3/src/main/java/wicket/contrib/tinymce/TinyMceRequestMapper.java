@@ -9,8 +9,6 @@ import org.apache.wicket.request.Url;
 import org.apache.wicket.request.handler.resource.ResourceReferenceRequestHandler;
 import org.apache.wicket.request.mapper.AbstractMapper;
 import org.apache.wicket.request.resource.PackageResourceReference;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * A request mapper to enable TinyMCE JS to load at runtime other JS resources

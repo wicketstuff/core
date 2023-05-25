@@ -29,7 +29,6 @@ public class RotationConverter implements SingleValueConverter {
 		return o.toString();
 	}
 
-	@SuppressWarnings("unchecked")
 	public boolean canConvert(Class c) {
 		return Rotation.class.isAssignableFrom(c);
 	}

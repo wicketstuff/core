@@ -18,7 +18,6 @@ package org.wicketstuff.jeeweb;
 
 import org.apache.wicket.Page;
 import org.apache.wicket.protocol.http.WebApplication;
-import org.wicketstuff.jeeweb.JEEWebResolver;
 
 public class TestApplication extends WebApplication
 {

@@ -1,7 +1,5 @@
 package org.wicketstuff.openlayers3.api.source.tile;
 
-import org.wicketstuff.openlayers3.api.source.tile.TileSource;
-
 /**
  * Provides an object that models an OpenStreetMap source of map data.
  */

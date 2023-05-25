@@ -1,7 +1,6 @@
 package org.wicketstuff.foundation;
 
 import org.junit.jupiter.api.Test;
-import org.wicketstuff.foundation.FoundationIconsPage;
 
 public class FoundationIconsPageTest extends AbstractPageTest {
 

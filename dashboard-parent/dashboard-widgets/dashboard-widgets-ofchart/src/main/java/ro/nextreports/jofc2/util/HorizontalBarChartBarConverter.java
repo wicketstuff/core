@@ -23,7 +23,6 @@ import com.thoughtworks.xstream.io.path.PathTrackingWriter;
 
 public class HorizontalBarChartBarConverter extends ConverterBase<Bar> {
 
-	@SuppressWarnings("unchecked")
 	public boolean canConvert(Class c) {
 		return HorizontalBarChart.Bar.class.isAssignableFrom(c);
 	}

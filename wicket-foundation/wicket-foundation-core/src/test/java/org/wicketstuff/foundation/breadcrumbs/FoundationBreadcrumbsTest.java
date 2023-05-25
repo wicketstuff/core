@@ -10,8 +10,6 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.util.tester.TagTester;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.jupiter.api.Test;
-import org.wicketstuff.foundation.breadcrumbs.BreadcrumbsItem;
-import org.wicketstuff.foundation.breadcrumbs.FoundationBreadcrumbs;
 
 public class FoundationBreadcrumbsTest {
 

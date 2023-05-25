@@ -40,17 +40,17 @@ public class HttpUtilsTest
 			+ "		</p>\n"
 			+ "	</body>\n"
 			+ "</html>";
-		
+
 		MockApplication mockApplication = new MockApplication();
 		MockServletContext servletContext = new MockServletContext(mockApplication, "/");
 		BufferedMockRequest mockedRequest = new BufferedMockRequest(mockApplication,
 			new MockHttpSession(servletContext), servletContext, "POST");
-		
+
 		mockedRequest.setTextAsRequestBody(xmlText);
-		
+
 		WebRequest webRequest = mock(WebRequest.class);
 		when(webRequest.getContainerRequest()).thenReturn(mockedRequest);
-		
+
 		String stringFromRequest = HttpUtils.readStringFromRequest(webRequest);
 		assertEquals(xmlText, stringFromRequest);
 	}

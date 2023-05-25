@@ -1,7 +1,6 @@
 package org.wicketstuff.foundation;
 
 import org.junit.jupiter.api.Test;
-import org.wicketstuff.foundation.TopBarPage;
 
 public class TopBarPageTest extends AbstractPageTest {
 

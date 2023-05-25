@@ -136,7 +136,7 @@ public class YuiHeaderContributor implements IHeaderContributor
 
 		/**
 		 * Classic head as YuiLoader is still in Beta
-		 * 
+		 *
 		 */
 		public void renderHead(IHeaderResponse response)
 		{
@@ -155,9 +155,9 @@ public class YuiHeaderContributor implements IHeaderContributor
 
 
 				final ResourceReference moduleScript;
-				if (YuiHeaderContributor.this.moduleCache.containsKey(path))
+				if (YuiHeaderContributor.moduleCache.containsKey(path))
 				{
-					moduleScript = YuiHeaderContributor.this.moduleCache.get(path);
+					moduleScript = YuiHeaderContributor.moduleCache.get(path);
 				}
 				else
 				{
@@ -169,7 +169,7 @@ public class YuiHeaderContributor implements IHeaderContributor
 					{
 						moduleScript = new JavaScriptResourceReference(YUI.class, path);
 					}
-					YuiHeaderContributor.this.moduleCache.put(path, moduleScript);
+					YuiHeaderContributor.moduleCache.put(path, moduleScript);
 				}
 				response.render(JavaScriptReferenceHeaderItem.forReference(moduleScript));
 				if (dependencyResolver.hasCssAsset(name, YUI_BUILD_ROOT + "/" + build))
@@ -180,14 +180,14 @@ public class YuiHeaderContributor implements IHeaderContributor
 
 					final String assetPath = build + "/" + name + "/assets/" + name + ".css";
 					final ResourceReference assetRef;
-					if (YuiHeaderContributor.this.moduleCache.containsKey(assetPath))
+					if (YuiHeaderContributor.moduleCache.containsKey(assetPath))
 					{
-						assetRef = YuiHeaderContributor.this.moduleCache.get(assetPath);
+						assetRef = YuiHeaderContributor.moduleCache.get(assetPath);
 					}
 					else
 					{
 						assetRef = new CssResourceReference(YUI.class, assetPath);
-						YuiHeaderContributor.this.moduleCache.put(assetPath, assetRef);
+						YuiHeaderContributor.moduleCache.put(assetPath, assetRef);
 					}
 
 					response.render(CssHeaderItem.forReference(assetRef, "screen"));

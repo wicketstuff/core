@@ -16,8 +16,6 @@
  */
 package org.apache.wicket.examples.tree.content;
 
-import java.util.Optional;
-
 import org.apache.wicket.Component;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.ajax.AjaxRequestTarget;

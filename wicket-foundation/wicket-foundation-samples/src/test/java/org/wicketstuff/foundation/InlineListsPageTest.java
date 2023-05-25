@@ -2,7 +2,6 @@ package org.wicketstuff.foundation;
 
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.jupiter.api.Test;
-import org.wicketstuff.foundation.InlineListsPage;
 
 public class InlineListsPageTest {
 
@@ -12,5 +11,5 @@ public class InlineListsPageTest {
 		tester.startPage(InlineListsPage.class);
 		tester.assertRenderedPage(InlineListsPage.class);
 	}
-	
+
 }

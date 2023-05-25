@@ -1,7 +1,6 @@
 package org.wicketstuff.foundation;
 
 import org.junit.jupiter.api.Test;
-import org.wicketstuff.foundation.BreadcrumbsPage;
 
 public class BreadcrumbsPageTest extends AbstractPageTest {
 

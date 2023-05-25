@@ -31,7 +31,6 @@ public class StackKeyConverter extends ConverterBase<Key>
         writeNode(writer, "font-size", o.getFontSize(), false);
     }
 
-    @SuppressWarnings("unchecked")
     public boolean canConvert(Class arg0)
     {
         return Key.class.isAssignableFrom(arg0);

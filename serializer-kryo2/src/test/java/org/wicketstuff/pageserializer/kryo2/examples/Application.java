@@ -20,10 +20,7 @@
  */
 package org.wicketstuff.pageserializer.kryo2.examples;
 
-import java.io.File;
-
 import org.apache.wicket.protocol.http.WebApplication;
-import org.apache.wicket.util.file.Files;
 import org.apache.wicket.util.lang.Bytes;
 import org.wicketstuff.pageserializer.common.analyze.AnalyzingSerializationListener;
 import org.wicketstuff.pageserializer.common.analyze.ComponentIdAsLabel;
@@ -37,8 +34,6 @@ import org.wicketstuff.pageserializer.common.analyze.report.SortedTreeSizeReport
 import org.wicketstuff.pageserializer.common.analyze.report.TreeTransformator;
 import org.wicketstuff.pageserializer.common.analyze.report.TypeSizeReport;
 import org.wicketstuff.pageserializer.common.analyze.report.filter.TypeFilter;
-import org.wicketstuff.pageserializer.common.analyze.report.io.DirectoryBasedReportOutput;
-import org.wicketstuff.pageserializer.common.analyze.report.io.Keys;
 import org.wicketstuff.pageserializer.common.listener.ISerializationListener;
 import org.wicketstuff.pageserializer.common.listener.SerializationListeners;
 import org.wicketstuff.pageserializer.kryo2.inspecting.InspectingKryoSerializer;
@@ -47,7 +42,7 @@ import org.wicketstuff.pageserializer.kryo2.inspecting.validation.DefaultJavaSer
 /**
  * Application object for your web application. If you want to run this application without
  * deploying, run the Start class.
- * 
+ *
  * @see org.wicketstuff.pageserializer.kryo.mycompany.Start#main(String[])
  */
 public class Application extends WebApplication
@@ -62,10 +57,10 @@ public class Application extends WebApplication
 	public void init()
 	{
 		super.init();
-		
+
 		IReportOutput reportOutput=new LoggerReportOutput();
 
-		// output of report of type sizes, sorted tree report (by size), aggregated tree 
+		// output of report of type sizes, sorted tree report (by size), aggregated tree
 		ISerializedObjectTreeProcessor typeAndSortedTreeAndCollapsedSortedTreeProcessors = TreeProcessors.listOf(
 			new TypeSizeReport(reportOutput), new SortedTreeSizeReport(reportOutput), new SimilarNodeTreeTransformator(
 				new SortedTreeSizeReport(reportOutput)));

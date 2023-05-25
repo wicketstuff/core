@@ -31,7 +31,6 @@ public class ShapePointConverter extends ConverterBase<Point>
         writeNode(writer, "y", o.getY(), false);
     }
 
-    @SuppressWarnings("unchecked")
     public boolean canConvert(Class arg0)
     {
         return Point.class.isAssignableFrom(arg0);

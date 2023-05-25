@@ -19,7 +19,6 @@ package org.wicketstuff.jamon.component;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
-import org.wicketstuff.jamon.component.PropertyModelObjectComparator;
 
 
 public class PropertyModelObjectComparatorTest

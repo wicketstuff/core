@@ -26,7 +26,6 @@ import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.head.OnLoadHeaderItem;
-import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -43,7 +42,7 @@ import org.wicketstuff.yui.markup.html.contributor.YuiHeaderContributor;
  *
  * @author Eelco Hillenius
  */
-public class Calendar extends Panel implements IHeaderContributor {
+public class Calendar extends Panel {
     /**
      * The container/ receiver of the javascript component.
      */
