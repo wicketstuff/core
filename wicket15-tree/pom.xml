@@ -42,7 +42,7 @@
 		<junit.version>4.13.2</junit.version>
 		<servlet-api.version>3.1.0</servlet-api.version>
 		<wtp.version>none</wtp.version>
-		<wicket.version>9.0.0</wicket.version>
+		<wicket.version>9.3.0</wicket.version>
 	</properties>
 	<scm>
 		<connection>scm:git:git@github.com:wicketstuff/wicket1.5-tree.git</connection>
