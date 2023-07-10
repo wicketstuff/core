@@ -285,7 +285,7 @@
 		<jackson.version>2.15.2</jackson.version>
 		<poi.version>5.2.3</poi.version>
 		<guava.version>32.1.1-jre</guava.version>
-		<wicket-webjars.version>4.0.0-SNAPSHOT</wicket-webjars.version>
+		<wicket-webjars.version>4.0.0</wicket-webjars.version>
 		<commons-io.version>2.13.0</commons-io.version>
 		<xstream.version>1.4.20</xstream.version>
 		<hamcrest.version>2.2</hamcrest.version>
