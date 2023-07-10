@@ -256,7 +256,7 @@
 	<!-- mocleiri: for distribution in to central repository sections in the main pom are not allowed -->
 
 	<properties>
-		<wicket.version>10.0.0-M1-SNAPSHOT</wicket.version>
+		<wicket.version>10.0.0-M1</wicket.version>
 
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
@@ -268,32 +268,32 @@
 		<deployment.disabled>false</deployment.disabled>
 		<sources.disabled>false</sources.disabled>
 
-		<hibernate.version>6.2.1.Final</hibernate.version>
+		<hibernate.version>6.2.6.Final</hibernate.version>
 		<hibernate-ehcache.version>6.0.0.Alpha7</hibernate-ehcache.version>
-		<hibernate-validator.version>8.0.0.Final</hibernate-validator.version>
+		<hibernate-validator.version>8.0.1.Final</hibernate-validator.version>
 		<javassist.version>3.29.2-GA</javassist.version>
 		<jetty.version>11.0.14</jetty.version>
 		<sf-jung.version>2.1.1</sf-jung.version>
 		<shiro.version>1.11.0</shiro.version>
 		<slf4j.version>2.0.7</slf4j.version>
-		<logback.version>1.4.6</logback.version>
+		<logback.version>1.4.8</logback.version>
 		<log4j.version>2.20.0</log4j.version>
-		<spring.version>6.0.8</spring.version>
+		<spring.version>6.0.10</spring.version>
 		<cglib.version>3.3.0</cglib.version>
 		<objenesis.version>3.3</objenesis.version>
-		<scala.version>2.13.10</scala.version>
-		<jackson.version>2.14.2</jackson.version>
+		<scala.version>2.13.11</scala.version>
+		<jackson.version>2.15.2</jackson.version>
 		<poi.version>5.2.3</poi.version>
-		<guava.version>31.1-jre</guava.version>
+		<guava.version>32.1.1-jre</guava.version>
 		<wicket-webjars.version>4.0.0-SNAPSHOT</wicket-webjars.version>
-		<commons-io.version>2.11.0</commons-io.version>
+		<commons-io.version>2.13.0</commons-io.version>
 		<xstream.version>1.4.20</xstream.version>
 		<hamcrest.version>2.2</hamcrest.version>
 		<commons-logging.version>1.2</commons-logging.version>
 		<jakarta.servlet-api.version>6.0.0</jakarta.servlet-api.version>
-		<junit.version>5.9.2</junit.version>
+		<junit.version>5.9.3</junit.version>
 		<easymock.version>5.1.0</easymock.version>
-		<mockito.version>5.3.0</mockito.version>
+		<mockito.version>5.4.0</mockito.version>
 		<commons-beanutils.version>1.9.4</commons-beanutils.version>
 		<commons-collections4.version>4.4</commons-collections4.version>
 		<commons-digester3.version>3.2</commons-digester3.version>
@@ -301,12 +301,12 @@
 		<validation-api.version>3.0.2</validation-api.version>
 		<jta.version>2.0.1</jta.version>
 		<htmlcompressor.version>1.5.2</htmlcompressor.version>
-		<closure-compiler.version>v20230411</closure-compiler.version>
+		<closure-compiler.version>v20230502</closure-compiler.version>
 		<ibatis2-sqlmap.version>2.1.7.597</ibatis2-sqlmap.version>
 		<jts.version>1.13</jts.version>
 		<gson.version>2.10.1</gson.version>
 		<wicket-bootstrap-core.version>4.0.4</wicket-bootstrap-core.version> <!-- 4.0.x is required for openlayers-3 (bootstrap3) -->
-		<jasperreports.version>6.20.4</jasperreports.version>
+		<jasperreports.version>6.20.5</jasperreports.version>
 		<bcprov.version>1.70</bcprov.version>
 		<joda-time.version>2.12.5</joda-time.version>
 		<ehcache.version>3.10.8</ehcache.version>
@@ -315,7 +315,7 @@
 		<clojure.version>1.11.1</clojure.version>
 		<groovy.version>4.0.7</groovy.version>
 		<asm-util.version>9.5</asm-util.version>
-		<hsqldb.version>2.7.1</hsqldb.version>
+		<hsqldb.version>2.7.2</hsqldb.version>
 		<jython-standalone.version>2.7.3</jython-standalone.version>
 		<!-- plugins -->
 		<maven-surefire-plugin.version>3.0.0</maven-surefire-plugin.version>
