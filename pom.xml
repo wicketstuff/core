@@ -13,7 +13,7 @@
 
 	<groupId>com.googlecode.wicket-jquery-ui</groupId>
 	<artifactId>wicket-jquery-ui-parent</artifactId>
-	<version>10.0.0-M1</version>
+	<version>10.0.0-M2-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<licenses>
@@ -41,7 +41,7 @@
 		<url>git@github.com:sebfz1/wicket-jquery-ui.git</url>
 		<connection>scm:git:git@github.com:sebfz1/wicket-jquery-ui.git</connection>
 		<developerConnection>scm:git:git@github.com:sebfz1/wicket-jquery-ui.git</developerConnection>
-		<tag>wicket-jquery-ui-10.0.0-M1</tag>
+		<tag>HEAD</tag>
 	</scm>
 
 	<properties>
