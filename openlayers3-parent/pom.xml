@@ -22,6 +22,7 @@
 	<modules>
 		<module>openlayers3</module>
 		<module>openlayers3-bootstrap</module>
+		<module>openlayers3-bootstrap4</module>
 		<module>openlayers3-examples</module>
 	</modules>
 

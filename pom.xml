@@ -260,7 +260,8 @@
 		<ibatis2-sqlmap.version>2.1.7.597</ibatis2-sqlmap.version>
 		<jts.version>1.13</jts.version>
 		<gson.version>2.10.1</gson.version>
-		<wicket-bootstrap-core.version>4.0.4</wicket-bootstrap-core.version> <!-- 4.0.x is required for openlayers-3 (bootstrap3) -->
+		<wicket-bootstrap3-core.version>4.0.4</wicket-bootstrap3-core.version>
+		<wicket-bootstrap4-core.version>5.0.4</wicket-bootstrap4-core.version>
 		<jasperreports.version>6.20.5</jasperreports.version>
 		<bcprov.version>1.70</bcprov.version>
 		<joda-time.version>2.12.5</joda-time.version>
@@ -738,8 +739,9 @@
 			</dependency>
 			<dependency>
 				<groupId>de.agilecoders.wicket</groupId>
-				<artifactId>wicket-bootstrap-core</artifactId>
-				<version>${wicket-bootstrap-core.version}</version>
+				<!-- This is used to get new versions -->
+				<artifactId>wicket-bootstrap-themes</artifactId>
+				<version>${wicket-bootstrap4-core.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>net.sf.jasperreports</groupId>

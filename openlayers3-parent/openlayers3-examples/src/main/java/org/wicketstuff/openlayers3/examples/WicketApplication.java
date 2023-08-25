@@ -14,36 +14,30 @@ import de.agilecoders.wicket.webjars.settings.WebjarsSettings;
  */
 public class WicketApplication extends WebApplication {
 
-    /**
-     * Creates a new instance.
-     */
-    public WicketApplication() {
+	@Override
+	protected void init() {
+		super.init();
+		getCspSettings().blocking().disabled();
 
-    }
+		// scan for annotations
+		new AnnotatedMountScanner().scanPackage("org.wicketstuff.openlayers3.examples").mount(this);
 
-    @Override
-    protected void init() {
-	super.init();
+		// setup webjars
+		WebjarsSettings webjarsSettings = new WebjarsSettings();
+		WicketWebjars.install(this, webjarsSettings);
 
-	// scan for annotations
-	new AnnotatedMountScanner().scanPackage("org.wicketstuff.openlayers3.examples").mount(this);
+		// setup wicket boostrap
+		BootstrapSettings bootstrapSettings = new BootstrapSettings();
+		Bootstrap.install(this, bootstrapSettings);
+	}
 
-	// setup webjars
-	WebjarsSettings webjarsSettings = new WebjarsSettings();
-	WicketWebjars.install(this, webjarsSettings);
+	@Override
+	public Class<? extends Page> getHomePage() {
+		return HomePage.class;
+	}
 
-	// setup wicket boostrap
-	BootstrapSettings bootstrapSettings = new BootstrapSettings();
-	Bootstrap.install(this, bootstrapSettings);
-    }
-
-    @Override
-    public Class<? extends Page> getHomePage() {
-        return HomePage.class;
-    }
-
-    @Override
-    public RuntimeConfigurationType getConfigurationType() {
-        return RuntimeConfigurationType.DEVELOPMENT;
-    }
+	@Override
+	public RuntimeConfigurationType getConfigurationType() {
+		return RuntimeConfigurationType.DEVELOPMENT;
+	}
 }
