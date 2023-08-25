@@ -13,37 +13,31 @@ import de.agilecoders.wicket.webjars.settings.WebjarsSettings;
  * Provides an application that demonstrates the OpenLayers3 map.
  */
 public class WicketApplication extends WebApplication {
+	@Override
+	protected void init() {
+		super.init();
+		getCspSettings().blocking().disabled();
 
-    /**
-     * Creates a new instance.
-     */
-    public WicketApplication() {
+		// scan for annotations
+		new AnnotatedMountScanner().scanPackage("org.wicketstuff.openlayers3.examples").mount(this);
 
-    }
+		// setup webjars
+		WebjarsSettings webjarsSettings = new WebjarsSettings();
+		WicketWebjars.install(this, webjarsSettings);
 
-    @Override
-    protected void init() {
-	super.init();
+		// setup wicket boostrap
+		BootstrapSettings bootstrapSettings = new BootstrapSettings();
+		Bootstrap.install(this, bootstrapSettings);
 
-	// scan for annotations
-	new AnnotatedMountScanner().scanPackage("org.wicketstuff.openlayers3.examples").mount(this);
+	}
 
-	// setup webjars
-	WebjarsSettings webjarsSettings = new WebjarsSettings();
-	WicketWebjars.install(this, webjarsSettings);
+	@Override
+	public Class<? extends Page> getHomePage() {
+		return HomePage.class;
+	}
 
-	// setup wicket boostrap
-	BootstrapSettings bootstrapSettings = new BootstrapSettings();
-	Bootstrap.install(this, bootstrapSettings);
-    }
-
-    @Override
-    public Class<? extends Page> getHomePage() {
-        return HomePage.class;
-    }
-
-    @Override
-    public RuntimeConfigurationType getConfigurationType() {
-        return RuntimeConfigurationType.DEVELOPMENT;
-    }
+	@Override
+	public RuntimeConfigurationType getConfigurationType() {
+		return RuntimeConfigurationType.DEVELOPMENT;
+	}
 }

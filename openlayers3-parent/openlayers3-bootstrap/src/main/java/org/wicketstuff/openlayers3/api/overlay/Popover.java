@@ -209,7 +209,7 @@ public class Popover extends Overlay {
      * @return This instance
      */
     public Popover hide(AjaxRequestTarget target) {
-        target.appendJavaScript("$(" + getJsId() + ".getElement()).popover('destroy');");
+        target.appendJavaScript("$(" + getJsId() + ".getElement()).popover('dispose');");
         return this;
     }
 
@@ -243,7 +243,7 @@ public class Popover extends Overlay {
         if (placement != null) {
             builder.append("'placement': '" + placement + "',");
         }
-        builder.append("'html': '" + html + "',");
+        builder.append("'html': " + html + ",");
         if (html) {
             builder.append("'content': '" + escapeQuoteJs(model.getObject()) + "',");
         } else {

@@ -33,8 +33,6 @@
 
 	<inceptionYear>2014</inceptionYear>
 
-	<url>http://wicketstuff.org/confluence/display/STUFFWIKI/wicket-contrib-openlayers3-bootstrap</url>
-
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>

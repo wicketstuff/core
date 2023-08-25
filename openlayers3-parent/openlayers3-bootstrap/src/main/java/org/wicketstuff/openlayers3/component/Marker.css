@@ -145,6 +145,6 @@ div.marker .pulse:after {
     }
 }
 
-.popover-content {
+.popover-body {
     min-width: 200px;
 }

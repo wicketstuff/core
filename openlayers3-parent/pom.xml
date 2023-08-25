@@ -8,6 +8,7 @@
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicketstuff-core</artifactId>
 		<version>10.0.0-M2-SNAPSHOT</version>
+		<relativePath>..</relativePath>
 	</parent>
 
 	<artifactId>openlayers3-parent</artifactId>
@@ -15,10 +16,13 @@
 
 	<name>Openlayers3 Integration - Parent</name>
 	<description>
-    See the child project "openlayers3" for a more complete description. This
-    is the parent for the actual project and the examples.
-  </description>
+		See the child project "openlayers3" for a more complete description. This
+		is the parent for the actual project and the examples.
+	</description>
 
+	<properties>
+		<openlayers.version>3.10.1</openlayers.version>
+	</properties>
 	<modules>
 		<module>openlayers3</module>
 		<module>openlayers3-bootstrap</module>
@@ -40,7 +44,7 @@
 			<dependency>
 				<groupId>org.webjars</groupId>
 				<artifactId>openlayers</artifactId>
-				<version>3.10.1</version>
+				<version>${openlayers.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
