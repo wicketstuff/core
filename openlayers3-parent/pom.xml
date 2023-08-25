@@ -15,9 +15,9 @@
 
 	<name>Openlayers3 Integration - Parent</name>
 	<description>
-    See the child project "openlayers3" for a more complete description. This
-    is the parent for the actual project and the examples.
-  </description>
+		See the child project "openlayers3" for a more complete description. This
+		is the parent for the actual project and the examples.
+	</description>
 
 	<modules>
 		<module>openlayers3</module>
