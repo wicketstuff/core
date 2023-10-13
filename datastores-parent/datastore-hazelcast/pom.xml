@@ -15,8 +15,8 @@
 	<properties>
 		<hazelcast.version>5.3.1</hazelcast.version>
 	</properties>
-	<dependencies>
 
+	<dependencies>
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
 			<artifactId>wicketstuff-datastore-common</artifactId>
@@ -25,9 +25,8 @@
 
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
-			<artifactId>wicketstuff-datastore-common</artifactId>
+			<artifactId>wicketstuff-datastore-tests</artifactId>
 			<version>${project.version}</version>
-			<classifier>tests</classifier>
 			<scope>test</scope>
 		</dependency>
 

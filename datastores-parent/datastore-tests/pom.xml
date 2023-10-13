@@ -24,42 +24,57 @@
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>wicketstuff-datastore-memcached</artifactId>
+	<artifactId>wicketstuff-datastore-tests</artifactId>
 	<packaging>jar</packaging>
-	<name>Apache Wicket IPageStore Memcached</name>
-	<description>An implementation of Apache Wicket's IPageStore that uses Memcached as a backend</description>
-
-	<properties>
-		<spymemcached.version>2.12.3</spymemcached.version>
-	</properties>
+	<name>Apache Wicket Tests Common</name>
+	<description>Helper classes Datastore testing</description>
 
 	<dependencies>
-
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
 			<artifactId>wicketstuff-datastore-common</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-
 		<dependency>
-			<groupId>org.wicketstuff</groupId>
-			<artifactId>wicketstuff-datastore-tests</artifactId>
-			<version>${project.version}</version>
-			<scope>test</scope>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-devutils</artifactId>
 		</dependency>
-
 		<dependency>
-			<groupId>net.spy</groupId>
-			<artifactId>spymemcached</artifactId>
-			<version>${spymemcached.version}</version>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+			<scope>compile</scope>
+			<optional>false</optional>
 		</dependency>
-
 		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
-			<optional>true</optional>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<scope>compile</scope>
+			<optional>false</optional>
 		</dependency>
-
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-server</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-webapp</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-jmx</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-native-websocket-javax</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty.websocket</groupId>
+			<artifactId>websocket-jakarta-server</artifactId>
+			<scope>compile</scope>
+		</dependency>
 	</dependencies>
-
 </project>

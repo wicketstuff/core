@@ -1215,6 +1215,7 @@
 						</includes>
 						<testFailureIgnore>false</testFailureIgnore>
 						<argLine>-Xmx1G --add-opens java.base/jdk.internal.loader=ALL-UNNAMED --add-modules=ALL-SYSTEM</argLine>
+						<useModulePath>false</useModulePath>
 					</configuration>
 				</plugin>
 				<plugin>
