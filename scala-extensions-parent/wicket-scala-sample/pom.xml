@@ -8,7 +8,7 @@
 		<version>10.0.0-M2-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>wicketstuff-sample</artifactId>
+	<artifactId>wicketstuff-scala-sample</artifactId>
 	<name>Wicket-Scala Samples</name>
 
 	<description>An example project demonstrating various uses of the WicketStuff-Scala-Extensions project.</description>
