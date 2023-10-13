@@ -50,6 +50,10 @@ limitations under the License.
 			<artifactId>log4j-core</artifactId>
             <scope>test</scope>
         </dependency>
+		<dependency>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-tester</artifactId>
+		</dependency>
         <dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-api</artifactId>

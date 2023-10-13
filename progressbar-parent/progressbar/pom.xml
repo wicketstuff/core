@@ -9,4 +9,11 @@
 
 	<artifactId>wicketstuff-progressbar</artifactId>
 	<packaging>jar</packaging>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-tester</artifactId>
+		</dependency>
+	</dependencies>
 </project>

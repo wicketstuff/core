@@ -36,5 +36,9 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-reload4j</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-tester</artifactId>
+		</dependency>
 	</dependencies>
 </project>

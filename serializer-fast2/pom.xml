@@ -62,7 +62,11 @@
       <artifactId>jakarta.servlet-api</artifactId>
       <scope>test</scope>
     </dependency>
-  </dependencies>
+		<dependency>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-tester</artifactId>
+		</dependency>
+	</dependencies>
 
   <build>
     <plugins>

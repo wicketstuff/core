@@ -68,9 +68,8 @@
 		</dependency>
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
-			<artifactId>wicketstuff-rest-utils</artifactId>
+			<artifactId>wicketstuff-rest-tests</artifactId>
 			<version>${project.version}</version>
-			<type>test-jar</type>
 			<scope>test</scope>
 		</dependency>
 
@@ -105,6 +104,9 @@
 			<artifactId>jakarta.servlet-api</artifactId>
 			<scope>test</scope>
 		</dependency>
-
+		<dependency>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-tester</artifactId>
+		</dependency>
 	</dependencies>
 </project>

@@ -407,6 +407,7 @@
 		<module>sitemap-xml-parent</module>
 		<module>urlfragment-parent</module>
 		<module>wicketstuff-rest-utils</module>
+		<module>wicketstuff-rest-tests</module>
 		<module>wicketstuff-restannotations-parent</module>
 		<module>wicket-mount-parent</module>
 		<module>select2-parent</module>
@@ -495,9 +496,8 @@
 			</dependency>
 			<dependency>
 				<groupId>org.apache.wicket</groupId>
-				<artifactId>wicket</artifactId>
+				<artifactId>wicket-tester</artifactId>
 				<version>${wicket.version}</version>
-				<type>test-jar</type>
 				<scope>test</scope>
 			</dependency>
 

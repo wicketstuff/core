@@ -57,6 +57,10 @@
 			<artifactId>slf4j-simple</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-tester</artifactId>
+		</dependency>
 		<!-- TESTING / DEV -->
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>

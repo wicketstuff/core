@@ -24,12 +24,16 @@
 	</developers>
 
 	<dependencies>
-      <dependency>
-        <groupId>org.openjdk.nashorn</groupId>
-        <artifactId>nashorn-core</artifactId>
-        <version>15.4</version>
-      </dependency>
-      
+		<dependency>
+			<groupId>org.openjdk.nashorn</groupId>
+			<artifactId>nashorn-core</artifactId>
+			<version>15.4</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-tester</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-api</artifactId>

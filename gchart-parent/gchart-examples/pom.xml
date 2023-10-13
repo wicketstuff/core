@@ -51,6 +51,10 @@
             <artifactId>slf4j-api</artifactId>
         </dependency>
 
+		<dependency>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-tester</artifactId>
+		</dependency>
         <!--  JUNIT DEPENDENCY FOR TESTING -->
         <dependency>
 			<groupId>org.junit.jupiter</groupId>

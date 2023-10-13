@@ -73,5 +73,9 @@
 			<artifactId>wicket-util</artifactId>
 			<version>${wicket.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-tester</artifactId>
+		</dependency>
 	</dependencies>
 </project>
