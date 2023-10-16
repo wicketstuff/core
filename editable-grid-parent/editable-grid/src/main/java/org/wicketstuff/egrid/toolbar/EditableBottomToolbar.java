@@ -26,7 +26,7 @@ import org.wicketstuff.egrid.component.EditableGridSubmitLink;
  * @author Nadeem Mohammad
  *
  */
-public abstract class EditableGridBottomToolbar<T, S> extends AbstractEditableGridToolbar
+public abstract class EditableBottomToolbar<T, S> extends AbstractEditableToolbar
 {
 
 	private static final long serialVersionUID 	= 1L;
@@ -37,7 +37,7 @@ public abstract class EditableGridBottomToolbar<T, S> extends AbstractEditableGr
 
 	protected abstract void onAdd(AjaxRequestTarget target, T newRow);
 
-	public EditableGridBottomToolbar(EditableDataTable<?, ?> table, Class<T> clazz)
+	public EditableBottomToolbar(EditableDataTable<?, ?> table, Class<T> clazz)
 	{
 		super(table);
 		createNewInstance(clazz);
@@ -101,7 +101,7 @@ public abstract class EditableGridBottomToolbar<T, S> extends AbstractEditableGr
 			@Override
 			protected void onError(AjaxRequestTarget target)
 			{
-				EditableGridBottomToolbar.this.onError(target);
+				EditableBottomToolbar.this.onError(target);
 			}
 		};
 	}

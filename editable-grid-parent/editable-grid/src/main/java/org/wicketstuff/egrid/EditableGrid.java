@@ -1,8 +1,5 @@
 package org.wicketstuff.egrid;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -17,202 +14,162 @@ import org.wicketstuff.egrid.column.EditableGridActionsColumn;
 import org.wicketstuff.egrid.component.EditableDataTable;
 import org.wicketstuff.egrid.component.EditableDataTable.RowItem;
 import org.wicketstuff.egrid.provider.IEditableDataProvider;
-import org.wicketstuff.egrid.toolbar.EditableGridBottomToolbar;
-import org.wicketstuff.egrid.toolbar.EditableGridHeadersToolbar;
-import org.wicketstuff.egrid.toolbar.EditableGridNavigationToolbar;
+import org.wicketstuff.egrid.toolbar.EditableBottomToolbar;
+import org.wicketstuff.egrid.toolbar.EditableHeadersToolbar;
+import org.wicketstuff.egrid.toolbar.EditableNavigationToolbar;
+
+import java.io.Serial;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * 
  * @author Nadeem Mohammad
- * 
  */
-public class EditableGrid<T, S> extends Panel
-{
+public class EditableGrid<T, S> extends Panel {
 
-	private static final long serialVersionUID = 1L;
-	
-	private EditableDataTable<T, S> dataTable;
+    @Serial
+    private static final long serialVersionUID = 1L;
 
-	public EditableGrid(final String id, final List<? extends IColumn<T, S>> columns,
-		final IEditableDataProvider<T, S> dataProvider, final long rowsPerPage, Class<T> clazz)
-	{
-		super(id);
-		List<IColumn<T, S>> newCols = new ArrayList<IColumn<T, S>>();
-		newCols.addAll(columns);
-		newCols.add(newActionsColumn());
+    private EditableDataTable<T, S> dataTable;
 
-		add(buildForm(newCols, dataProvider, rowsPerPage, clazz));
-	}
+    public EditableGrid(final String id, final List<? extends IColumn<T, S>> columns, final IEditableDataProvider<T, S> dataProvider, final long rowsPerPage, final Class<T> clazz) {
+        super(id);
+        List<IColumn<T, S>> newCols = new ArrayList<>(columns);
+        newCols.add(newActionsColumn());
 
-	private Component buildForm(final List<? extends IColumn<T, S>> columns,
-		final IEditableDataProvider<T, S> dataProvider, long rowsPerPage, Class<T> clazz)
-	{
-		Form<T> form = new NonValidatingForm<T>("form");
-		form.setOutputMarkupId(true);
-		this.dataTable = newDataTable(columns, dataProvider, rowsPerPage, clazz);
-		form.add(this.dataTable);
-		return form;
-	}
+        add(buildForm(newCols, dataProvider, rowsPerPage, clazz));
+    }
 
-	public final EditableGrid<T, S> setTableBodyCss(final String cssStyle)
-	{
-		this.dataTable.setTableBodyCss(cssStyle);
-		return this;
-	}
-	
-	public final EditableGrid<T, S> setTableCss(final String cssStyle)
-	{
-		this.dataTable.add(AttributeModifier.replace("class", cssStyle));
-		return this;
-	}
+    private Component buildForm(final List<? extends IColumn<T, S>> columns, final IEditableDataProvider<T, S> dataProvider, final long rowsPerPage, final Class<T> clazz) {
+        Form<T> form = new NonValidatingForm<>("form");
+        form.setOutputMarkupId(true);
+        this.dataTable = newDataTable(columns, dataProvider, rowsPerPage, clazz);
+        form.add(this.dataTable);
+        return form;
+    }
 
-	private static class NonValidatingForm<T> extends Form<T>
-	{
-		private static final long serialVersionUID = 1L;
-		public NonValidatingForm(String id)
-		{
-			super(id);
-		}
-		@Override
-		public void process(IFormSubmitter submittingComponent)
-		{
-			delegateSubmit(submittingComponent);
-		}
-		
-	}
+    public final EditableGrid<T, S> setTableBodyCss(final String cssStyle) {
+        this.dataTable.setTableBodyCss(cssStyle);
+        return this;
+    }
 
-	private EditableDataTable<T, S> newDataTable(final List<? extends IColumn<T, S>> columns,
-		final IEditableDataProvider<T, S> dataProvider, long rowsPerPage, Class<T> clazz)
-	{
-		final EditableDataTable<T, S> dataTable = new EditableDataTable<T, S>("dataTable", columns,
-			dataProvider, rowsPerPage, clazz)
-		{
+    public final EditableGrid<T, S> setTableCss(final String cssStyle) {
+        this.dataTable.add(AttributeModifier.replace("class", cssStyle));
+        return this;
+    }
 
-			private static final long serialVersionUID = 1L;
+    private EditableDataTable<T, S> newDataTable(final List<? extends IColumn<T, S>> columns, final IEditableDataProvider<T, S> dataProvider, final long rowsPerPage, final Class<T> clazz) {
+        final EditableDataTable<T, S> dataTable = new EditableDataTable<T, S>("dataTable", columns, dataProvider, rowsPerPage, clazz) {
 
-			@Override
-			protected void onError(AjaxRequestTarget target)
-			{
-				EditableGrid.this.onError(target);
-			}
-			@Override
-			protected Item<T> newRowItem(String id, int index, IModel<T> model) {
-				return super.newRowItem(id, index, model);
-			}
-		};
+            @Serial
+            private static final long serialVersionUID = 1L;
 
-		dataTable.setOutputMarkupId(true);
+            @Override
+            protected Item<T> newRowItem(final String id, final int index, final IModel<T> model) {
+                return EditableGrid.this.newRowItem(id, index, model);
+            }
+        };
 
-		dataTable.addTopToolbar(new EditableGridNavigationToolbar(dataTable));
-		dataTable.addTopToolbar(new EditableGridHeadersToolbar<T, S>(dataTable, dataProvider));		
-		if (displayAddFeature())
-		{			
-			dataTable.addBottomToolbar(newAddBottomToolbar(dataProvider, clazz, dataTable));
-		}
+        dataTable.setOutputMarkupId(true);
 
-		return dataTable;
-	}
+        dataTable.addTopToolbar(new EditableNavigationToolbar(dataTable));
+        dataTable.addTopToolbar(new EditableHeadersToolbar<T, S>(dataTable, dataProvider));
+        if (displayAddFeature()) {
+            dataTable.addBottomToolbar(newAddBottomToolbar(dataProvider, clazz, dataTable));
+        }
 
-	protected RowItem<T> newRowItem(String id, int index, IModel<T> model) {
-		return new RowItem<T>(id, index, model);
-	}
+        return dataTable;
+    }
 
-	private EditableGridBottomToolbar<T, S> newAddBottomToolbar(
-			final IEditableDataProvider<T, S> dataProvider, Class<T> clazz,
-			final EditableDataTable<T, S> dataTable)
-			{
-		return new EditableGridBottomToolbar<T, S>(dataTable, clazz)
-				{
+    protected RowItem<T> newRowItem(final String id, final int index, final IModel<T> model) {
+        return new RowItem<T>(id, index, model, dataTable.getMarkupId());
+    }
 
-					private static final long serialVersionUID = 1L;
+    private EditableBottomToolbar<T, S> newAddBottomToolbar(final IEditableDataProvider<T, S> dataProvider, Class<T> clazz, final EditableDataTable<T, S> dataTable) {
+        return new EditableBottomToolbar<T, S>(dataTable, clazz) {
 
-					@Override
-					protected void onAdd(AjaxRequestTarget target, T newRow)
-					{
-						dataProvider.add(newRow);
-						target.add(dataTable);
-						EditableGrid.this.onAdd(target, newRow);
-					}
+            @Serial
+            private static final long serialVersionUID = 1L;
 
-					@Override
-					protected void onError(AjaxRequestTarget target)
-					{
-						super.onError(target);
-						EditableGrid.this.onError(target);
-					}
+            @Override
+            protected void onAdd(final AjaxRequestTarget target, T newRow) {
+                dataProvider.add(newRow);
+                target.add(dataTable);
+                EditableGrid.this.onAdd(target, newRow);
+            }
 
-				};
-	}
+            @Override
+            protected void onError(final AjaxRequestTarget target) {
+                super.onError(target);
+                EditableGrid.this.onError(target);
+            }
 
-	private EditableGridActionsColumn<T, S> newActionsColumn()
-	{
-		return new EditableGridActionsColumn<T, S>(new Model<String>("Actions"))
-		{
+        };
+    }
 
-			private static final long serialVersionUID = 1L;
+    private EditableGridActionsColumn<T, S> newActionsColumn() {
+        return new EditableGridActionsColumn<T, S>(new Model<String>("Actions")) {
 
-			@Override
-			protected void onError(AjaxRequestTarget target, IModel<T> rowModel)
-			{
-				EditableGrid.this.onError(target);
-			}
+            @Serial
+            private static final long serialVersionUID = 1L;
 
-			@Override
-			protected void onSave(AjaxRequestTarget target, IModel<T> rowModel)
-			{
-				EditableGrid.this.onSave(target, rowModel);
-			}
+            @Override
+            protected void onError(final AjaxRequestTarget target, final IModel<T> rowModel) {
+                EditableGrid.this.onError(target);
+            }
 
-			@Override
-			protected void onDelete(AjaxRequestTarget target, IModel<T> rowModel)
-			{
-				EditableGrid.this.onDelete(target, rowModel);
-			}
+            @Override
+            protected void onSave(final AjaxRequestTarget target, final IModel<T> rowModel) {
+                EditableGrid.this.onSave(target, rowModel);
+            }
 
-			@Override
-			protected void onCancel(AjaxRequestTarget target)
-			{
-				EditableGrid.this.onCancel(target);
-			}
+            @Override
+            protected void onDelete(final AjaxRequestTarget target, final IModel<T> rowModel) {
+                EditableGrid.this.onDelete(target, rowModel);
+            }
 
-			@Override
-			protected boolean allowDelete(Item<T> rowItem) {
-				return EditableGrid.this.allowDelete(rowItem);
-			}
-		};
-	}
+            @Override
+            protected void onCancel(final AjaxRequestTarget target) {
+                EditableGrid.this.onCancel(target);
+            }
 
-	protected boolean allowDelete(Item<T> rowItem) {
-		return true;
-	}
+            @Override
+            protected boolean allowDelete(final Item<T> rowItem) {
+                return EditableGrid.this.allowDelete(rowItem);
+            }
+        };
+    }
 
-	protected void onCancel(AjaxRequestTarget target)
-	{
+    protected boolean allowDelete(final Item<T> rowItem) {
+        return true;
+    }
 
-	}
+    protected void onCancel(final AjaxRequestTarget target) {}
 
+    protected void onDelete(final AjaxRequestTarget target, IModel<T> rowModel) {}
 
-	protected void onDelete(AjaxRequestTarget target, IModel<T> rowModel)
-	{
+    protected void onSave(final AjaxRequestTarget target, IModel<T> rowModel) {}
 
-	}
+    protected void onError(final AjaxRequestTarget target) {}
 
-	protected void onSave(AjaxRequestTarget target, IModel<T> rowModel)
-	{
+    protected void onAdd(final AjaxRequestTarget target, T newRow) {}
 
-	}
+    protected boolean displayAddFeature() {
+        return true;
+    }
 
-	protected void onError(AjaxRequestTarget target)
-	{
+    private static class NonValidatingForm<T> extends Form<T> {
+        @Serial
+        private static final long serialVersionUID = 1L;
 
-	}
+        public NonValidatingForm(final String id) {
+            super(id);
+        }
 
-	protected void onAdd(AjaxRequestTarget target, T newRow)
-	{
+        @Override
+        public void process(final IFormSubmitter submittingComponent) {
+            delegateSubmit(submittingComponent);
+        }
 
-	}
-	
-	protected boolean displayAddFeature() {
-		return true;
-	}
+    }
 }

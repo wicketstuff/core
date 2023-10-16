@@ -20,7 +20,7 @@ import org.wicketstuff.egrid.component.EditableDataTable.CssAttributeBehavior;
  * @author Nadeem Mohammad
  *
  */
-public class EditableGridHeadersToolbar<T, S> extends AbstractEditableGridToolbar
+public class EditableHeadersToolbar<T, S> extends AbstractEditableToolbar
 {
 
 		private static final long serialVersionUID = 1L;
@@ -33,7 +33,7 @@ public class EditableGridHeadersToolbar<T, S> extends AbstractEditableGridToolba
 		 * @param stateLocator
 		 *            locator for the ISortState implementation used by sortable headers
 		 */
-		public EditableGridHeadersToolbar(final EditableDataTable<T, S> table, final ISortStateLocator<S> stateLocator)
+		public EditableHeadersToolbar(final EditableDataTable<T, S> table, final ISortStateLocator<S> stateLocator)
 		{
 			super(table);
 

@@ -4,11 +4,11 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.wicketstuff.egrid.component.EditableDataTable;
 /**
- * 
+ *
  * @author Nadeem Mohammad
  *
  */
-public class AbstractEditableGridToolbar extends Panel
+public class AbstractEditableToolbar extends Panel
 {
 
 	private static final long serialVersionUID = 1L;
@@ -20,13 +20,13 @@ public class AbstractEditableGridToolbar extends Panel
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param model
 	 *            model
 	 * @param table
 	 *            data table this toolbar will be attached to
 	 */
-	public AbstractEditableGridToolbar(final IModel<?> model, final EditableDataTable<?, ?> table)
+	public AbstractEditableToolbar(final IModel<?> model, final EditableDataTable<?, ?> table)
 	{
 		super(String.valueOf(counter++).intern(), model);
 		this.table = table;
@@ -34,11 +34,11 @@ public class AbstractEditableGridToolbar extends Panel
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param table
 	 *            data table this toolbar will be attached to
 	 */
-	public AbstractEditableGridToolbar(final EditableDataTable<?, ?> table)
+	public AbstractEditableToolbar(final EditableDataTable<?, ?> table)
 	{
 		this(null, table);
 	}
