@@ -59,7 +59,7 @@ public class EditableGrid<T, S> extends Panel {
     }
 
     private EditableDataTable<T, S> newDataTable(final List<? extends IColumn<T, S>> columns, final IEditableDataProvider<T, S> dataProvider, final long rowsPerPage, final Class<T> clazz) {
-        final EditableDataTable<T, S> dataTable = new EditableDataTable<T, S>("dataTable", columns, dataProvider, rowsPerPage, clazz) {
+        final EditableDataTable<T, S> dataTable = new EditableDataTable<T, S>("dataTable", columns, dataProvider, rowsPerPage) {
 
             @Serial
             private static final long serialVersionUID = 1L;
@@ -85,14 +85,11 @@ public class EditableGrid<T, S> extends Panel {
         return new RowItem<T>(id, index, model, dataTable.getMarkupId());
     }
 
-    private EditableBottomToolbar<T, S> newAddBottomToolbar(final IEditableDataProvider<T, S> dataProvider, Class<T> clazz, final EditableDataTable<T, S> dataTable) {
+    private EditableBottomToolbar<T, S> newAddBottomToolbar(final IEditableDataProvider<T, S> dataProvider, final Class<T> clazz, final EditableDataTable<T, S> dataTable) {
         return new EditableBottomToolbar<T, S>(dataTable, clazz) {
 
-            @Serial
-            private static final long serialVersionUID = 1L;
-
             @Override
-            protected void onAdd(final AjaxRequestTarget target, T newRow) {
+            protected void onAdd(final AjaxRequestTarget target, final T newRow) {
                 dataProvider.add(newRow);
                 target.add(dataTable);
                 EditableGrid.this.onAdd(target, newRow);
@@ -109,9 +106,6 @@ public class EditableGrid<T, S> extends Panel {
 
     private EditableGridActionsColumn<T, S> newActionsColumn() {
         return new EditableGridActionsColumn<T, S>(new Model<String>("Actions")) {
-
-            @Serial
-            private static final long serialVersionUID = 1L;
 
             @Override
             protected void onError(final AjaxRequestTarget target, final IModel<T> rowModel) {
@@ -144,15 +138,20 @@ public class EditableGrid<T, S> extends Panel {
         return true;
     }
 
-    protected void onCancel(final AjaxRequestTarget target) {}
+    protected void onCancel(final AjaxRequestTarget target) {
+    }
 
-    protected void onDelete(final AjaxRequestTarget target, IModel<T> rowModel) {}
+    protected void onDelete(final AjaxRequestTarget target, final IModel<T> rowModel) {
+    }
 
-    protected void onSave(final AjaxRequestTarget target, IModel<T> rowModel) {}
+    protected void onSave(final AjaxRequestTarget target, final IModel<T> rowModel) {
+    }
 
-    protected void onError(final AjaxRequestTarget target) {}
+    protected void onError(final AjaxRequestTarget target) {
+    }
 
-    protected void onAdd(final AjaxRequestTarget target, T newRow) {}
+    protected void onAdd(final AjaxRequestTarget target, final T newRow) {
+    }
 
     protected boolean displayAddFeature() {
         return true;

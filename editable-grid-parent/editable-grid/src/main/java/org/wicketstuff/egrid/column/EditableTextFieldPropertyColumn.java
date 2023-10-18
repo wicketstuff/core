@@ -2,40 +2,34 @@ package org.wicketstuff.egrid.column;
 
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.model.IModel;
+
+import java.io.Serial;
+
 /**
- * 
  * @author Nadeem Mohammad
- *
  */
-public class EditableTextFieldPropertyColumn<T, S> extends AbstractEditablePropertyColumn<T, S>
-{
+public class EditableTextFieldPropertyColumn<T, S> extends AbstractEditablePropertyColumn<T, S> {
 
-	private static final long serialVersionUID = 1L;
+    @Serial
+    private static final long serialVersionUID = 1L;
 
-	public EditableTextFieldPropertyColumn(IModel<String> displayModel, String propertyExpression)
-	{
-		super(displayModel, propertyExpression);
-	}
-	
-	
-	public EditableTextFieldPropertyColumn(IModel<String> displayModel, String propertyExpression, boolean isEditable)
-	{
-		super(displayModel, propertyExpression, isEditable);
-	}
+    public EditableTextFieldPropertyColumn(final IModel<String> displayModel, final String propertyExpression) {
+        super(displayModel, propertyExpression);
+    }
 
-	@Override
-	public EditableCellPanel getEditableCellPanel(String componentId)
-	{
-		return new EditableTextFieldCellPanel<T, S>(componentId, this)
-		{
 
-			private static final long serialVersionUID = 1L;
+    public EditableTextFieldPropertyColumn(final IModel<String> displayModel, final String propertyExpression, final boolean isEditable) {
+        super(displayModel, propertyExpression, isEditable);
+    }
 
-			@Override
-			protected void addBehaviors(FormComponent<T> formComponent)
-			{
-				EditableTextFieldPropertyColumn.this.addBehaviors(formComponent);
-			}
-		};
-	}
+    @Override
+    public EditableCellPanel getEditableCellPanel(final String componentId) {
+        return new EditableTextFieldCellPanel<T, S>(componentId, this) {
+
+            @Override
+            protected void addBehaviors(final FormComponent<T> formComponent) {
+                EditableTextFieldPropertyColumn.this.addBehaviors(formComponent);
+            }
+        };
+    }
 }

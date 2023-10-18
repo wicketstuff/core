@@ -8,11 +8,14 @@ import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
 import org.apache.wicket.model.IModel;
 import org.wicketstuff.egrid.component.EditableDataTable;
 
+import java.io.Serial;
+
 /**
  * @author Nadeem Mohammad
  */
 public class EditableNavigationToolbar extends AbstractEditableToolbar {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     public EditableNavigationToolbar(final EditableDataTable<?, ?> table) {
@@ -21,8 +24,6 @@ public class EditableNavigationToolbar extends AbstractEditableToolbar {
         WebMarkupContainer span = new WebMarkupContainer("span");
         add(span);
         span.add(AttributeModifier.replace("colspan", new IModel<String>() {
-            private static final long serialVersionUID = 1L;
-
             @Override
             public String getObject() {
                 return String.valueOf(table.getColumns().size());
