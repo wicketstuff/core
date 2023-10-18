@@ -7,28 +7,24 @@ import org.wicketstuff.egrid.component.EditableDataTable;
 import java.io.Serial;
 
 /**
+ * A base class for data table toolbars
+ * @see org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractToolbar
  * @author Nadeem Mohammad
  */
 public class AbstractEditableToolbar extends Panel {
-
     @Serial
     private static final long serialVersionUID = 1L;
-
-    /**
-     * Counter used for generating unique component ids.
-     */
-    private static long counter = 0;
 
     private final EditableDataTable<?, ?> table;
 
     /**
      * Constructor
      *
-     * @param model model
      * @param table data table this toolbar will be attached to
+     * @param model model
      */
-    public AbstractEditableToolbar(final IModel<?> model, final EditableDataTable<?, ?> table) {
-        super(String.valueOf(counter++).intern(), model);
+    public AbstractEditableToolbar(final EditableDataTable<?, ?> table, final IModel<?> model) {
+        super(table.newToolbarId(), model);
         this.table = table;
     }
 
@@ -38,7 +34,7 @@ public class AbstractEditableToolbar extends Panel {
      * @param table data table this toolbar will be attached to
      */
     public AbstractEditableToolbar(final EditableDataTable<?, ?> table) {
-        this(null, table);
+        this(table, null);
     }
 
     /**

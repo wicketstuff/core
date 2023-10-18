@@ -1,8 +1,6 @@
 package org.wicketstuff.egrid.toolbar;
 
-import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
-import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -12,67 +10,84 @@ import org.apache.wicket.markup.html.form.IFormSubmitter;
 import org.apache.wicket.markup.html.form.IFormVisitorParticipant;
 import org.apache.wicket.markup.html.list.Loop;
 import org.apache.wicket.markup.html.list.LoopItem;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.wicketstuff.egrid.column.AbstractEditablePropertyColumn;
 import org.wicketstuff.egrid.column.EditableCellPanel;
+import org.wicketstuff.egrid.column.IEditableGridColumn;
 import org.wicketstuff.egrid.component.EditableDataTable;
 import org.wicketstuff.egrid.component.EditableGridSubmitLink;
 
 import java.io.Serial;
+import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
+ * Toolbar that can be used to add new rows.
+ *
+ * @param <T> the type of the data in the table.
+ * @param <S> the type of the sorting parameter
  * @author Nadeem Mohammad
  */
-public abstract class EditableBottomToolbar<T, S> extends AbstractEditableToolbar {
-
+public abstract class EditableBottomToolbar<T extends Serializable, S> extends AbstractEditableToolbar {
     @Serial
     private static final long serialVersionUID = 1L;
-    private static final String CELL_ID = "cell";
-    private static final String CELLS_ID = "cells";
+    private static final Logger LOGGER = Logger.getLogger(EditableBottomToolbar.class.getName());
 
-    private T newRow = null;
+    private Model<T> rowModel;
 
+
+    /**
+     * Constructor
+     *
+     * @param table data table this toolbar will be attached to
+     * @param clazz class of type T
+     */
     public EditableBottomToolbar(final EditableDataTable<?, ?> table, final Class<T> clazz) {
         super(table);
-        createNewInstance(clazz);
-        MarkupContainer td = new WebMarkupContainer("td");
-        td.add(new AttributeModifier("colspan", table.getColumns().size() - 1));
-        AddToolBarForm addToolBarForm = new AddToolBarForm("addToolbarForm");
-        td.add(addToolBarForm);
-        add(td);
-        add(newAddButton(addToolBarForm));
+
+        createNewInstance(clazz, null);
+
+        var addToolBarForm = new AddToolBarForm("addToolbarForm");
+        add(newAddButton("add", addToolBarForm), addToolBarForm);
     }
 
-    protected abstract void onAdd(AjaxRequestTarget target, T newRow);
-
-    protected void onError(final AjaxRequestTarget target) {
-    }
-
-    //TODO: use Objenesis instead of the following
-
-    private void createNewInstance(final Class<T> clazz) {
+    /**
+     * Creates a new instance for the rowModel object.
+     *
+     * @param clazz  class of type T
+     * @param target optional AjaxRequestTarget used for error messages
+     */
+    private void createNewInstance(final Class<T> clazz, final AjaxRequestTarget target) {
         try {
-            newRow = clazz.getDeclaredConstructor().newInstance();
-        } catch (InstantiationException | IllegalAccessException
-                 | IllegalArgumentException | InvocationTargetException
-                 | NoSuchMethodException | SecurityException e) {
-            e.printStackTrace();
+            rowModel = Model.of(clazz.getDeclaredConstructor().newInstance());
+        } catch (InstantiationException | IllegalAccessException | IllegalArgumentException |
+                 InvocationTargetException | NoSuchMethodException | SecurityException e) {
+            LOGGER.warning(e.toString());
+            error(getInstantiationErrorMessage(clazz));
+            if (target != null) {
+                onError(target);
+            }
         }
     }
 
-    private Component newAddButton(final WebMarkupContainer encapsulatingContainer) {
-        return new EditableGridSubmitLink("add", encapsulatingContainer) {
+    /**
+     * @param id        the markup id for the button
+     * @param container the container where the button will be placed into
+     * @return new 'Add' button as EditableGridSubmitLink
+     */
+    protected EditableGridSubmitLink newAddButton(final String id, final WebMarkupContainer container) {
+        return new EditableGridSubmitLink(id, container) {
+            @Serial
+            private static final long serialVersionUID = 1L;
 
-            @SuppressWarnings("unchecked")
             @Override
             protected void onSuccess(final AjaxRequestTarget target) {
-                onAdd(target, newRow);
-                createNewInstance((Class<T>) newRow.getClass());
+                onAdd(target, rowModel);
+                createNewInstance(rowModel.getObjectClass(), target);
                 target.add(getTable());
-
             }
 
             @Override
@@ -82,56 +97,71 @@ public abstract class EditableBottomToolbar<T, S> extends AbstractEditableToolba
         };
     }
 
-    private Loop newEditorComponents() {
-        final List<AbstractEditablePropertyColumn<T, S>> columns = getEditableColumns();
-        return new Loop(CELLS_ID, columns.size()) {
+    protected abstract void onAdd(AjaxRequestTarget target, Model<T> rowModel);
+
+    protected void onError(final AjaxRequestTarget target) {
+    }
+
+    /**
+     * Creates a container with different inputs that will be displayed in the toolbar
+     * and used for the creation of a new row.
+     *
+     * @param id the markup id for the container
+     * @return container with different input components
+     */
+    protected WebMarkupContainer newEditorComponents(final String id) {
+        List<? extends IColumn<?, ?>> columns = getTable().getColumns();
+        return new Loop(id, columns.size() - 1) {
+            @Serial
+            private static final long serialVersionUID = 1L;
 
             @Override
             protected void populateItem(final LoopItem item) {
-                addEditorComponent(item, getEditorColumn(columns, item.getIndex()));
+                var column = columns.get(item.getIndex());
+                item.add((column instanceof IEditableGridColumn) ? getColumnCellPanel("cell", (IEditableGridColumn) column) : new WebMarkupContainer("cell"));
             }
         };
     }
 
-    private void addEditorComponent(final LoopItem item, final AbstractEditablePropertyColumn<T, S> toolBarCell) {
-        item.add(newCell(toolBarCell));
-    }
+    /**
+     * Gets the cell panel of an {@code editableColumn} that mostly contains an input field.
+     *
+     * @param id             the markup id for the cell panel
+     * @param editableColumn an editable column of the data table
+     * @return the cell panel
+     */
+    protected Component getColumnCellPanel(final String id, final IEditableGridColumn editableColumn) {
+        EditableCellPanel panel = editableColumn.getEditableCellPanel(id);
 
-    @SuppressWarnings("unchecked")
-    private List<AbstractEditablePropertyColumn<T, S>> getEditableColumns() {
-        List<AbstractEditablePropertyColumn<T, S>> columns = new ArrayList<>();
-        for (IColumn<?, ?> column : getTable().getColumns()) {
-            if (column instanceof AbstractEditablePropertyColumn) {
-                columns.add((AbstractEditablePropertyColumn<T, S>) column);
-            }
-
+        if (editableColumn instanceof AbstractEditablePropertyColumn<?, ?> propertyColumn) {
+            FormComponent<?> editorComponent = panel.getEditableComponent();
+            editorComponent.setDefaultModel(PropertyModel.<T>of(rowModel, propertyColumn.getPropertyExpression()));
         }
 
-        return columns;
-    }
-
-    private Component newCell(final AbstractEditablePropertyColumn<T, S> editableGridColumn) {
-        EditableCellPanel panel = editableGridColumn.getEditableCellPanel(CELL_ID);
-        FormComponent<?> editorComponent = panel.getEditableComponent();
-        editorComponent.setDefaultModel(new PropertyModel<T>(newRow, editableGridColumn.getPropertyExpression()));
         return panel;
     }
 
-    private AbstractEditablePropertyColumn<T, S> getEditorColumn(final List<AbstractEditablePropertyColumn<T, S>> editorColumn, int index) {
-        return editorColumn.get(index);
+    /**
+     * Can be overridden to customize the error message of an instantiation failure in {@link #createNewInstance}.
+     *
+     * @param clazz class of type T
+     * @return error message as String
+     */
+    protected String getInstantiationErrorMessage(final Class<T> clazz) {
+        return "Could not instantiate Class " + clazz.getName();
     }
 
     private class AddToolBarForm extends Form<T> implements IFormVisitorParticipant {
 
         public AddToolBarForm(final String id) {
             super(id);
-            add(newEditorComponents());
+            add(newEditorComponents("td"));
         }
 
         @Override
         public boolean processChildren() {
             IFormSubmitter submitter = getRootForm().findSubmitter();
-            return submitter != null && submitter.getForm() == this;
+            return submitter != null && submitter.getForm().equals(this);
         }
     }
 }

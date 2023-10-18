@@ -11,24 +11,30 @@ import org.wicketstuff.egrid.component.EditableDataTable;
 import java.io.Serial;
 
 /**
+ * Adjusted version of Wicket Extensions' HeadersToolbar
+ * <p>
+ * Toolbar that displays links used to navigate the pages of the datatable as well as a message
+ * about which rows are being displayed and their total number in the data table.
+ * </p>
+ *
  * @author Nadeem Mohammad
+ * @see org.apache.wicket.extensions.markup.html.repeater.data.table.NavigationToolbar
  */
 public class EditableNavigationToolbar extends AbstractEditableToolbar {
-
     @Serial
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Constructor
+     *
+     * @param table data table this toolbar will be attached to
+     */
     public EditableNavigationToolbar(final EditableDataTable<?, ?> table) {
         super(table);
 
         WebMarkupContainer span = new WebMarkupContainer("span");
         add(span);
-        span.add(AttributeModifier.replace("colspan", new IModel<String>() {
-            @Override
-            public String getObject() {
-                return String.valueOf(table.getColumns().size());
-            }
-        }));
+        span.add(AttributeModifier.replace("colspan", (IModel<String>) () -> String.valueOf(table.getColumns().size()).intern()));
 
         span.add(newPagingNavigator("navigator", table));
         span.add(newNavigatorLabel("navigatorLabel", table));
@@ -47,7 +53,7 @@ public class EditableNavigationToolbar extends AbstractEditableToolbar {
     }
 
     /**
-     * Factory method used to create the navigator label that will be used by the datatable
+     * Factory method used to create the navigator label.
      *
      * @param navigatorId component id navigator label should be created with
      * @param table       dataview used by datatable

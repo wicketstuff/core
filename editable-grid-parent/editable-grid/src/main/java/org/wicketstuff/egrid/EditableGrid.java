@@ -19,13 +19,14 @@ import org.wicketstuff.egrid.toolbar.EditableHeadersToolbar;
 import org.wicketstuff.egrid.toolbar.EditableNavigationToolbar;
 
 import java.io.Serial;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Nadeem Mohammad
  */
-public class EditableGrid<T, S> extends Panel {
+public class EditableGrid<T extends Serializable, S> extends Panel {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -73,7 +74,7 @@ public class EditableGrid<T, S> extends Panel {
         dataTable.setOutputMarkupId(true);
 
         dataTable.addTopToolbar(new EditableNavigationToolbar(dataTable));
-        dataTable.addTopToolbar(new EditableHeadersToolbar<T, S>(dataTable, dataProvider));
+        dataTable.addTopToolbar(new EditableHeadersToolbar<>(dataTable, dataProvider));
         if (displayAddFeature()) {
             dataTable.addBottomToolbar(newAddBottomToolbar(dataProvider, clazz, dataTable));
         }
@@ -86,13 +87,13 @@ public class EditableGrid<T, S> extends Panel {
     }
 
     private EditableBottomToolbar<T, S> newAddBottomToolbar(final IEditableDataProvider<T, S> dataProvider, final Class<T> clazz, final EditableDataTable<T, S> dataTable) {
-        return new EditableBottomToolbar<T, S>(dataTable, clazz) {
+        return new EditableBottomToolbar<>(dataTable, clazz) {
 
             @Override
-            protected void onAdd(final AjaxRequestTarget target, final T newRow) {
-                dataProvider.add(newRow);
+            protected void onAdd(final AjaxRequestTarget target, final Model<T> newRow) {
+                dataProvider.add(newRow.getObject());
                 target.add(dataTable);
-                EditableGrid.this.onAdd(target, newRow);
+                EditableGrid.this.onAdd(target, newRow.getObject());
             }
 
             @Override
