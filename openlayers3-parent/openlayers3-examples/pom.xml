@@ -8,7 +8,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>openlayers3-parent</artifactId>
-		<version>10.0.0-M2-SNAPSHOT</version>
+		<version>10.0.0-M3-SNAPSHOT</version>
 		<relativePath>..</relativePath>
 	</parent>
 

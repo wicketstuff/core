@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicketstuff-autocomplete-tagit-parent</artifactId>
-		<version>10.0.0-M2-SNAPSHOT</version>
+		<version>10.0.0-M3-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>wicketstuff-autocomplete-tagit-examples</artifactId>
