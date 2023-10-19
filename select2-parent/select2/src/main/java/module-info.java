@@ -9,7 +9,7 @@ module org.wicketstuff.select2 {
 	requires org.apache.wicket.request;
 	requires org.apache.wicket.util;
 
-	requires wicket.webjars;
+	requires de.agilecoders.wicket.webjars;
 
 	requires org.slf4j;
 }

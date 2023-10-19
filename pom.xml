@@ -256,7 +256,7 @@
 	<!-- mocleiri: for distribution in to central repository sections in the main pom are not allowed -->
 
 	<properties>
-		<wicket.version>10.0.0-M2-SNAPSHOT</wicket.version>
+		<wicket.version>10.0.0-M2</wicket.version>
 
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
@@ -285,7 +285,8 @@
 		<jackson.version>2.14.3</jackson.version>
 		<poi.version>5.2.3</poi.version>
 		<guava.version>32.1.1-jre</guava.version>
-		<wicket-webjars.version>4.0.0</wicket-webjars.version>
+		<wicket-webjars.version>4.0.1</wicket-webjars.version>
+		<jquery-selectors.version>4.0.2</jquery-selectors.version>
 		<commons-io.version>2.13.0</commons-io.version>
 		<xstream.version>1.4.20</xstream.version>
 		<hamcrest.version>2.2</hamcrest.version>
@@ -766,6 +767,16 @@
 			</dependency>
 
 			<!-- OTHER -->
+			<dependency>
+				<groupId>de.agilecoders.wicket.webjars</groupId>
+				<artifactId>wicket-webjars</artifactId>
+				<version>${wicket-webjars.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>de.agilecoders.wicket</groupId>
+				<artifactId>jquery-selectors</artifactId>
+				<version>${jquery-selectors.version}</version>
+			</dependency>
 			<dependency>
 				<groupId>com.googlecode.htmlcompressor</groupId>
 				<artifactId>htmlcompressor</artifactId>
