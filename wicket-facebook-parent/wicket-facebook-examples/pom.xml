@@ -4,7 +4,7 @@
 	<parent>
 		<artifactId>wicket-facebook-parent</artifactId>
 		<groupId>org.wicketstuff</groupId>
-		<version>10.0.0-M2-SNAPSHOT</version>
+		<version>10.0.0-M3-SNAPSHOT</version>
 	</parent>
 	<artifactId>wicket-facebook-examples</artifactId>
 	<name>Wicket Facebook Examples</name>
