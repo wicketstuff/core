@@ -10,7 +10,7 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-import org.wicketstuff.egrid.column.EditableGridActionsColumn;
+import org.wicketstuff.egrid.column.EditableActionsColumn;
 import org.wicketstuff.egrid.component.EditableDataTable;
 import org.wicketstuff.egrid.component.EditableDataTable.RowItem;
 import org.wicketstuff.egrid.provider.IEditableDataProvider;
@@ -105,8 +105,8 @@ public class EditableGrid<T extends Serializable, S> extends Panel {
         };
     }
 
-    private EditableGridActionsColumn<T, S> newActionsColumn() {
-        return new EditableGridActionsColumn<T, S>(new Model<String>("Actions")) {
+    private EditableActionsColumn<T, S> newActionsColumn() {
+        return new EditableActionsColumn<T, S>(new Model<String>("Actions")) {
 
             @Override
             protected void onError(final AjaxRequestTarget target, final IModel<T> rowModel) {
@@ -124,7 +124,7 @@ public class EditableGrid<T extends Serializable, S> extends Panel {
             }
 
             @Override
-            protected void onCancel(final AjaxRequestTarget target) {
+            protected void onCancel(final AjaxRequestTarget target, final IModel<T> rowModel) {
                 EditableGrid.this.onCancel(target);
             }
 

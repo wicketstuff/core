@@ -12,13 +12,13 @@ import java.io.Serial;
 /**
  * @author Nadeem Mohammad
  */
-public abstract class EditableGridSubmitLink extends AjaxSubmitLink {
+public abstract class EditableTableSubmitLink extends AjaxSubmitLink {
 
     @Serial
     private static final long serialVersionUID = 1L;
     private final WebMarkupContainer encapsulatingContainer;
 
-    public EditableGridSubmitLink(final String id, final WebMarkupContainer newEncapsulatingComponent) {
+    public EditableTableSubmitLink(final String id, final WebMarkupContainer newEncapsulatingComponent) {
         super(id);
         this.encapsulatingContainer = newEncapsulatingComponent;
     }
@@ -32,9 +32,9 @@ public abstract class EditableGridSubmitLink extends AjaxSubmitLink {
 
         if (isFormComponentsValid()) {
             updateFormComponentsModel();
-            EditableGridSubmitLink.this.onSuccess(target);
+            EditableTableSubmitLink.this.onSuccess(target);
         } else {
-            EditableGridSubmitLink.this.onError(target);
+            EditableTableSubmitLink.this.onError(target);
         }
     }
 

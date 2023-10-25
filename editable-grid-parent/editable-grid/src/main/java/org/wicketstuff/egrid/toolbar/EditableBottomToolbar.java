@@ -13,10 +13,10 @@ import org.apache.wicket.markup.html.list.LoopItem;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.wicketstuff.egrid.column.AbstractEditablePropertyColumn;
-import org.wicketstuff.egrid.column.EditableCellPanel;
-import org.wicketstuff.egrid.column.IEditableGridColumn;
+import org.wicketstuff.egrid.column.panel.EditablePanel;
+import org.wicketstuff.egrid.column.IEditableColumn;
 import org.wicketstuff.egrid.component.EditableDataTable;
-import org.wicketstuff.egrid.component.EditableGridSubmitLink;
+import org.wicketstuff.egrid.component.EditableTableSubmitLink;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -78,8 +78,8 @@ public abstract class EditableBottomToolbar<T extends Serializable, S> extends A
      * @param container the container where the button will be placed into
      * @return new 'Add' button as EditableGridSubmitLink
      */
-    protected EditableGridSubmitLink newAddButton(final String id, final WebMarkupContainer container) {
-        return new EditableGridSubmitLink(id, container) {
+    protected EditableTableSubmitLink newAddButton(final String id, final WebMarkupContainer container) {
+        return new EditableTableSubmitLink(id, container) {
             @Serial
             private static final long serialVersionUID = 1L;
 
@@ -118,7 +118,7 @@ public abstract class EditableBottomToolbar<T extends Serializable, S> extends A
             @Override
             protected void populateItem(final LoopItem item) {
                 var column = columns.get(item.getIndex());
-                item.add((column instanceof IEditableGridColumn) ? getColumnCellPanel("cell", (IEditableGridColumn) column) : new WebMarkupContainer("cell"));
+                item.add((column instanceof IEditableColumn) ? getColumnCellPanel("cell", (IEditableColumn) column) : new WebMarkupContainer("cell"));
             }
         };
     }
@@ -130,8 +130,8 @@ public abstract class EditableBottomToolbar<T extends Serializable, S> extends A
      * @param editableColumn an editable column of the data table
      * @return the cell panel
      */
-    protected Component getColumnCellPanel(final String id, final IEditableGridColumn editableColumn) {
-        EditableCellPanel panel = editableColumn.getEditableCellPanel(id);
+    protected Component getColumnCellPanel(final String id, final IEditableColumn editableColumn) {
+        EditablePanel panel = editableColumn.createEditablePanel(id);
 
         if (editableColumn instanceof AbstractEditablePropertyColumn<?, ?> propertyColumn) {
             FormComponent<?> editorComponent = panel.getEditableComponent();

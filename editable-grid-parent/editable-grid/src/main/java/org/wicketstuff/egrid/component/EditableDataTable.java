@@ -21,7 +21,6 @@ import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.string.Strings;
-import org.wicketstuff.egrid.column.IColumnProvider;
 import org.wicketstuff.egrid.provider.IEditableDataProvider;
 import org.wicketstuff.egrid.toolbar.AbstractEditableToolbar;
 
@@ -31,12 +30,12 @@ import java.util.List;
 /**
  * Modified Copy of Wicket Extensions' DataTable that supports editing of Rows.
  *
- * @param <T> The model object type
+ * @param <T> the model object type
  * @param <S> the type of the sorting parameter
  * @author Nadeem
  * @see org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable
  */
-public class EditableDataTable<T, S> extends Panel implements IPageableItems, IColumnProvider<T, S> {
+public class EditableDataTable<T, S> extends Panel implements IPageableItems {
 
     public static final MetaDataKey<Boolean> EDITING = new MetaDataKey<>() {
     };
@@ -204,7 +203,6 @@ public class EditableDataTable<T, S> extends Panel implements IPageableItems, IC
     /**
      * @return list of column objects this table displays
      */
-    @Override
     public final List<? extends IColumn<T, S>> getColumns() {
         return columns;
     }
@@ -332,8 +330,8 @@ public class EditableDataTable<T, S> extends Panel implements IPageableItems, IC
     }
 
     /**
-     * @see AbstractEditableToolbar
      * @return new id for a toolbar
+     * @see AbstractEditableToolbar
      */
     public String newToolbarId() {
         toolbarIdCounter++;
@@ -383,7 +381,7 @@ public class EditableDataTable<T, S> extends Panel implements IPageableItems, IC
      *
      * @return true if at least one row is currently being edited
      */
-    public boolean isCurrentlyEditing() {
+    public boolean isCurrentlyAnyEdit() {
         return currentlyEditingRowsCount > 0;
     }
 

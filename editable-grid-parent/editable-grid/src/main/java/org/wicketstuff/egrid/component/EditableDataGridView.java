@@ -11,8 +11,9 @@ import java.util.List;
 /**
  * Extension of DataGridView with the method {@code refresh}.
  *
- * @param <T> The model object type
+ * @param <T> the model object type
  * @param <S> the type of the sorting parameter
+ * @author Silas Porth
  * @see org.apache.wicket.extensions.markup.html.repeater.data.grid.DataGridView
  */
 public class EditableDataGridView<T, S> extends DataGridView<T> {
