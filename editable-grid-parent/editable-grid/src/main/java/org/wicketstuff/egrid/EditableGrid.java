@@ -7,7 +7,7 @@ import org.apache.wicket.markup.html.form.IFormSubmitter;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
+import org.apache.wicket.model.StringResourceModel;
 import org.wicketstuff.egrid.column.EditableActionsColumn;
 import org.wicketstuff.egrid.component.EditableDataTable;
 import org.wicketstuff.egrid.component.EditableDataTable.RowItem;
@@ -51,7 +51,7 @@ public class EditableGrid<T extends Serializable, S> extends Panel {
         this.dataProvider = dataProvider;
 
         List<IColumn<T, S>> newCols = new ArrayList<>(columns);
-        newCols.add(newActionsColumn(getString("editableGrid.actionsColumn.headerText")));
+        newCols.add(newActionsColumn(new StringResourceModel("editableGrid.actionsColumn.headerText")));
 
         Form<T> form = createForm("form");
         dataTable = newDataTable("dataTable", newCols, dataProvider, rowsPerPage, clazz);
@@ -63,11 +63,11 @@ public class EditableGrid<T extends Serializable, S> extends Panel {
     /**
      * Factory method for {@link org.wicketstuff.egrid.column.EditableActionsColumn}.
      *
-     * @param headerText the text for the header
+     * @param stringModel the text for the header
      * @return the new EditableActionsColumn
      */
-    protected EditableActionsColumn<T, S> newActionsColumn(final String headerText) {
-        return new EditableActionsColumn<>(Model.of(headerText)) {
+    protected EditableActionsColumn<T, S> newActionsColumn(final IModel<String> stringModel) {
+        return new EditableActionsColumn<>(stringModel) {
             @Serial
             private static final long serialVersionUID = 1L;
 
