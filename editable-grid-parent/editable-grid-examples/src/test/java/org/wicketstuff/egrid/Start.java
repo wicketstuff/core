@@ -50,7 +50,9 @@ public class Start {
             sslContextFactory.setKeyManagerPassword("wicket");
 
             HttpConfiguration httpsConfig = new HttpConfiguration(httpConfig);
-            httpsConfig.addCustomizer(new SecureRequestCustomizer());
+            SecureRequestCustomizer src = new SecureRequestCustomizer();
+            src.setSniHostCheck(false);
+            httpsConfig.addCustomizer(src);
 
             ServerConnector https = new ServerConnector(server, new SslConnectionFactory(sslContextFactory, "http/1.1"), new HttpConnectionFactory(httpsConfig));
             https.setPort(8443);
