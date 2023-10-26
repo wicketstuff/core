@@ -17,7 +17,6 @@ import org.apache.wicket.markup.html.navigation.paging.IPageableItems;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.IItemReuseStrategy;
 import org.apache.wicket.markup.repeater.Item;
-import org.apache.wicket.markup.repeater.RefreshingView;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.lang.Args;
@@ -162,7 +161,7 @@ public class EditableDataTable<T, S> extends Panel implements IPageableItems {
      * Adds a toolbar to the datatable that will be displayed after the data
      *
      * @param toolbar toolbar to be added
-     * @see AbstractEditableToolbar
+     * @see org.wicketstuff.egrid.toolbar.AbstractEditableToolbar
      */
     public void addBottomToolbar(final AbstractEditableToolbar toolbar) {
         addToolbar(toolbar, bottomToolbars);
@@ -172,7 +171,7 @@ public class EditableDataTable<T, S> extends Panel implements IPageableItems {
      * Adds a toolbar to the datatable that will be displayed before the data
      *
      * @param toolbar toolbar to be added
-     * @see AbstractEditableToolbar
+     * @see org.wicketstuff.egrid.toolbar.AbstractEditableToolbar
      */
     public void addTopToolbar(final AbstractEditableToolbar toolbar) {
         addToolbar(toolbar, topToolbars);
@@ -271,12 +270,12 @@ public class EditableDataTable<T, S> extends Panel implements IPageableItems {
     }
 
     /**
-     * Sets the item reuse strategy. This strategy controls the creation of {@link Item}s.
+     * Sets the item reuse strategy. This strategy controls the creation of {@link org.apache.wicket.markup.repeater.Item}s.
      *
      * @param strategy item reuse strategy
      * @return this for chaining
-     * @see RefreshingView#setItemReuseStrategy(IItemReuseStrategy)
-     * @see IItemReuseStrategy
+     * @see org.apache.wicket.markup.repeater.RefreshingView#setItemReuseStrategy(IItemReuseStrategy)
+     * @see org.apache.wicket.markup.repeater.IItemReuseStrategy
      */
     public final EditableDataTable<T, S> setItemReuseStrategy(final IItemReuseStrategy strategy) {
         dataGrid.setItemReuseStrategy(strategy);
@@ -304,7 +303,7 @@ public class EditableDataTable<T, S> extends Panel implements IPageableItems {
      * @param index the index of the new data item
      * @param model the model for the new data item
      * @return DataItem created DataItem
-     * @see Item
+     * @see org.apache.wicket.markup.repeater.Item
      */
     protected Item<IColumn<T, S>> newCellItem(final String id, final int index, final IModel<IColumn<T, S>> model) {
         return new Item<>(id, index, model);
@@ -317,7 +316,7 @@ public class EditableDataTable<T, S> extends Panel implements IPageableItems {
      * @param index the index of the new data item
      * @param model the model for the new data item.
      * @return DataItem created DataItem
-     * @see Item
+     * @see org.apache.wicket.markup.repeater.Item
      */
     protected Item<T> newRowItem(final String id, final int index, final IModel<T> model) {
         return new RowItem<>(id, index, model, getMarkupId());
@@ -344,7 +343,7 @@ public class EditableDataTable<T, S> extends Panel implements IPageableItems {
 
     /**
      * @return new id for a toolbar
-     * @see AbstractEditableToolbar
+     * @see org.wicketstuff.egrid.toolbar.AbstractEditableToolbar
      */
     public String newToolbarId() {
         toolbarIdCounter++;
@@ -449,7 +448,7 @@ public class EditableDataTable<T, S> extends Panel implements IPageableItems {
 
     /**
      * A caption for the table. It renders itself only if
-     * {@link EditableDataTable#getCaptionModel()} has non-empty value.
+     * {@link #getCaptionModel()} has non-empty value.
      */
     public static class Caption extends Label {
         @Serial
@@ -486,7 +485,7 @@ public class EditableDataTable<T, S> extends Panel implements IPageableItems {
         protected abstract String getCssClass();
 
         /**
-         * @see Behavior#onComponentTag(Component, ComponentTag)
+         * @see org.apache.wicket.behavior.Behavior#onComponentTag(Component, ComponentTag)
          */
         @Override
         public void onComponentTag(final Component component, final ComponentTag tag) {

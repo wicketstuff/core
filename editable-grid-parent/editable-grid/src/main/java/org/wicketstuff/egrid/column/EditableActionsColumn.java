@@ -18,7 +18,7 @@ import static org.wicketstuff.egrid.component.EditableDataTable.EDITING;
  * @param <T> the model object type
  * @param <S> the type of the sorting parameter
  * @author Nadeem Mohammad
- * @see ActionsPanel
+ * @see org.wicketstuff.egrid.column.panel.ActionsPanel
  * @see org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractColumn
  */
 public class EditableActionsColumn<T, S> extends AbstractColumn<T, S> {

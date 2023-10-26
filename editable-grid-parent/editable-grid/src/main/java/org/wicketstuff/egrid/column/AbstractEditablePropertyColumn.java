@@ -51,7 +51,7 @@ public abstract class AbstractEditablePropertyColumn<T, S> extends PropertyColum
      * a label is added to the cell whose model is the provided property expression evaluated against rowModel,
      * otherwise an input field is placed in the cell.
      *
-     * @see ICellPopulator#populateItem(Item, String, IModel)
+     * @see org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator#populateItem(Item, String, IModel)
      */
     @SuppressWarnings("unchecked")
     @Override

@@ -15,7 +15,7 @@ public interface IEditableColumn {
      *
      * @param componentId the id of the editable cell panel
      * @return an Panel containing an input
-     * @see EditablePanel
+     * @see org.wicketstuff.egrid.column.panel.EditablePanel
      */
     EditablePanel createEditablePanel(String componentId);
 

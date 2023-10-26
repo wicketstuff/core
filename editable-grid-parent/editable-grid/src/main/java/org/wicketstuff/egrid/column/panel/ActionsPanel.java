@@ -97,7 +97,7 @@ public abstract class ActionsPanel<T> extends Panel {
      *
      * @param id the component id used for the EditableTableSubmitLink
      * @return the EditableTableSubmitLink
-     * @see EditableTableSubmitLink
+     * @see org.wicketstuff.egrid.component.EditableTableSubmitLink
      */
     protected EditableTableSubmitLink newSaveLink(final String id) {
         return new EditableTableSubmitLink(id, rowItem) {
