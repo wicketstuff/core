@@ -310,7 +310,7 @@ public class EditableDataTable<T, S> extends Panel implements IPageableItems {
     }
 
     /**
-     * Factory method for Item container that represents a row in the underlying DataGridView
+     * Factory method for Item container that represents a row in the underlying DataGridView.
      *
      * @param id    component id for the new data item
      * @param index the index of the new data item
@@ -408,7 +408,7 @@ public class EditableDataTable<T, S> extends Panel implements IPageableItems {
         @Serial
         private static final long serialVersionUID = 1L;
 
-        private final RepeatingView toolbars;
+        private final RepeatingView toolbars = new RepeatingView("toolbars");
 
         /**
          * Constructor
@@ -417,7 +417,9 @@ public class EditableDataTable<T, S> extends Panel implements IPageableItems {
          */
         private ToolbarsContainer(final String id) {
             super(id);
-            toolbars = new RepeatingView("toolbars");
+
+            setOutputMarkupId(true);
+
             add(toolbars);
         }
 
@@ -496,6 +498,11 @@ public class EditableDataTable<T, S> extends Panel implements IPageableItems {
         }
     }
 
+    /**
+     * Extension of Item that is ajax ready and has two MetaDataKeys set.
+     * @param <RI> the model object's type
+     * @see org.apache.wicket.markup.repeater.Item
+     */
     public static class RowItem<RI> extends Item<RI> {
         @Serial
         private static final long serialVersionUID = 1L;
