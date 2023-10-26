@@ -216,7 +216,7 @@ public class EditableGrid<T extends Serializable, S> extends Panel {
      * @param target
      * @param rowModel the data model of the row
      */
-    private void onEdit(final AjaxRequestTarget target, final IModel<T> rowModel) {
+    protected void onEdit(final AjaxRequestTarget target, final IModel<T> rowModel) {
         target.add(dataTable.getTopToolbars());
     }
 

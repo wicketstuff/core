@@ -153,7 +153,7 @@ public abstract class ActionsPanel<T> extends Panel {
      * @param rowItem current row
      * @return {@code true} if the row is currently in edit mode
      */
-    private boolean isRowInEditMode(final Item<T> rowItem) {
+    protected boolean isRowInEditMode(final Item<T> rowItem) {
         Boolean editing = rowItem.getMetaData(EDITING);
         return editing != null && editing;
     }
