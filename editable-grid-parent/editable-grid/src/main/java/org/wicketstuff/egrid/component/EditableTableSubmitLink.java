@@ -34,7 +34,7 @@ public abstract class EditableTableSubmitLink extends AjaxSubmitLink {
     /**
      * This method will validate all FormComponents on click of the link and update the models on success.
      *
-     * @param target the {@link AjaxRequestTarget}
+     * @param target the {@link org.apache.wicket.ajax.AjaxRequestTarget}
      */
     @Override
     protected void onSubmit(final AjaxRequestTarget target) {
@@ -53,7 +53,7 @@ public abstract class EditableTableSubmitLink extends AjaxSubmitLink {
 
     /**
      * Manual validation of all FormComponents instead of the form to validate only a subset of the form.
-     * The subset is most likely a row of an {@link EditableDataTable}.
+     * The subset is most likely a row of an {@link org.wicketstuff.egrid.component.EditableDataTable}.
      *
      * @return whether all components are valid or a problem exists
      */

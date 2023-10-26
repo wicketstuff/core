@@ -67,7 +67,7 @@ public class DropDownColumn<T, P extends Serializable, S> extends AbstractEditab
     }
 
     /**
-     * This getter should only be used in an override otherwise use {@link DropDownPanel#getChoices()}.
+     * This getter should only be used in an override otherwise use {@link org.wicketstuff.egrid.column.panel.DropDownPanel#getChoices()}.
      *
      * @return the list of choices
      */
