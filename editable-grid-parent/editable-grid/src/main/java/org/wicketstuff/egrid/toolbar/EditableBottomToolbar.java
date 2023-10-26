@@ -4,17 +4,15 @@ import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
-import org.apache.wicket.markup.html.form.IFormSubmitter;
-import org.apache.wicket.markup.html.form.IFormVisitorParticipant;
 import org.apache.wicket.markup.html.list.Loop;
 import org.apache.wicket.markup.html.list.LoopItem;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.wicketstuff.egrid.column.AbstractEditablePropertyColumn;
-import org.wicketstuff.egrid.column.panel.EditablePanel;
 import org.wicketstuff.egrid.column.IEditableColumn;
+import org.wicketstuff.egrid.column.panel.EditablePanel;
 import org.wicketstuff.egrid.component.EditableDataTable;
 import org.wicketstuff.egrid.component.EditableTableSubmitLink;
 
@@ -28,15 +26,14 @@ import java.util.logging.Logger;
  * Toolbar that can be used to add new rows.
  *
  * @param <T> the type of the data in the table.
- * @param <S> the type of the sorting parameter
  * @author Nadeem Mohammad
  */
-public abstract class EditableBottomToolbar<T extends Serializable, S> extends AbstractEditableToolbar {
+public abstract class EditableBottomToolbar<T extends Serializable> extends AbstractEditableToolbar {
     @Serial
     private static final long serialVersionUID = 1L;
     private static final Logger LOGGER = Logger.getLogger(EditableBottomToolbar.class.getName());
 
-    private Model<T> rowModel;
+    private IModel<T> rowModel;
 
 
     /**
@@ -50,8 +47,7 @@ public abstract class EditableBottomToolbar<T extends Serializable, S> extends A
 
         createNewInstance(clazz, null);
 
-        var addToolBarForm = new AddToolBarForm("addToolbarForm");
-        add(newAddButton("add", addToolBarForm), addToolBarForm);
+        add(newAddButton("add", this), newEditorComponents("td"));
     }
 
     /**
@@ -83,10 +79,11 @@ public abstract class EditableBottomToolbar<T extends Serializable, S> extends A
             @Serial
             private static final long serialVersionUID = 1L;
 
+            @SuppressWarnings("unchecked")
             @Override
             protected void onSuccess(final AjaxRequestTarget target) {
                 onAdd(target, rowModel);
-                createNewInstance(rowModel.getObjectClass(), target);
+                createNewInstance((Class<T>) rowModel.getObject().getClass(), target);
                 target.add(getTable());
             }
 
@@ -97,7 +94,7 @@ public abstract class EditableBottomToolbar<T extends Serializable, S> extends A
         };
     }
 
-    protected abstract void onAdd(AjaxRequestTarget target, Model<T> rowModel);
+    protected abstract void onAdd(AjaxRequestTarget target, IModel<T> rowModel);
 
     protected void onError(final AjaxRequestTarget target) {
     }
@@ -148,20 +145,6 @@ public abstract class EditableBottomToolbar<T extends Serializable, S> extends A
      * @return error message as String
      */
     protected String getInstantiationErrorMessage(final Class<T> clazz) {
-        return "Could not instantiate Class " + clazz.getName();
-    }
-
-    private class AddToolBarForm extends Form<T> implements IFormVisitorParticipant {
-
-        public AddToolBarForm(final String id) {
-            super(id);
-            add(newEditorComponents("td"));
-        }
-
-        @Override
-        public boolean processChildren() {
-            IFormSubmitter submitter = getRootForm().findSubmitter();
-            return submitter != null && submitter.getForm().equals(this);
-        }
+        return getString("editableBottomToolbar.instantiationError").formatted(clazz.getName());
     }
 }

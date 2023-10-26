@@ -1,5 +1,6 @@
 package org.wicketstuff.egrid.column.panel;
 
+import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractColumn;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.TextField;
@@ -45,6 +46,7 @@ public class TextFieldPanel<T> extends EditablePanel {
         };
         textField.setOutputMarkupId(true);
         textField.setLabel(column.getDisplayModel());
+        add(new AttributeModifier("placeholder", column.getDisplayModel()));
         add(textField);
     }
 

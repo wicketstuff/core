@@ -12,6 +12,7 @@ import org.apache.wicket.extensions.markup.html.repeater.data.table.IStyledColum
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.navigation.paging.IPageableItems;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.IItemReuseStrategy;
@@ -29,6 +30,7 @@ import java.util.List;
 
 /**
  * Modified Copy of Wicket Extensions' DataTable that supports editing of Rows.
+ * The data table must be placed in a Form in order for editing to work.
  *
  * @param <T> the model object type
  * @param <S> the type of the sorting parameter
@@ -94,6 +96,17 @@ public class EditableDataTable<T, S> extends Panel implements IPageableItems {
         add(bottomToolbars);
 
         setOutputMarkupId(true);
+    }
+
+    /**
+     * The table checks if it is placed inside a {@link org.apache.wicket.markup.html.form.Form}.
+     */
+    @Override
+    protected void onInitialize() {
+        super.onInitialize();
+        if (findParent(Form.class) == null) {
+            throw new IllegalStateException("form cannot be found in the hierarchy of the editable data table %s".formatted(toString(false)));
+        }
     }
 
     /**
@@ -467,7 +480,6 @@ public class EditableDataTable<T, S> extends Panel implements IPageableItems {
     }
 
     public abstract static class CssAttributeBehavior extends Behavior {
-
         @Serial
         private static final long serialVersionUID = 1L;
 
@@ -486,7 +498,6 @@ public class EditableDataTable<T, S> extends Panel implements IPageableItems {
     }
 
     public static class RowItem<RI> extends Item<RI> {
-
         @Serial
         private static final long serialVersionUID = 1L;
 
