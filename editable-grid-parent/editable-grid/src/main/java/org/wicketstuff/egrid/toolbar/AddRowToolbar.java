@@ -107,8 +107,8 @@ public abstract class AddRowToolbar<T extends Serializable> extends AbstractEdit
      * @return container with different input components
      */
     protected WebMarkupContainer newEditorComponents(final String id) {
-        List<? extends IColumn<?, ?>> columns = getTable().getColumns();
-        return new Loop(id, columns.size() - 1) {
+        List<? extends IColumn<?, ?>> columns = getTable().getColumns().stream().filter(column -> column instanceof IEditableColumn).toList();
+        return new Loop(id, columns.size()) {
             @Serial
             private static final long serialVersionUID = 1L;
 

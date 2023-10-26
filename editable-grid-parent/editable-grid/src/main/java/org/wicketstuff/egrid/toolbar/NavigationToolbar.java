@@ -1,6 +1,8 @@
 package org.wicketstuff.egrid.toolbar;
 
 import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.navigation.paging.AjaxPagingNavigator;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.NavigatorLabel;
 import org.apache.wicket.markup.html.WebComponent;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -49,7 +51,12 @@ public class NavigationToolbar extends AbstractEditableToolbar {
      */
     protected PagingNavigator newPagingNavigator(final String navigatorId,
                                                  final EditableDataTable<?, ?> table) {
-        return new PagingNavigator(navigatorId, table);
+        return new AjaxPagingNavigator(navigatorId, table) {
+            @Override
+            protected void onAjaxEvent(final AjaxRequestTarget target) {
+                target.add(getTable());
+            }
+        };
     }
 
     /**

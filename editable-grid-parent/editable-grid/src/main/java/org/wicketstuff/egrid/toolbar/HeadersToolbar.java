@@ -1,8 +1,12 @@
 package org.wicketstuff.egrid.toolbar;
 
 import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
+import org.apache.wicket.extensions.ajax.markup.html.repeater.data.sort.AjaxOrderByLink;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.ISortStateLocator;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.OrderByBorder;
+import org.apache.wicket.extensions.markup.html.repeater.data.sort.OrderByLink;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IStyledColumn;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -35,14 +39,15 @@ public class HeadersToolbar<S> extends AbstractEditableToolbar {
 
     /**
      * Constructor
-     * @param <T> the column data type
-     * @param table data table this toolbar will be attached to
+     *
+     * @param <T>          the column data type
+     * @param table        data table this toolbar will be attached to
      * @param stateLocator locator for the ISortState implementation used by sortable headers
      */
     public <T> HeadersToolbar(final EditableDataTable<T, S> table, final ISortStateLocator<S> stateLocator) {
         super(table);
 
-        RefreshingView<IColumn<T, S>> headers = new RefreshingView<IColumn<T, S>>("headers") {
+        RefreshingView<IColumn<T, S>> headers = new RefreshingView<>("headers") {
             @Serial
             private static final long serialVersionUID = 1L;
 
@@ -63,7 +68,7 @@ public class HeadersToolbar<S> extends AbstractEditableToolbar {
 
                 WebMarkupContainer header;
 
-                if (column.isSortable()) {
+                if (column.isSortable() && !table.isCurrentlyAnyEdit()) {
                     header = newSortableHeader("header", column.getSortProperty(), stateLocator);
                 } else {
                     header = new WebMarkupContainer("header");
@@ -84,19 +89,20 @@ public class HeadersToolbar<S> extends AbstractEditableToolbar {
                 }
 
                 if (column.getHeaderColspan() > 1) {
-                    header.add(AttributeModifier.replace("colspan", column.getHeaderColspan()));
-                    header.add(AttributeModifier.replace("scope", "colgroup"));
+                    header.add(new AttributeModifier("colspan", column.getHeaderColspan()));
+                    header.add(new AttributeModifier("scope", "colgroup"));
                 } else {
-                    header.add(AttributeModifier.replace("scope", "col"));
+                    header.add(new AttributeModifier("scope", "col"));
                 }
 
                 if (column.getHeaderRowspan() > 1) {
-                    header.add(AttributeModifier.replace("rowspan", column.getHeaderRowspan()));
+                    header.add(new AttributeModifier("rowspan", column.getHeaderRowspan()));
                 }
+
+                header.add(column.getHeader("label"));
 
                 item.add(header);
                 item.setRenderBodyOnly(true);
-                header.add(column.getHeader("label"));
             }
         };
         add(headers);
@@ -115,10 +121,32 @@ public class HeadersToolbar<S> extends AbstractEditableToolbar {
         return new OrderByBorder<S>(headerId, property, locator) {
             @Serial
             private static final long serialVersionUID = 1L;
+
+            @Override
+            protected OrderByLink<S> newOrderByLink(final String id, final S property, final ISortStateLocator<S> stateLocator) {
+                return new AjaxOrderByLink<>(id, property, stateLocator) {
+                    @Serial
+                    private static final long serialVersionUID = 1L;
+
+                    @Override
+                    public void onClick(final AjaxRequestTarget target) {
+                        target.add(getTable());
+                    }
+
+                    @Override
+                    protected void updateAjaxAttributes(final AjaxRequestAttributes attributes) {
+                        HeadersToolbar.this.updateAjaxAttributes(attributes);
+                    }
+                };
+            }
+
             @Override
             protected void onSortChanged() {
                 getTable().setCurrentPage(0);
             }
         };
+    }
+
+    protected void updateAjaxAttributes(final AjaxRequestAttributes attributes) {
     }
 }
