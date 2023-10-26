@@ -28,10 +28,10 @@ import java.util.logging.Logger;
  * @param <T> the type of the data in the table.
  * @author Nadeem Mohammad
  */
-public abstract class EditableBottomToolbar<T extends Serializable> extends AbstractEditableToolbar {
+public abstract class AddRowToolbar<T extends Serializable> extends AbstractEditableToolbar {
     @Serial
     private static final long serialVersionUID = 1L;
-    private static final Logger LOGGER = Logger.getLogger(EditableBottomToolbar.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(AddRowToolbar.class.getName());
 
     private IModel<T> rowModel;
 
@@ -42,7 +42,7 @@ public abstract class EditableBottomToolbar<T extends Serializable> extends Abst
      * @param table data table this toolbar will be attached to
      * @param clazz class of type T
      */
-    public EditableBottomToolbar(final EditableDataTable<?, ?> table, final Class<T> clazz) {
+    public AddRowToolbar(final EditableDataTable<?, ?> table, final Class<T> clazz) {
         super(table);
 
         createNewInstance(clazz, null);
@@ -89,7 +89,7 @@ public abstract class EditableBottomToolbar<T extends Serializable> extends Abst
 
             @Override
             protected void onError(final AjaxRequestTarget target) {
-                EditableBottomToolbar.this.onError(target);
+                AddRowToolbar.this.onError(target);
             }
         };
     }
@@ -145,6 +145,6 @@ public abstract class EditableBottomToolbar<T extends Serializable> extends Abst
      * @return error message as String
      */
     protected String getInstantiationErrorMessage(final Class<T> clazz) {
-        return getString("editableBottomToolbar.instantiationError").formatted(clazz.getName());
+        return getString("addRowToolbar.instantiationError").formatted(clazz.getName());
     }
 }

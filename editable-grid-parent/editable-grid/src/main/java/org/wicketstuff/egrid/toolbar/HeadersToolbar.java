@@ -26,10 +26,10 @@ import java.util.List;
  * </p>
  *
  * @param <S> the type of the sorting parameter
- * @see org.apache.wicket.extensions.markup.html.repeater.data.table.HeadersToolbar
  * @author Nadeem Mohammad
+ * @see org.apache.wicket.extensions.markup.html.repeater.data.table.HeadersToolbar
  */
-public class EditableHeadersToolbar<S> extends AbstractEditableToolbar {
+public class HeadersToolbar<S> extends AbstractEditableToolbar {
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -39,7 +39,7 @@ public class EditableHeadersToolbar<S> extends AbstractEditableToolbar {
      * @param table data table this toolbar will be attached to
      * @param stateLocator locator for the ISortState implementation used by sortable headers
      */
-    public <T> EditableHeadersToolbar(final EditableDataTable<T, S> table, final ISortStateLocator<S> stateLocator) {
+    public <T> HeadersToolbar(final EditableDataTable<T, S> table, final ISortStateLocator<S> stateLocator) {
         super(table);
 
         RefreshingView<IColumn<T, S>> headers = new RefreshingView<IColumn<T, S>>("headers") {
@@ -104,7 +104,7 @@ public class EditableHeadersToolbar<S> extends AbstractEditableToolbar {
 
     /**
      * Factory method for sortable header components. A sortable header component must have id of
-     * <code>headerId</code> and conform to markup specified in <code>EditableHeadersToolbar.html</code>
+     * <code>headerId</code> and conform to markup specified in <code>HeadersToolbar.html</code>
      *
      * @param headerId header component id
      * @param property property this header represents

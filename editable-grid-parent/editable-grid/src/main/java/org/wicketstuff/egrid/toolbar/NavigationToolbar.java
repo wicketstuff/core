@@ -20,7 +20,7 @@ import java.io.Serial;
  * @author Nadeem Mohammad
  * @see org.apache.wicket.extensions.markup.html.repeater.data.table.NavigationToolbar
  */
-public class EditableNavigationToolbar extends AbstractEditableToolbar {
+public class NavigationToolbar extends AbstractEditableToolbar {
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -29,7 +29,7 @@ public class EditableNavigationToolbar extends AbstractEditableToolbar {
      *
      * @param table data table this toolbar will be attached to
      */
-    public EditableNavigationToolbar(final EditableDataTable<?, ?> table) {
+    public NavigationToolbar(final EditableDataTable<?, ?> table) {
         super(table);
 
         WebMarkupContainer span = new WebMarkupContainer("span");
