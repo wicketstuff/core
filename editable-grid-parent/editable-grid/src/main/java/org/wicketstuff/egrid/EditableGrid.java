@@ -1,10 +1,5 @@
 package org.wicketstuff.egrid;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.wicket.AttributeModifier;
-import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.markup.html.form.Form;
@@ -12,207 +7,326 @@ import org.apache.wicket.markup.html.form.IFormSubmitter;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
-import org.wicketstuff.egrid.column.EditableGridActionsColumn;
+import org.apache.wicket.model.StringResourceModel;
+import org.wicketstuff.egrid.column.EditableActionsColumn;
 import org.wicketstuff.egrid.component.EditableDataTable;
 import org.wicketstuff.egrid.component.EditableDataTable.RowItem;
 import org.wicketstuff.egrid.provider.IEditableDataProvider;
-import org.wicketstuff.egrid.toolbar.EditableGridBottomToolbar;
-import org.wicketstuff.egrid.toolbar.EditableGridHeadersToolbar;
-import org.wicketstuff.egrid.toolbar.EditableGridNavigationToolbar;
+import org.wicketstuff.egrid.toolbar.AddRowToolbar;
+import org.wicketstuff.egrid.toolbar.HeadersToolbar;
+import org.wicketstuff.egrid.toolbar.NavigationToolbar;
+import org.wicketstuff.egrid.toolbar.NoRecordsToolbar;
+
+import java.io.Serial;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * 
+ * Example usage of the EditableDataTable
+ *
+ * @param <T> the model object type
+ * @param <S> the type of the sorting parameter
  * @author Nadeem Mohammad
- * 
+ * @see org.wicketstuff.egrid.component.EditableDataTable
  */
-public class EditableGrid<T, S> extends Panel
-{
+public class EditableGrid<T extends Serializable, S> extends Panel {
+    @Serial
+    private static final long serialVersionUID = 1L;
 
-	private static final long serialVersionUID = 1L;
-	
-	private EditableDataTable<T, S> dataTable;
+    private final EditableDataTable<T, S> dataTable;
+    private final IEditableDataProvider<T, S> dataProvider;
 
-	public EditableGrid(final String id, final List<? extends IColumn<T, S>> columns,
-		final IEditableDataProvider<T, S> dataProvider, final long rowsPerPage, Class<T> clazz)
-	{
-		super(id);
-		List<IColumn<T, S>> newCols = new ArrayList<IColumn<T, S>>();
-		newCols.addAll(columns);
-		newCols.add(newActionsColumn());
+    /**
+     * Constructor
+     *
+     * @param id           the component id
+     * @param columns      the list of IColumn objects
+     * @param dataProvider an {@link org.wicketstuff.egrid.provider.IEditableDataProvider}
+     * @param rowsPerPage  the number of rows per page
+     * @param clazz        the class of type T
+     */
+    public EditableGrid(final String id, final List<? extends IColumn<T, S>> columns, final IEditableDataProvider<T, S> dataProvider, final long rowsPerPage, final Class<T> clazz) {
+        super(id);
+        this.dataProvider = dataProvider;
 
-		add(buildForm(newCols, dataProvider, rowsPerPage, clazz));
-	}
+        List<IColumn<T, S>> newCols = new ArrayList<>(columns);
+        newCols.add(newActionsColumn(new StringResourceModel("editableGrid.actionsColumn.headerText")));
 
-	private Component buildForm(final List<? extends IColumn<T, S>> columns,
-		final IEditableDataProvider<T, S> dataProvider, long rowsPerPage, Class<T> clazz)
-	{
-		Form<T> form = new NonValidatingForm<T>("form");
-		form.setOutputMarkupId(true);
-		this.dataTable = newDataTable(columns, dataProvider, rowsPerPage, clazz);
-		form.add(this.dataTable);
-		return form;
-	}
+        Form<T> form = createForm("form");
+        dataTable = newDataTable("dataTable", newCols, dataProvider, rowsPerPage, clazz);
 
-	public final EditableGrid<T, S> setTableBodyCss(final String cssStyle)
-	{
-		this.dataTable.setTableBodyCss(cssStyle);
-		return this;
-	}
-	
-	public final EditableGrid<T, S> setTableCss(final String cssStyle)
-	{
-		this.dataTable.add(AttributeModifier.replace("class", cssStyle));
-		return this;
-	}
+        form.add(dataTable);
+        add(form);
+    }
 
-	private static class NonValidatingForm<T> extends Form<T>
-	{
-		private static final long serialVersionUID = 1L;
-		public NonValidatingForm(String id)
-		{
-			super(id);
-		}
-		@Override
-		public void process(IFormSubmitter submittingComponent)
-		{
-			delegateSubmit(submittingComponent);
-		}
-		
-	}
+    /**
+     * Factory method for {@link org.wicketstuff.egrid.column.EditableActionsColumn}.
+     *
+     * @param stringModel the text for the header
+     * @return the new EditableActionsColumn
+     */
+    protected EditableActionsColumn<T, S> newActionsColumn(final IModel<String> stringModel) {
+        return new EditableActionsColumn<>(stringModel) {
+            @Serial
+            private static final long serialVersionUID = 1L;
 
-	private EditableDataTable<T, S> newDataTable(final List<? extends IColumn<T, S>> columns,
-		final IEditableDataProvider<T, S> dataProvider, long rowsPerPage, Class<T> clazz)
-	{
-		final EditableDataTable<T, S> dataTable = new EditableDataTable<T, S>("dataTable", columns,
-			dataProvider, rowsPerPage, clazz)
-		{
+            @Override
+            public void onEdit(final AjaxRequestTarget target, final IModel<T> rowModel) {
+                super.onEdit(target, rowModel);
+                EditableGrid.this.onEdit(target, rowModel);
+            }
 
-			private static final long serialVersionUID = 1L;
+            @Override
+            protected void onCancel(final AjaxRequestTarget target, final IModel<T> rowModel) {
+                super.onCancel(target, rowModel);
+                EditableGrid.this.onCancel(target, rowModel);
+            }
 
-			@Override
-			protected void onError(AjaxRequestTarget target)
-			{
-				EditableGrid.this.onError(target);
-			}
-			@Override
-			protected Item<T> newRowItem(String id, int index, IModel<T> model) {
-				return super.newRowItem(id, index, model);
-			}
-		};
+            @Override
+            protected void onSave(final AjaxRequestTarget target, final IModel<T> rowModel) {
+                super.onSave(target, rowModel);
+                EditableGrid.this.onSave(target, rowModel);
+            }
 
-		dataTable.setOutputMarkupId(true);
+            @Override
+            protected void onError(final AjaxRequestTarget target, final IModel<T> rowModel) {
+                super.onError(target, rowModel);
+                EditableGrid.this.onError(target, rowModel);
+            }
 
-		dataTable.addTopToolbar(new EditableGridNavigationToolbar(dataTable));
-		dataTable.addTopToolbar(new EditableGridHeadersToolbar<T, S>(dataTable, dataProvider));		
-		if (displayAddFeature())
-		{			
-			dataTable.addBottomToolbar(newAddBottomToolbar(dataProvider, clazz, dataTable));
-		}
+            @Override
+            protected void onDelete(final AjaxRequestTarget target, final IModel<T> rowModel) {
+                super.onDelete(target, rowModel);
+                EditableGrid.this.onDelete(target, rowModel);
+            }
 
-		return dataTable;
-	}
+            @Override
+            protected boolean allowEdit(final Item<T> rowItem) {
+                return EditableGrid.this.allowEdit(rowItem);
+            }
 
-	protected RowItem<T> newRowItem(String id, int index, IModel<T> model) {
-		return new RowItem<T>(id, index, model);
-	}
+            @Override
+            protected boolean allowDelete(final Item<T> rowItem) {
+                return EditableGrid.this.allowDelete(rowItem);
+            }
+        };
+    }
 
-	private EditableGridBottomToolbar<T, S> newAddBottomToolbar(
-			final IEditableDataProvider<T, S> dataProvider, Class<T> clazz,
-			final EditableDataTable<T, S> dataTable)
-			{
-		return new EditableGridBottomToolbar<T, S>(dataTable, clazz)
-				{
+    /**
+     * Creates a new form which is used for the data table
+     *
+     * @param id the component id
+     * @return the form
+     * @see org.wicketstuff.egrid.component.EditableDataTable
+     */
+    protected Form<T> createForm(final String id) {
+        return new NonValidatingForm(id);
+    }
 
-					private static final long serialVersionUID = 1L;
+    /**
+     * Creates a new {@link org.wicketstuff.egrid.component.EditableDataTable}
+     * with the four toolbars
+     * {@link org.wicketstuff.egrid.toolbar.NavigationToolbar},
+     * {@link org.wicketstuff.egrid.toolbar.HeadersToolbar},
+     * {@link org.wicketstuff.egrid.toolbar.NoRecordsToolbar}
+     * and {@link org.wicketstuff.egrid.toolbar.AddRowToolbar}.
+     *
+     * @param id           the component id
+     * @param columns      the list of IColumn objects
+     * @param dataProvider an {@link org.wicketstuff.egrid.provider.IEditableDataProvider}
+     * @param rowsPerPage  the number of rows per page
+     * @param clazz        the class of type T
+     * @return the editable data table
+     */
+    protected EditableDataTable<T, S> newDataTable(final String id, final List<? extends IColumn<T, S>> columns, final IEditableDataProvider<T, S> dataProvider, final long rowsPerPage, final Class<T> clazz) {
+        EditableDataTable<T, S> dataTable = new EditableDataTable<>(id, columns, dataProvider, rowsPerPage) {
+            @Serial
+            private static final long serialVersionUID = 1L;
 
-					@Override
-					protected void onAdd(AjaxRequestTarget target, T newRow)
-					{
-						dataProvider.add(newRow);
-						target.add(dataTable);
-						EditableGrid.this.onAdd(target, newRow);
-					}
+            @Override
+            protected Item<T> newRowItem(final String id, final int index, final IModel<T> model) {
+                return EditableGrid.this.newRowItem(id, index, model);
+            }
+        };
 
-					@Override
-					protected void onError(AjaxRequestTarget target)
-					{
-						super.onError(target);
-						EditableGrid.this.onError(target);
-					}
+        dataTable.addTopToolbar(new NavigationToolbar(dataTable));
+        dataTable.addTopToolbar(new HeadersToolbar<>(dataTable, dataProvider));
+        dataTable.addBottomToolbar(new NoRecordsToolbar(dataTable));
+        if (allowAdd()) {
+            dataTable.addBottomToolbar(newAddRowToolbar(dataTable, clazz));
+        }
 
-				};
-	}
+        return dataTable;
+    }
 
-	private EditableGridActionsColumn<T, S> newActionsColumn()
-	{
-		return new EditableGridActionsColumn<T, S>(new Model<String>("Actions"))
-		{
+    /**
+     * Factory method for Item container that represents a row in the underlying DataGridView.
+     *
+     * @param id    the component id for the new data item
+     * @param index the index of the new data item
+     * @param model the model for the new data item.
+     * @return the created DataItem
+     * @see org.apache.wicket.markup.repeater.Item
+     * @see org.wicketstuff.egrid.component.EditableDataTable.RowItem
+     */
+    protected Item<T> newRowItem(final String id, final int index, final IModel<T> model) {
+        return new RowItem<>(id, index, model, dataTable.getMarkupId());
+    }
 
-			private static final long serialVersionUID = 1L;
+    /**
+     * Factory method for {@link org.wicketstuff.egrid.toolbar.AddRowToolbar}.
+     *
+     * @param dataTable the data table this toolbar will be attached to
+     * @param clazz     the class of type T
+     * @return the new AddRowToolbar
+     */
+    protected AddRowToolbar<T> newAddRowToolbar(final EditableDataTable<T, S> dataTable, final Class<T> clazz) {
+        return new AddRowToolbar<>(dataTable, clazz) {
+            @Serial
+            private static final long serialVersionUID = 1L;
 
-			@Override
-			protected void onError(AjaxRequestTarget target, IModel<T> rowModel)
-			{
-				EditableGrid.this.onError(target);
-			}
+            @Override
+            protected void onAdd(final AjaxRequestTarget target, final IModel<T> rowModel) {
+                EditableGrid.this.onAdd(target, rowModel);
+            }
 
-			@Override
-			protected void onSave(AjaxRequestTarget target, IModel<T> rowModel)
-			{
-				EditableGrid.this.onSave(target, rowModel);
-			}
+            @Override
+            protected void onError(final AjaxRequestTarget target) {
+                super.onError(target);
+                EditableGrid.this.onError(target, null);
+            }
+        };
+    }
 
-			@Override
-			protected void onDelete(AjaxRequestTarget target, IModel<T> rowModel)
-			{
-				EditableGrid.this.onDelete(target, rowModel);
-			}
+    /**
+     * Listener method invoked when a new row gets added.
+     *
+     * @param target
+     * @param rowModel the data model of the row
+     */
+    protected void onAdd(final AjaxRequestTarget target, final IModel<T> rowModel) {
+        dataProvider.add(rowModel.getObject());
+        target.add(dataTable);
+    }
 
-			@Override
-			protected void onCancel(AjaxRequestTarget target)
-			{
-				EditableGrid.this.onCancel(target);
-			}
+    /**
+     * Listener method invoked when the edit button in a row gets clicked.
+     *
+     * @param target
+     * @param rowModel the data model of the row
+     */
+    protected void onEdit(final AjaxRequestTarget target, final IModel<T> rowModel) {
+        target.add(dataTable.getTopToolbars());
+    }
 
-			@Override
-			protected boolean allowDelete(Item<T> rowItem) {
-				return EditableGrid.this.allowDelete(rowItem);
-			}
-		};
-	}
+    /**
+     * Listener method invoked when the cancel button in a row gets clicked.
+     * The edited row items always get refreshed in {@link org.wicketstuff.egrid.component.EditableDataTable#onEvent}.
+     *
+     * @param target
+     * @param rowModel the data model of the row
+     */
+    protected void onCancel(final AjaxRequestTarget target, final IModel<T> rowModel) {
+        if (!dataTable.isCurrentlyAnyEdit()) {
+            target.add(dataTable);
+        }
+    }
 
-	protected boolean allowDelete(Item<T> rowItem) {
-		return true;
-	}
+    /**
+     * Listener method invoked when the save button in a row gets clicked and the user input is valid.
+     * The edited row items always get refreshed in {@link org.wicketstuff.egrid.component.EditableDataTable#onEvent}.
+     *
+     * @param target
+     * @param rowModel the data model of the row
+     */
+    protected void onSave(final AjaxRequestTarget target, final IModel<T> rowModel) {
+        dataProvider.update(rowModel.getObject());
+        if (!dataTable.isCurrentlyAnyEdit()) {
+            target.add(dataTable);
+        }
+    }
 
-	protected void onCancel(AjaxRequestTarget target)
-	{
+    /**
+     * Listener method invoked when the user input is invalid during a save attempt.
+     *
+     * @param target
+     * @param rowModel the data model of the row
+     */
+    protected void onError(final AjaxRequestTarget target, final IModel<T> rowModel) {
+    }
 
-	}
+    /**
+     * Listener method invoked when the delete button in a row gets clicked.
+     *
+     * @param target
+     * @param rowModel the data model of the row
+     */
+    protected void onDelete(final AjaxRequestTarget target, final IModel<T> rowModel) {
+        dataProvider.remove(rowModel.getObject());
+        target.add(dataTable);
+    }
 
+    /**
+     * Override this method in order to disable or enable adding in some other way.
+     *
+     * @return boolean value
+     */
+    protected boolean allowAdd() {
+        return true;
+    }
 
-	protected void onDelete(AjaxRequestTarget target, IModel<T> rowModel)
-	{
+    /**
+     * Override this method in order to disable or enable editing in some other way.
+     *
+     * @param rowItem current row
+     * @return boolean value
+     */
+    protected boolean allowEdit(final Item<T> rowItem) {
+        return true;
+    }
 
-	}
+    /**
+     * Override this method in order to disable or enable deleting in some other way.
+     *
+     * @param rowItem current row
+     * @return boolean value
+     */
+    protected boolean allowDelete(final Item<T> rowItem) {
+        return true;
+    }
 
-	protected void onSave(AjaxRequestTarget target, IModel<T> rowModel)
-	{
+    /**
+     * @return the editable data table
+     */
+    public EditableDataTable<T, S> getDataTable() {
+        return dataTable;
+    }
 
-	}
+    /**
+     * @return the data provider
+     */
+    public IEditableDataProvider<T, S> getDataProvider() {
+        return dataProvider;
+    }
 
-	protected void onError(AjaxRequestTarget target)
-	{
+    /**
+     * This form encapsulates all rows to allow the submission of edits.
+     * Validation is controlled by each row's EditableTableSubmitLink, not by the form,
+     * so multiple rows can be in edit simultaneously.
+     */
+    private class NonValidatingForm extends Form<T> {
+        @Serial
+        private static final long serialVersionUID = 1L;
 
-	}
+        public NonValidatingForm(final String id) {
+            super(id);
+            setOutputMarkupId(true);
+        }
 
-	protected void onAdd(AjaxRequestTarget target, T newRow)
-	{
-
-	}
-	
-	protected boolean displayAddFeature() {
-		return true;
-	}
+        @Override
+        public void process(final IFormSubmitter submittingComponent) {
+            delegateSubmit(submittingComponent);
+        }
+    }
 }

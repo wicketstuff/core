@@ -5,6 +5,7 @@ import java.util.Set;
 
 public interface Attribute {
 
-	Set<String> getAttributeKeys();
-	Set<Entry<String, String>> attributeEntries();
+    Set<String> getAttributeKeys();
+
+    Set<Entry<String, String>> attributeEntries();
 }

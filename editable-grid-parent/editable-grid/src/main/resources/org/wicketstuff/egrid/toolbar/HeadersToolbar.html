@@ -16,19 +16,9 @@
    limitations under the License.
 -->
 <wicket:panel xmlns:wicket="http://wicket.apache.org">
-    <caption wicket:id="caption"></caption>
-    <colgroup wicket:id="colGroup"></colgroup>
-    <thead wicket:id="topToolbars">
-    <wicket:container wicket:id="toolbars"></wicket:container>
-    </thead>
-    <tbody wicket:id="body">
-    <tr wicket:id="rows">
-        <td wicket:id="cells">
-            <div wicket:id="cell">[cell]</div>
-        </td>
+    <tr class="headers">
+        <wicket:container wicket:id="headers">
+            <th wicket:id="header"><span wicket:id="label">[header-label]</span></th>
+        </wicket:container>
     </tr>
-    </tbody>
-    <tfoot wicket:id="bottomToolbars">
-    <wicket:container wicket:id="toolbars"></wicket:container>
-    </tfoot>
 </wicket:panel>
