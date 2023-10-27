@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE web-app
-				PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
-				"http://java.sun.com/dtd/web-app_2_3.dtd">
-
-<web-app>
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
+		version="6.0">
 		<display-name>Wicket Examples</display-name>
 
 		<filter>
@@ -131,7 +130,7 @@
 						<param-value>org.wicketstuff.examples.gmap.zoomlimit.ZoomLimitGMapApplication</param-value>
 				</init-param>
 		</filter>
-		
+
 		<filter>
 				<filter-name>GGroundOverlayGMapApplication</filter-name>
 				<filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
@@ -185,7 +184,7 @@
 						<param-value>org.wicketstuff.examples.gmap.info.advanced.AdvancedInfoWindowGMapApplication</param-value>
 				</init-param>
 		</filter>
-		
+
 		<filter>
 				<filter-name>BoundsGMapApplication</filter-name>
 				<filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
@@ -194,7 +193,7 @@
 						<param-value>org.wicketstuff.examples.gmap.bounds.BoundsGMapApplication</param-value>
 				</init-param>
 		</filter>
-		
+
 		<filter>
 				<filter-name>ClusteringGMapApplication</filter-name>
 				<filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
@@ -274,7 +273,7 @@
 				<filter-name>ZoomLimitGMapApplication</filter-name>
 				<url-pattern>/zoomlimit/*</url-pattern>
 		</filter-mapping>
-		
+
 		<filter-mapping>
 				<filter-name>GGroundOverlayGMapApplication</filter-name>
 				<url-pattern>/overlay/*</url-pattern>
@@ -304,17 +303,17 @@
 				<filter-name>AdvancedInfoWindowGMapApplication</filter-name>
 				<url-pattern>/info/advanced/*</url-pattern>
 		</filter-mapping>
-		
+
 		<filter-mapping>
 				<filter-name>BoundsGMapApplication</filter-name>
 				<url-pattern>/bounds/*</url-pattern>
 		</filter-mapping>
-		
+
 		<filter-mapping>
 				<filter-name>ClusteringGMapApplication</filter-name>
 				<url-pattern>/clustering/*</url-pattern>
 		</filter-mapping>
-		
+
 
 		<welcome-file-list>
 				<welcome-file>index.html</welcome-file>
