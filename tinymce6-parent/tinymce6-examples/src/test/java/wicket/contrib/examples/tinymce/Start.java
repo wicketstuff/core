@@ -31,13 +31,15 @@ import org.eclipse.jetty.webapp.WebAppContext;
  * Separate startup class for people that want to run the examples directly. Use parameter
  * -Dcom.sun.management.jmxremote to startup JMX (and e.g. connect with jconsole).
  */
-public class Start {
+public class Start
+{
 	/**
 	 * Main function, starts the jetty server.
 	 *
 	 * @param args
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
 		System.setProperty("wicket.configuration", "development");
 
 		Server server = new Server();
@@ -69,10 +71,13 @@ public class Start {
 		server.addEventListener(mBeanContainer);
 		server.addBean(mBeanContainer);
 
-		try {
+		try
+		{
 			server.start();
 			server.join();
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			e.printStackTrace();
 			System.exit(100);
 		}

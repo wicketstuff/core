@@ -15,22 +15,27 @@ import org.apache.wicket.request.resource.PackageResourceReference;
  *
  * @author Pedro Santos, JavaLuigi
  */
-public class TinyMceRequestMapper extends AbstractMapper {
+public class TinyMceRequestMapper extends AbstractMapper
+{
 
 	private static final List<String> KNOWN_SEGMENTS = Arrays.asList("themes", "skins", "models",
-			"skins", "icons", "langs", "plugins", "utils", "tinymce.min.js");
+		"skins", "icons", "langs", "plugins", "utils", "tinymce.min.js");
 
 	@Override
-	public IRequestHandler mapRequest(Request request) {
+	public IRequestHandler mapRequest(Request request)
+	{
 		String url = request.getUrl().toString();
 		List<String> segments = request.getUrl().getSegments();
 
-		for (String prefix : KNOWN_SEGMENTS) {
-			if (segments.contains(prefix)) {
+		for (String prefix : KNOWN_SEGMENTS)
+		{
+			if (segments.contains(prefix))
+			{
 				String path = "tinymce/" + url.substring(url.indexOf(prefix));
-				if (TinyMceRequestMapper.class.getResource(path) != null) {
+				if (TinyMceRequestMapper.class.getResource(path) != null)
+				{
 					PackageResourceReference resourceReference = new PackageResourceReference(
-							TinyMceRequestMapper.class, path);
+						TinyMceRequestMapper.class, path);
 					return new ResourceReferenceRequestHandler(resourceReference, null);
 				}
 			}
@@ -39,12 +44,14 @@ public class TinyMceRequestMapper extends AbstractMapper {
 	}
 
 	@Override
-	public int getCompatibilityScore(Request request) {
+	public int getCompatibilityScore(Request request)
+	{
 		return Integer.MAX_VALUE;
 	}
 
 	@Override
-	public Url mapHandler(IRequestHandler requestHandler) {
+	public Url mapHandler(IRequestHandler requestHandler)
+	{
 		return null;
 	}
 }

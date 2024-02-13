@@ -8,25 +8,31 @@ import org.apache.wicket.markup.html.form.Form;
  *
  * @author Sander van Faassen
  */
-public abstract class TinyMceAjaxSubmitLink extends AjaxSubmitLink {
+public abstract class TinyMceAjaxSubmitLink extends AjaxSubmitLink
+{
 	/**
 	 *
 	 */
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * @param id   id
-	 * @param form form
+	 * @param id
+	 *            id
+	 * @param form
+	 *            form
 	 */
-	public TinyMceAjaxSubmitLink(String id, Form form) {
+	public TinyMceAjaxSubmitLink(String id, Form form)
+	{
 		super(id, form);
 		add(new TinyMceAjaxSubmitModifier());
 	}
 
 	/**
-	 * @param id id
+	 * @param id
+	 *            id
 	 */
-	public TinyMceAjaxSubmitLink(String id) {
+	public TinyMceAjaxSubmitLink(String id)
+	{
 		super(id);
 		add(new TinyMceAjaxSubmitModifier());
 	}

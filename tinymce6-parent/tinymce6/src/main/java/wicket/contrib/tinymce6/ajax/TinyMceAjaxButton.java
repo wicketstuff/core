@@ -8,7 +8,8 @@ import org.apache.wicket.markup.html.form.Form;
  *
  * @author Sander van Faassen
  */
-public abstract class TinyMceAjaxButton extends AjaxButton {
+public abstract class TinyMceAjaxButton extends AjaxButton
+{
 	/**
 	 *
 	 */
@@ -17,10 +18,13 @@ public abstract class TinyMceAjaxButton extends AjaxButton {
 	/**
 	 * Constructor
 	 *
-	 * @param id   id
-	 * @param form form
+	 * @param id
+	 *            id
+	 * @param form
+	 *            form
 	 */
-	public TinyMceAjaxButton(String id, Form form) {
+	public TinyMceAjaxButton(String id, Form form)
+	{
 		super(id, form);
 		add(new TinyMceAjaxSubmitModifier());
 	}
@@ -28,9 +32,11 @@ public abstract class TinyMceAjaxButton extends AjaxButton {
 	/**
 	 * Constructor
 	 *
-	 * @param id id
+	 * @param id
+	 *            id
 	 */
-	public TinyMceAjaxButton(String id) {
+	public TinyMceAjaxButton(String id)
+	{
 		super(id);
 		add(new TinyMceAjaxSubmitModifier());
 	}

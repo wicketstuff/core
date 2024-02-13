@@ -21,7 +21,8 @@ import java.io.Serializable;
 /**
  * Toolbar for Tinymce 6
  */
-public class Toolbar implements Serializable {
+public class Toolbar implements Serializable
+{
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -32,46 +33,55 @@ public class Toolbar implements Serializable {
 	private final String id;
 	private final StringBuilder builder = new StringBuilder();
 
-	public Toolbar(String id, String value) {
+	public Toolbar(String id, String value)
+	{
 		this(id);
 		builder.append(value);
 	}
 
-	public Toolbar(String id) {
+	public Toolbar(String id)
+	{
 		this.id = id;
 	}
 
-	public String getId() {
+	public String getId()
+	{
 		return id;
 	}
 
 	/**
 	 * Adds a button.
 	 *
-	 * @param buttonName Name of the button
+	 * @param buttonName
+	 *            Name of the button
 	 */
-	public void appendButton(String buttonName) {
+	public void appendButton(String buttonName)
+	{
 		builder.append(buttonName).append(' ');
 	}
 
 	/**
 	 * Adds a button.
 	 *
-	 * @param button button
+	 * @param button
+	 *            button
 	 */
-	public void appendButton(Button button) {
+	public void appendButton(Button button)
+	{
 		builder.append(button.name()).append(' ');
 	}
 
 	/**
 	 * Appends a {@link #SEPARATOR}
 	 */
-	public void appendSeparator() {
+	public void appendSeparator()
+	{
 		appendButton(SEPARATOR);
 	}
 
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		return builder.toString();
 	}
 }

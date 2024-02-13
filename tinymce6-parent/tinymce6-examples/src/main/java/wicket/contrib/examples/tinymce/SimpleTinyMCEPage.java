@@ -2,15 +2,18 @@ package wicket.contrib.examples.tinymce;
 
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.model.Model;
+
 import wicket.contrib.tinymce6.TinyMceBehavior;
 
 /**
  * @author Iulian-Corneliu COSTAN
  */
-public class SimpleTinyMCEPage extends TinyMCEBasePage {
+public class SimpleTinyMCEPage extends TinyMCEBasePage
+{
 	private static final long serialVersionUID = 1L;
 
-	public SimpleTinyMCEPage() {
+	public SimpleTinyMCEPage()
+	{
 		TextArea textArea = new TextArea("ta", new Model(TEXT));
 		textArea.add(new TinyMceBehavior());
 		add(textArea);

@@ -9,12 +9,12 @@ import org.apache.wicket.model.Model;
  * Solution found at: http://dwairi.blogspot.com/2006/12/tinymce-ajax.html <BR>
  * For more details see:
  * <a href="https://www.tiny.cloud/docs/tinymce/latest/apis/tinymce.root/#triggerSave">triggerSave
- * Documentation</a>
- * <BR>
+ * Documentation</a> <BR>
  *
  * @author Sander van Faassen
  */
-public class TinyMceAjaxSubmitModifier extends AttributeModifier {
+public class TinyMceAjaxSubmitModifier extends AttributeModifier
+{
 	/**
 	 * serialVersionUID
 	 */
@@ -28,7 +28,8 @@ public class TinyMceAjaxSubmitModifier extends AttributeModifier {
 	/**
 	 * Constructor
 	 */
-	public TinyMceAjaxSubmitModifier() {
+	public TinyMceAjaxSubmitModifier()
+	{
 		super("onclick", Model.of(SAVE_TRIGGER));
 	}
 
@@ -36,11 +37,13 @@ public class TinyMceAjaxSubmitModifier extends AttributeModifier {
 	 * @see org.apache.wicket.AttributeModifier#newValue(java.lang.String, java.lang.String)
 	 */
 	@Override
-	protected String newValue(final String currentValue, final String replacementValue) {
+	protected String newValue(final String currentValue, final String replacementValue)
+	{
 		// Call the trigger, before submitting the form
 		String result = replacementValue;
 
-		if (currentValue != null) {
+		if (currentValue != null)
+		{
 			result = result + currentValue;
 		}
 		return result;

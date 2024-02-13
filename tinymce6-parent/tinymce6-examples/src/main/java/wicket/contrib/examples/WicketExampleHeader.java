@@ -21,6 +21,7 @@ package wicket.contrib.examples;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.panel.Panel;
+
 import wicket.contrib.examples.tinymce.TinyMCEBasePage;
 
 /**
@@ -28,16 +29,20 @@ import wicket.contrib.examples.tinymce.TinyMCEBasePage;
  *
  * @author Eelco Hillenius
  */
-public final class WicketExampleHeader extends Panel {
+public final class WicketExampleHeader extends Panel
+{
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Construct.
 	 *
-	 * @param id           id of the component
-	 * @param exampleTitle title of the example
+	 * @param id
+	 *            id of the component
+	 * @param exampleTitle
+	 *            title of the example
 	 */
-	public WicketExampleHeader(String id, String exampleTitle) {
+	public WicketExampleHeader(String id, String exampleTitle)
+	{
 		super(id);
 		add(new Label("exampleTitle", exampleTitle));
 		add(new BookmarkablePageLink("homelink", TinyMCEBasePage.class));

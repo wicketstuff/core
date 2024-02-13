@@ -45,12 +45,13 @@ import wicket.contrib.tinymce6.TinyMceBehavior;
  * @author Frank Bille Jensen (fbille@avaleo.net)
  * @see Button
  */
-public class TinyMCESettings implements Serializable {
+public class TinyMCESettings implements Serializable
+{
 	private static final Logger LOG = LoggerFactory.getLogger(TinyMCESettings.class);
 	private static final String NEWLINE_TAB = "\n\t";
 
 	public static final ResourceReference TINYMCE_JS_REF_MIN = new JavaScriptResourceReference(
-			TinyMceBehavior.class, "tinymce/tinymce.min.js");
+		TinyMceBehavior.class, "tinymce/tinymce.min.js");
 
 	private final Language language;
 	private boolean resizing = false;
@@ -73,44 +74,53 @@ public class TinyMCESettings implements Serializable {
 	private final List<String> customSettings;
 	private final Map<String, Toolbar> toolbars;
 
-	public TinyMCESettings() {
+	public TinyMCESettings()
+	{
 		this(selectLang());
 	}
 
-	public TinyMCESettings(Language lang) {
+	public TinyMCESettings(Language lang)
+	{
 		this.language = lang;
 		this.plugins = new ArrayList<>();
 		this.customSettings = new ArrayList<>();
 		this.toolbars = new HashMap<>();
 	}
 
-	private static Language selectLang() {
+	private static Language selectLang()
+	{
 		return Language.fromLocale(Session.get().getLocale());
 	}
 
-	public Language getLanguage() {
+	public Language getLanguage()
+	{
 		return language;
 	}
 
-	public String getDocumentBaseUrl() {
+	public String getDocumentBaseUrl()
+	{
 		return documentBaseUrl;
 	}
 
-	public TinyMCESettings setDocumentBaseUrl(String documentBaseUrl) {
+	public TinyMCESettings setDocumentBaseUrl(String documentBaseUrl)
+	{
 		this.documentBaseUrl = documentBaseUrl;
 		return this;
 	}
 
-	public TinyMCESettings addCustomSetting(String customSetting) {
+	public TinyMCESettings addCustomSetting(String customSetting)
+	{
 		customSettings.add(customSetting);
 		return this;
 	}
 
-	public String[] getCustomSettings() {
+	public String[] getCustomSettings()
+	{
 		return customSettings.toArray(new String[customSettings.size()]);
 	}
 
-	public String getContentCss() {
+	public String getContentCss()
+	{
 		return contentCss;
 	}
 
@@ -120,35 +130,42 @@ public class TinyMCESettings implements Serializable {
 	 * @param contentCss
 	 * @return
 	 */
-	public TinyMCESettings setContentCss(String contentCss) {
+	public TinyMCESettings setContentCss(String contentCss)
+	{
 		this.contentCss = contentCss;
 		return this;
 	}
 
-	public String getBlockFormats() {
+	public String getBlockFormats()
+	{
 		return blockFormats;
 	}
 
-	public TinyMCESettings setBlockFormats(String blockFormats) {
+	public TinyMCESettings setBlockFormats(String blockFormats)
+	{
 		this.blockFormats = blockFormats;
 		return this;
 	}
 
-	public TinyMCESettings setReadOnly(boolean readOnly) {
+	public TinyMCESettings setReadOnly(boolean readOnly)
+	{
 		this.readOnly = readOnly;
 		return this;
 	}
 
-	public boolean isReadOnly() {
+	public boolean isReadOnly()
+	{
 		return readOnly;
 	}
 
-	public TinyMCESettings setResizing(Boolean resizing) {
+	public TinyMCESettings setResizing(Boolean resizing)
+	{
 		this.resizing = resizing;
 		return this;
 	}
 
-	public Boolean getResizing() {
+	public Boolean getResizing()
+	{
 		return resizing;
 	}
 
@@ -162,12 +179,14 @@ public class TinyMCESettings implements Serializable {
 	 *
 	 * @param convertUrls
 	 */
-	public TinyMCESettings setConvertUrls(boolean convertUrls) {
+	public TinyMCESettings setConvertUrls(boolean convertUrls)
+	{
 		this.convertUrls = convertUrls;
 		return this;
 	}
 
-	public Boolean getConvertUrls() {
+	public Boolean getConvertUrls()
+	{
 		return convertUrls;
 	}
 
@@ -181,12 +200,14 @@ public class TinyMCESettings implements Serializable {
 	 *
 	 * @param removeScriptHost
 	 */
-	public TinyMCESettings setRemoveScriptHost(Boolean removeScriptHost) {
+	public TinyMCESettings setRemoveScriptHost(Boolean removeScriptHost)
+	{
 		this.removeScriptHost = removeScriptHost;
 		return this;
 	}
 
-	public Boolean getRemoveScriptHost() {
+	public Boolean getRemoveScriptHost()
+	{
 		return removeScriptHost;
 	}
 
@@ -197,22 +218,26 @@ public class TinyMCESettings implements Serializable {
 	 *
 	 * @param relativeUrls
 	 */
-	public TinyMCESettings setRelativeUrls(Boolean relativeUrls) {
+	public TinyMCESettings setRelativeUrls(Boolean relativeUrls)
+	{
 		this.relativeUrls = relativeUrls;
 		return this;
 	}
 
-	public Boolean getRelativeUrls() {
+	public Boolean getRelativeUrls()
+	{
 		return relativeUrls;
 	}
 
 	/**
 	 * Set Browser-Spellcheck to true or false (default).
 	 *
-	 * @param browserSpellcheck true or false
+	 * @param browserSpellcheck
+	 *            true or false
 	 * @return this
 	 */
-	public TinyMCESettings setBrowserSpellcheck(boolean browserSpellcheck) {
+	public TinyMCESettings setBrowserSpellcheck(boolean browserSpellcheck)
+	{
 		this.browserSpellcheck = browserSpellcheck;
 
 		return this;
@@ -221,7 +246,8 @@ public class TinyMCESettings implements Serializable {
 	/**
 	 * Generates the initialisation script. Internal API, do not call.
 	 */
-	public final String toJavaScript(Collection<Component> components) {
+	public final String toJavaScript(Collection<Component> components)
+	{
 		final var builder = new StringBuilder();
 		addElements(components, builder);
 
@@ -241,48 +267,64 @@ public class TinyMCESettings implements Serializable {
 		return builder.toString();
 	}
 
-	public String toJavaScript() {
+	public String toJavaScript()
+	{
 		final var builder = new StringBuilder();
 
-		if (convertUrls != null) {
+		if (convertUrls != null)
+		{
 			appendSingleConfigElement(builder, "convert_urls", Boolean.toString(convertUrls));
 		}
 
-		if (relativeUrls != null) {
+		if (relativeUrls != null)
+		{
 			appendSingleConfigElement(builder, "relative_urls", Boolean.toString(relativeUrls));
 		}
 
-		if (removeScriptHost != null) {
+		if (removeScriptHost != null)
+		{
 			appendSingleConfigElement(builder, "remove_script_host",
-					Boolean.toString(removeScriptHost));
+				Boolean.toString(removeScriptHost));
 		}
 
-		if (Boolean.TRUE.equals(readOnly)) {
+		if (Boolean.TRUE.equals(readOnly))
+		{
 			appendSingleConfigElement(builder, "readonly", "true");
 		}
 
-		if (contentCss != null) {
+		if (contentCss != null)
+		{
 			appendSingleConfigElement(builder, "content_css", contentCss, true);
 		}
 
-		if (documentBaseUrl != null) {
+		if (documentBaseUrl != null)
+		{
 			appendSingleConfigElement(builder, "document_base_url", documentBaseUrl, true);
 		}
 
-		if (Boolean.FALSE.equals(menuBar)) {
+		if (Boolean.FALSE.equals(menuBar))
+		{
 			appendSingleConfigElement(builder, "menubar", "false");
 		}
 
-		if (Boolean.FALSE.equals(statusBar)) {
+		if (Boolean.FALSE.equals(statusBar))
+		{
 			appendSingleConfigElement(builder, "statusbar", "false");
 		}
 
-		if (Boolean.TRUE.equals(inLine)) {
+		if (Boolean.TRUE.equals(inLine))
+		{
 			appendSingleConfigElement(builder, "inline", "true");
 		}
 
-		if (Boolean.TRUE.equals(browserSpellcheck)) {
+		if (Boolean.TRUE.equals(browserSpellcheck))
+		{
 			appendSingleConfigElement(builder, "browser_spellcheck", "true");
+		}
+
+		if (Boolean.FALSE == typeaheadUrls)
+		{
+			appendSingleConfigElement(builder, "typeahead_urls", "true");
 		}
 
 		appendPluginsSettings(builder);
@@ -292,8 +334,10 @@ public class TinyMCESettings implements Serializable {
 		return builder.toString();
 	}
 
-	private void appendPluginsSettings(StringBuilder buffer) {
-		if (plugins.isEmpty()) {
+	private void appendPluginsSettings(StringBuilder buffer)
+	{
+		if (plugins.isEmpty())
+		{
 			return;
 		}
 
@@ -302,25 +346,33 @@ public class TinyMCESettings implements Serializable {
 		buffer.append("]");
 	}
 
-	private void appendToolbarsSettings(StringBuilder buffer) {
-		for (Toolbar toolbar : toolbars.values()) {
+	private void appendToolbarsSettings(StringBuilder buffer)
+	{
+		for (Toolbar toolbar : toolbars.values())
+		{
 			appendSingleConfigElement(buffer, toolbar.getId(), toolbar.toString(), true);
 		}
 	}
 
-	private void appendCustomSettings(StringBuilder buffer) {
-		for (String line : customSettings) {
+	private void appendCustomSettings(StringBuilder buffer)
+	{
+		for (String line : customSettings)
+		{
 			buffer.append("," + NEWLINE_TAB).append(line);
 		}
 	}
 
-	private void addElements(Collection<Component> components, StringBuilder buffer) {
-		if (!components.isEmpty()) {
+	private void addElements(Collection<Component> components, StringBuilder buffer)
+	{
+		if (!components.isEmpty())
+		{
 			buffer.append(NEWLINE_TAB + "selector : \"");
 			buffer.append(components.stream().map(c -> '#' + c.getMarkupId())
-					.collect(Collectors.joining(", ")));
+				.collect(Collectors.joining(", ")));
 			buffer.append("\"");
-		} else {
+		}
+		else
+		{
 			LOG.warn("tinymce is set to \"exact\" mode but there are no components attached");
 		}
 	}
@@ -328,10 +380,12 @@ public class TinyMCESettings implements Serializable {
 	/**
 	 * Add {@link TinyMCE6Plugin}s
 	 *
-	 * @param plugin Varargs of {@link TinyMCE6Plugin} to add to the settings.
+	 * @param plugin
+	 *            Varargs of {@link TinyMCE6Plugin} to add to the settings.
 	 * @return this
 	 */
-	public TinyMCESettings addPlugins(TinyMCE6Plugin... plugin) {
+	public TinyMCESettings addPlugins(TinyMCE6Plugin... plugin)
+	{
 		plugins.addAll(Arrays.asList(plugin));
 
 		return this;
@@ -341,10 +395,12 @@ public class TinyMCESettings implements Serializable {
 	 * Add a Toolbar to the settings. If the ID of the Toolbar is already in the settings. The
 	 * toolbar gets overwritten
 	 *
-	 * @param toolbar Toolbar.
+	 * @param toolbar
+	 *            Toolbar.
 	 * @return this
 	 */
-	public TinyMCESettings addToolbar(Toolbar toolbar) {
+	public TinyMCESettings addToolbar(Toolbar toolbar)
+	{
 		toolbars.put(toolbar.getId(), toolbar);
 		return this;
 	}
@@ -352,7 +408,8 @@ public class TinyMCESettings implements Serializable {
 	/**
 	 * Language enum
 	 */
-	public enum Language {
+	public enum Language
+	{
 		ar, ar_SA, az, be, bg_BG, bn_BD, bs, ca, cs, cs_CZ, cy, da, de, de_AT, dv, el, en_CA,
 		/**
 		 * default, no js needed
@@ -361,7 +418,8 @@ public class TinyMCESettings implements Serializable {
 
 		private static final Map<String, Language> unmappedLocales = new HashMap<>();
 
-		static {
+		static
+		{
 			unmappedLocales.put("bg", Language.bg_BG);
 			unmappedLocales.put("en", Language.en_GB);
 			unmappedLocales.put("fr", Language.fr_FR);
@@ -379,32 +437,41 @@ public class TinyMCESettings implements Serializable {
 			unmappedLocales.put("zh", Language.zh_CN);
 		}
 
-		public static Language fromLocale(final Locale locale) {
+		public static Language fromLocale(final Locale locale)
+		{
 			Language language = fromString(locale.getLanguage() + "_" + locale.getCountry());
-			if (language != null) {
+			if (language != null)
+			{
 				return language;
 			}
 			language = fromString(locale.getLanguage());
-			if (language != null) {
+			if (language != null)
+			{
 				return language;
 			}
 			language = fromString(locale.getISO3Language());
-			if (language != null) {
+			if (language != null)
+			{
 				return language;
 			}
 			return unmappedLocales.get(locale.getLanguage());
 		}
 
-		private static Language fromString(final String string) {
-			try {
+		private static Language fromString(final String string)
+		{
+			try
+			{
 				return Language.valueOf(string);
-			} catch (IllegalArgumentException e) {
+			}
+			catch (IllegalArgumentException e)
+			{
 				return null;
 			}
 		}
 	}
 
-	public Boolean getMenuBar() {
+	public Boolean getMenuBar()
+	{
 		return menuBar;
 	}
 
@@ -414,7 +481,8 @@ public class TinyMCESettings implements Serializable {
 	 * @param menuBar
 	 * @return this
 	 */
-	public TinyMCESettings setMenuBar(boolean menuBar) {
+	public TinyMCESettings setMenuBar(boolean menuBar)
+	{
 		this.menuBar = menuBar;
 		return this;
 	}
@@ -425,7 +493,8 @@ public class TinyMCESettings implements Serializable {
 	 * @param statusBar
 	 * @return this
 	 */
-	public TinyMCESettings setStatusBar(boolean statusBar) {
+	public TinyMCESettings setStatusBar(boolean statusBar)
+	{
 		this.statusBar = statusBar;
 		return this;
 	}
@@ -436,7 +505,8 @@ public class TinyMCESettings implements Serializable {
 	 * @param typeaheadUrls
 	 * @return this
 	 */
-	public TinyMCESettings setTypeaheadUrls(boolean typeaheadUrls) {
+	public TinyMCESettings setTypeaheadUrls(boolean typeaheadUrls)
+	{
 		this.typeaheadUrls = typeaheadUrls;
 		return this;
 	}
@@ -444,35 +514,46 @@ public class TinyMCESettings implements Serializable {
 	/**
 	 * Appends a config to the buffer
 	 *
-	 * @param builder {@link StringBuilder}
-	 * @param name    name of the setting
-	 * @param value   value of the setting
+	 * @param builder
+	 *            {@link StringBuilder}
+	 * @param name
+	 *            name of the setting
+	 * @param value
+	 *            value of the setting
 	 */
-	public static void appendSingleConfigElement(StringBuilder builder, String name, String value) {
+	public static void appendSingleConfigElement(StringBuilder builder, String name, String value)
+	{
 		appendSingleConfigElement(builder, name, value, false);
 	}
 
 	/**
 	 * Appends a config to the buffer. Wraps the value in quotes of wrapValueWithQuotes is true.
 	 *
-	 * @param buffer              {@link StringBuilder}
-	 * @param name                name of the setting
-	 * @param value               value of the setting
-	 * @param wrapValueWithQuotes if the value should be wrapped in quotes
+	 * @param buffer
+	 *            {@link StringBuilder}
+	 * @param name
+	 *            name of the setting
+	 * @param value
+	 *            value of the setting
+	 * @param wrapValueWithQuotes
+	 *            if the value should be wrapped in quotes
 	 */
 	public static void appendSingleConfigElement(StringBuilder buffer, String name, String value,
-												 boolean wrapValueWithQuotes) {
+		boolean wrapValueWithQuotes)
+	{
 		String quotes = wrapValueWithQuotes ? "\"" : "";
 
 		buffer.append("," + NEWLINE_TAB).append(name).append(" : ").append(quotes).append(value)
-				.append(quotes);
+			.append(quotes);
 	}
 
-	public Boolean getInLine() {
+	public Boolean getInLine()
+	{
 		return inLine;
 	}
 
-	public TinyMCESettings setInLine(Boolean inLine) {
+	public TinyMCESettings setInLine(Boolean inLine)
+	{
 		this.inLine = inLine;
 		return this;
 	}

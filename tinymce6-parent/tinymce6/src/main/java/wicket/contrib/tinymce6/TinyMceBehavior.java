@@ -20,6 +20,7 @@ package wicket.contrib.tinymce6;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.stream.Collectors;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
@@ -35,25 +36,33 @@ import wicket.contrib.tinymce6.settings.TinyMCESettings;
 /**
  * Renders a component (textarea) as WYSIWYG editor, using TinyMce.
  */
-public class TinyMceBehavior extends Behavior {
+public class TinyMceBehavior extends Behavior
+{
 	private static final long serialVersionUID = 3L;
 
 	private Component component;
 	private final TinyMCESettings settings;
 	private boolean rendered = false;
 
-	public TinyMceBehavior() {
+	public TinyMceBehavior()
+	{
 		this(new TinyMCESettings());
 	}
 
-	public TinyMceBehavior(TinyMCESettings settings) {
+	public TinyMceBehavior(TinyMCESettings settings)
+	{
 		this.settings = settings;
 	}
 
 	@Override
-	public void renderHead(Component component, IHeaderResponse response) {
+	public void renderHead(Component component, IHeaderResponse response)
+	{
+		// FIXME Problem when a previously rendered Tinymce textarea is made invisibale again, there
+		// is no way to destroy the tinymce instance.
+
 		super.renderHead(component, response);
-		if (component == null) {
+		if (component == null)
+		{
 			throw new IllegalStateException("TinyMceBehavior is not bound to a component");
 		}
 
@@ -68,51 +77,65 @@ public class TinyMceBehavior extends Behavior {
 	 * Wrap the initialization script for TinyMCE into a HeaderItem. In this way we can control when
 	 * and how the script should be executed.
 	 *
-	 * @param settingScript the actual initialization script for TinyMCE
-	 * @param component     the target component that must be decorated with TinyMCE
+	 * @param settingScript
+	 *            the actual initialization script for TinyMCE
+	 * @param component
+	 *            the target component that must be decorated with TinyMCE
 	 * @return the HeaderItem containing {@paramref settingScript}
 	 */
-	protected HeaderItem wrapTinyMceSettingsScript(String settingScript, Component component) {
+	protected HeaderItem wrapTinyMceSettingsScript(String settingScript, Component component)
+	{
 		return OnDomReadyHeaderItem.forScript(settingScript);
 	}
 
-	protected String getAddTinyMceSettingsScript(Collection<Component> components) {
+	protected String getAddTinyMceSettingsScript(Collection<Component> components)
+	{
 		final var script = new StringBuilder();
 		// If this behavior is run a second time, it means we're redrawing this
 		// component via an ajax call. The tinyMCE javascript does not handle
 		// this scenario, so we must remove the old editor before initializing
 		// it again.
-		if (rendered) {
-			for (Component c : components) {
+		if (rendered)
+		{
+			for (Component c : components)
+			{
 				String tryToRemoveJS = "try {let editor = tinymce.get('%s'); if (editor) { editor.destroy(); }} catch (e) { console.debug(e); }\n;";
 				script.append(String.format(tryToRemoveJS, c.getMarkupId()));
 			}
 		}
 
-		script.append(";tinyMCE.init({").append(settings.toJavaScript(components)).append(" });\n");
+		script
+			.append(";tinyMCE.init({").append(settings.toJavaScript(components.stream()
+				.filter(c -> c.isVisibleInHierarchy()).collect(Collectors.toList())))
+			.append(" });\n");
 		rendered = true;
 
 		return script.toString();
 	}
 
 	@Override
-	public void bind(Component component) {
-		if (this.component != null) {
+	public void bind(Component component)
+	{
+		if (this.component != null)
+		{
 			throw new IllegalStateException(
-					"TinyMceBehavior can not bind to more than one component");
+				"TinyMceBehavior can not bind to more than one component");
 		}
 		super.bind(component);
-		if (isMarkupIdRequired()) {
+		if (isMarkupIdRequired())
+		{
 			component.setOutputMarkupId(true);
 		}
 		this.component = component;
 	}
 
-	protected boolean isMarkupIdRequired() {
+	protected boolean isMarkupIdRequired()
+	{
 		return true;
 	}
 
-	protected Component getComponent() {
+	protected Component getComponent()
+	{
 		return component;
 	}
 
@@ -128,7 +151,8 @@ public class TinyMceBehavior extends Behavior {
 	 *
 	 * @return Tinymce JS Resource Reference
 	 */
-	protected ResourceReference getTinyMCEReference() {
+	protected ResourceReference getTinyMCEReference()
+	{
 		return TinyMCESettings.TINYMCE_JS_REF_MIN;
 	}
 }
