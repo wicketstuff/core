@@ -28,8 +28,13 @@
 		Adds support for WYSIWYG editing (using TinyMce6) to Wicket
 	</description>
 
-
 	<dependencies>
+		<dependency>
+			<groupId>org.webjars.npm</groupId>
+			<artifactId>tinymce</artifactId>
+			<version>6.8.2</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket-extensions</artifactId>
