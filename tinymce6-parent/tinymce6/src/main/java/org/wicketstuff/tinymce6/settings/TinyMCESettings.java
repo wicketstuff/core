@@ -326,9 +326,9 @@ public class TinyMCESettings implements Serializable
 			appendSingleConfigElement(builder, "browser_spellcheck", "true");
 		}
 
-		if (Boolean.FALSE == typeaheadUrls)
+		if (!typeaheadUrls)
 		{
-			appendSingleConfigElement(builder, "typeahead_urls", "true");
+			appendSingleConfigElement(builder, "typeahead_urls", "false");
 		}
 
 		appendPluginsSettings(builder);

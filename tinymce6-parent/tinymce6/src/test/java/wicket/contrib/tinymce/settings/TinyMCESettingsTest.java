@@ -28,7 +28,12 @@ public class TinyMCESettingsTest {
 	public void testCustomSettings() {
 		settings.addCustomSetting("setting_1: false");
 		settings.addCustomSetting("setting : \"help,blah\"");
-		assertEquals(",\n\tsetting_1: false,\n\tsetting : \"help,blah\"", settings.toJavaScript());
+		assertEquals(",\n" +
+				"\tpromotion : false,\n" +
+				"\tstatusbar : false,\n" +
+				"\ttypeahead_urls : false,\n" +
+				"\tsetting_1: false,\n" +
+				"\tsetting : \"help,blah\"", settings.toJavaScript());
 	}
 
 }
