@@ -311,7 +311,7 @@
 		<bcprov.version>1.70</bcprov.version>
 		<joda-time.version>2.12.5</joda-time.version>
 		<ehcache.version>3.10.8</ehcache.version>
-		<commons-dbcp2.version>2.9.0</commons-dbcp2.version>
+		<commons-dbcp2.version>2.11.0</commons-dbcp2.version>
 		<jakartaee-api.version>10.0.0</jakartaee-api.version>
 		<clojure.version>1.11.1</clojure.version>
 		<groovy.version>4.0.7</groovy.version>
