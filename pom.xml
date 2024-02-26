@@ -339,7 +339,7 @@
 		<maven-war-plugin.version>3.3.2</maven-war-plugin.version>
 		<maven-release-plugin.version>3.0.0</maven-release-plugin.version>
 		<maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
-		<maven-pmd-plugin.version>3.20.0</maven-pmd-plugin.version>
+		<maven-pmd-plugin.version>3.21.2</maven-pmd-plugin.version>
 	</properties>
 
 	<prerequisites>
