@@ -16,7 +16,7 @@
 		<dependency>
 			<groupId>org.apache.servicemix.bundles</groupId>
 			<artifactId>org.apache.servicemix.bundles.cglib</artifactId>
-			<version>2.2_2</version>
+			<version>3.3.0_1</version>
 		</dependency>
 	</dependencies>
 	<description>An OSGi-friendly version of the wicket-ioc module that does not use dynamic imports.</description>
