@@ -9,7 +9,7 @@
 		<version>10.0.0-M3-SNAPSHOT</version>
 	</parent>
 	<properties>
-		<bootstrap.version>4.4.1-1</bootstrap.version>
+		<bootstrap.version>5.3.3</bootstrap.version>
 	</properties>
 
 	<artifactId>datatables-parent</artifactId>
