@@ -287,7 +287,7 @@
 		<guava.version>32.1.1-jre</guava.version>
 		<wicket-webjars.version>4.0.1</wicket-webjars.version>
 		<jquery-selectors.version>4.0.2</jquery-selectors.version>
-		<commons-io.version>2.13.0</commons-io.version>
+		<commons-io.version>2.15.1</commons-io.version>
 		<xstream.version>1.4.20</xstream.version>
 		<hamcrest.version>2.2</hamcrest.version>
 		<commons-logging.version>1.2</commons-logging.version>
