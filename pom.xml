@@ -932,7 +932,7 @@
 			<dependency>
 				<groupId>com.google.protobuf</groupId>
 				<artifactId>protobuf-java</artifactId>
-				<version>3.19.6</version>
+				<version>3.25.3</version>
 			</dependency>
 			<dependency>
 				<groupId>org.hsqldb</groupId>
