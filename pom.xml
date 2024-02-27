@@ -290,7 +290,7 @@
 		<commons-io.version>2.13.0</commons-io.version>
 		<xstream.version>1.4.20</xstream.version>
 		<hamcrest.version>2.2</hamcrest.version>
-		<commons-logging.version>1.2</commons-logging.version>
+		<commons-logging.version>1.3.0</commons-logging.version>
 		<jakarta.servlet-api.version>6.0.0</jakarta.servlet-api.version>
 		<junit.version>5.9.3</junit.version>
 		<easymock.version>5.1.0</easymock.version>
