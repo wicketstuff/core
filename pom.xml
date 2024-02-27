@@ -223,10 +223,10 @@
 		<deployment.disabled>false</deployment.disabled>
 		<sources.disabled>false</sources.disabled>
 
-		<hibernate.version>6.3.1.Final</hibernate.version>
+		<hibernate.version>6.4.4.Final</hibernate.version>
 		<hibernate-ehcache.version>6.0.0.Alpha7</hibernate-ehcache.version>
 		<hibernate-validator.version>8.0.1.Final</hibernate-validator.version>
-		<javassist.version>3.29.2-GA</javassist.version>
+		<javassist.version>3.30.2-GA</javassist.version>
 		<jetty.version>9.4.54.v20240208</jetty.version>
 		<sf-jung.version>2.1.1</sf-jung.version>
 		<shiro.version>1.13.0</shiro.version>
@@ -265,7 +265,7 @@
 		<wicket-bootstrap4-core.version>5.0.4</wicket-bootstrap4-core.version>
 		<jasperreports.version>6.21.2</jasperreports.version>
 		<bcprov.version>1.77</bcprov.version>
-		<joda-time.version>2.12.5</joda-time.version>
+		<joda-time.version>2.12.7</joda-time.version>
 		<ehcache.version>3.10.8</ehcache.version>
 		<javaee-api.version>7.0</javaee-api.version>
 		<clojure.version>1.11.1</clojure.version>
