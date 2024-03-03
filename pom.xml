@@ -292,7 +292,7 @@
 		<jakarta.servlet-api.version>6.0.0</jakarta.servlet-api.version>
 		<junit.version>5.10.2</junit.version>
 		<easymock.version>5.2.0</easymock.version>
-		<mockito.version>5.10.0</mockito.version>
+		<mockito.version>5.11.0</mockito.version>
 		<commons-io.version>2.15.1</commons-io.version>
 		<commons-beanutils.version>1.9.4</commons-beanutils.version>
 		<commons-collections4.version>4.4</commons-collections4.version>
