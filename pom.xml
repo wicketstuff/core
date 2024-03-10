@@ -282,7 +282,7 @@
 		<cglib.version>3.3.0</cglib.version>
 		<objenesis.version>3.3</objenesis.version>
 		<scala.version>2.13.13</scala.version>
-		<jackson.version>2.14.3</jackson.version>
+		<jackson.version>2.16.2</jackson.version>
 		<poi.version>5.2.5</poi.version>
 		<guava.version>33.0.0-jre</guava.version>
 		<wicket-webjars.version>4.0.1</wicket-webjars.version>
