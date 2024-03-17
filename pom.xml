@@ -307,7 +307,7 @@
 		<ibatis2-sqlmap.version>2.1.7.597</ibatis2-sqlmap.version>
 		<jts.version>1.13</jts.version>
 		<gson.version>2.10.1</gson.version>
-		<wicket-bootstrap-core.version>7.0.1</wicket-bootstrap-core.version>
+		<wicket-bootstrap-core.version>7.0.3</wicket-bootstrap-core.version>
 		<jasperreports.version>6.21.2</jasperreports.version>
 		<bcprov.version>1.70</bcprov.version>
 		<joda-time.version>2.12.7</joda-time.version>
