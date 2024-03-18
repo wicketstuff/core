@@ -50,9 +50,9 @@ public class TinyMCESettings implements Serializable
 	private static final String NEWLINE_TAB = "\n\t";
 
 	public static final ResourceReference TINYMCE_JS_REF = new JavaScriptResourceReference(
-		TinyMceBehavior.class, "../../../webjars/tinymce/6.8.2/tinymce.js");
+		TinyMceBehavior.class, "../../../webjars/tinymce/6.8.3/tinymce.js");
 	public static final ResourceReference TINYMCE_JS_REF_MIN = new JavaScriptResourceReference(
-		TinyMceBehavior.class, "../../../webjars/tinymce/6.8.2/tinymce.min.js");
+		TinyMceBehavior.class, "../../../webjars/tinymce/6.8.3/tinymce.min.js");
 
 	private final Language language;
 	private boolean resizing = false;
