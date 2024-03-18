@@ -1,7 +1,7 @@
 /**
  * Copyright (C)
- * 	2008 Jeremy Thomerson <jeremy@thomersonfamily.com>
- * 	2012 Michael Mosmann <michael@mosmann.de>
+ * 	2008 Jeremy Thomerson jeremy@thomersonfamily.com
+ * 	2012 Michael Mosmann michael@mosmann.de
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -36,13 +36,13 @@ public class SamplePanel extends Panel
 	public SamplePanel(String id)
 	{
 		super(id);
-		
+
 		WebMarkupContainer container = new WebMarkupContainer("container");
 		container.add(new EmptyPanel("empty"));
-		
+
 		List<Integer> list=new ArrayList<Integer>();
 		list.addAll(Arrays.asList(1,2,3,4,5,6));
-		
+
 		container.add(new ListView<Integer>("list",list) {
 			@Override
 			protected void populateItem(ListItem<Integer> item)
@@ -50,7 +50,7 @@ public class SamplePanel extends Panel
 				item.add(new Label("label",item.getModel()));
 			}
 		});
-		
+
 		add(container);
 	}
 

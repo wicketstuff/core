@@ -18,21 +18,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.pageserializer.kryo2.components;
+module org.wicketstuff.serializer.fast2 {
+	requires org.apache.wicket.core;
+	requires org.wicketstuff.serializer.common;
+	requires fst;
 
-import org.apache.wicket.markup.html.panel.Panel;
-
-public class NotSerializablePanel extends Panel
-{
-	private final IsNotSerializableObject aField = new IsNotSerializableObject();
-
-	public NotSerializablePanel(String id)
-	{
-		super(id);
-	}
-
-	static class IsNotSerializableObject
-	{
-		String name;
-	}
+	exports org.wicketstuff.pageserializer.fast2;
 }

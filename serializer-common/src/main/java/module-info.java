@@ -18,21 +18,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.pageserializer.kryo2.components;
+module org.wicketstuff.serializer.common {
+	requires org.apache.wicket.util;
+	requires org.apache.wicket.core;
+	requires org.slf4j;
 
-import org.apache.wicket.markup.html.panel.Panel;
-
-public class NotSerializablePanel extends Panel
-{
-	private final IsNotSerializableObject aField = new IsNotSerializableObject();
-
-	public NotSerializablePanel(String id)
-	{
-		super(id);
-	}
-
-	static class IsNotSerializableObject
-	{
-		String name;
-	}
+	exports org.wicketstuff.pageserializer.common.analyze;
+	exports org.wicketstuff.pageserializer.common.analyze.report;
+	exports org.wicketstuff.pageserializer.common.analyze.report.d3js;
+	exports org.wicketstuff.pageserializer.common.analyze.report.filter;
+	exports org.wicketstuff.pageserializer.common.analyze.report.io;
+	exports org.wicketstuff.pageserializer.common.listener;
 }

@@ -1,7 +1,7 @@
 /**
  * Copyright (C)
- * 	2008 Jeremy Thomerson <jeremy@thomersonfamily.com>
- * 	2012 Michael Mosmann <michael@mosmann.de>
+ * 	2008 Jeremy Thomerson jeremy@thomersonfamily.com
+ * 	2012 Michael Mosmann michael@mosmann.de
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -25,23 +25,23 @@ public class Keys {
 	private Keys() {
 		// no instance
 	}
-	
+
 	public static IReportKeyGenerator join(String separator, IReportKeyGenerator... generator) {
 		return new JoiningKeyGenerator(separator, generator);
 	}
-	
+
 	public static IReportKeyGenerator with(String staticValue) {
 		return new StaticKeyGenerator(staticValue);
 	}
-	
+
 	public static IReportKeyGenerator defaultTimeStamp() {
 		return TimeStampKeyGenerator.withMilliseconds();
 	}
-	
+
 	public static IReportKeyGenerator typeKey() {
 		return new TreeTypeKeyGenerator("UNKNOWN");
 	}
-	
+
 	public static IReportKeyGenerator withNameAndFileExtension(String name, String fileExtension) {
 		return join("-",typeKey(),with(name),defaultTimeStamp(),with("."+fileExtension));
 	}

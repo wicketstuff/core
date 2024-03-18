@@ -1,7 +1,7 @@
 /**
  * Copyright (C)
- * 	2008 Jeremy Thomerson <jeremy@thomersonfamily.com>
- * 	2012 Michael Mosmann <michael@mosmann.de>
+ * 	2008 Jeremy Thomerson jeremy@thomersonfamily.com
+ * 	2012 Michael Mosmann michael@mosmann.de
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -34,7 +34,7 @@ import org.wicketstuff.pageserializer.common.analyze.report.IReportRenderer;
 
 
 public class DirectoryBasedReportOutput {
-	
+
 	private final static Logger LOG = LoggerFactory.getLogger(DirectoryBasedReportOutput.class);
 
 	private final File _directory;
@@ -42,10 +42,10 @@ public class DirectoryBasedReportOutput {
 	public DirectoryBasedReportOutput(File directory) {
 		if (!directory.isDirectory()) throw new RuntimeException("not a directory: "+directory);
 		_directory = directory;
-		
+
 		LOG.info("write reports into "+directory);
 	}
-	
+
 	protected void write(IReportKeyGenerator keyGenerator, ISerializedObjectTree tree, IReportRenderer renderer) {
 		String report = renderer.render(tree);
 		File output=new File(_directory,keyGenerator.keyOf(tree));
@@ -55,11 +55,11 @@ public class DirectoryBasedReportOutput {
 			throw new RuntimeException("write report to "+output,e);
 		}
 	}
-	
+
 	public IReportOutput with(IReportKeyGenerator keyGenerator) {
 		return new KeyReportOutputAdapter(keyGenerator);
 	}
-	
+
 	class KeyReportOutputAdapter implements IReportOutput {
 
 		private final IReportKeyGenerator _keyGenerator;
@@ -72,6 +72,6 @@ public class DirectoryBasedReportOutput {
 		public void write(ISerializedObjectTree tree, IReportRenderer renderer) {
 			DirectoryBasedReportOutput.this.write(_keyGenerator,tree,renderer);
 		}
-		
+
 	}
 }

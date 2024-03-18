@@ -1,7 +1,7 @@
 /**
  * Copyright (C)
- * 	2008 Jeremy Thomerson <jeremy@thomersonfamily.com>
- * 	2012 Michael Mosmann <michael@mosmann.de>
+ * 	2008 Jeremy Thomerson jeremy@thomersonfamily.com
+ * 	2012 Michael Mosmann michael@mosmann.de
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -29,7 +29,7 @@ import org.wicketstuff.pageserializer.common.analyze.reportbuilder.Report.Row.Ro
 
 
 /**
- * report builder 
+ * report builder
  * @author mosmann
  *
  */
@@ -41,7 +41,7 @@ public class Report
 	public Report() {
 		this(null);
 	}
-	
+
 	public Report(String title)
 	{
 		this.title = title;
@@ -112,7 +112,7 @@ public class Report
 	}
 
 	/**
-	 * report export 
+	 * report export
 	 * @author mosmann
 	 *
 	 */
@@ -167,11 +167,11 @@ public class Report
 			if (report.title!=null) {
 				sb.append(report.title);
 			}
-			
+
 			if (tableBorder!=null) {
 				lineSeparator(sb, columnWidth, tableBorder);
 			}
-			
+
 			if (showColumnNames) {
 				for (Column c : columns)
 				{
@@ -179,7 +179,7 @@ public class Report
 					sb.append(c.attributes().get(Column.Separator, ","));
 				}
 				sb.append("\n");
-				
+
 				if (columnNamesSeparator!=null) {
 					lineSeparator(sb, columnWidth, columnNamesSeparator);
 				}
@@ -210,7 +210,7 @@ public class Report
 			{
 				fill(sb,columnWidth.get(c),separator);
 				fill(sb,c.attributes().get(Column.Separator, ",").length(),separator);
-			}					
+			}
 			sb.append("\n");
 		}
 
@@ -257,7 +257,7 @@ public class Report
 					sb.append(c);
 				}
 			}
-			else 
+			else
 			{
 				char[] buffer=new char[count];
 				for (int i = 0; i< count; i++)

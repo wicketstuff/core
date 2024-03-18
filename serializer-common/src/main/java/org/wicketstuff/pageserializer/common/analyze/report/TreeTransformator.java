@@ -1,7 +1,7 @@
 /**
  * Copyright (C)
- * 	2008 Jeremy Thomerson <jeremy@thomersonfamily.com>
- * 	2012 Michael Mosmann <michael@mosmann.de>
+ * 	2008 Jeremy Thomerson jeremy@thomersonfamily.com
+ * 	2012 Michael Mosmann michael@mosmann.de
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -72,18 +72,18 @@ public class TreeTransformator extends AbstractTreeTransformingProcessor
 	{
 		FilterType filterType();
 	}
-	
+
 	static class Filter implements IFilter {
 
 		private final ITreeFilter filter;
 		private final FilterType type;
-		
+
 		public Filter(FilterType type, ITreeFilter filter)
 		{
 			this.type = type;
 			this.filter = filter;
 		}
-		
+
 		@Override
 		public boolean accept(ISerializedObjectTree source, Level current)
 		{
@@ -95,7 +95,7 @@ public class TreeTransformator extends AbstractTreeTransformingProcessor
 		{
 			return type;
 		}
-		
+
 	}
 
 	/**
@@ -105,7 +105,7 @@ public class TreeTransformator extends AbstractTreeTransformingProcessor
 	{
 		return new Filter(FilterType.STRIP,filter);
 	}
-	
+
 	/**
 	 * @see TreeTransformations#compact(ISerializedObjectTree, ITreeFilter)
 	 */

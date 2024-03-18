@@ -1,7 +1,7 @@
 /**
  * Copyright (C)
- * 	2008 Jeremy Thomerson <jeremy@thomersonfamily.com>
- * 	2012 Michael Mosmann <michael@mosmann.de>
+ * 	2008 Jeremy Thomerson jeremy@thomersonfamily.com
+ * 	2012 Michael Mosmann michael@mosmann.de
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -30,7 +30,7 @@ public class TreeTypeKeyGenerator implements IReportKeyGenerator {
 	public TreeTypeKeyGenerator(String defaultKey) {
 		_defaultKey = defaultKey;
 	}
-	
+
 	@Override
 	public String keyOf(ISerializedObjectTree tree) {
 		Class<? extends Object> type = tree.type();
@@ -39,8 +39,8 @@ public class TreeTypeKeyGenerator implements IReportKeyGenerator {
 				type=tree.children().get(0).type();
 			}
 		}
-		
+
 		return type!=null ? type.getName().replace(".", "-") : _defaultKey;
 	}
-	
+
 }

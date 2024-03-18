@@ -1,7 +1,7 @@
 /**
  * Copyright (C)
- * 	2008 Jeremy Thomerson <jeremy@thomersonfamily.com>
- * 	2012 Michael Mosmann <michael@mosmann.de>
+ * 	2008 Jeremy Thomerson jeremy@thomersonfamily.com
+ * 	2012 Michael Mosmann michael@mosmann.de
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -31,10 +31,10 @@ import org.wicketstuff.pageserializer.common.analyze.report.Level;
 public interface ITreeFilter
 {
 	/**
-	 * returns true if the node should not be touched 
+	 * returns true if the node should not be touched
 	 * @param node tree node
 	 * @param level
-	 * @return 
+	 * @return
 	 */
 	boolean accept(ISerializedObjectTree node, Level level);
 

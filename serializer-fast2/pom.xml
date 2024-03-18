@@ -32,11 +32,10 @@
       <artifactId>wicketstuff-serializer-common</artifactId>
       <version>${project.parent.version}</version>
     </dependency>
-    <dependency>
-      <groupId>de.ruedigermoeller</groupId>
-      <artifactId>fst</artifactId>
-      <version>2.57</version>
-    </dependency>
+		<dependency>
+			<groupId>de.ruedigermoeller</groupId>
+			<artifactId>fst</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-server</artifactId>
@@ -93,6 +92,8 @@
             --add-opens java.base/java.text=ALL-UNNAMED
             --add-opens java.base/java.util=ALL-UNNAMED
             --add-opens java.base/java.util.concurrent=ALL-UNNAMED
+            --add-opens java.sql/java.sql=ALL-UNNAMED
+            --add-opens java.base/sun.reflect.annotation=ALL-UNNAMED
           </argLine>
         </configuration>
       </plugin>

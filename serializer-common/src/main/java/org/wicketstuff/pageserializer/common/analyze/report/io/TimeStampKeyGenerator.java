@@ -1,7 +1,7 @@
 /**
  * Copyright (C)
- * 	2008 Jeremy Thomerson <jeremy@thomersonfamily.com>
- * 	2012 Michael Mosmann <michael@mosmann.de>
+ * 	2008 Jeremy Thomerson jeremy@thomersonfamily.com
+ * 	2012 Michael Mosmann michael@mosmann.de
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -31,7 +31,7 @@ public class TimeStampKeyGenerator implements IReportKeyGenerator {
 
 	protected static final String DEFAULT_WITH_MILLISECONDS = "yyyy-MM-dd--hhmmss-SSS";
 	private final String _pattern;
-	
+
 	public TimeStampKeyGenerator(String pattern) {
 		_pattern = pattern;
 	}
@@ -40,7 +40,7 @@ public class TimeStampKeyGenerator implements IReportKeyGenerator {
 	public String keyOf(ISerializedObjectTree tree) {
 		return format(_pattern, new Date());
 	}
-	
+
 	protected static String format(String pattern, Date currentTime) {
 		return new SimpleDateFormat(pattern,Locale.GERMAN).format(currentTime);
 	}

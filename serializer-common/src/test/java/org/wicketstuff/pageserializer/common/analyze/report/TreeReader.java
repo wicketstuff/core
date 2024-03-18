@@ -1,7 +1,7 @@
 /**
  * Copyright (C)
- * 	2008 Jeremy Thomerson <jeremy@thomersonfamily.com>
- * 	2012 Michael Mosmann <michael@mosmann.de>
+ * 	2008 Jeremy Thomerson jeremy@thomersonfamily.com
+ * 	2012 Michael Mosmann michael@mosmann.de
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -37,7 +37,7 @@ import org.wicketstuff.pageserializer.common.analyze.ImmutableTree;
 public class TreeReader
 {
 	private final static Logger LOG = LoggerFactory.getLogger(TreeReader.class);
-	
+
 	public static ISerializedObjectTree fromResource(Class<?> baseType, String resourceName)
 		throws IOException {
 		return fromResourceWithFilename(baseType, baseType.getSimpleName()+"-"+resourceName);
@@ -69,11 +69,11 @@ public class TreeReader
 				lines.add(new Line(textLine));
 			}
 		}
-		
+
 		if (!lines.isEmpty()) {
 			Line last=lines.get(0);
 			IndentedLines parent=new IndentedLines(last);
-			
+
 			for (Line l : lines.subList(1, lines.size())) {
 				if (l.indent>last.indent) {
 					IndentedLines sub=new IndentedLines(parent,l);
@@ -89,11 +89,11 @@ public class TreeReader
 				}
 				last=l;
 			}
-			
+
 			while (parent.parent!=null) {
 				parent=parent.parent;
 			}
-			
+
 			return parent.asObjectTree();
 		}
 		throw new IOException("empty file");
@@ -104,9 +104,9 @@ public class TreeReader
 	protected static class IndentedLines {
 		IndentedLines parent;
 		List<IndentedLines> children=new ArrayList<TreeReader.IndentedLines>();
-		
+
 		private final Line line;
-		
+
 		public IndentedLines(Line line)
 		{
 			this.line = line;
@@ -127,7 +127,7 @@ public class TreeReader
 			this.parent=parent;
 		}
 	}
-	
+
 	public static class Line
 	{
 		private static Pattern pattern = Pattern.compile("^([ ]*)([a-zA-Z0-9\\.;\\[\\$]+)(\\([a-zA-Z0-9\\|]+\\))?[ ]+\\|[ ]+([0-9]+)$");
@@ -143,7 +143,7 @@ public class TreeReader
 			if (!matcher.matches())
 			{
 				throw new IllegalArgumentException("Could not parse '" + textLine+"'");
-			} 
+			}
 			String typeName = matcher.group(2);
 			indent=matcher.group(1).length()/2;
 			type=typeFromString(typeName);

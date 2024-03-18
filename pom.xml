@@ -321,6 +321,7 @@
 		<jython-standalone.version>2.7.3</jython-standalone.version>
 		<protobuf.version>4.26.0</protobuf.version>
 		<bootstrap.version>5.3.3</bootstrap.version>
+		<fst.version>3.0.4-jdk17</fst.version>
 		<!-- plugins -->
 		<maven-surefire-plugin.version>3.2.5</maven-surefire-plugin.version>
 		<maven-javadoc-plugin.version>3.6.3</maven-javadoc-plugin.version>
@@ -966,6 +967,11 @@
 				<groupId>org.webjars</groupId>
 				<artifactId>bootstrap</artifactId>
 				<version>${bootstrap.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>de.ruedigermoeller</groupId>
+				<artifactId>fst</artifactId>
+				<version>${fst.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
