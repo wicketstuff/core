@@ -277,7 +277,7 @@
 		<shiro.version>2.0.0</shiro.version>
 		<slf4j.version>2.0.12</slf4j.version>
 		<logback.version>1.5.3</logback.version>
-		<log4j.version>2.23.0</log4j.version>
+		<log4j.version>2.23.1</log4j.version>
 		<spring.version>6.1.5</spring.version>
 		<cglib.version>3.3.0</cglib.version>
 		<objenesis.version>3.3</objenesis.version>
@@ -319,6 +319,8 @@
 		<hsqldb.version>2.7.2</hsqldb.version>
 		<hazelcast.version>5.3.6</hazelcast.version>
 		<jython-standalone.version>2.7.3</jython-standalone.version>
+		<protobuf.version>4.26.0</protobuf.version>
+		<bootstrap.version>5.3.3</bootstrap.version>
 		<!-- plugins -->
 		<maven-surefire-plugin.version>3.2.5</maven-surefire-plugin.version>
 		<maven-javadoc-plugin.version>3.6.3</maven-javadoc-plugin.version>
@@ -931,7 +933,7 @@
 			<dependency>
 				<groupId>com.google.protobuf</groupId>
 				<artifactId>protobuf-java</artifactId>
-				<version>3.25.3</version>
+				<version>${protobuf.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.hsqldb</groupId>
@@ -959,6 +961,11 @@
 				<groupId>com.hazelcast</groupId>
 				<artifactId>hazelcast</artifactId>
 				<version>${hazelcast.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.webjars</groupId>
+				<artifactId>bootstrap</artifactId>
+				<version>${bootstrap.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
