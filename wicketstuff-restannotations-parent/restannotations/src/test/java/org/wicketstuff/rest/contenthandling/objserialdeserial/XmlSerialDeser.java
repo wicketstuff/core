@@ -18,7 +18,7 @@ package org.wicketstuff.rest.contenthandling.objserialdeserial;
 
 import java.io.StringWriter;
 
-import javax.xml.bind.JAXB;
+import jakarta.xml.bind.JAXB;
 
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.http.WebResponse;

@@ -256,7 +256,7 @@
 	<!-- mocleiri: for distribution in to central repository sections in the main pom are not allowed -->
 
 	<properties>
-		<wicket.version>10.0.0-M3-SNAPSHOT</wicket.version>
+		<wicket.version>10.0.0</wicket.version>
 
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
@@ -278,15 +278,15 @@
 		<slf4j.version>2.0.12</slf4j.version>
 		<logback.version>1.5.3</logback.version>
 		<log4j.version>2.23.0</log4j.version>
-		<spring.version>6.1.4</spring.version>
+		<spring.version>6.1.5</spring.version>
 		<cglib.version>3.3.0</cglib.version>
 		<objenesis.version>3.3</objenesis.version>
 		<scala.version>2.13.13</scala.version>
-		<jackson.version>2.16.2</jackson.version>
+		<jackson.version>2.17.0</jackson.version>
 		<poi.version>5.2.5</poi.version>
-		<guava.version>33.0.0-jre</guava.version>
-		<wicket-webjars.version>4.0.1</wicket-webjars.version>
-		<jquery-selectors.version>4.0.2</jquery-selectors.version>
+		<guava.version>33.1.0-jre</guava.version>
+		<wicket-webjars.version>4.0.3</wicket-webjars.version>
+		<jquery-selectors.version>4.0.4</jquery-selectors.version>
 		<xstream.version>1.4.20</xstream.version>
 		<hamcrest.version>2.2</hamcrest.version>
 		<jakarta.servlet-api.version>6.0.0</jakarta.servlet-api.version>
@@ -307,7 +307,7 @@
 		<ibatis2-sqlmap.version>2.1.7.597</ibatis2-sqlmap.version>
 		<jts.version>1.13</jts.version>
 		<gson.version>2.10.1</gson.version>
-		<wicket-bootstrap-core.version>7.0.1</wicket-bootstrap-core.version>
+		<wicket-bootstrap-core.version>7.0.3</wicket-bootstrap-core.version>
 		<jasperreports.version>6.21.2</jasperreports.version>
 		<bcprov.version>1.70</bcprov.version>
 		<joda-time.version>2.12.7</joda-time.version>
@@ -324,7 +324,7 @@
 		<maven-javadoc-plugin.version>3.6.3</maven-javadoc-plugin.version>
 		<maven-source-plugin.version>3.3.0</maven-source-plugin.version>
 		<maven-bundle-plugin.version>5.1.9</maven-bundle-plugin.version>
-		<maven-assembly-plugin.version>3.6.0</maven-assembly-plugin.version>
+		<maven-assembly-plugin.version>3.7.0</maven-assembly-plugin.version>
 		<maven-compiler-plugin.version>3.12.1</maven-compiler-plugin.version>
 		<maven-eclipse-plugin.version>2.10</maven-eclipse-plugin.version>
 		<maven-help-plugin.version>3.4.0</maven-help-plugin.version>
@@ -339,7 +339,7 @@
 		<maven-site-plugin.version>4.0.0-M13</maven-site-plugin.version>
 		<maven-war-plugin.version>3.4.0</maven-war-plugin.version>
 		<maven-release-plugin.version>3.0.1</maven-release-plugin.version>
-		<maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
+		<maven-gpg-plugin.version>3.2.0</maven-gpg-plugin.version>
 		<maven-pmd-plugin.version>3.21.2</maven-pmd-plugin.version>
 	</properties>
 

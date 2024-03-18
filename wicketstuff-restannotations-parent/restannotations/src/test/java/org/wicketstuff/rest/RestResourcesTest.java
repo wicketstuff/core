@@ -27,7 +27,7 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Collections;
 
-import javax.xml.bind.JAXB;
+import jakarta.xml.bind.JAXB;
 import javax.xml.transform.stream.StreamResult;
 
 import org.apache.wicket.Session;
