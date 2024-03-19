@@ -414,7 +414,7 @@ public class TinyMCESettings implements Serializable
 	 */
 	public enum Language
 	{
-		ar, ar_SA, az, be, bg_BG, bn_BD, bs, ca, cs, cs_CZ, cy, da, de, de_AT, dv, el, en_CA,
+		ar, ar_SA, az, be, bg_BG, bn_BD, bs, ca, cs, cy, da, de, de_AT, dv, el, en_CA,
 		/**
 		 * default, no js needed
 		 */
