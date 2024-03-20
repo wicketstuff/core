@@ -20,18 +20,12 @@ import org.wicketstuff.dashboard.Dashboard;
 import org.wicketstuff.dashboard.DefaultDashboard;
 import org.wicketstuff.dashboard.examples.jqplot.DemoChartFactory;
 import org.wicketstuff.dashboard.examples.justgage.DemoJustGageFactory;
-import org.wicketstuff.dashboard.examples.ofchart.DemoChartDataFactory;
-import org.wicketstuff.dashboard.examples.wickedCharts.DemoHighChartsFactory;
 import org.wicketstuff.dashboard.web.DashboardContext;
-import org.wicketstuff.dashboard.widgets.charts.HighChartsWidget;
-import org.wicketstuff.dashboard.widgets.charts.HighChartsWidgetDescriptor;
 import org.wicketstuff.dashboard.widgets.jqplot.JqPlotWidget;
 import org.wicketstuff.dashboard.widgets.jqplot.JqPlotWidgetDescriptor;
 import org.wicketstuff.dashboard.widgets.justgage.JustGageWidget;
 import org.wicketstuff.dashboard.widgets.justgage.JustGageWidgetDescriptor;
 import org.wicketstuff.dashboard.widgets.loremipsum.LoremIpsumWidgetDescriptor;
-import org.wicketstuff.dashboard.widgets.ofchart.ChartWidget;
-import org.wicketstuff.dashboard.widgets.ofchart.ChartWidgetDescriptor;
 
 /**
  * @author Decebal Suiu
@@ -45,6 +39,8 @@ public class WicketApplication extends WebApplication {
 	@Override
 	public void init() {
 		super.init();
+
+		getCspSettings().blocking().disabled();
 
 		// markup settings
 		getMarkupSettings().setStripWicketTags(true);
@@ -61,21 +57,18 @@ public class WicketApplication extends WebApplication {
 
 		// register some widgets
 		DashboardContext dashboardContext = getDashboardContext();
+		dashboardContext.setDashboardPersister(new ExampleDashboardPersister());
 		dashboardContext.getWidgetRegistry()
 			.registerWidget(new LoremIpsumWidgetDescriptor())
-			.registerWidget(new ChartWidgetDescriptor())
 			.registerWidget(new JqPlotWidgetDescriptor())
-			.registerWidget(new JustGageWidgetDescriptor())
-			.registerWidget(new HighChartsWidgetDescriptor());
+			.registerWidget(new JustGageWidgetDescriptor());
 
 		// add a custom action for all widgets
 		dashboardContext.setWidgetActionsFactory(new DemoWidgetActionsFactory());
 
 		// set some (data) factory
-		ChartWidget.setChartDataFactory(new DemoChartDataFactory());
 		JqPlotWidget.setChartFactory(new DemoChartFactory());
 		JustGageWidget.setJustGageFactory(new DemoJustGageFactory());
-		HighChartsWidget.setHighChartsFactory(new DemoHighChartsFactory());
 
 		// <<< end dashboard settings
 	}
