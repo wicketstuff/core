@@ -32,10 +32,8 @@
 	</dependencies>
 
 	<modules>
-		<module>dashboard-widgets-ofchart</module>
 		<module>dashboard-widgets-jqplot</module>
 		<module>dashboard-widgets-loremipsum</module>
 		<module>dashboard-widgets-justgage</module>
-		<module>dashboard-widgets-charts</module>
 	</modules>
 </project>
