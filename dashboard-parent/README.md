@@ -38,10 +38,8 @@ Artifacts
 -------------------
 - Wicket Dashboard Core `wicketstuff-dashboard-core` (jar)
 - Wicket Dashboard (Standard) Widgets
-    - ofchart `wicketstuff-dashboard-widgets-ofchart`        (jar)
     - jqplot `wicketstuff-dashboard-widgets-jqplot`          (jar)
     - justgage `wicketstuff-dashboard-widgets-justgage`      (jar)
-    - wicked-charts `wicketstuff-dashboard-widgets-charts` (jar)
     - loremipsum `wicketstuff-dashboard-widgets-loremispum`  (jar)
 - Wicket Dashboard Demo `wicketstuff-dashboard-examples` (war)
 
