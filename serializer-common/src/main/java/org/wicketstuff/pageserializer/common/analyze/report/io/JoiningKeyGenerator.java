@@ -1,7 +1,7 @@
 /**
  * Copyright (C)
- * 	2008 Jeremy Thomerson <jeremy@thomersonfamily.com>
- * 	2012 Michael Mosmann <michael@mosmann.de>
+ * 	2008 Jeremy Thomerson jeremy@thomersonfamily.com
+ * 	2012 Michael Mosmann michael@mosmann.de
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -36,13 +36,13 @@ public class JoiningKeyGenerator implements IReportKeyGenerator {
 	public String keyOf(ISerializedObjectTree tree) {
 		StringBuilder sb=new StringBuilder();
 		boolean addSeparator=false;
-		
+
 		for (IReportKeyGenerator g : _generator) {
 			if (addSeparator) {
 				sb.append("-");
-			} 
+			}
 			addSeparator=true;
-			
+
 			String key=g.keyOf(tree);
 			sb.append(key);
 		}

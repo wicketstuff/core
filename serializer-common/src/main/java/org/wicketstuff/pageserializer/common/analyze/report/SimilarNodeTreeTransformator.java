@@ -1,7 +1,7 @@
 /**
  * Copyright (C)
- * 	2008 Jeremy Thomerson <jeremy@thomersonfamily.com>
- * 	2012 Michael Mosmann <michael@mosmann.de>
+ * 	2008 Jeremy Thomerson jeremy@thomersonfamily.com
+ * 	2012 Michael Mosmann michael@mosmann.de
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -61,7 +61,7 @@ public class SimilarNodeTreeTransformator extends AbstractTreeTransformingProces
 			if (typeMap.hasLessEntries(transformed.size()))
 			{
 //				LOG.error("Compress {}",tree.type());
-				
+
 				List<ISerializedObjectTree> result = typeMap.compressedResult();
 				ret = new ImmutableTree(ret.id(), ret.type(), ret.label(), ret.size(), result);
 //				new TreeSizeReport().process(tree);

@@ -53,7 +53,6 @@
 		<dependency>
 			<groupId>de.agilecoders.wicket</groupId>
 			<artifactId>jquery-selectors</artifactId>
-			<version>3.0.6</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>

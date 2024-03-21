@@ -1,7 +1,7 @@
 /**
  * Copyright (C)
- * 	2008 Jeremy Thomerson <jeremy@thomersonfamily.com>
- * 	2012 Michael Mosmann <michael@mosmann.de>
+ * 	2008 Jeremy Thomerson jeremy@thomersonfamily.com
+ * 	2012 Michael Mosmann michael@mosmann.de
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -23,14 +23,14 @@ package org.wicketstuff.pageserializer.common.analyze.report;
 import java.io.Serializable;
 
 /**
- * 
+ *
  * @author mosmann
  *
  */
 public class Level implements Serializable
 {
 	final Level parent;
-	
+
 	/**
 	 * Level Start
 	 */
@@ -38,20 +38,20 @@ public class Level implements Serializable
 	{
 		this(null);
 	}
-	
+
 	private Level(Level parent) {
 		this.parent=parent;
 	}
-	
+
 	public Level down() {
 		return new Level(this);
 	}
-	
+
 	public Level up() {
 		if (parent==null) throw new IllegalArgumentException("could not go up, parent is NULL");
 		return parent;
 	}
-	
+
 	public int distanceFromTop() {
 		return parent!=null ? 1 + parent.distanceFromTop() : 0;
 	}

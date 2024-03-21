@@ -1,7 +1,7 @@
 /**
  * Copyright (C)
- * 	2008 Jeremy Thomerson <jeremy@thomersonfamily.com>
- * 	2012 Michael Mosmann <michael@mosmann.de>
+ * 	2008 Jeremy Thomerson jeremy@thomersonfamily.com
+ * 	2012 Michael Mosmann michael@mosmann.de
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -31,9 +31,9 @@ import de.javakaffee.kryoserializers.KryoReflectionFactorySupport;
 
 /**
  * main entry for serialization, deserialization
- * 
+ *
  * @author mosmann
- * 
+ *
  */
 public class InspectingKryo extends KryoReflectionFactorySupport
 {

@@ -1,7 +1,7 @@
 /**
  * Copyright (C)
- * 	2008 Jeremy Thomerson <jeremy@thomersonfamily.com>
- * 	2012 Michael Mosmann <michael@mosmann.de>
+ * 	2008 Jeremy Thomerson jeremy@thomersonfamily.com
+ * 	2012 Michael Mosmann michael@mosmann.de
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -24,50 +24,50 @@ import java.util.List;
 
 /**
  * serialized tree
- * 
+ *
  * @author mosmann
- * 
+ *
  */
 public interface ISerializedObjectTree
 {
 	/**
 	 * node id
-	 * 
+	 *
 	 * @return
 	 */
 	ObjectId id();
 
 	/**
 	 * node type
-	 * 
+	 *
 	 * @return type
 	 */
 	Class<? extends Object> type();
 
 	/**
 	 * node label if any
-	 * 
+	 *
 	 * @return type
 	 */
 	String label();
 
 	/**
 	 * size of object without children
-	 * 
+	 *
 	 * @return size in bytes
 	 */
 	int size();
 
 	/**
 	 * size of all children
-	 * 
+	 *
 	 * @return size in bytes
 	 */
 	int childSize();
 
 	/**
 	 * list of children
-	 * 
+	 *
 	 * @return immutable
 	 */
 	List<? extends ISerializedObjectTree> children();

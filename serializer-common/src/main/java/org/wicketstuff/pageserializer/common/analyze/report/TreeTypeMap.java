@@ -1,7 +1,7 @@
 /**
  * Copyright (C)
- * 	2008 Jeremy Thomerson <jeremy@thomersonfamily.com>
- * 	2012 Michael Mosmann <michael@mosmann.de>
+ * 	2008 Jeremy Thomerson jeremy@thomersonfamily.com
+ * 	2012 Michael Mosmann michael@mosmann.de
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -36,9 +36,9 @@ import org.wicketstuff.pageserializer.common.analyze.ImmutableTree;
 /**
  * NOT A PUBLIC API
  * this builds a map of similar trees
- * 
+ *
  * @author mosmann
- * 
+ *
  */
 class TreeTypeMap {
 
@@ -75,7 +75,7 @@ class TreeTypeMap {
 
 	/**
 	 * join a list of nodes into one, label and size information will be aggregated
-	 * 
+	 *
 	 * @param list
 	 *          source nodes
 	 * @return one node
@@ -95,7 +95,7 @@ class TreeTypeMap {
 
 	/**
 	 * all entries in the list are equal, join every matching child node for every entry
-	 * 
+	 *
 	 * @param source
 	 *          entries with same tree layout
 	 * @return tree with compressed child layout
@@ -137,7 +137,7 @@ class TreeTypeMap {
 
 	/**
 	 * joins all labels from list into on
-	 * 
+	 *
 	 * @param list
 	 *          tree elements
 	 * @return joined label

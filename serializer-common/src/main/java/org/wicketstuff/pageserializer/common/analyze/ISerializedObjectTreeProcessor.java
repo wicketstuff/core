@@ -1,7 +1,7 @@
 /**
  * Copyright (C)
- * 	2008 Jeremy Thomerson <jeremy@thomersonfamily.com>
- * 	2012 Michael Mosmann <michael@mosmann.de>
+ * 	2008 Jeremy Thomerson jeremy@thomersonfamily.com
+ * 	2012 Michael Mosmann michael@mosmann.de
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -22,14 +22,14 @@ package org.wicketstuff.pageserializer.common.analyze;
 
 /**
  * a serialized tree processor can process a serialized tree
- * 
+ *
  * @author mosmann
- * 
+ *
  */
 public interface ISerializedObjectTreeProcessor
 {
 	/**
-	 * process serialized tree data 
+	 * process serialized tree data
 	 * @param tree source
 	 */
 	void process(ISerializedObjectTree tree);

@@ -1,7 +1,7 @@
 /**
  * Copyright (C)
- * 	2008 Jeremy Thomerson <jeremy@thomersonfamily.com>
- * 	2012 Michael Mosmann <michael@mosmann.de>
+ * 	2008 Jeremy Thomerson jeremy@thomersonfamily.com
+ * 	2012 Michael Mosmann michael@mosmann.de
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -24,9 +24,9 @@ import org.wicketstuff.pageserializer.common.listener.ThreadLocalContextSerializ
 
 /**
  * serialization listener with some aggregation hooks
- * 
+ *
  * @author mosmann
- * 
+ *
  */
 public class AnalyzingSerializationListener extends
 	ThreadLocalContextSerializationListener<ObjectTreeTracker>
@@ -35,7 +35,7 @@ public class AnalyzingSerializationListener extends
 	private final ISerializedObjectTreeProcessor treeProcessor;
 
 	/**
-	 * creates an listener which processes tree data from serialization process 
+	 * creates an listener which processes tree data from serialization process
 	 * @param labelizer a hook for label creation
 	 * @param treeProcessor tree processor
 	 */

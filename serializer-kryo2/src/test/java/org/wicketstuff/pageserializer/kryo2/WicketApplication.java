@@ -1,7 +1,7 @@
 /**
  * Copyright (C)
- * 	2008 Jeremy Thomerson <jeremy@thomersonfamily.com>
- * 	2012 Michael Mosmann <michael@mosmann.de>
+ * 	2008 Jeremy Thomerson jeremy@thomersonfamily.com
+ * 	2012 Michael Mosmann michael@mosmann.de
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -49,7 +49,7 @@ import org.wicketstuff.pageserializer.kryo2.inspecting.validation.DefaultJavaSer
 /**
  * Application object for your web application. If you want to run this application without
  * deploying, run the Start class.
- * 
+ *
  * @see org.wicketstuff.pageserializer.kryo.mycompany.Start#main(String[])
  */
 public class WicketApplication extends WebApplication
@@ -64,7 +64,7 @@ public class WicketApplication extends WebApplication
 	public void init()
 	{
 		super.init();
-		
+
 		IObjectLabelizer labelizer = new IObjectLabelizer()
 		{
 
@@ -77,12 +77,12 @@ public class WicketApplication extends WebApplication
 				return null;
 			}
 		};
-		
+
 		DirectoryBasedReportOutput reportOutput=new DirectoryBasedReportOutput(tempDirectory("reports"));
-		
+
 		ISerializedObjectTreeProcessor treeProcessor = TreeProcessors.listOf(new TypeSizeReport(reportOutput.with(Keys.withNameAndFileExtension("TypeSizeReport", "txt"))),
-				new SortedTreeSizeReport(reportOutput.with(Keys.withNameAndFileExtension("SortedTreeSizeReport", "txt"))), 
-				new RenderTreeProcessor(reportOutput.with(Keys.withNameAndFileExtension("d3js-chart", "html")),new D3DataFileRenderer()), 
+				new SortedTreeSizeReport(reportOutput.with(Keys.withNameAndFileExtension("SortedTreeSizeReport", "txt"))),
+				new RenderTreeProcessor(reportOutput.with(Keys.withNameAndFileExtension("d3js-chart", "html")),new D3DataFileRenderer()),
 				new SimilarNodeTreeTransformator(new SortedTreeSizeReport(reportOutput.with(Keys.withNameAndFileExtension("StrippedSortedTreeSizeReport", "txt")))));
 		ITreeFilter filter = new ITreeFilter()
 		{
@@ -95,7 +95,7 @@ public class WicketApplication extends WebApplication
 		ISerializedObjectTreeProcessor cleanedTreeProcessor = new TreeTransformator(treeProcessor,
 			TreeTransformator.strip(filter));
 		ISerializationListener listener = SerializationListeners.listOf(
-			new DefaultJavaSerializationValidator(), 
+			new DefaultJavaSerializationValidator(),
 			new AnalyzingSerializationListener(labelizer, cleanedTreeProcessor));
 
 

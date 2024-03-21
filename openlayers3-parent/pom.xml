@@ -34,11 +34,6 @@
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>de.agilecoders.wicket.webjars</groupId>
-				<artifactId>wicket-webjars</artifactId>
-				<version>${wicket-webjars.version}</version>
-			</dependency>
-			<dependency>
 				<groupId>org.webjars</groupId>
 				<artifactId>openlayers</artifactId>
 				<version>3.10.1</version>

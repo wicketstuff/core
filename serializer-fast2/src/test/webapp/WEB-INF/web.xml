@@ -2,8 +2,8 @@
 <!--
 
     Copyright (C)
-    	2008 Jeremy Thomerson <jeremy@thomersonfamily.com>
-    	2012 Michael Mosmann <michael@mosmann.de>
+    	2008 Jeremy Thomerson jeremy@thomersonfamily.com
+    	2012 Michael Mosmann michael@mosmann.de
 
     Licensed to the Apache Software Foundation (ASF) under one or more
     contributor license agreements.  See the NOTICE file distributed with
@@ -29,14 +29,14 @@
 	<display-name>quickstart</display-name>
 
 	<!--
-		There are three means to configure Wickets configuration mode and they 
+		There are three means to configure Wickets configuration mode and they
 		are tested in the order given.
-		
-		1) A system property: -Dwicket.configuration 
-		2) servlet specific <init-param> 
+
+		1) A system property: -Dwicket.configuration
+		2) servlet specific <init-param>
 		3) context specific <context-param>
 
-		The value might be either "development" (reloading when templates change) or 
+		The value might be either "development" (reloading when templates change) or
 		"deployment". If no configuration is found, "development" is the default. -->
 
 	<filter>

@@ -1,7 +1,7 @@
 /**
  * Copyright (C)
- * 	2008 Jeremy Thomerson <jeremy@thomersonfamily.com>
- * 	2012 Michael Mosmann <michael@mosmann.de>
+ * 	2008 Jeremy Thomerson jeremy@thomersonfamily.com
+ * 	2012 Michael Mosmann michael@mosmann.de
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -39,7 +39,7 @@ import org.wicketstuff.pageserializer.common.analyze.reportbuilder.Report;
 /**
  * creates an report based on the types
  * the size calculation can have some as we say in german "Ungenauigkeiten"
- * because f.i. an array list can contain an array list, so the sizes of the sub list is added twice 
+ * because f.i. an array list can contain an array list, so the sizes of the sub list is added twice
  * @author mosmann
  *
  */
@@ -62,14 +62,14 @@ public class TypeSizeReport implements ISerializedObjectTreeProcessor
 		.build());
 
 	private final IReportOutput reportOutput;
-	
+
 	public TypeSizeReport(IReportOutput reportOutput) {
 		this.reportOutput = reportOutput;
 	}
-	
+
 	@Override
 	public void process(ISerializedObjectTree tree) {
-		
+
 		reportOutput.write(tree, new IReportRenderer() {
 
 			@Override

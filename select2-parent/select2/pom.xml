@@ -61,7 +61,6 @@
 		<dependency>
 			<groupId>de.agilecoders.wicket.webjars</groupId>
 			<artifactId>wicket-webjars</artifactId>
-			<version>${wicket-webjars.version}</version>
 		</dependency>
 	</dependencies>
 	<build>
@@ -99,4 +98,3 @@
 		</testResources>
 	</build>
 </project>
-

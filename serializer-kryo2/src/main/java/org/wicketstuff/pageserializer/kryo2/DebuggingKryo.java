@@ -1,7 +1,7 @@
 /**
  * Copyright (C)
- * 	2008 Jeremy Thomerson <jeremy@thomersonfamily.com>
- * 	2012 Michael Mosmann <michael@mosmann.de>
+ * 	2008 Jeremy Thomerson jeremy@thomersonfamily.com
+ * 	2012 Michael Mosmann michael@mosmann.de
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -36,7 +36,7 @@ import de.javakaffee.kryoserializers.KryoReflectionFactorySupport;
  * An extension of {@link KryoReflectionFactorySupport} that logs the serialized objects and the
  * current size of the buffer after the write. Additionally provides the functionality to blacklist
  * the serialization of specific classes.
- * 
+ *
  * @deprecated
  * @see InspectingKryo
  */

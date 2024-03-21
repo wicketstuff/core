@@ -8,9 +8,6 @@
 		<artifactId>wicketstuff-core</artifactId>
 		<version>9.17.0-SNAPSHOT</version>
 	</parent>
-	<properties>
-		<bootstrap.version>4.4.1-1</bootstrap.version>
-	</properties>
 
 	<artifactId>datatables-parent</artifactId>
 	<packaging>pom</packaging>

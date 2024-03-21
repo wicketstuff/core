@@ -26,7 +26,6 @@
 		<dependency>
 			<groupId>de.agilecoders.wicket.webjars</groupId>
 			<artifactId>wicket-webjars</artifactId>
-			<version>${wicket-webjars.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.webjars.bower</groupId>
@@ -36,13 +35,11 @@
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>bootstrap</artifactId>
-			<version>${bootstrap.version}</version>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>de.agilecoders.wicket</groupId>
 			<artifactId>jquery-selectors</artifactId>
-			<version>3.0.2</version>
 		</dependency>
 	</dependencies>
 </project>
