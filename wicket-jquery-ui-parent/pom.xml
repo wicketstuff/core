@@ -2,6 +2,12 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
+  <parent>
+    <groupId>org.wicketstuff</groupId>
+    <artifactId>wicketstuff-core</artifactId>
+    <version>10.1.0-SNAPSHOT</version>
+  </parent>
+
 	<name>wicket-jquery-ui pom</name>
 	<description>parent pom</description>
 	<url>https://github.com/sebfz1/wicket-jquery-ui</url>
@@ -13,7 +19,6 @@
 
 	<groupId>com.googlecode.wicket-jquery-ui</groupId>
 	<artifactId>wicket-jquery-ui-parent</artifactId>
-	<version>10.0.0-M2-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<licenses>
@@ -319,14 +324,14 @@
 	</profiles>
 
 	<modules>
-		<module>wicket-jquery-ui-core</module>
-		<module>wicket-jquery-ui</module>
-		<module>wicket-jquery-ui-themes</module>
-		<module>wicket-jquery-ui-plugins</module>
-		<module>wicket-jquery-ui-calendar</module>
-		<module>wicket-kendo-ui</module>
-		<module>wicket-kendo-ui-culture</module>
-		<module>wicket-kendo-ui-themes</module>
-		<module>wicket-jquery-ui-samples</module>
+		<module>../wicket-jquery-ui-core</module>
+		<module>../wicket-jquery-ui</module>
+		<module>../wicket-jquery-ui-themes</module>
+		<module>../wicket-jquery-ui-plugins</module>
+		<module>../wicket-jquery-ui-calendar</module>
+		<module>../wicket-kendo-ui</module>
+		<module>../wicket-kendo-ui-culture</module>
+		<module>../wicket-kendo-ui-themes</module>
+		<module>../wicket-jquery-ui-samples</module>
 	</modules>
 </project>

@@ -424,6 +424,8 @@
 		<module>wicketstuff-lambda-components</module>
 		<module>wicket-datetime-parent</module>
 		<module>wicketstuff-datetime-yui-parent</module>
+		
+		<module>wicket-jquery-ui-parent</module>
 	</modules>
 
 	<dependencies>
