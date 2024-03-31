@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>wicket-gchart-parent</artifactId>
+        <groupId>org.wicketstuff</groupId>
+        <version>10.1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>wicket-gchart</artifactId>
+    <packaging>jar</packaging>
+
+    <name>Google Charts component for wicket</name>
+    <description>Integrate Google Charts API (v45) with wicket.
+        The API tries not to hide all details of the Google API,
+        but makes use of the JSON lib of wicket to mix Java, JavaScript and JSON in a transparent way..</description>
+    <developers>
+        <developer>
+            <name>Dieter Tremel</name>
+            <email>tremel@tremel-computer.de</email>
+            <url>http://www.tremel-computer.de</url>
+            <timezone>+1</timezone>
+            <properties>
+                <picUrl>http://www.tremel-computer.de/typo3temp/pics/09570b0eb3.jpg</picUrl>
+                <picUrl>http://hotchpotch-blog.de/wp-content/uploads/2012/11/pleyer-foto-20121115-103612.jpg</picUrl>
+            </properties>
+        </developer>
+    </developers>
+
+    <url>http://www.tremel-computer.de</url>
+
+    <dependencies>
+        <!-- Logging with http://logback.qos.ch/ -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+
+        <!-- Test dependencies-->
+        <dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+        </dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+		</dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+			<groupId>net.javacrumbs.json-unit</groupId>
+			<artifactId>json-unit</artifactId>
+			<version>3.2.7</version>
+			<scope>test</scope>
+		</dependency>
+    </dependencies>
+</project>

@@ -1,0 +1,2 @@
+The Javascript, CSS and Image files written and produced by Nick Stakenburg (http://www.nickstakenburg.com) are under the licence which 
+is visible at the top of the prototip.js file and are included in this bundle after gaining his permission to do so.

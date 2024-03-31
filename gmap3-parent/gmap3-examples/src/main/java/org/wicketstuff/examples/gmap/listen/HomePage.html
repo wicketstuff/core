@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:v="urn:schemas-microsoft-com:vml"
+	xmlns:wicket="http://wicket.sourceforge.net/">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<title>Wicket Examples - GMap Panel</title>
+<style type="text/css">
+    v\:* {
+      behavior:url(#default#VML);
+    }
+</style>
+<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+
+<body>
+<span wicket:id="mainNavigation" />
+Listen to the map!<br/>
+Zoom in or out and the label will show the current zoom level and the bounds of the shown map.<br/>
+Click on the 'Update on MoveEnd' Button to toggle this behavior.<br/>
+<center>
+<table>
+	<tr>
+		<td>
+			<div>Update on MoveEnd Event of the map:
+			<span class="myButton" wicket:id="enabled">toBeEditet</span></div>
+			<div class="myButton" wicket:id="zoom" title="current zoom level of the map">zoom</div>
+			<div class="myButton" wicket:id="bounds" title="current bounds of the map">bounds</div>
+		</td>
+		<td><div wicket:id="map" style="width: 500px; height: 350px;">topPanel</div></td>
+	</tr>
+</table>
+</center>
+</body>
+</html>

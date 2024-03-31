@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<meta charset="utf-8" />
+<title>wicket-foundation</title>
+</head>
+<body>
+    <wicket:extend>
+
+        <div class="row">
+            <h1 id="labels">Labels</h1>
+            <h3 class="subheader">Labels are useful inline styles
+                that can be dropped into body copy to call out certain
+                sections or to attach metadata. For example, you can
+                attach a label that notes when something was updated.</h3>
+
+            <hr>
+            <h2>Basic</h2>
+
+            <p>You can create a label using minimal markup.</p>
+            <div>
+                <div>
+                    <h4>HTML</h4>
+                    
+<pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">span</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;basic&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+</div></code>
+</pre>
+
+                </div>
+                <div>
+                    <h4>Java</h4>
+                    
+<pre><code class="language-html"><div class="code-container">add(new FoundationLabel("basic", "Regular label"));
+</div></code>
+</pre>
+
+                </div>
+                <div>
+                    <h4>Rendered HTML</h4>
+                    <span wicket:id="basic"></span>
+                </div>
+            </div>
+
+            <hr>
+            <h2>Advanced</h2>
+
+            <p>Additional classes can be added to your labels to
+                change their appearance.</p>
+            <div>
+                <div>
+                    <h4>HTML</h4>
+                    
+<pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;radiusSecondary&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+<span class="tag">&lt;<span class="title">div</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;roundAlert&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+<span class="tag">&lt;<span class="title">div</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;success&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+</div></code>
+</pre>
+
+                </div>
+                <div>
+                    <h4>Java</h4>
+                    
+<pre><code class="language-html"><div class="code-container">add(new FoundationLabel(&quot;radiusSecondary&quot;, &quot;Radius Secondary Label&quot;, new LabelOptions(ButtonColor.SECONDARY, ButtonRadius.RADIUS)));
+add(new FoundationLabel(&quot;roundAlert&quot;, &quot;Round Alert Label&quot;, new LabelOptions(ButtonColor.ALERT, ButtonRadius.ROUND)));
+add(new FoundationLabel(&quot;success&quot;, &quot;Success Label&quot;, new LabelOptions(ButtonColor.SUCCESS)));
+</div></code>
+</pre>
+
+                </div>
+                <div class="verticalPadding50">
+                    <h4>Rendered HTML</h4>
+                    <div wicket:id="radiusSecondary"></div>
+                    <div wicket:id="roundAlert"></div>
+                    <div wicket:id="success"></div>
+                </div>
+            </div>
+        </div>
+
+    </wicket:extend>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<assembly>
+  <id>project</id>
+  <formats>
+    <format>tar.bz2</format>
+  </formats>
+  <fileSets>
+    <fileSet>
+      <directory>.</directory>
+      <outputDirectory></outputDirectory>
+      <excludes>
+        <exclude>target/**</exclude>
+        <exclude>.hg/**</exclude>
+        <exclude>.classpath</exclude>
+        <exclude>.project</exclude>
+        <exclude>.settings/**</exclude>
+        <exclude>null/**</exclude>
+        <exclude>test-output/**</exclude>
+        <exclude>tmp/**</exclude>
+        <exclude>dist/**</exclude>
+        <exclude>build/**</exclude>
+      </excludes>
+    </fileSet>
+  </fileSets>
+</assembly>

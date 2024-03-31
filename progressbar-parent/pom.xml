@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.wicketstuff</groupId>
+		<artifactId>wicketstuff-core</artifactId>
+		<version>10.1.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>progressbar-parent</artifactId>
+
+	<packaging>pom</packaging>
+	<url>http://wicketstuff.org/</url>
+	<inceptionYear>2007</inceptionYear>
+
+	<description>Parent project for wicketstuff progressbar project</description>
+
+	<modules>
+		<module>progressbar</module>
+		<module>progressbar-spring</module>
+		<module>progressbar-example</module>
+	</modules>
+
+	<developers>
+		<developer>
+			<name>Christopher Hlubek</name>
+			<id>hlubek</id>
+			<email>hlubek at users.sf.net</email>
+		</developer>
+	</developers>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>jakarta.servlet</groupId>
+			<artifactId>jakarta.servlet-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+		</dependency>
+	</dependencies>
+</project>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
+		version="6.0">
+	<display-name>myproject</display-name>
+
+	<!--
+        There are three means to configure Wickets configuration mode and they
+        are tested in the order given.
+
+        1) A system property: -Dwicket.configuration
+        2) servlet specific <init-param>
+        3) context specific <context-param>
+
+        The value might be either "development" (reloading when templates change) or
+        "deployment". If no configuration is found, "development" is the default. -->
+
+	<filter>
+		<filter-name>wicket.myproject</filter-name>
+
+		<filter-class>org.apache.wicket.protocol.ws.javax.JavaxWebSocketFilter</filter-class>
+
+		<init-param>
+			<param-name>applicationClassName</param-name>
+			<param-value>org.wicketstuff.examples.WicketApplication</param-value>
+		</init-param>
+	</filter>
+
+	<!--
+    <filter>
+        <filter-name>wicket.wicket-native-websockets</filter-name>
+        <filter-class>org.apache.wicket.protocol.ws.javax.JavaxWebSocketFilter</filter-class>
+        <init-param>
+            <param-name>applicationClassName</param-name>
+            <param-value>org.apache.wicket.examples.websocket.JSR356Application</param-value>
+        </init-param>
+    </filter>
+-->
+	<filter-mapping>
+		<filter-name>wicket.myproject</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+
+</web-app>

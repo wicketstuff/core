@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<!-- widget collapse/expand -->
+	<entry key="collapse"><![CDATA[Einklappen]]></entry>
+	<entry key="expand"><![CDATA[Ausklappen]]></entry>
+	<!-- widget actions -->
+	<entry key="refresh"><![CDATA[Neu laden]]></entry>
+	<entry key="delete"><![CDATA[Löschen]]></entry>
+	<entry key="settings"><![CDATA[Einstellungen]]></entry>
+	<entry key="deleteAsk"><![CDATA[Widget "${}" löschen?]]></entry>
+</properties>

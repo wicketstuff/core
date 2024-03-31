@@ -1,0 +1,33 @@
+<!--
+Copyright 2012 Vineet Semwal
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head style="margin-left:50px;">
+    <title>Rows Navigator Example</title>
+    <h2>  Rows Navigation displaying all items from 0-99</h2>
+    <h2>Scroll the navigation-bar of quickview's parent and more item/rows will be added</h2>
+</head>
+<body style="margin-left:50px;margin-top:50px;">
+<ul wicket:id="numbers" style="list-style-type: none;overflow-y:auto;height:150px;width:50%" >
+    <li wicket:id="start"></li>
+    <li wicket:id="number" style="margin-bottom:20px;">
+        number=<label wicket:id="display"></label>
+    </li>
+    <li wicket:id="end"></li>
+</ul>
+
+</body>
+</html>

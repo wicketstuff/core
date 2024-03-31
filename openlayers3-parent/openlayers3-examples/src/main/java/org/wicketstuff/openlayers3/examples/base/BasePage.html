@@ -1,0 +1,32 @@
+<!doctype html>
+<html xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd"
+      wicket:id="html">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta charset="utf-8">
+    <meta wicket:id="viewport">
+    <meta wicket:id="description">
+    <meta wicket:id="author">
+    <meta wicket:id="chrome-frame">
+    <title wicket:id="title">page.title</title>
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico"/>
+</head>
+<body>
+
+<div wicket:id="header" class="navbar-fixed-top">[HEADER]</div>
+
+<div class="page" style="margin-top: 40px;">
+
+    <div class="page-content container">
+        <div class="row" style="margin-bottom: 1em;">
+            <div class="col-md-12">
+                <h2 wicket:id="titleShort">page.title.short</h2>
+            </div>
+        </div>
+
+        <wicket:child/>
+    </div>
+</div>
+</body>
+</html>

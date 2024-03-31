@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<document>
+	<properties>
+		<title>News</title>
+	</properties>
+	<meta name="keyword" content="wicket, web, j2ee, java, components" />
+	<body>
+		<section name="News Archive">
+			<p>
+				Here is an overview of all Wicket related news items posted on our
+				<a href="http://wicket.sourceforge.net">front page</a>
+				.
+			</p>
+		</section>
+	</body>
+</document>

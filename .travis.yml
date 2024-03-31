@@ -1,0 +1,38 @@
+dist: trusty
+language: java
+jdk:
+- openjdk11
+- oraclejdk11
+addons:
+  apt:
+    packages:
+    - openjdk-11-jdk
+sudo: false
+notifications:
+  email:
+  - mgrigorov@apache.org
+  - solomax@apache.org
+  irc:
+    channels:
+    - chat.freenode.net##wicket
+    template:
+    - "%{repository}, %{author}, (%{commit}) : %{message} "
+    - 'Build details: %{build_url}'
+    - 'Duration: %{duration}'
+env:
+  global:
+  - secure: "I0PbW4iQlyMO/yztGnZ/qiaMm7IS51QqAGhA5HQYKVh/ywNpQpVrpZaFRyf8OlBAemqKmOTp3EcvR225hb6RQCFilkN2vCMbMO/b7BbMRVhfV6PlpkfiuP2EehgT5vXl74tF/WbnijbvLpQppLPqbC0yYKOVplVcNEDs0LcVLfk="
+  - secure: "PKgEV+4JuiCQ+69lYz8kDXLVKxn107EzGd+jq0BPxZK09LqMsvQpvkF0EZGF0gk1xXt3Gn2itVeKPbcxgufccuzVNoQnnXljvKn9+6ITTKg2HZA7UP4MrdOhhw1m+GMRKYVEdPz6qcG4FXlBfw3zgrmiZZ89K6mggPFeyf1VFDw="
+  - secure: "5VJDZpUAkDd//gFxVFcJSlPa7NzdPyR5jGR1+wV7szUCkCXA6e8RIGDBu4vFxjOer7bANHKeiu9Cb+Fl7xwCMncWQ1ah1ZWLSHFuYmd/NnlWDfSwrdDCIE5nG7VSzmXI5NZ31vmNr5z9M/gA38pQnFtEW3EoKXS0FB0uzNQhSDc="
+cache:
+  directories:
+  - "$HOME/.m2"
+install: true
+before_script:
+- echo "export MAVEN_OPTS='-Xmx2g ${MAVEN_OPTS}'" > ~/.mavenrc
+script:
+- DEPLOY_OR_TEST=install
+- '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && DEPLOY_OR_TEST=deploy'
+- echo DEPLOY_OR_TEST=$DEPLOY_OR_TEST
+- if [ -n "`echo ${JAVA_HOME}|grep openjdk`" ] ; then cp ./config/toolchains.xml $HOME/.m2 ; else cp ./config/toolchains_oracle.xml $HOME/.m2/toolchains.xml ; fi
+- mvn -s sonatype-settings.xml clean $DEPLOY_OR_TEST -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true -Dsource.skip=true -B -V
