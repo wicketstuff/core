@@ -5,7 +5,7 @@
 	<description>Wicket-Kendo UI Culture</description>
 
 	<parent>
-		<groupId>com.googlecode.wicket-jquery-ui</groupId>
+		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicket-jquery-ui-parent</artifactId>
     <version>10.1.0-SNAPSHOT</version>
     <relativePath>../wicket-jquery-ui-parent</relativePath>
@@ -22,7 +22,7 @@
 	
 		<!-- KENDO-UI DEPENDENCIES -->
 		<dependency>
-			<groupId>com.googlecode.wicket-jquery-ui</groupId>
+			<groupId>org.wicketstuff</groupId>
 			<artifactId>wicket-kendo-ui</artifactId>
 			<version>10.1.0-SNAPSHOT</version>
 		</dependency>

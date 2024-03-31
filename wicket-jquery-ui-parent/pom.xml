@@ -17,7 +17,6 @@
 		<url>http://www.7thweb.net/wicket-jquery-ui/</url>
 	</organization>
 
-	<groupId>com.googlecode.wicket-jquery-ui</groupId>
 	<artifactId>wicket-jquery-ui-parent</artifactId>
 	<packaging>pom</packaging>
 
