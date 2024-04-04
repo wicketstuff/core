@@ -1,0 +1,18 @@
+
+   org.wicketstuff.minis.behavior.reflection
+   Contains reflection.js javascript library released under a MIT style license.
+   Contributors: Cow http://cow.neondragon.net
+                 Gfx http://www.jroller.com/page/gfx/
+                 Sitharus http://www.sitharus.com
+                 Andreas Linde http://www.andreaslinde.de
+                 Tralala, coder @ http://www.vbulletin.org
+                 Matthew R Hanlon 
+
+	org.wicketstuff.minis.behaviour.prototip
+	Contains prototip.js, prototip.css and relevent image files
+	Licenced under terms printed in prototip.js, author Nick Stakenburg, see http://www.nickstakenburg.com/projects/prototip/
+	
+	org.wicketstuff.minis.behavior.tooltipsy
+	Contains tooltipsy.js (http://tooltipsy.com) javascript library released under GPLv2 license.
+	Tooltipsy.js author Brian Cray.
+	wicket-tooltipsy licensed under same terms as tooltipsy.js.

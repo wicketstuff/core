@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org">
+	<wicket:extend>
+		<section id="wrapper">
+		    <header>
+		      <h1>WebRTC</h1>
+		    </header>
+		    <article>
+		   		Documentation can be found here: <a href="https://github.com/wicketstuff/core/wiki/Html5">Wicket Stuff HTML5 Wiki Page</a><br/><br/>
+		   		<b>To setup your own signal server refer to the manual and use the following files:</b><br />
+		    	Signal server for nodejs: <a wicket:id="signalserver">server.js</a> (Do right click - save as - server.js)<br/>
+		    	Configuration for the signal server: <a wicket:id="signalserverconfig">dev_config.json</a> (Do right click - save as - dev_config.json)<br/><br/>
+		    	<b>To setup your own STUN server follow the instructions at:</b><br/>
+		    	<a href="http://www.stunprotocol.org/">http://www.stunprotocol.org/</a><br/><br/>
+		    	To test the WebRTC implementation, start this example in a jee container and visit it with two browser which are able to access it. (Use url with the same roomName)
+		    	<hr />
+		    	<h1 style="color:red; margin:0; padding:0; margin-top:10px;">WARNING: THE COMMUNICATION IS PUBLIC!</h1>
+				<h4 style="color:red; margin:0; padding:0;">IF YOU ACCEPT VIDEO / AUDIO SHARING SIGNALS ARE SEND TO AND RECEIVED FROM "https://signaling.simplewebrtc.com:443/" AND "stun.l.google.com:19302"</h4>
+				<div class="videocontainer">
+					<video wicket:id="video" />
+				</div>
+				<div wicket:id="webrtc"></div>
+		    </article>
+		</section>
+	</wicket:extend>
+</html>

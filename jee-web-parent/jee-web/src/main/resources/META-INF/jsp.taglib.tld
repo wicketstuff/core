@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+     Licensed to the Apache Software Foundation (ASF) under one or more
+     contributor license agreements.  See the NOTICE file distributed with
+     this work for additional information regarding copyright ownership.
+     The ASF licenses this file to You under the Apache License, Version 2.0
+     (the "License"); you may not use this file except in compliance with
+     the License.  You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+
+-->
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+	version="2.0">
+	<tlib-version>2.0</tlib-version>
+	<jsp-version>2.2</jsp-version>
+	<short-name>wicketstuff-jee-web</short-name>
+	<description>This taglib contains functions to be used in JSPs embedded into
+		Wicket pages.</description>
+	<uri>http://wicketstuff-jee-web.org/functions/jsp</uri>
+	
+    <function>
+        <name>url</name>
+        <function-class>org.wicketstuff.jeeweb.el.ELFunctions</function-class>
+        <function-signature>java.lang.String url(java.lang.String)</function-signature>
+    </function>
+
+    <function>
+        <name>urlWithQuery</name>
+        <function-class>org.wicketstuff.jeeweb.el.ELFunctions</function-class>
+        <function-signature>java.lang.String urlWithQuery(java.lang.String, java.lang.String)</function-signature>
+    </function>
+
+    <function>
+        <name>ajaxGet</name>
+        <function-class>org.wicketstuff.jeeweb.el.ELFunctions</function-class>
+        <function-signature>java.lang.String ajaxGet()</function-signature>
+    </function>
+
+    <function>
+        <name>ajaxGetWithQuery</name>
+        <function-class>org.wicketstuff.jeeweb.el.ELFunctions</function-class>
+        <function-signature>java.lang.String ajaxGetWithQuery(java.lang.String)</function-signature>
+    </function>
+
+    <function>
+        <name>ajaxCallbackUrlWithQuery</name>
+        <function-class>org.wicketstuff.jeeweb.el.ELFunctions</function-class>
+        <function-signature>java.lang.String ajaxCallbackUrlWithQuery(java.lang.String)</function-signature>
+    </function>
+
+    <function>
+        <name>ajaxCallbackUrl</name>
+        <function-class>org.wicketstuff.jeeweb.el.ELFunctions</function-class>
+        <function-signature>java.lang.String ajaxCallbackUrl()</function-signature>
+    </function>
+    
+    <function>
+        <name>ajaxFormSubmit</name>
+        <function-class>org.wicketstuff.jeeweb.el.ELFunctions</function-class>
+        <function-signature>java.lang.String ajaxFormSubmit(java.lang.String)</function-signature>
+    </function>
+    
+	<tag>
+		<name>url</name>
+		<tag-class>org.wicketstuff.jeeweb.jsp.JspUrlTagSupport</tag-class>
+		<description>Used to generate Wicket page URLs within jsp files.</description>
+		<attribute>
+			<name>page</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>query</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+</taglib> 

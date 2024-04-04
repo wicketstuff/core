@@ -1,0 +1,11 @@
+<html xmlns:wicket>
+<wicket:extend>
+<wicket:message key="message">[You are about to delete the following contact]</wicket:message>:<br/>
+<span wicket:id="name">[contact name]</span><br/><br/>
+<wicket:message key="info">[Press 'confirm' to remove the contact, 'cancel' to return to previous page]</wicket:message><br/><br/>
+<form>
+	<input type="submit" wicket:id="confirm"/>
+	<input type="submit" wicket:id="cancel"/>
+</form>
+</wicket:extend>
+</html>

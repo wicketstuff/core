@@ -1,0 +1,2 @@
+This project can be built with either Maven or Simple Build Tool (SBT).
+To run with sbt, install SBT, run sbt in this directory and type update then jetty-run at the prompt.

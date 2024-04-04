@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<meta charset="utf-8" />
+<title>wicket-foundation</title>
+</head>
+<body>
+    <wicket:extend>
+
+		<div class="row">
+			<h1 id="reveal-modal">Reveal Modal</h1>
+			<h3 class="subheader">Modal dialogs, or pop-up windows, are
+				handy for prototyping and production. Foundation includes Reveal our
+				jQuery modal plugin, to make this easy for you.</h3>
+
+			<hr>
+			<h2>Basic</h2>
+
+			<p>You can create a reveal modal using minimal markup. The anchor
+				tag with the reveal-modal-id is what triggers the Reveal.</p>
+			<div>
+				<div>
+					<h4>HTML</h4>
+<pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;basic&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+</div></code></pre>
+				</div>
+				<div>
+					<h4>Java</h4>
+<pre><code class="language-html"><div class="code-container">final String content = &quot;&lt;h2&gt;Awesome. I have it.&lt;/h2&gt;&lt;p class=\&quot;lead\&quot;&gt;Your couch. It is mine.&lt;/p&gt;&lt;p&gt;I&#39;m a cool paragraph that lives inside of an even cooler modal. Wins!&lt;/p&gt;&lt;a class=\&quot;close-reveal-modal\&quot;&gt;&#215;&lt;/a&gt;&quot;;
+add(new FoundationRevealModal(&quot;basic&quot;, Model.of(&quot;Click Me For A Modal&quot;), Model.of(content)));
+</div></code></pre>
+				</div>
+				<div>
+					<h4>Rendered HTML</h4>
+	
+					<div wicket:id="basic"></div>				
+				</div>
+			</div>
+
+			<hr>
+			<h2>Intermediate</h2>
+
+			<p>You can create a reveal modal with another inside it. You can
+				even put a video into a reveal.</p>
+			<div>
+				<div>
+					<h4>HTML</h4>
+<pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;modalInModal&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+<span class="tag">&lt;<span class="title">div</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;video&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+</div></code></pre>
+				</div>
+				<div>
+					<h4>Java</h4>
+<pre><code class="language-html"><div class="code-container">final String videoContent = &quot;&lt;h2&gt;This modal has video&lt;/h2&gt;&lt;div class=\&quot;flex-video widescreen vimeo\&quot;&gt;&lt;iframe width=\&quot;1280\&quot; height=\&quot;720\&quot; src=\&quot;//www.youtube-nocookie.com/embed/wnXCopXXblE?rel=0\&quot; frameborder=\&quot;0\&quot; allowfullscreen&gt;&lt;/iframe&gt;&lt;/div&gt;&lt;p&gt;&lt;a class=\&quot;close-reveal-modal\&quot;&gt;&#215;&lt;/a&gt;&quot;;
+add(new FoundationRevealModal(&quot;video&quot;, Model.of(&quot;Example Modal with Video...&quot;), Model.of(videoContent)));
+
+add(new FoundationRevealModal(&quot;modalInModal&quot;, Model.of(&quot;Modal in a modal...&quot;)) {
+
+	private static final long serialVersionUID = 1L;
+
+	@Override
+	public WebMarkupContainer createContentPanel(String id) {
+		return new ModalInModalPanel(id);
+	}
+});
+</div></code></pre>
+				</div>
+				<div>
+					<h4>Rendered HTML</h4>
+
+					<div wicket:id="modalInModal"></div>				
+
+					<div wicket:id="video"></div>				
+				</div>
+			</div>
+		</div>
+
+	</wicket:extend>
+</body>
+</html>

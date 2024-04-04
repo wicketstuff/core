@@ -1,0 +1,52 @@
+<html>
+<head>
+    <style type="text/css">
+        INPUT, BODY { font-size: 24px; font-family: Helvetica; }
+        BODY { margin-left: 30%; margin-right: 30%; margin-top: 10%; }
+        .header { background-color: #E05717; color: white; padding: 10px; }
+        FORM { background-color: #7EACCB; padding: 30px; }
+        P { margin: 0 }
+    </style>
+</head>
+
+<body>
+
+<a wicket:id="clicker">click me!</a>
+
+<p class="header"><strong>Hello, Wicket World!</strong></p>
+<form wicket:id="form1">
+    What's your name? <br/>
+    name1: <input wicket:id="name1"/>
+    name2: <input wicket:id="name2"/>
+    name2: <input wicket:id="name3"/>
+    <input type="submit" value = "OK" />
+
+    <p>helloworld1: <strong><span wicket:id="helloworld1"/></strong></p>
+    <p>helloworld2: <strong><span wicket:id="helloworld2"/></strong></p>
+    <p>helloworld3: <strong><span wicket:id="helloworld3"/></strong></p>
+    <p>helloworld4: <strong><span wicket:id="helloworld4"/></strong></p>
+</form>
+
+<form wicket:id="form2" style="border-style: groove; padding: 10px; ">
+<h3>New Presentation</h3>
+Name: <input wicket:id="name" type="text"/> <br/>
+Author: <input wicket:id="author" type="text"/>
+</form>
+
+<hr/>
+
+<div wicket:id="presentations" style="border-style: dashed; padding:5px; background-color: #ccffff">
+	Name: <span wicket:id="name" /><br/>
+	Author: <span wicket:id="author" /><br/>
+	Votes: <span wicket:id="votes" />
+
+	<h3>Add Votes</h3>
+	<form wicket:id="form" style="border-style: groove; padding: 3px;">
+		Email: <input wicket:id="email" type="text"/>
+		<div wicket:id="feedback"></div>
+	</form>
+</div>
+
+</body>
+
+</html>

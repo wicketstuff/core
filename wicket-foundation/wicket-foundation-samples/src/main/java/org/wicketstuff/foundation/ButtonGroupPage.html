@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<meta charset="utf-8" />
+<title>wicket-foundation</title>
+</head>
+<body>
+  <wicket:extend>
+
+<div class="row">
+              <h1 id="button-groups">Button Groups</h1>
+              <h3 class="subheader">Button groups are containers for related action items. They&#39;re great when you need to display a group of actions in a bar. These build off the button styles and work perfectly with the grid.</h3>
+
+<hr>
+<h2>Basic</h2>
+
+<p>You can create a button group using minimal markup.</p>
+
+<h4>HTML</h4>
+
+<pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">wicket:id</span>=<span class="value">"basic"</span>&gt;</span>&lt;<span class="title">div</span>&gt;
+</div></code>
+</pre>
+
+<h4>Java</h4>
+
+<pre><code class="language-html"><div class="code-container">List&lt;FoundationButtonOptions&gt; btnOptions = Arrays.asList(
+        new FoundationButtonOptions(), new FoundationButtonOptions(), new FoundationButtonOptions());
+add(new ButtonGroupPanel("basic", new ButtonGroupOptions(), btnOptions) {
+
+    private static final long serialVersionUID = 1L;
+
+    @Override
+    protected WebMarkupContainer createButton(int idx, String id,
+            IModel&lt;FoundationButtonOptions&gt; optionsModel) {
+        return new FoundationLink&lt;String&gt;(id, Model.of(String.format("Button %d", idx+1)), optionsModel.getObject()) {
+
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void onClick() {
+                // NOP
+            }
+        };
+    }
+});
+</div></code>
+</pre>
+
+<h4>Rendered HTML</h4>
+
+<div wicket:id="basic"></div>
+
+<hr>
+<h2>Advanced</h2>
+
+<p>Additional classes can be added to your button group to change its appearance.</p>
+
+<h4>HTML</h4>
+
+<pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">wicket:id</span>=<span class="value">"advanced"</span>&gt;</span>&lt;<span class="title">div</span>&gt;
+</div></code>
+</pre>
+
+<h4>Java</h4>
+
+<pre><code class="language-html"><div class="code-container">List&lt;FoundationButtonOptions&gt; btnOptions = Arrays.asList(
+        new FoundationButtonOptions(FoundationButtonColor.ALERT), 
+        new FoundationButtonOptions(FoundationButtonColor.ALERT), 
+        new FoundationButtonOptions(FoundationButtonColor.ALERT));
+add(new ButtonGroupPanel("advanced", new ButtonGroupOptions(FoundationButtonRadius.ROUND), btnOptions) {
+
+    private static final long serialVersionUID = 1L;
+
+    @Override
+    protected WebMarkupContainer createButton(int idx, String id,
+            IModel&lt;FoundationButtonOptions&gt; optionsModel) {
+        return new FoundationLink&lt;String&gt;(id, Model.of(String.format("Button %d", idx+1)), optionsModel.getObject()) {
+
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void onClick() {
+                // NOP
+            }
+        };
+    }
+});
+</div></code>
+</pre>
+
+<h4>Rendered HTML</h4>
+
+<div wicket:id="advanced"></div>
+
+<hr>
+<h2 id="stacking">Stacking</h2>
+<p>You can change the orientation of a button group.</p>
+
+<h4>HTML</h4>
+
+<pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">wicket:id</span>=<span class="value">"stack"</span>&gt;</span>&lt;<span class="title">div</span>&gt;
+</div></code>
+</pre>
+
+<h4>Java</h4>
+
+<pre><code class="language-html"><div class="code-container">List&lt;ButtonOptions&gt; btnOptions = Arrays.asList(new ButtonOptions(), 
+        new ButtonOptions(), new ButtonOptions());
+add(new ButtonGroupPanel("stack", new ButtonGroupOptions(ButtonGroupStacking.STACK), btnOptions) {
+
+    private static final long serialVersionUID = 1L;
+
+    @Override
+    protected WebMarkupContainer createButton(int idx, String id,
+            IModel&lt;ButtonOptions&gt; optionsModel) {
+        return new FoundationLink&lt;String&gt;(id, Model.of(String.format("Button %d", idx+1)), optionsModel.getObject()) {
+
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void onClick() {
+                // NOP
+            }
+        };
+    }
+});
+</div></code>
+</pre>
+
+
+<h4>Rendered HTML</h4>
+
+<div wicket:id="stack"></div>
+
+<hr>
+<h2 id="button-bars">Button Bars</h2>
+<p>A button bar is a group of button groups, perfect for situations where you want groups of actions that are all related to a similar element or page.</p>
+
+<h4>HTML</h4>
+
+<pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">wicket:id</span>=<span class="value">"buttonbar"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">wicket:id</span>=<span class="value">"first"</span>&gt;</span>&lt;<span class="title">div</span>&gt;
+  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">wicket:id</span>=<span class="value">"second"</span>&gt;</span>&lt;<span class="title">div</span>&gt;
+&lt;<span class="title">div</span>&gt;
+</div></code>
+</pre>
+
+<h4>Java</h4>
+
+<pre><code class="language-html"><div class="code-container">ButtonBarBorder buttonbar = new ButtonBarBorder("buttonbar");
+add(buttonbar);
+buttonbar.add(createButtonGroup("first"));
+buttonbar.add(createButtonGroup("second"));
+</div></code>
+</pre>
+
+<h4>Rendered HTML</h4>
+
+<div wicket:id="buttonbar">
+    <div wicket:id="first"></div>
+    <div wicket:id="second"></div>
+</div>
+
+</div>
+
+  </wicket:extend>
+</body>
+</html>

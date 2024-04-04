@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE glassfish-web-app PUBLIC "-//GlassFish.org//DTD GlassFish Application Server 3.1 Servlet 3.0//EN" "http://glassfish.org/dtds/glassfish-web-app_3_0-1.dtd">
+<!-- This file only need for glassfish to map the roles, see 
+https://github.com/jsarman/core/wiki/Servlet-Container-Authentication-and-Authorization#advanced-topics
+for howto -->
+<glassfish-web-app error-url="">
+  <security-role-mapping>
+    <role-name>admin</role-name>
+    <group-name>ADMIN</group-name>
+  </security-role-mapping>
+  <security-role-mapping>
+    <role-name>role1</role-name>
+    <group-name>USER</group-name>
+  </security-role-mapping>
+  <security-role-mapping>
+    <role-name>tomcat</role-name>
+    <group-name>ADMIN</group-name>
+  </security-role-mapping>  
+</glassfish-web-app>

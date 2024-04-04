@@ -1,0 +1,14 @@
+#stop {
+	cursor: pointer;
+	text-decoration: underline;
+	color: #8a2be2;
+}
+
+article {
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
+footer {
+	padding-bottom: 20px;
+}

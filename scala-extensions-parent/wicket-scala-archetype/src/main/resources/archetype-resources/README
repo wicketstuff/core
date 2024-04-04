@@ -1,0 +1,9 @@
+This project can be built with either Maven or Simple Build Tool (SBT).
+To run with sbt, install SBT, run sbt in this directory and type update then jetty-run at the prompt.
+
+Or to run the tests:
+sbt update && sbt test
+mvn test
+
+
+See the Scala-Wicket Sample project for more examples of usage of the library.

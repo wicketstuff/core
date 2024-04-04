@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org" lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<title>Apache Wicket Stuff Select2 Examples</title>
+	</head>
+	<body class="bg-light pb-5">
+		<div class="container">
+			<div class="jumbotron mt-3 py-5">
+				<h1 class="display-4">Wicket Stuff Select2 Examples</h1>
+				<p class="lead m-0">
+					<code>wicketstuff-select2</code>
+					integrates <a href="https://select2.org/">Select2</a>
+					with <a href="https://wicket.apache.org/">Apache Wicket</a>.
+				</p>
+				<p class="mb-0">
+					<a href="https://github.com/angel-vladov/select2-bootstrap-theme">Select2 theme</a>
+					for <a href="https://getbootstrap.com/">Bootstrap 4</a> available.
+				</p>
+				<hr class="my-3" />
+				<a class="btn btn-outline-primary" wicket:id="homeBootstrapPageLink">Examples BS4 theme</a>
+			</div>
+			<section class="mb-4">
+				<div class="card">
+					<div class="card-body">
+						<h4 class="card-title">Single-Select</h4>
+						<h6 class="card-subtitle mb-3 text-muted">Ajax result loading. Paging with infinite scrolling.</h6>
+						<p>
+							Country currently selected: <strong><span wicket:id="country0"></span></strong>
+						</p>
+						
+						<form wicket:id="single0">
+							<div class="form-row">
+								<div class="form-group col-md-7 col-lg-5">
+									<select wicket:id="country0"></select>
+								</div>
+							</div>
+							<button type="submit" class="btn btn-primary">Submit</button>
+						</form>
+					</div>
+				</div>
+			</section>
+			<section class="mb-4">
+				<div class="card">
+					<div class="card-body">
+						<h4 class="card-title">Single-Select</h4>
+						<h6 class="card-subtitle mb-3 text-muted">Ajax result loading. Paging with infinite scrolling. Minimum input length.</h6>
+						<p>
+							Country currently selected: <strong><span wicket:id="country"></span></strong>
+						</p>
+						<form wicket:id="single">
+							<div class="form-row">
+								<div class="form-group col-md-7 col-lg-5">
+									<select wicket:id="country"></select>
+								</div>
+							</div>
+							<button type="submit" class="btn btn-primary">Submit</button>
+						</form>
+					</div>
+				</div>
+			</section>
+			<section class="mb-4">
+				<div class="card">
+					<div class="card-body">
+						<h4 class="card-title">Single-Select</h4>
+						<h6 class="card-subtitle mb-3 text-muted">Non-Ajax DropDownChoice. Select2Behavior.</h6>
+						<p>
+							Country currently selected: <strong><span wicket:id="countryDropDownChoice"></span></strong>
+						</p>
+						<form wicket:id="singleDropDownChoice">
+							<div class="form-row">
+								<div class="form-group col-md-7 col-lg-5">
+									<select wicket:id="countryDropDownChoice"></select>
+								</div>
+							</div>
+							<button type="submit" class="btn btn-primary">Submit</button>
+						</form>
+					</div>
+				</div>
+			</section>
+			<section class="mb-4">
+				<div class="card">
+					<div class="card-body">
+						<h4 class="card-title">Multi-Select</h4>
+						<h6 class="card-subtitle mb-3 text-muted">Ajax result loading. Paging with infinite scrolling. Minimum input length.</h6>
+						<p>
+							Countries currently selected: <strong><span wicket:id="countries"></span></strong>
+						</p>
+						<form wicket:id="multi">
+							<div class="form-row">
+								<div class="form-group col-md-7 col-lg-5">
+									<select wicket:id="countries"></select>
+								</div>
+							</div>
+							<button type="submit" class="btn btn-primary">Submit</button>
+						</form>
+					</div>
+				</div>
+			</section>
+			<section class="mb-4">
+				<div class="card">
+					<div class="card-body">
+						<h4 class="card-title">Multi-Select</h4>
+						<h6 class="card-subtitle mb-3 text-muted">Ajax result loading. Paging with infinite scrolling. Minimum input length. Ajax change.</h6>
+						<p>
+							Countries currently selected: <strong><span wicket:id="ajaxcountries"></span></strong>
+						</p>
+						<form wicket:id="multiajax">
+							<div class="form-row">
+								<div class="form-group col-md-7 col-lg-5 mb-0">
+									<select wicket:id="ajaxcountries" ></select>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</section>
+			<section class="mb-4">
+				<div class="card">
+					<div class="card-body">
+						<h4 class="card-title">Multi-Select</h4>
+						<h6 class="card-subtitle mb-3 text-muted">Ajax result loading. Paging with infinite scrolling. Minimum input length. Ajax change, no submit.</h6>
+						<p>
+							Countries in model: <strong><span wicket:id="ajaxcountriesnsm"></span></strong><br/>
+							Countries currently selected: <strong><span wicket:id="ajaxcountriesns"></span></strong>
+						</p>
+						<form wicket:id="multiajaxns">
+							<div class="form-row">
+								<div class="form-group col-md-7 col-lg-5 mb-0">
+									<select wicket:id="ajaxcountriesns"></select>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</section>
+			<section class="mb-4">
+				<div class="card">
+					<div class="card-body">
+						<h4 class="card-title">Multi-Select</h4>
+						<h6 class="card-subtitle mb-3 text-muted">Non-Ajax ListMultipleChoice. Select2Behavior.</h6>
+						<p>
+							Countries currently selected: <strong><span wicket:id="countriesListMultipleChoice"></span></strong>
+						</p>
+						<form wicket:id="listMultipleChoice">
+							<div class="form-row">
+								<div class="form-group col-md-7 col-lg-5">
+									<select wicket:id="countriesListMultipleChoice" ></select>
+								</div>
+							</div>
+							<button type="submit" class="btn btn-primary">Submit</button>
+						</form>
+					</div>
+				</div>
+			</section>
+			<section class="mb-4">
+				<div class="card">
+					<div class="card-body">
+						<h4 class="card-title">Multi-Select</h4>
+						<h6 class="card-subtitle mb-3 text-muted">Ajax result loading. Paging with infinite scrolling. Minimum input length. Close on select. Tags.</h6>
+						<p>
+							Tags currently selected: <strong><span wicket:id="tagsLabel"></span></strong>
+						</p>
+						<form wicket:id="tagsForm">
+							<div class="form-row">
+								<div class="form-group col-md-7 col-lg-5">
+									<select wicket:id="tagsSelect"></select>
+								</div>
+							</div>
+							<button type="submit" class="btn btn-primary">Submit</button>
+						</form>
+					</div>
+				</div>
+			</section>
+			<section class="mb-4">
+				<div class="card">
+					<div class="card-body">
+						<h4 class="card-title">Stateless</h4>
+						<form wicket:id="stateless">
+							<div class="form-row">
+								<div class="form-group col-md-7 col-lg-5 mb-0">
+									<select wicket:id="statelessCountries"></select>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</section>
+		</div>
+	</body>
+</html>

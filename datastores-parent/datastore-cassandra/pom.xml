@@ -1,0 +1,51 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<parent>
+		<groupId>org.wicketstuff</groupId>
+		<artifactId>datastores-parent</artifactId>
+		<version>9.18.0-SNAPSHOT</version>
+	</parent>
+
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>wicketstuff-datastore-cassandra</artifactId>
+	<packaging>jar</packaging>
+	<name>Apache Wicket IPageStore Cassandra </name>
+	<description>An implementation of Apache Wicket's IPageStore that uses Apache Cassandra as a backend</description>
+
+	<properties>
+		<cassandra-driver-core.version>3.6.0</cassandra-driver-core.version>
+	</properties>
+	<dependencies>
+
+		<dependency>
+			<groupId>org.wicketstuff</groupId>
+			<artifactId>wicketstuff-datastore-common</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.wicketstuff</groupId>
+			<artifactId>wicketstuff-datastore-common</artifactId>
+			<version>${project.version}</version>
+			<classifier>tests</classifier>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.datastax.cassandra</groupId>
+			<artifactId>cassandra-driver-core</artifactId>
+			<version>${cassandra-driver-core.version}</version>
+			<!--
+			 the application should provide the version of the driver
+			 for version of its Cassandra installation
+			 -->
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+		</dependency>
+
+	</dependencies>
+
+</project>
