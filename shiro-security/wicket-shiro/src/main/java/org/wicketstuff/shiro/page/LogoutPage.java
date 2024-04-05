@@ -22,6 +22,8 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Page;
+import org.apache.wicket.RestartResponseException;
+import org.apache.wicket.Session;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.model.Model;
@@ -42,7 +44,7 @@ public class LogoutPage extends WebPage
 
 	/**
 	 * Constructor. The page will immediately redirect to the given url.
-	 * 
+	 *
 	 * @param url
 	 *            The url to redirect to
 	 */
@@ -62,7 +64,7 @@ public class LogoutPage extends WebPage
 	{
 		final StringValue page = parameters.get(REDIRECTPAGE_PARAM);
 		Class<? extends Page> pageClass;
-		if (!page.isNull())
+		if (!page.isNull()) {
 			try
 			{
 				pageClass = (Class<? extends Page>)Class.forName(page.toString());
@@ -71,26 +73,27 @@ public class LogoutPage extends WebPage
 			{
 				throw new RuntimeException(e);
 			}
-		else
+		} else {
 			pageClass = getApplication().getHomePage();
-
+		}
 
 		setStatelessHint(true);
-		setResponsePage(pageClass);
 
 		// this should remove the cookie and invalidate session
 		final Subject subject = SecurityUtils.getSubject();
 		LOG.info("logout: " + subject);
 		subject.logout();
-		
-		return;
+		Session.get().invalidateNow(); // invalidate the wicket session
+
+		//redirect to correct page and stop processing this one.
+		throw new RestartResponseException(pageClass);
 	}
 
 
 	/**
 	 * Constructor. The page will redirect to the given url after waiting for the given number of
 	 * seconds.
-	 * 
+	 *
 	 * @param url
 	 *            The url to redirect to
 	 * @param waitBeforeRedirectInSeconds
