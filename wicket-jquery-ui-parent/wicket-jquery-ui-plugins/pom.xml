@@ -5,7 +5,7 @@
 	<description>Wicket-jQuery UI plugins</description>
 
 	<parent>
-		<groupId>org.wicketstuff</groupId>
+		<groupId>com.googlecode.wicket-jquery-ui</groupId>
 		<artifactId>wicket-jquery-ui-parent</artifactId>
 		<version>9.18.0-SNAPSHOT</version>
 	</parent>
@@ -20,7 +20,7 @@
 	<dependencies>
 		<!-- JQUERY-UI DEPENDENCIES -->
 		<dependency>
-			<groupId>org.wicketstuff</groupId>
+			<groupId>com.googlecode.wicket-jquery-ui</groupId>
 			<artifactId>wicket-jquery-ui-core</artifactId>
 			<version>9.18.0-SNAPSHOT</version>
 		</dependency>

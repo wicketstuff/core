@@ -7,6 +7,10 @@
     <version>9.18.0-SNAPSHOT</version>
   </parent>
 
+  <groupId>com.googlecode.wicket-jquery-ui</groupId>
+  <artifactId>wicket-jquery-ui-parent</artifactId>
+  <packaging>pom</packaging>
+
 	<name>wicket-jquery-ui pom</name>
 	<description>parent pom</description>
 	<url>https://github.com/sebfz1/wicket-jquery-ui</url>
@@ -15,9 +19,6 @@
 		<name>7thWeb</name>
 		<url>http://www.7thweb.net/wicket-jquery-ui/</url>
 	</organization>
-
-	<artifactId>wicket-jquery-ui-parent</artifactId>
-	<packaging>pom</packaging>
 
 	<licenses>
 		<license>
