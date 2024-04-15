@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+</head>
+<body>
+	<wicket:extend>
+
+		<div class="component">
+			<button type="button" id="close" class="site close">x</button>
+			<h2 wicket:id="title">[title]</h2>
+	
+			<div class="demo">
+				<wicket:child />
+			</div>
+	
+			<wicket:enclosure child="demo-list">
+				<h3>Components / Samples</h3>
+				<nav>
+					<ul>
+						<li wicket:id="demo-list">
+							<a href="javascript:;" wicket:id="link" class="site"><span wicket:id="label">[label]</span></a>
+						</li>
+					</ul>
+				</nav>
+			</wicket:enclosure>
+	
+			<div class="componentDescription">
+				<h3>Description</h3>
+				<p wicket:id="source-desc">[description]</p>
+			</div>
+	
+			<div class="componentSource">
+				<h3>Sources</h3>
+				<div wicket:id="sources" class="sources">[sources]</div>
+			</div>
+		</div>
+
+		<wicket:fragment wicket:id="fragment-java">
+			<pre wicket:id="code" class="code">[code]</pre>
+		</wicket:fragment>
+
+		<wicket:fragment wicket:id="fragment-html">
+			<pre wicket:id="code" class="code">[code]</pre>
+		</wicket:fragment>
+
+		<wicket:fragment wicket:id="fragment-style">
+			<pre wicket:id="code" class="code">[code]</pre>
+		</wicket:fragment>
+
+	</wicket:extend>
+</body>
+</html>

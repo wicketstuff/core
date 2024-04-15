@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<wicket:head>
+	<title>Wicket Kendo UI: menu</title>
+</wicket:head>
+</head>
+<body>
+<wicket:extend>
+	<div wicket:id="menu"></div>
+	<br/>
+	<div wicket:id="feedback"></div>
+
+	<wicket:fragment wicket:id="moveToPosition">
+		<form wicket:id="form">
+			With a Form: <input wicket:id="position" type="number" style="width: 70px"/> <button type="button" wicket:id="moveToPositionBtn">Set position</button>
+		</form>
+	</wicket:fragment>
+
+</wicket:extend>
+</body>
+</html>

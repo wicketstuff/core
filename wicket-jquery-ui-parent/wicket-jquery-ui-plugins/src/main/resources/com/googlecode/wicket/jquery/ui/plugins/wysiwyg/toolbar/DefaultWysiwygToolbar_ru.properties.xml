@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+  <entry key="wicket.jquery.ui.wysiwyg.toolbar.fontSize">Размер шрифта</entry>
+
+  <entry key="wicket.jquery.ui.wysiwyg.toolbar.huge">большой</entry>
+  <entry key="wicket.jquery.ui.wysiwyg.toolbar.medium">среда</entry>
+  <entry key="wicket.jquery.ui.wysiwyg.toolbar.small">небольшой</entry>
+
+  <entry key="wicket.jquery.ui.wysiwyg.toolbar.bold">смелый (Ctrl/Cmd+B)</entry>
+  <entry key="wicket.jquery.ui.wysiwyg.toolbar.italic">курсив (Ctrl/Cmd+I)</entry>
+  <entry key="wicket.jquery.ui.wysiwyg.toolbar.strikethrough">зачеркивать</entry>
+  <entry key="wicket.jquery.ui.wysiwyg.toolbar.underline">подчеркивание (Ctrl/Cmd+U)</entry>
+
+  <entry key="wicket.jquery.ui.wysiwyg.toolbar.bullets">Пуля список</entry>
+  <entry key="wicket.jquery.ui.wysiwyg.toolbar.numbers">список номеров</entry>
+  <entry key="wicket.jquery.ui.wysiwyg.toolbar.indent">Уменьшить отступ (Shift+Tab)</entry>
+  <entry key="wicket.jquery.ui.wysiwyg.toolbar.reduceIndent">отступ (Tab)</entry>
+
+  <entry key="wicket.jquery.ui.wysiwyg.toolbar.justifyLeft">Выровнять по левому краю (Ctrl/Cmd+L)</entry>
+  <entry key="wicket.jquery.ui.wysiwyg.toolbar.justifyCenter">центр (Ctrl/Cmd+E)</entry>
+  <entry key="wicket.jquery.ui.wysiwyg.toolbar.justifyRight">Выровнять по правому краю (Ctrl/Cmd+R)</entry>
+  <entry key="wicket.jquery.ui.wysiwyg.toolbar.justifyFull">оправдывать (Ctrl/Cmd+J)</entry>
+
+  <entry key="wicket.jquery.ui.wysiwyg.toolbar.hyperlink">гиперссылка</entry>
+  <entry key="wicket.jquery.ui.wysiwyg.toolbar.removeHyperlink">Удалить гиперссылку</entry>
+
+  <entry key="wicket.jquery.ui.wysiwyg.toolbar.undo">аннулировать (Ctrl/Cmd+Z)</entry>
+  <entry key="wicket.jquery.ui.wysiwyg.toolbar.redo">переделывать (Ctrl/Cmd+Y)</entry>
+</properties>

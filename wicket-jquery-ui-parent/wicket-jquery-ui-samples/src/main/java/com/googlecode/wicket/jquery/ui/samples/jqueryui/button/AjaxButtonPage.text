@@ -1,0 +1,8 @@
+Alike <code>Button</code>, <code>AjaxButton</code> inherits from org.apache.wicket.markup.html.form.AjaxButton.<br />
+
+<h4>Why two buttons in this sample?</h4>
+There is a slight difference behind the action of these two buttons:
+<ul>
+<li>The action of the first button just refresh the FeedbackPanel.</li>
+<li>The action of the second button re-attach the whole form in ajax. By doing this, it also re-attach nested components: buttons. This sample ensure that the display of buttons is not altered.</li>
+</ul>

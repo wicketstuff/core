@@ -1,0 +1,1 @@
+<b>Note: </b> <code>onValueChanged</code> visibility changed to <code>public</code> in core-1.1 (was <code>protected</code> before).

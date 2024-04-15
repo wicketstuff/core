@@ -1,0 +1,10 @@
+<h4>Superfish Menu</h4>
+Superfish is an enhanced Suckerfish-style menu jQuery plugin.<br/>
+<br/>
+The menu can be used to redirect to Wicket pages. The css styles for horizontal and vertical menus can be customized by using ISuperfishLibrarySettings.
+<br/>
+Plugin options: <a class="site icon-new-tab" target="_blank" href="http://users.tpg.com.au/j_birch/plugins/superfish/options/">http://users.tpg.com.au/j_birch/plugins/superfish/options/</a><br/>
+General overview: <a class="site icon-new-tab" target="_blank" href="http://users.tpg.com.au/j_birch/plugins/superfish/">http://users.tpg.com.au/j_birch/plugins/superfish/</a><br/>
+<br/>
+<h4>Since</h4>
+wicket-jquery-ui-core-6.12.0

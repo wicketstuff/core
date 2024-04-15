@@ -1,0 +1,9 @@
+.w-label-icon {
+	display: inline-block;
+	margin-right: 0.1em;
+	vertical-align: middle;
+}
+
+.w-label-text {
+	vertical-align: middle;
+}

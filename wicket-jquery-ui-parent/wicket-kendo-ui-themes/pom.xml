@@ -1,0 +1,35 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<name>wicket-kendo-ui-themes</name>
+	<description>Wicket-Kendo UI Themes</description>
+
+	<parent>
+		<groupId>com.googlecode.wicket-jquery-ui</groupId>
+		<artifactId>wicket-jquery-ui-parent</artifactId>
+		<version>9.18.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>wicket-kendo-ui-themes</artifactId>
+	<packaging>pom</packaging>
+
+	<modules>
+		<module>theme-black</module>
+		<module>theme-blue-opal</module>
+		<module>theme-bootstrap</module>
+		<module>theme-default</module>
+		<module>theme-fiori</module>
+		<module>theme-flat</module>
+		<module>theme-high-contrast</module>
+		<module>theme-material</module>
+		<module>theme-material-black</module>
+		<module>theme-metro</module>
+		<module>theme-metro-black</module>
+		<module>theme-moonlight</module>
+		<module>theme-nova</module>
+		<module>theme-office365</module>
+		<module>theme-silver</module>
+		<module>theme-uniform</module>
+	</modules>
+
+</project>

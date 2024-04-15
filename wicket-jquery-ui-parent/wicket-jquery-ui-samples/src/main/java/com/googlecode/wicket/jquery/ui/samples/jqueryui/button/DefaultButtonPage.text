@@ -1,0 +1,10 @@
+The <code>Button</code> class inherits from <code>org.apache.wicket.markup.html.form.Button</code>.<br/>
+It means that you can use a button exactly as built-in Wicket one, except that it looks like the jQuery one.<br/>
+<pre>
+Button button = new Button("button1") {
+
+	@Override
+	public void onSubmit() {
+				
+	}			
+};</pre>

@@ -1,0 +1,5 @@
+<code>Spinner</code> is a form component, its value can be validated and submitted through a form.<br/>
+<br/>
+<h4>Since</h4>
+wicket-jquery-ui-core-1.4.0<br/>
+wicket-jquery-ui-core-6.2.0

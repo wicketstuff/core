@@ -1,0 +1,32 @@
+<code>AutoCompleteTextField</code> widget allows you to customize the item's display using a jQuery template, 
+which will be enclosed in a <code>&lt;script type="text/x-jquery-tmpl" /&gt;</code> (so you can use the "<code>\n</code>" character to properly format the template).<br/>
+<br/>
+For an <code>AutoComplete</code>, the properties used in the template text (ie: <code>#: data.name #</code>) should be prefixed by "<code>data.</code>" and should be identified in the list returned by <code>IJQueryTemplate#getTextProperties()</code>, without "<code>data.</code>".
+
+<pre>
+@Override
+protected IJQueryTemplate newTemplate()
+{
+	return new IJQueryTemplate() {
+
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public String getText()
+		{
+			return  "&lt;i&gt;#: data.name #&lt;/i&gt;";
+		}
+
+		@Override
+		public List<String> getTextProperties()
+		{
+			// should be specified, unless already part of the ITextRenderer
+			return Arrays.asList("name"); 
+		}
+	};
+}
+</pre>
+
+<br/>
+<h4>Since</h4>
+wicket-jquery-ui-core-1.2.0<br/>

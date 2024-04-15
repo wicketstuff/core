@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<wicket:head>
+	<title>Wicket - Kendo UI: tabs - demo</title>
+</wicket:head>
+</head>
+<body>
+<wicket:extend>
+	<form wicket:id="form">
+		<div style="text-align: right; margin-bottom: 4px;">
+			<button wicket:id="add">Add Tab</button>&nbsp;<span wicket:id="nav"></span>
+		</div>
+		<div wicket:id="tabs">
+		</div>
+	</form>
+	<br/>
+	<div wicket:id="feedback"></div>
+	
+	<div wicket:id="dialog">[dialog]</div>
+
+	<wicket:fragment wicket:id="panel-1">
+		Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.
+	</wicket:fragment>
+	
+	<wicket:fragment wicket:id="panel-2">
+		<b>Panel loaded in ajax</b><br/>
+		<p>
+			Sed non urna. Donec et ante. Phasellus eu ligula. Vestibulum sit amet purus. Vivamus hendrerit, dolor at aliquet laoreet, mauris turpis porttitor velit, faucibus interdum tellus libero ac justo. Vivamus non quam. In suscipit faucibus urna.
+		</p>
+	</wicket:fragment>
+</wicket:extend>
+</body>
+</html>
