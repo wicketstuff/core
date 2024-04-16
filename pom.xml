@@ -265,7 +265,6 @@
 		<wicket-bootstrap3-core.version>4.0.4</wicket-bootstrap3-core.version>
 		<wicket-bootstrap4-core.version>5.0.4</wicket-bootstrap4-core.version>
 		<jasperreports.version>6.21.2</jasperreports.version>
-		<bcprov.version>1.78</bcprov.version>
 		<joda-time.version>2.12.7</joda-time.version>
 		<ehcache.version>3.10.8</ehcache.version>
 		<javaee-api.version>7.0</javaee-api.version>
@@ -886,11 +885,6 @@
 				<artifactId>hamcrest-library</artifactId>
 				<version>${hamcrest.version}</version>
 				<scope>test</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.bouncycastle</groupId>
-				<artifactId>bcprov-jdk18on</artifactId>
-				<version>${bcprov.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.google.guava</groupId>
