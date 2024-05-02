@@ -1,0 +1,66 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<name>wicket-jquery-ui-themes</name>
+	<description>Wicket-jQuery UI Themes</description>
+
+	<parent>
+		<groupId>org.wicketstuff</groupId>
+		<artifactId>wicketstuff-jquery-ui-parent</artifactId>
+    <version>10.1.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>wicketstuff-jquery-ui-themes</artifactId>
+	<packaging>pom</packaging>
+
+	<dependencies>
+		<!-- JQUERY-UI DEPENDENCIES -->
+		<dependency>
+			<groupId>org.wicketstuff</groupId>
+			<artifactId>wicketstuff-jquery-ui</artifactId>
+			<version>10.1.0-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>	
+		<!-- WICKET DEPENDENCIES -->
+		<dependency>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-core</artifactId>
+			<version>${wicket.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-extensions</artifactId>
+			<version>${wicket.version}</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
+	<modules>
+		<module>wicketstuff-jquery-ui-theme-base</module>
+		<module>wicketstuff-jquery-ui-theme-black-tie</module>
+		<module>wicketstuff-jquery-ui-theme-blitzer</module>
+		<module>wicketstuff-jquery-ui-theme-cupertino</module>
+		<module>wicketstuff-jquery-ui-theme-dark-hive</module>
+		<module>wicketstuff-jquery-ui-theme-dot-luv</module>
+		<module>wicketstuff-jquery-ui-theme-eggplant</module>
+		<module>wicketstuff-jquery-ui-theme-excite-bike</module>
+		<module>wicketstuff-jquery-ui-theme-flick</module>
+		<module>wicketstuff-jquery-ui-theme-hot-sneaks</module>
+		<module>wicketstuff-jquery-ui-theme-humanity</module>
+		<module>wicketstuff-jquery-ui-theme-le-frog</module>
+		<module>wicketstuff-jquery-ui-theme-mint-choc</module>
+		<module>wicketstuff-jquery-ui-theme-overcast</module>
+		<module>wicketstuff-jquery-ui-theme-pepper-grinder</module>
+		<module>wicketstuff-jquery-ui-theme-redmond</module>
+		<module>wicketstuff-jquery-ui-theme-smoothness</module>
+		<module>wicketstuff-jquery-ui-theme-south-street</module>
+		<module>wicketstuff-jquery-ui-theme-start</module>
+		<module>wicketstuff-jquery-ui-theme-sunny</module>
+		<module>wicketstuff-jquery-ui-theme-swanky-purse</module>
+		<module>wicketstuff-jquery-ui-theme-trontastic</module>
+		<module>wicketstuff-jquery-ui-theme-ui-darkness</module>
+		<module>wicketstuff-jquery-ui-theme-ui-lightness</module>
+		<module>wicketstuff-jquery-ui-theme-vader</module>
+	</modules>
+</project>
