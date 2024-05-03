@@ -21,7 +21,7 @@ import org.wicketstuff.kendo.ui.resource.KendoMessageResourceReference;
  * <br>
  * This will results to:
  * <pre><code>
- * &lt;script type="text/javascript" src="./resource/com.googlecode.wicket.kendo.ui.resource.KendoMessageResourceReference/messages/kendo.messages.fr-FR.js"&gt;&lt;/script&gt;
+ * &lt;script type="text/javascript" src="./resource/org.wicketstuff.kendo.ui.resource.KendoMessageResourceReference/messages/kendo.messages.fr-FR.js"&gt;&lt;/script&gt;
  * </code></pre>
  *
  * @author Sebastien Briquet - sebfz1

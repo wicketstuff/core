@@ -117,7 +117,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>wicket-jquery-ui</finalName>
+		<finalName>wicketstuff-jquery-ui</finalName>
 		<resources>
 			<resource>
 				<filtering>false</filtering>

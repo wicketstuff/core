@@ -10,7 +10,7 @@
 		<filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
 		<init-param>
 			<param-name>applicationClassName</param-name>
-			<param-value>com.googlecode.wicket.jquery.ui.samples.SampleApplication</param-value>
+			<param-value>org.wicketstuff.jquery.ui.samples.SampleApplication</param-value>
 		</init-param>
 	</filter>
 

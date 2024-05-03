@@ -14,7 +14,7 @@
 	<packaging>bundle</packaging>
 
     <properties>
-	    <bundle.namespace>com.googlecode.wicket.kendo.ui.theme.black</bundle.namespace>
+	    <bundle.namespace>org.wicketstuff.kendo.ui.theme.black</bundle.namespace>
 	</properties>
 
 	<dependencies>

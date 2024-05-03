@@ -1,5 +1,5 @@
 # Caution: need Docker 20.10.10+
-FROM tomcat:10.1-jre11
+FROM tomcat:10-jre17
 
-COPY ./target/wicket-jquery-ui.war /usr/local/tomcat/webapps
+COPY ./target/wicketstuff-jquery-ui.war /usr/local/tomcat/webapps
 

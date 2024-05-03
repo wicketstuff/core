@@ -23,7 +23,7 @@ import org.wicketstuff.kendo.ui.resource.KendoCultureResourceReference;
  * <br>
  * This will results to:
  * <pre><code>
- * &lt;script type="text/javascript" src="./resource/com.googlecode.wicket.kendo.ui.resource.KendoCultureResourceReference/cultures/kendo.culture.fr-FR.js"&gt;&lt;/script&gt;
+ * &lt;script type="text/javascript" src="./resource/org.wicketstuff.kendo.ui.resource.KendoCultureResourceReference/cultures/kendo.culture.fr-FR.js"&gt;&lt;/script&gt;
  * &lt;script type="text/javascript" id="kendo-culture"&gt;
  * 	kendo.culture('fr-FR');
  * &lt;/script&gt;

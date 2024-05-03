@@ -14,7 +14,7 @@
 	<packaging>bundle</packaging>
 
     <properties>
-	    <bundle.namespace>com.googlecode.wicket.jquery.ui.theme.trontastic</bundle.namespace>
+	    <bundle.namespace>org.wicketstuff.jquery.ui.theme.trontastic</bundle.namespace>
 	</properties>
 
     <build>

@@ -14,7 +14,7 @@
 	<packaging>bundle</packaging>
 
     <properties>
-	    <bundle.namespace>com.googlecode.wicket.jquery.ui.theme.mintchoc</bundle.namespace>
+	    <bundle.namespace>org.wicketstuff.jquery.ui.theme.mintchoc</bundle.namespace>
 	</properties>
 
     <build>

@@ -14,7 +14,7 @@
 	<packaging>bundle</packaging>
 
     <properties>
-	    <bundle.namespace>com.googlecode.wicket.jquery.core</bundle.namespace>
+	    <bundle.namespace>org.wicketstuff.jquery.core</bundle.namespace>
 	</properties>
 
 	<dependencies>

@@ -1,4 +1,4 @@
-<code>AjaxDropDownChoice</code> inherits from <code>com.googlecode.wicket.jquery.ui.form.dropdown.DropDownChoice</code><br />
+<code>AjaxDropDownChoice</code> inherits from <code>org.wicketstuff.jquery.ui.form.dropdown.DropDownChoice</code><br />
 
 <h4>Since</h4>
 wicket-jquery-ui-6.22.0
