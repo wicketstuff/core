@@ -281,7 +281,7 @@
 		<spring.version>6.1.6</spring.version>
 		<cglib.version>3.3.0</cglib.version>
 		<objenesis.version>3.3</objenesis.version>
-		<scala.version>2.13.13</scala.version>
+		<scala.version>2.13.14</scala.version>
 		<jackson.version>2.17.1</jackson.version>
 		<poi.version>5.2.5</poi.version>
 		<guava.version>33.2.0-jre</guava.version>
