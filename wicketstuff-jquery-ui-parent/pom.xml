@@ -42,7 +42,7 @@
 	</developers>
 
 	<properties>
-		<owasp-sanitizer.version>20220608.1</owasp-sanitizer.version>
+		<owasp-sanitizer.version>20240325.1</owasp-sanitizer.version>
 	</properties>
 
 	<build>
