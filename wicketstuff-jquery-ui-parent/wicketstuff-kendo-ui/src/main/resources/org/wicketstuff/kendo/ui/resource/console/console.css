@@ -1,0 +1,27 @@
+.console {
+	background-color: #FFFFFF;
+	border: 1px solid #CCCCCC;
+	color: #333333;
+	font: 11px Consolas, Monaco, "Bitstream Vera Sans Mono", "Courier New", Courier, monospace;
+	margin: 0 0 1.4em;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	text-align: left;
+}
+
+.console .count,.km-root .km-android .console .count {
+	background-color: #91AFEF;
+	border-radius: 15px 15px 15px 15px;
+	color: #FFFFFF;
+	font-size: 10px;
+	margin-left: 5px;
+	padding: 2px 6px 2px 5px;
+}
+
+.console div {
+	border-bottom: 1px solid #DDDDDD;
+	padding: 5px 5px 4px 5px;
+}
+
+.console div.error {
+}

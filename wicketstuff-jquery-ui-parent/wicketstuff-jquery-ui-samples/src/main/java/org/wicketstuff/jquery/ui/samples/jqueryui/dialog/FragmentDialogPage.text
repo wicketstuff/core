@@ -1,0 +1,35 @@
+If you wish to customize the dialog, but you prefer using a <code>Fragment</code> instead of a <code>Panel</code>, you may use a <code>FragmentDialog</code>.<br />
+<pre>
+HTML:
+	&lt;!DOCTYPE html&gt;
+	&lt;html xmlns:wicket="http://wicket.apache.org"&gt;
+	&lt;head&gt;
+	&lt;/head&gt;
+	&lt;body&gt;
+		&lt;div wicket:id="dialog"&gt;[dialog]&lt;/div&gt;
+		
+		&lt;wicket:fragment wicket:id="myfragment&gt;
+			My dialog with a lot a things to display here
+		&lt;/wicket:fragment&gt;
+	&lt;/body&gt;
+	&lt;/html&gt;
+
+Java:
+	final FragmentDialog&lt;Void&gt; dialog = new FragmentDialog&lt;Void&gt;("dialog", "title") {
+
+			private static final long serialVersionUID = 1L;
+			
+			@Override
+			protected Fragment newFragment(String id)
+			{
+				return new Fragment(id, "myfragment", MyPage.this);
+			}
+			
+			@Override
+			protected void onClose(AjaxRequestTarget target, DialogButton button)
+			{
+			}
+		};
+		
+	this.add(dialog); //TODO: open it, using dialog.open(target);
+</pre>

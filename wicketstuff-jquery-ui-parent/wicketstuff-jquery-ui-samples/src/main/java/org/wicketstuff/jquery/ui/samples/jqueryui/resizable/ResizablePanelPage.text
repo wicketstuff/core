@@ -1,0 +1,13 @@
+This sample shows how to use the <code>ResizablePanel</code> component.<br/>
+<br/>
+<code>ResizablePanel</code> does not have an associated markup, it is up to the user to provide it (therefore, <code>ResizablePanel</code> should be extended).<br/>
+<br/>
+Events are disabled by default to prevent unnecessary server round-trips. These could be enabled by overriding <code>#isResizeStartEventEnabled()</code> and/or <code>#isResizeStopEventEnabled()</code> returning <code>true</code><br/>
+<br/>
+To get the position back (<code>top</code>, <code>left</code>) in the event callbacks (<code>onResizeStart</code> &#38; <code>onResizeStop</code>), it should be '<code>absolute</code>'.<br/> 
+<br/>
+The overflow (scrollbars) are controlled with CSS. You may have a look at source code (<code>ResizablePanelPage$MyResizablePanel.html</code>) to see how this sample works.<br/>
+<br/>
+<h4>Since</h4>
+wicket-jquery-ui-core-1.4.1<br/>
+wicket-jquery-ui-core-6.2.1

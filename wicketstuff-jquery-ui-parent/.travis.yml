@@ -1,0 +1,8 @@
+language: java
+jdk: oraclejdk11
+
+branches:
+  only: wicket9.x
+
+after_success: mvn deploy -q --settings settings.xml -P snapshot 
+

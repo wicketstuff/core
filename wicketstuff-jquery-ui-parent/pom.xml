@@ -1,0 +1,123 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.wicketstuff</groupId>
+    <artifactId>wicketstuff-core</artifactId>
+    <version>10.1.0-SNAPSHOT</version>
+  </parent>
+
+	<name>wicket-jquery-ui pom</name>
+	<description>parent pom</description>
+	<url>https://github.com/sebfz1/wicket-jquery-ui</url>
+
+	<organization>
+		<name>7thWeb</name>
+		<url>http://www.7thweb.net/wicket-jquery-ui/</url>
+	</organization>
+
+	<artifactId>wicketstuff-jquery-ui-parent</artifactId>
+	<packaging>pom</packaging>
+
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<id>sbriquet</id>
+			<name>Sebastien Briquet</name>
+			<email>sbriquet@apache.org</email>
+		</developer>
+		<developer>
+			<id>martingrigorov</id>
+			<name>Martin Grigorov</name>
+			<email>mgrigorov@apache.org</email>
+		</developer>
+	</developers>
+
+	<properties>
+		<owasp-sanitizer.version>20220608.1</owasp-sanitizer.version>
+	</properties>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.felix</groupId>
+					<artifactId>maven-bundle-plugin</artifactId>
+					<extensions>true</extensions>
+					<version>5.1.2</version>
+					<executions>
+						<execution>
+							<id>bundle-manifest</id>
+							<phase>process-classes</phase>
+							<goals>
+								<goal>manifest</goal>
+							</goals>
+							<configuration>
+								<instructions>
+									<Bundle-Version>${project.version}</Bundle-Version>
+									<Bundle-SymbolicName>${bundle.namespace}</Bundle-SymbolicName>
+									<Embed-Dependency>*;scope=compile|runtime</Embed-Dependency>
+									<Export-Package>${bundle.namespace}.*;version="${project.version}"</Export-Package>
+								</instructions>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-enforcer-plugin</artifactId>
+				<version>3.0.0-M3</version>
+				<executions>
+					<execution>
+						<id>enforce-maven</id>
+						<goals>
+							<goal>enforce</goal>
+						</goals>
+						<configuration>
+							<rules>
+								<requireMavenVersion>
+									<version>3.5</version>
+								</requireMavenVersion>
+							</rules>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>3.0.0-M4</version>
+				<configuration>
+					<autoVersionSubmodules>true</autoVersionSubmodules>
+					<releaseProfiles>release</releaseProfiles>
+					<goals>deploy</goals>
+				</configuration>
+			</plugin -->
+		</plugins>
+	</build>
+
+	<modules>
+		<module>wicketstuff-jquery-ui-core</module>
+		<module>wicketstuff-jquery-ui</module>
+		<module>wicketstuff-jquery-ui-themes</module>
+		<module>wicketstuff-jquery-ui-plugins</module>
+		<module>wicketstuff-jquery-ui-calendar</module>
+		<module>wicketstuff-kendo-ui</module>
+		<module>wicketstuff-kendo-ui-culture</module>
+		<module>wicketstuff-kendo-ui-themes</module>
+		<module>wicketstuff-jquery-ui-samples</module>
+	</modules>
+</project>

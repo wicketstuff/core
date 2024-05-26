@@ -1,0 +1,2 @@
+The Slider is a form component, having a IModel<Integer>.
+Additionally a Label could be used to dynamically display the value as it's changing

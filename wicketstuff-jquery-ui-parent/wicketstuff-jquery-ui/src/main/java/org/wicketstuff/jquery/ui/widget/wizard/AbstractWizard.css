@@ -1,0 +1,12 @@
+.abstractWizard .feedback {
+	margin-bottom: 1em;
+}
+
+.abstractWizard .wizard-step-title {
+	font-weight: bold;
+}
+
+.abstractWizard .wizard-step-summary {
+	font-style: italic;
+	margin-bottom: 1em;
+}

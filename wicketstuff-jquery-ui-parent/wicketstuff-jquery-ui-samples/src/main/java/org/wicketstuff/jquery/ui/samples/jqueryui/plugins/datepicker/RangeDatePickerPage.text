@@ -1,0 +1,9 @@
+<code>RangeDatePicker</code> is an integration of foxrunsoftware's <code>DatePicker</code>:<br/>
+<a class="site icon-new-tab" target="_blank" href="https://github.com/foxrunsoftware/DatePicker/">https://github.com/foxrunsoftware/DatePicker/</a><br/>
+
+<br/>
+This jQuery plugin serves as example for the tutorial "Step #3, handling callbacks" (<i>currently writing</i>)<br/>
+
+<h4>Since</h4>
+wicket-jquery-ui-plugin-1.3.0<br/>
+wicket-jquery-ui-plugin-6.1.0

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<wicket:head>
+	<title>Wicket jQuery UI: color picker</title>
+</wicket:head>
+</head>
+<body>
+<wicket:extend>
+	<div id="demo-panel">
+		<form wicket:id="form">
+			<table>
+				<tr>
+					<td width="240">
+						<div wicket:id="picker"></div>
+					</td>
+					<td class="color-box">
+						<span wicket:id="color" class="ui-corner-all"><br/></span>
+					</td>
+				</tr>
+			</table>
+			<br/>
+			<div wicket:id="feedback" style="width: 360px;"></div>
+		</form>
+	</div>
+
+	<wicket:fragment wicket:id="color-picker">
+		<div wicket:id="r" id="red"></div>
+		<br/>
+		<div wicket:id="g" id="green"></div>
+		<br/>
+		<div wicket:id="b" id="blue"></div>
+	</wicket:fragment>
+</wicket:extend>
+</body>
+</html>

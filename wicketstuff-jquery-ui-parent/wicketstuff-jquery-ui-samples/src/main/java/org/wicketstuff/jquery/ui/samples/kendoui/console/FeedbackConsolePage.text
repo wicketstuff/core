@@ -1,0 +1,33 @@
+The Kendo UI's console is not a Kendo standard widget, but is used in the Kendo UI's demo website.<br/>
+For this reason, the style is not part of the Kendo UI's theme. It can however be customized using <code>IConsoleLibrarySettings</code>
+
+<br/>
+<h4>Tip</h4>
+In order to get <i>only</i> new feedback messages (ie: not keeping the history), <code>#clear()</code> should be called in <code>#onConfigure</code> and the console should be refreshed using <code>target.add(console)</code> (rather than <code>console.refresh(target)</code>) 
+<pre>
+	final FeedbackConsole console = new FeedbackConsole("console") {
+	
+		private static final long serialVersionUID = 1L;
+	
+		@Override
+		protected void onConfigure()
+		{
+			super.onConfigure();
+	
+			this.clear();
+		}
+	};
+	
+	...
+	
+	target.add(console);
+</pre>
+
+<br/>
+<h4>Since</h4>
+wicket-jquery-ui-kendo-6.12.0
+
+<br/>
+<h4>Licensing</h4>
+Kendo UI Console does not belongs to the Kendo UI Web framework.<br/>
+A part of the underlying javascript is licensed under the MIT and GPL licenses.

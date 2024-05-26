@@ -1,0 +1,14 @@
+.objects {
+	position: absolute;
+	left: 830px;
+	width: 100px;
+}
+
+.object {
+	margin: 4px 0;
+	padding: 2px;
+	width: 90px;
+	z-index: 999;
+	cursor: pointer;
+	border: 1px solid black;
+}

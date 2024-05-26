@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<wicket:head>
+	<title>Wicket jQuery UI: selectable (draggable)</title>
+</wicket:head>
+</head>
+<body>
+<wicket:extend>
+	<div class="ui-widget-content">
+		<ul wicket:id="droppable" class="ui-corner-all">
+			<li wicket:id="items">
+				<span wicket:id="item">[label]</span>
+			</li>
+		</ul>
+		<ul wicket:id="selectable">
+			<li wicket:id="items">
+				<span wicket:id="drag">[icon]</span>
+				<span wicket:id="item">[label]</span>
+			</li>
+		</ul>
+		<div wicket:id="feedback" style="width: 480px;"></div>
+	</div>
+</wicket:extend>
+</body>
+</html>

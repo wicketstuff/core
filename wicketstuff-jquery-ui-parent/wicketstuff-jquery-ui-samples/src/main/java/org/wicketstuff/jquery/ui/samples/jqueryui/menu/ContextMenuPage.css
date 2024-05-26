@@ -1,0 +1,10 @@
+/* labels */
+.label {
+	margin: 10px;
+	text-decoration: underline;
+}
+
+/* sub menus */
+.ui-menu .ui-menu {
+	width: 200px;
+}
