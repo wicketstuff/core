@@ -1,5 +1,6 @@
 package org.wicketstuff.datatables;
 
+import org.apache.wicket.Application;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
@@ -53,7 +54,7 @@ public class DemoDatatable extends WebMarkupContainer
 
 	private void renderBasicJS(IHeaderResponse response)
 	{
-		response.render(JavaScriptHeaderItem.forReference(new PackageResourceReference(DemoDatatable.class, "media/js/jquery.js")));
+		response.render(JavaScriptHeaderItem.forReference(Application.get().getJavaScriptLibrarySettings().getJQueryReference()));
 		response.render(JavaScriptHeaderItem.forReference(new PackageResourceReference(DemoDatatable.class,
 			"media/js/jquery.dataTables.min.js")));
 		response.render(JavaScriptHeaderItem.forReference(new PackageResourceReference(DemoDatatable.class,
