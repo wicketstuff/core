@@ -315,7 +315,7 @@
 		<clojure.version>1.11.3</clojure.version>
 		<groovy.version>4.0.7</groovy.version>
 		<asm-util.version>9.7</asm-util.version>
-		<hsqldb.version>2.7.2</hsqldb.version>
+		<hsqldb.version>2.7.3</hsqldb.version>
 		<hazelcast.version>5.4.0</hazelcast.version>
 		<jython-standalone.version>2.7.3</jython-standalone.version>
 		<protobuf.version>4.27.0</protobuf.version>
