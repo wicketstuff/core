@@ -1,12 +1,12 @@
 /*
  * Copyright 2009 Michael Würtinger (mwuertinger@users.sourceforge.net)
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  * 		http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -25,12 +25,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.wicket.Application;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.MarkupStream;
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.HeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
+import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.WebComponent;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.parser.XmlTag;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,54 +48,54 @@ public class FlotPanel extends Panel
 	private static final long serialVersionUID = 1L;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(FlotPanel.class);
+	private ResourceReference jsReference = new PackageResourceReference(FlotPanel.class, "jquery.flot.pack.js") {
+		@Override
+		public List<HeaderItem> getDependencies() {
+			return List.of(JavaScriptHeaderItem.forReference(Application.get().getJavaScriptLibrarySettings().getJQueryReference()));
+		}
+	};
+	private ResourceReference cssReference = new PackageResourceReference(FlotPanel.class, "FlotPanel.css");
 
 	private final Map<String, Map<String, Object>> options = new HashMap<String, Map<String, Object>>();
 	private boolean showTooltip = false;
 
-	public FlotPanel(final String id, final IModel<List<Series>> model)
-	{
+	public FlotPanel(final String id, final IModel<List<Series>> model) {
 		super(id, model);
 
 		String[] optionsKeys = { "lines", "points", "legend", "xaxis", "yaxis", "x2axis", "y2axis",
 				"selection", "grid" };
 
-		for (String key : optionsKeys)
+		for (String key : optionsKeys) {
 			options.put(key, new HashMap<String, Object>());
+		}
 
 		options.get("selection").put("mode", "xy");
 		options.get("grid").put("hoverable", true);
 		options.get("grid").put("clickable", true);
+	}
 
+	@Override
+	protected void onInitialize() {
+		super.onInitialize();
 		// JN - commented out to allow autoscaling if not set
 		// options.get("yaxis").put("min", 0);
 		// options.get("yaxis").put("max", 15);
 
 		// This custom component fills the <script> tag with the script returned by getFlotScript().
-		add(new WebComponent("flotScript")
-		{
-			private static final long serialVersionUID = 1L;
+		add(new WebComponent("flotScript"));
+	}
 
-			@Override
-			public void onComponentTagBody(final MarkupStream markupStream,
-				final ComponentTag openTag)
-			{
-				replaceComponentTagBody(markupStream, openTag, getFlotScript());
-			}
-
-			@Override
-			protected void onComponentTag(ComponentTag tag)
-			{
-				super.onComponentTag(tag);
-				// always transform the tag to <span></span> so even labels defined as <span/>
-// render
-				tag.setType(XmlTag.TagType.OPEN);
-			}
-		});
+	@Override
+	public void renderHead(final IHeaderResponse response) {
+		super.renderHead(response);
+		response.render(CssHeaderItem.forReference(cssReference));
+		response.render(JavaScriptHeaderItem.forReference(jsReference));
+		response.render(OnDomReadyHeaderItem.forScript(getFlotScript()));
 	}
 
 	/**
 	 * Returns Javascript code which renders the flot graph.
-	 * 
+	 *
 	 * @throws RuntimeException
 	 *             if FlotPanel.js cannot be loaded.
 	 */
@@ -305,7 +313,7 @@ public class FlotPanel extends Panel
 
 	/**
 	 * Returns the contents of the given resource.
-	 * 
+	 *
 	 * @param location
 	 *            The resource path.
 	 * @return The resource's content.
@@ -324,7 +332,7 @@ public class FlotPanel extends Panel
 
 	/**
 	 * Returns the complete content of the given stream.
-	 * 
+	 *
 	 * @throws IOException
 	 *             If anything goes wrong while reading the stream.
 	 */

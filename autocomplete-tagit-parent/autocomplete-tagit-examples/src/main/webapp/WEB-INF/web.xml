@@ -15,9 +15,9 @@
 		</init-param>
 	</filter>
 
- <filter-mapping>
-     <filter-name>wicket.tagit</filter-name>
-     <url-pattern>/*</url-pattern>
- </filter-mapping>
+	<filter-mapping>
+		<filter-name>wicket.tagit</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 
 </web-app>
