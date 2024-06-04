@@ -21,7 +21,7 @@ import com.google.javascript.jscomp.JSError;
 
 public class HomePage extends WebPage
 {
-	private static final long serialVersionUID = -6623549607771622662L;
+	private static final long serialVersionUID = 1L;
 	private static final Logger log = LoggerFactory.getLogger(HomePage.class);
 
 	private String source;

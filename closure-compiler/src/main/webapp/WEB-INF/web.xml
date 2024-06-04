@@ -4,19 +4,19 @@
 		xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
 		version="3.1">
 
-	<display-name>BrowserId example</display-name>
+	<display-name>Closure compiler example</display-name>
 
 	<filter>
-		<filter-name>wicket.tagit</filter-name>
+		<filter-name>wicketstuff.closurecompiler</filter-name>
 		<filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
 		<init-param>
 			<param-name>applicationClassName</param-name>
-			<param-value>org.wicketstuff.tagit.example.TagItApplication</param-value>
+			<param-value>org.wicketstuff.closurecompiler.testapp.ClosureCompilerApp</param-value>
 		</init-param>
 	</filter>
 
 	<filter-mapping>
-		<filter-name>wicket.tagit</filter-name>
+		<filter-name>wicketstuff.closurecompiler</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
