@@ -13,11 +13,6 @@
 	<artifactId>wicket-jquery-ui-samples</artifactId>
 	<packaging>war</packaging>
 
-	<properties>
-		<jetty.version>9.4.44.v20210927</jetty.version>
-		<slf4j.version>2.0.0-alpha2</slf4j.version>
-	</properties>
-
 	<dependencies>
 
 		<!-- JQUERY-UI DEPENDENCIES -->
