@@ -1,13 +1,13 @@
 package org.wicketstuff.datatables;
 
-import org.apache.wicket.Application;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.request.resource.PackageResourceReference;
+import org.wicketstuff.datatables.res.DataTablesCssReference;
+import org.wicketstuff.datatables.res.DataTablesJsReference;
 
 public class DemoDatatable extends WebMarkupContainer
 {
@@ -40,24 +40,11 @@ public class DemoDatatable extends WebMarkupContainer
 
 	private void renderDemoCSS(IHeaderResponse response)
 	{
-		response.render(CssHeaderItem.forReference(new PackageResourceReference(DemoDatatable.class,
-			"media/css/demo_table_jui.css"), "screen"));
-
-		response.render(CssHeaderItem.forReference(new PackageResourceReference(DemoDatatable.class, "media/css/" +
-			getJUITheme() + "/jquery-ui-1.8.10.custom.css"), "screen"));
-	}
-
-	private String getJUITheme()
-	{
-		return "smoothness";
+		response.render(CssHeaderItem.forReference(new DataTablesCssReference()));
 	}
 
 	private void renderBasicJS(IHeaderResponse response)
 	{
-		response.render(JavaScriptHeaderItem.forReference(Application.get().getJavaScriptLibrarySettings().getJQueryReference()));
-		response.render(JavaScriptHeaderItem.forReference(new PackageResourceReference(DemoDatatable.class,
-			"media/js/jquery.dataTables.min.js")));
-		response.render(JavaScriptHeaderItem.forReference(new PackageResourceReference(DemoDatatable.class,
-			"media/js/jquery-ui-1.8.10.custom.min.js")));
+		response.render(JavaScriptHeaderItem.forReference(new DataTablesJsReference()));
 	}
 }
