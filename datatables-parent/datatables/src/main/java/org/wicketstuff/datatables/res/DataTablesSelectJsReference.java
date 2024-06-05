@@ -2,7 +2,6 @@ package org.wicketstuff.datatables.res;
 
 public class DataTablesSelectJsReference extends DataTablesPluginJsReference {
     public DataTablesSelectJsReference() {
-        super(DataTablesSelectJsReference.class, "js/dataTables.select.js");
+        super("datatables-select/current/js/dataTables.select.min.js");
     }
-
 }
