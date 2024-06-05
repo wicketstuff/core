@@ -17,7 +17,7 @@ import org.wicketstuff.datatables.res.DataTablesBootstrapJsReference;
 public class BootstrapTheme extends Behavior {
 
     public BootstrapTheme(Options options) {
-        options.style(Options.Style.bootstrap);
+        options.style(Options.Style.bootstrap5);
     }
 
     @Override

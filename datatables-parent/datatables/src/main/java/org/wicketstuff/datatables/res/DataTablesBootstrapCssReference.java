@@ -1,9 +1,9 @@
 package org.wicketstuff.datatables.res;
 
-import org.apache.wicket.request.resource.CssResourceReference;
+import de.agilecoders.wicket.webjars.request.resource.WebjarsCssResourceReference;
 
-public class DataTablesBootstrapCssReference extends CssResourceReference {
+public class DataTablesBootstrapCssReference extends WebjarsCssResourceReference {
     public DataTablesBootstrapCssReference() {
-        super(DataTablesBootstrapCssReference.class, "css/dataTables.bootstrap.css");
+        super("datatables/current/css/dataTables.bootstrap5.min.css");
     }
 }
