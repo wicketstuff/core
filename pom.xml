@@ -278,6 +278,7 @@
 		<bootstrap.version>4.6.2</bootstrap.version>
 		<fst.version>2.57</fst.version>
 		<fullcalendar.version>6.1.14</fullcalendar.version>
+		<moment-js.version>2.29.4</moment-js.version>
 		<!-- plugins -->
 		<maven-surefire-plugin.version>3.2.5</maven-surefire-plugin.version>
 		<maven-javadoc-plugin.version>3.7.0</maven-javadoc-plugin.version>
