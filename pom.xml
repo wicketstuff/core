@@ -322,6 +322,7 @@
 		<bootstrap.version>5.3.3</bootstrap.version>
 		<fst.version>3.0.4-jdk17</fst.version>
 		<jquery-ui.version>1.13.3</jquery-ui.version>
+		<moment-js.version>2.29.4</moment-js.version>
 		<!-- plugins -->
 		<maven-surefire-plugin.version>3.2.5</maven-surefire-plugin.version>
 		<maven-javadoc-plugin.version>3.7.0</maven-javadoc-plugin.version>
