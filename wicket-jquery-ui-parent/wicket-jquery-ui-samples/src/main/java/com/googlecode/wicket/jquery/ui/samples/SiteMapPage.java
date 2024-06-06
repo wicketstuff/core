@@ -1,3 +1,6 @@
+/*
+Licensed under the Apache License, Version 2.0 (the "License") http://www.apache.org/licenses/LICENSE-2.0
+ */
 package com.googlecode.wicket.jquery.ui.samples;
 
 import java.util.Arrays;
@@ -34,6 +37,10 @@ import com.googlecode.wicket.jquery.ui.samples.jqueryui.calendar.CustomCalendarP
 import com.googlecode.wicket.jquery.ui.samples.jqueryui.calendar.DefaultCalendarPage;
 import com.googlecode.wicket.jquery.ui.samples.jqueryui.calendar.ExtendedCalendarPage;
 import com.googlecode.wicket.jquery.ui.samples.jqueryui.calendar.ObjectCalendarPage;
+import com.googlecode.wicket.jquery.ui.samples.jqueryui.calendar6.CustomCalendar6Page;
+import com.googlecode.wicket.jquery.ui.samples.jqueryui.calendar6.DefaultCalendar6Page;
+import com.googlecode.wicket.jquery.ui.samples.jqueryui.calendar6.ExtendedCalendar6Page;
+import com.googlecode.wicket.jquery.ui.samples.jqueryui.calendar6.ObjectCalendar6Page;
 import com.googlecode.wicket.jquery.ui.samples.jqueryui.datepicker.AjaxDatePickerPage;
 import com.googlecode.wicket.jquery.ui.samples.jqueryui.datepicker.DefaultDatePickerPage;
 import com.googlecode.wicket.jquery.ui.samples.jqueryui.dialog.CustomDialogPage;
@@ -186,6 +193,7 @@ public class SiteMapPage extends WebPage
 			ConverterAutoCompletePage.class,
 			CustomAutoCompletePage.class,
 			CustomCalendarPage.class,
+			CustomCalendar6Page.class,
 			CustomComboBoxPage.class,
 			CustomDialogPage.class,
 			CustomSortablePage.class,
@@ -195,6 +203,7 @@ public class SiteMapPage extends WebPage
 			DefaultAutoCompletePage.class,
 			DefaultButtonPage.class,
 			DefaultCalendarPage.class,
+			DefaultCalendar6Page.class,
 			DefaultComboBoxPage.class,
 			DefaultConsolePage.class,
 			DefaultDataTablePage.class,
@@ -229,6 +238,7 @@ public class SiteMapPage extends WebPage
 			DynamicWizardPage.class,
 			EmoticonsPage.class,
 			ExtendedCalendarPage.class,
+			ExtendedCalendar6Page.class,
 			FeedbackConsolePage.class,
 			FeedbackPanelPage.class,
 			FontSizePage.class,
@@ -264,6 +274,7 @@ public class SiteMapPage extends WebPage
 			MessageWindowPage.class,
 			MultipleResourceSchedulerPage.class,
 			ObjectCalendarPage.class,
+			ObjectCalendar6Page.class,
 			OptionSliderPage.class,
 			OptionSnippetPage.class,
 			CultureSpinnerPage.class,

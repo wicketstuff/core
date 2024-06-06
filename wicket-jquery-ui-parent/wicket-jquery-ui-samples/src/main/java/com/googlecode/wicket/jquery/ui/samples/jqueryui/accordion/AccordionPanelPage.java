@@ -1,3 +1,6 @@
+/*
+Licensed under the Apache License, Version 2.0 (the "License") http://www.apache.org/licenses/LICENSE-2.0
+ */
 package com.googlecode.wicket.jquery.ui.samples.jqueryui.accordion;
 
 import java.util.List;
@@ -67,7 +70,7 @@ public class AccordionPanelPage extends AbstractAccordionPage
 				accordion.setActiveTab(0).reload(target); // resets active tab and forces reload model
 			}
 		});
- 
+
 		form.add(new AjaxButton("activate") {
 
 			private static final long serialVersionUID = 1L;

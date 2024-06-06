@@ -1,3 +1,6 @@
+/*
+Licensed under the Apache License, Version 2.0 (the "License") http://www.apache.org/licenses/LICENSE-2.0
+ */
 package com.googlecode.wicket.jquery.ui.samples.kendoui.accordion;
 
 import java.util.List;
@@ -25,7 +28,7 @@ public class KendoAccordionPanelPage extends AbstractAccordionPage
 {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOG = LoggerFactory.getLogger(KendoAccordionPanelPage.class);
-	
+
 	public KendoAccordionPanelPage()
 	{
 		final Form<?> form = new Form<Void>("form");
@@ -39,7 +42,7 @@ public class KendoAccordionPanelPage extends AbstractAccordionPage
 		final AccordionPanel accordion = new AccordionPanel("accordion", this.newTabList()) {
 
 			private static final long serialVersionUID = 1L;
-			
+
 			@Override
 			public boolean isExpandEventEnabled()
 			{

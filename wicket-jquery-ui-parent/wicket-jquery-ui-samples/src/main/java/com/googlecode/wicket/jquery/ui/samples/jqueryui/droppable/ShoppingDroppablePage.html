@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+<!--
+Licensed under the Apache License, Version 2.0 (the "License") http://www.apache.org/licenses/LICENSE-2.0
+-->
 <html xmlns:wicket="http://wicket.apache.org">
 <head>
 <wicket:head>
@@ -13,9 +16,9 @@
 				<div wicket:id="draggable" class="ui-widget-content ui-corner-all">
 					<div wicket:id="book"></div>
 				</div>
-			</wicket:container> 
+			</wicket:container>
 		</div>
-		
+
 		<form wicket:id="form">
 			<div wicket:id="card">
 				<div class="ui-state-default ui-corner-all ui-helper-clearfix" style="height: 30px; padding: 4px; text-align: center;">
@@ -43,7 +46,7 @@
 			</div>
 		</form>
 	</div>
-	
+
 	<wicket:fragment wicket:id="book-fragment">
 		<table class="book">
 			<tr>
@@ -53,7 +56,7 @@
 			<tr>
 				<td wicket:id="price" align="right"></td>
 			</tr>
-		</table>		
+		</table>
 	</wicket:fragment>
 </wicket:extend>
 </body>

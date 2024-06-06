@@ -1,3 +1,6 @@
+/*
+Licensed under the Apache License, Version 2.0 (the "License") http://www.apache.org/licenses/LICENSE-2.0
+ */
 package com.googlecode.wicket.jquery.ui.samples.jqueryui.spinner;
 
 import java.util.Calendar;
@@ -84,7 +87,7 @@ public class TimeSpinnerPage extends AbstractSpinnerPage // NOSONAR
 			}
 		});
 	}
-	
+
 	@Override
 	public void renderHead(IHeaderResponse response)
 	{

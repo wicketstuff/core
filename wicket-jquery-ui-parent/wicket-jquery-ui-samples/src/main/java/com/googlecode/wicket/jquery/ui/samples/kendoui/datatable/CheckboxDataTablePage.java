@@ -1,3 +1,6 @@
+/*
+Licensed under the Apache License, Version 2.0 (the "License") http://www.apache.org/licenses/LICENSE-2.0
+ */
 package com.googlecode.wicket.jquery.ui.samples.kendoui.datatable;
 
 import java.util.List;
@@ -19,11 +22,11 @@ import com.googlecode.wicket.kendo.ui.datatable.column.PropertyColumn;
 import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
 import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
 
-public class CheckboxDataTablePage extends AbstractDataTablePage 
+public class CheckboxDataTablePage extends AbstractDataTablePage
 {
     private static final long serialVersionUID = 1L;
-    
-    public CheckboxDataTablePage() 
+
+    public CheckboxDataTablePage()
     {
         // FeedbackPanel //
         final KendoFeedbackPanel feedback = new KendoFeedbackPanel("feedback");
@@ -54,11 +57,11 @@ public class CheckboxDataTablePage extends AbstractDataTablePage
                 feedback.refresh(target);
             }
         };
-        
+
         form.add(table);
 
         // Buttons //
-        form.add(new AjaxButton("reload") 
+        form.add(new AjaxButton("reload")
         {
             private static final long serialVersionUID = 1L;
 
@@ -69,7 +72,7 @@ public class CheckboxDataTablePage extends AbstractDataTablePage
             }
         });
 
-        form.add(new AjaxButton("refresh") 
+        form.add(new AjaxButton("refresh")
         {
             private static final long serialVersionUID = 1L;
 
@@ -90,7 +93,7 @@ public class CheckboxDataTablePage extends AbstractDataTablePage
     {
         List<IColumn> columns = Generics.newArrayList();
 
-        /* 
+        /*
          * An IdPropertyColumn is mandatory for the checkbox selection to work properly.
          * If you don't want to display it just override the isVisible() method to always return false .
          */

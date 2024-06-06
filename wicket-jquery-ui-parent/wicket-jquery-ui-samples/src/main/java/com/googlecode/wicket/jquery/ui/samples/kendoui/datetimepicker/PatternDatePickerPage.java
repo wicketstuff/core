@@ -1,3 +1,6 @@
+/*
+Licensed under the Apache License, Version 2.0 (the "License") http://www.apache.org/licenses/LICENSE-2.0
+ */
 package com.googlecode.wicket.jquery.ui.samples.kendoui.datetimepicker;
 
 import java.util.Date;
@@ -27,7 +30,7 @@ public class PatternDatePickerPage extends AbstractTimePickerPage
 		form.add(feedback);
 
 		// DatePicker //
-		final String pattern = LocaleUtils.getLocaleDatePattern(Locale.FRENCH); // gives the french date pattern, ie: dd/MM/yyyy  
+		final String pattern = LocaleUtils.getLocaleDatePattern(Locale.FRENCH); // gives the french date pattern, ie: dd/MM/yyyy
 
 		final DatePicker datepicker = new DatePicker("datepicker", Model.of(new Date()), pattern);
 		form.add(datepicker);

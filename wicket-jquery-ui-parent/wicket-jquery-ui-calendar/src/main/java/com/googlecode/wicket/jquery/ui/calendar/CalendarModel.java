@@ -36,15 +36,6 @@ public abstract class CalendarModel extends LoadableDetachableModel<List<? exten
 	private LocalDate end;
 
 	/**
-	 * Constructor
-	 */
-	public CalendarModel()
-	{
-		this.start = null;
-		this.end = null;
-	}
-
-	/**
 	 * Gets the start date, used to {@link #load()} {@link CalendarEvent}{@code s}
 	 * @return the start date
 	 */
