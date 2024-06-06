@@ -1,3 +1,6 @@
+/*
+Licensed under the Apache License, Version 2.0 (the "License") http://www.apache.org/licenses/LICENSE-2.0
+ */
 package com.googlecode.wicket.jquery.ui.samples.kendoui.autocomplete;
 
 import java.util.Arrays;
@@ -40,12 +43,12 @@ public class KendoRendererAutoCompletePage extends AbstractAutoCompletePage
 			{
 				return ListUtils.contains(input, GenresDAO.all());
 			}
-			
+
 			@Override
 			protected void onInitialize()
 			{
 				super.onInitialize();
-				
+
 				this.setListWidth(350);
 			}
 

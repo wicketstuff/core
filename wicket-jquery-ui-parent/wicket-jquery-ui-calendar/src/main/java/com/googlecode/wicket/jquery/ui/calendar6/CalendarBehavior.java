@@ -57,7 +57,7 @@ public class CalendarBehavior extends Behavior implements IJQueryAjaxAware
 	private final ICalendarListener listener;
 
 	/** date range-select behavior */
-	private JQueryAjaxBehavior onSelectAjaxBehavior = null;
+	private JQueryAjaxBehavior onSelectAjaxBehavior;
 
 	/** day click */
 	private JQueryAjaxBehavior onDateClickAjaxBehavior;
@@ -66,16 +66,16 @@ public class CalendarBehavior extends Behavior implements IJQueryAjaxAware
 	private JQueryAjaxBehavior onEventClickAjaxBehavior;
 
 	/** event drop */
-	private JQueryAjaxBehavior onEventDropAjaxBehavior = null;
+	private JQueryAjaxBehavior onEventDropAjaxBehavior;
 
 	/** event resize */
-	private JQueryAjaxBehavior onEventResizeAjaxBehavior = null;
+	private JQueryAjaxBehavior onEventResizeAjaxBehavior;
 
 	/** event-object drop */
-	private JQueryAjaxBehavior onObjectDropAjaxBehavior = null;
+	private JQueryAjaxBehavior onObjectDropAjaxBehavior;
 
 	/** view render */
-	private JQueryAjaxBehavior onViewDidMountAjaxBehavior = null;
+	private JQueryAjaxBehavior onViewDidMountAjaxBehavior;
 
 	/**
 	 * Constructor

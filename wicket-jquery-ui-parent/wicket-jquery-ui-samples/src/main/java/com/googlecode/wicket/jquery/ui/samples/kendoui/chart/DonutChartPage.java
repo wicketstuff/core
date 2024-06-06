@@ -1,3 +1,6 @@
+/*
+Licensed under the Apache License, Version 2.0 (the "License") http://www.apache.org/licenses/LICENSE-2.0
+ */
 package com.googlecode.wicket.jquery.ui.samples.kendoui.chart;
 
 import java.util.List;
@@ -33,8 +36,8 @@ public class DonutChartPage extends AbstractChartPage // NOSONAR
 		options.set("tooltip", "{ visible: true, format: '{0:n0}' }");
 
 		return options;
-	}  
-	
+	}
+
 	static List<Series> newSeries()
 	{
 		List<Series> series = Generics.newArrayList();

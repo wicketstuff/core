@@ -1,3 +1,6 @@
+/*
+Licensed under the Apache License, Version 2.0 (the "License") http://www.apache.org/licenses/LICENSE-2.0
+ */
 package com.googlecode.wicket.jquery.ui.samples.data.dao;
 
 import java.util.List;
@@ -358,7 +361,7 @@ public class BandsDAO
 	{
 		return TreeNodeUtils.getChildren(parentId, get().list);
 	}
-	
+
 	static class BandTreeNode extends TreeNode<Band>
 	{
 		private static final long serialVersionUID = 1L;

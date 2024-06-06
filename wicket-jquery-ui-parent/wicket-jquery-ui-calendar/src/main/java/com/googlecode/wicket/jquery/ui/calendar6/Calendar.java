@@ -197,18 +197,18 @@ public class Calendar extends WebMarkupContainer implements ICalendarListener
 
 		// builds sources //
 		StringBuilder sourceBuilder = new StringBuilder();
-		sourceBuilder.append(String.format("{ url: '%s' }", Calendar.this.modelBehavior.getCallbackUrl()));
+		sourceBuilder.append("{ url: '" + modelBehavior.getCallbackUrl() + "' }");
 
-		if (Calendar.this.sources != null)
+		if (this.sources != null)
 		{
-			for (EventSource source : Calendar.this.sources)
+			for (EventSource source : this.sources)
 			{
 				sourceBuilder.append(", ");
 				sourceBuilder.append(source.toString());
 			}
 		}
 
-		behavior.setOption("eventSources", String.format("[%s]", sourceBuilder.toString()));
+		behavior.setOption("eventSources", "[" + sourceBuilder + "]");
 	}
 
 	@Override

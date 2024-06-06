@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- Licensed under the Apache License, Version 2.0 (the "License") http://www.apache.org/licenses/LICENSE-2.0 -->
 <html xmlns:wicket="http://wicket.apache.org">
 <head>
 </head>
@@ -8,11 +9,11 @@
 		<div class="component">
 			<button type="button" id="close" class="site close">x</button>
 			<h2 wicket:id="title">[title]</h2>
-	
+
 			<div class="demo">
 				<wicket:child />
 			</div>
-	
+
 			<wicket:enclosure child="demo-list">
 				<h3>Components / Samples</h3>
 				<nav>
@@ -23,12 +24,12 @@
 					</ul>
 				</nav>
 			</wicket:enclosure>
-	
+
 			<div class="componentDescription">
 				<h3>Description</h3>
 				<p wicket:id="source-desc">[description]</p>
 			</div>
-	
+
 			<div class="componentSource">
 				<h3>Sources</h3>
 				<div wicket:id="sources" class="sources">[sources]</div>

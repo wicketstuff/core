@@ -1,3 +1,6 @@
+/*
+Licensed under the Apache License, Version 2.0 (the "License") http://www.apache.org/licenses/LICENSE-2.0
+ */
 package com.googlecode.wicket.jquery.ui.samples.kendoui.datetimepicker.local;
 
 import java.util.Arrays;
@@ -30,7 +33,7 @@ abstract class AbstractTimePickerPage extends KendoSamplePage
 				new DemoLink(PatternAjaxTimePickerPage.class, "AjaxTimePicker: using pattern"), // lf
 				new DemoLink(AjaxDateTimePickerPage.class, "AjaxDateTimePicker"), // lf
 				new DemoLink(LocaleAjaxDateTimePickerPage.class, "AjaxDateTimePicker: using locale"), // lf
-				new DemoLink(PatternAjaxDateTimePickerPage.class, "AjaxDateTimePicker: using pattern") // lf			
+				new DemoLink(PatternAjaxDateTimePickerPage.class, "AjaxDateTimePicker: using pattern") // lf
 			);
 	}
 }
