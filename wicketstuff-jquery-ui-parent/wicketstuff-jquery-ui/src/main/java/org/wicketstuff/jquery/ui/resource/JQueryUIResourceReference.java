@@ -51,7 +51,7 @@ public class JQueryUIResourceReference extends WebjarsJavaScriptResourceReferenc
 	 */
 	private JQueryUIResourceReference()
 	{
-		super("jquery-ui/current/jquery-ui.min.js");
+		super("jquery-ui/current/jquery-ui.js");
 	}
 
 	@Override
