@@ -52,7 +52,7 @@ public class JQueryMomentResourceReference extends WebjarsJavaScriptResourceRefe
 	 */
 	private JQueryMomentResourceReference()
 	{
-		super("moment/current/min/moment.min.js");
+		super("moment/current/moment.js");
 	}
 
 	@Override
