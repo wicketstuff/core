@@ -1,5 +1,6 @@
 package org.wicketstuff.jquery.ui.samples;
 
+import de.agilecoders.wicket.webjars.WicketWebjars;
 import org.apache.wicket.Session;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
@@ -65,6 +66,7 @@ public class SampleApplication extends WebApplication
 	public void init()
 	{
 		super.init();
+		WicketWebjars.install(this);
 
 		this.getResourceSettings().setThrowExceptionOnMissingResource(false);
 
