@@ -16,9 +16,9 @@
  */
 package com.googlecode.wicket.jquery.ui.theme;
 
+import de.agilecoders.wicket.webjars.request.resource.WebjarsCssResourceReference;
 import org.apache.wicket.Application;
 import org.apache.wicket.IInitializer;
-import org.apache.wicket.request.resource.CssResourceReference;
 
 import com.googlecode.wicket.jquery.ui.settings.JQueryUILibrarySettings;
 
@@ -34,7 +34,7 @@ public class Initializer implements IInitializer
 	{
 		application.getMarkupSettings().setStripWicketTags(true);
 
-		JQueryUILibrarySettings.get().setStyleSheetReference(new CssResourceReference(Initializer.class, "jquery-ui.css"));
+		JQueryUILibrarySettings.get().setStyleSheetReference(new WebjarsCssResourceReference("jquery-ui/current/jquery-ui.css"));
 	}
 
 	@Override

@@ -13,8 +13,8 @@
 	<artifactId>wicket-jquery-ui</artifactId>
 	<packaging>bundle</packaging>
 
-    <properties>
-	    <bundle.namespace>com.googlecode.wicket.jquery.ui</bundle.namespace>
+	<properties>
+		<bundle.namespace>com.googlecode.wicket.jquery.ui</bundle.namespace>
 	</properties>
 
 	<dependencies>
@@ -23,6 +23,14 @@
 			<groupId>com.googlecode.wicket-jquery-ui</groupId>
 			<artifactId>wicket-jquery-ui-core</artifactId>
 			<version>9.19.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>de.agilecoders.wicket.webjars</groupId>
+			<artifactId>wicket-webjars</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>jquery-ui</artifactId>
 		</dependency>
 
 		<!-- WICKET DEPENDENCIES -->

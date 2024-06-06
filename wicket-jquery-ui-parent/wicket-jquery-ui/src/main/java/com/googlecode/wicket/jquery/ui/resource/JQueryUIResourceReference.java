@@ -16,7 +16,14 @@
  */
 package com.googlecode.wicket.jquery.ui.resource;
 
-import org.apache.wicket.resource.JQueryPluginResourceReference;
+import de.agilecoders.wicket.webjars.request.resource.WebjarsJavaScriptResourceReference;
+import org.apache.wicket.Application;
+import org.apache.wicket.markup.head.HeaderItem;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
+import org.apache.wicket.request.resource.ResourceReference;
+import org.apache.wicket.resource.JQueryResourceReference;
+
+import java.util.List;
 
 /**
  * Provides the resource reference for the jQuery UI javascript library.
@@ -24,8 +31,7 @@ import org.apache.wicket.resource.JQueryPluginResourceReference;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class JQueryUIResourceReference extends JQueryPluginResourceReference
-{
+public class JQueryUIResourceReference extends WebjarsJavaScriptResourceReference{
 	private static final long serialVersionUID = 1L;
 
 	private static final JQueryUIResourceReference INSTANCE = new JQueryUIResourceReference();
@@ -45,6 +51,25 @@ public class JQueryUIResourceReference extends JQueryPluginResourceReference
 	 */
 	private JQueryUIResourceReference()
 	{
-		super(JQueryUIResourceReference.class, "jquery-ui.js"); // v1.11.1
+		super("jquery-ui/current/jquery-ui.js");
+	}
+
+	@Override
+	public List<HeaderItem> getDependencies()
+	{
+		final ResourceReference backingLibraryReference;
+		if (Application.exists())
+		{
+			backingLibraryReference = Application.get()
+					.getJavaScriptLibrarySettings()
+					.getJQueryReference();
+		}
+		else
+		{
+			backingLibraryReference = JQueryResourceReference.getV3();
+		}
+		List<HeaderItem> dependencies = super.getDependencies();
+		dependencies.add(JavaScriptHeaderItem.forReference(backingLibraryReference));
+		return dependencies;
 	}
 }
