@@ -1,6 +1,8 @@
+/*
+Licensed under the Apache License, Version 2.0 (the "License") http://www.apache.org/licenses/LICENSE-2.0
+ */
 package org.wicketstuff.jquery.ui.samples;
 
-import de.agilecoders.wicket.webjars.WicketWebjars;
 import org.apache.wicket.Session;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
@@ -10,6 +12,7 @@ import org.wicketstuff.jquery.ui.samples.jqueryui.accordion.DefaultAccordionPage
 import org.wicketstuff.jquery.ui.samples.jqueryui.autocomplete.DefaultAutoCompletePage;
 import org.wicketstuff.jquery.ui.samples.jqueryui.button.DefaultButtonPage;
 import org.wicketstuff.jquery.ui.samples.jqueryui.calendar.DefaultCalendarPage;
+import org.wicketstuff.jquery.ui.samples.jqueryui.calendar6.DefaultCalendar6Page;
 import org.wicketstuff.jquery.ui.samples.jqueryui.datepicker.DefaultDatePickerPage;
 import org.wicketstuff.jquery.ui.samples.jqueryui.dialog.MessageDialogPage;
 import org.wicketstuff.jquery.ui.samples.jqueryui.draggable.DefaultDraggablePage;
@@ -66,7 +69,6 @@ public class SampleApplication extends WebApplication
 	public void init()
 	{
 		super.init();
-		WicketWebjars.install(this);
 
 		this.getResourceSettings().setThrowExceptionOnMissingResource(false);
 
@@ -143,6 +145,9 @@ public class SampleApplication extends WebApplication
 
 		// Calendar //
 		this.mountPackage("/calendar", DefaultCalendarPage.class);
+
+		// Calendar v6 //
+		this.mountPackage("/calendar6", DefaultCalendar6Page.class);
 
 		// Plugins //
 		this.mountPackage("/plugins", FontSizePage.class);

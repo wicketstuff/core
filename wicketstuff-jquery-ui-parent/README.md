@@ -1,5 +1,5 @@
 # wicket-jquery-ui
-**jQuery UI & Kendo UI integration in Wicket 7.x, Wicket 8.x &amp; Wicket9.x**  
+**jQuery UI & Kendo UI integration in Wicket 7.x, Wicket 8.x &amp; Wicket9.x**
 [![TravisCI](https://travis-ci.org/sebfz1/wicket-jquery-ui.svg?branch=wicket9.x)](https://travis-ci.org/sebfz1/wicket-jquery-ui)
 
 ## Getting started
@@ -9,23 +9,23 @@ In order to get started using this API, you may download appropriate jar(s) or s
 If you are not using maven, you need to download the core jar here:
 <http://central.maven.org/maven2/com/googlecode/wicket-jquery-ui/>
 
-You may also download other jars as required (ie: `wicket-kendo-ui`).  
+You may also download other jars as required (ie: `wicket-kendo-ui`).
 Once done, just include the jar(s) in your project's build path.
 
 ### Using Maven
 
 ```xml
 <dependency>
-    <groupId>com.googlecode.wicket-jquery-ui</groupId>
-    <artifactId>wicket-jquery-ui</artifactId>
-    <version>9.11.0</version>
+    <groupId>org.wicketstuff</groupId>
+    <artifactId>wicketstuff-jquery-ui</artifactId>
+    <version>10.1.0</version>
 </dependency>
 ```
 ```xml
 <dependency>
-    <groupId>com.googlecode.wicket-jquery-ui</groupId>
-    <artifactId>wicket-kendo-ui</artifactId>
-    <version>9.11.0</version>
+    <groupId>org.wicketstuff</groupId>
+    <artifactId>wicketstuff-kendo-ui</artifactId>
+    <version>10.1.0</version>
 </dependency>
 ```
 
@@ -86,9 +86,9 @@ To use wicket-jquery-ui with a standard theme, just add the corresponding theme 
 
 ```xml
 <dependency>
-	<groupId>com.googlecode.wicket-jquery-ui</groupId>
-	<artifactId>wicket-jquery-ui-theme-uilightness</artifactId>
-	<version>9.11.0</version>
+	<groupId>org.wicketstuff</groupId>
+	<artifactId>wicketstuff-jquery-ui-theme-uilightness</artifactId>
+	<version>10.1.0</version>
 </dependency>
 ```
 
@@ -102,9 +102,9 @@ To use wicket-kendo-ui with a standard theme, just add the corresponding theme d
 
 ```xml
 <dependency>
-	<groupId>com.googlecode.wicket-jquery-ui</groupId>
-	<artifactId>wicket-kendo-ui-theme-default</artifactId>
-	<version>9.11.0</version>
+	<groupId>org.wicketstuff</groupId>
+	<artifactId>wicketstuff-kendo-ui-theme-default</artifactId>
+	<version>10.1.0</version>
 </dependency>
 ```
 
@@ -112,6 +112,6 @@ To use wicket-kendo-ui with a standard theme, just add the corresponding theme d
 Please follow the instruction on [How to change resource references](https://github.com/sebfz1/wicket-jquery-ui/wiki/%5Bhowto%5D-change-resource-references)
 
 ## You are now ready to use wicket-jquery-ui!
-Look at the samples provided in the demo site to get started with the code...  
+Look at the samples provided in the demo site to get started with the code...
 <http://www.7thweb.net/wicket-jquery-ui>
 

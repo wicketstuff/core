@@ -323,6 +323,7 @@
 		<fst.version>3.0.4-jdk17</fst.version>
 		<jquery-ui.version>1.13.3</jquery-ui.version>
 		<moment-js.version>2.29.4</moment-js.version>
+		<fullcalendar.version>6.1.14</fullcalendar.version>
 		<!-- plugins -->
 		<maven-surefire-plugin.version>3.2.5</maven-surefire-plugin.version>
 		<maven-javadoc-plugin.version>3.7.0</maven-javadoc-plugin.version>
@@ -425,7 +426,7 @@
 		<module>wicketstuff-lambda-components</module>
 		<module>wicket-datetime-parent</module>
 		<module>wicketstuff-datetime-yui-parent</module>
-		
+
 		<module>wicketstuff-jquery-ui-parent</module>
 	</modules>
 
@@ -970,6 +971,21 @@
 				<groupId>de.ruedigermoeller</groupId>
 				<artifactId>fst</artifactId>
 				<version>${fst.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.webjars</groupId>
+				<artifactId>jquery-ui</artifactId>
+				<version>${jquery-ui.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.webjars.npm</groupId>
+				<artifactId>fullcalendar</artifactId>
+				<version>${fullcalendar.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.webjars.npm</groupId>
+				<artifactId>fullcalendar__google-calendar</artifactId>
+				<version>${fullcalendar.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

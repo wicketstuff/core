@@ -31,7 +31,6 @@
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>jquery-ui</artifactId>
-			<version>${jquery-ui.version}</version>
 		</dependency>
 
 		<!-- WICKET DEPENDENCIES -->

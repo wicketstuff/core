@@ -1,3 +1,6 @@
+/*
+Licensed under the Apache License, Version 2.0 (the "License") http://www.apache.org/licenses/LICENSE-2.0
+ */
 package org.wicketstuff.jquery.ui.samples.data.bean;
 
 import org.apache.wicket.util.io.IClusterable;
@@ -14,7 +17,7 @@ public class Band implements IClusterable
 		this.name = name;
 		this.desc = desc;
 	}
-	
+
 	public String getName()
 	{
 		return this.name;

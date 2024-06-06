@@ -1,3 +1,6 @@
+/*
+Licensed under the Apache License, Version 2.0 (the "License") http://www.apache.org/licenses/LICENSE-2.0
+ */
 package org.wicketstuff.jquery.ui.samples.kendoui.datatable;
 
 import java.util.Arrays;
@@ -108,9 +111,9 @@ public class InlineDataTablePage extends AbstractDataTablePage
 			public List<CommandButton> newButtons()
 			{
 				/*
-				 * 'edit' and 'destroy' are built-in buttons/commands, no property has to be to supply 
-				 * #onUpdate(AjaxRequestTarget target, JSONObject object) will be triggered 
-				 * #onDelete(AjaxRequestTarget target, JSONObject object) will be triggered 
+				 * 'edit' and 'destroy' are built-in buttons/commands, no property has to be to supply
+				 * #onUpdate(AjaxRequestTarget target, JSONObject object) will be triggered
+				 * #onDelete(AjaxRequestTarget target, JSONObject object) will be triggered
 				 * #onClick(AjaxRequestTarget, CommandButton, String) will not be triggered
 				 */
 				return Arrays.asList(new CommandButton("edit", Model.of("Edit")), new CommandButton("destroy", Model.of("Delete")));

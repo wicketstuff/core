@@ -1,3 +1,6 @@
+/*
+Licensed under the Apache License, Version 2.0 (the "License") http://www.apache.org/licenses/LICENSE-2.0
+ */
 package org.wicketstuff.jquery.ui.samples.jqueryui.button;
 
 import java.util.List;
@@ -71,7 +74,7 @@ public class AjaxSplitButtonPage extends AbstractButtonPage
 		list.add(new MenuItem("View", JQueryIcon.SEARCH) {
 
 			private static final long serialVersionUID = 1L;
-			
+
 			@Override
 			public void onClick(AjaxRequestTarget target)
 			{

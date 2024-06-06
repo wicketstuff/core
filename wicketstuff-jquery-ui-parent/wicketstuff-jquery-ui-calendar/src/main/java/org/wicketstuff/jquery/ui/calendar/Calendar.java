@@ -98,7 +98,7 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	/**
 	 * Adds a {@link EventSource}, can be a {@link GoogleCalendar}
 	 *
-	 * @param source the {@link EventSource}, 
+	 * @param source the {@link EventSource},
 	 */
 	public void addSource(EventSource source)
 	{
@@ -118,62 +118,6 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	public void refresh(IPartialPageRequestHandler handler)
 	{
 		handler.appendJavaScript(String.format("jQuery('%s').fullCalendar('refetchEvents');", JQueryWidget.getSelector(this)));
-	}
-
-	// Properties //
-
-	@Override
-	public boolean isSelectable()
-	{
-		return false;
-	}
-
-	@Override
-	public boolean isDayClickEnabled()
-	{
-		return false;
-	}
-
-	@Override
-	public boolean isEventClickEnabled()
-	{
-		return false;
-	}
-
-	@Override
-	public boolean isEventDropEnabled()
-	{
-		return false;
-	}
-
-	@Override
-	public boolean isEventResizeEnabled()
-	{
-		return false;
-	}
-
-	@Override
-	public boolean isObjectDropEnabled()
-	{
-		return false;
-	}
-
-	@Override
-	public boolean isViewRenderEnabled()
-	{
-		return false;
-	}
-
-	@Override
-	public CharSequence getEventDropPrecondition()
-	{
-		return "";
-	}
-
-	@Override
-	public CharSequence getEventResizePrecondition()
-	{
-		return "";
 	}
 
 	// Events //
@@ -206,48 +150,6 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 		}
 
 		behavior.setOption("eventSources", String.format("[%s]", sourceBuilder.toString()));
-	}
-
-	@Override
-	public void onSelect(AjaxRequestTarget target, CalendarView view, LocalDateTime start, LocalDateTime end, boolean allDay)
-	{
-		// noop
-	}
-
-	@Override
-	public void onDayClick(AjaxRequestTarget target, CalendarView view, LocalDateTime date, boolean allDay)
-	{
-		// noop
-	}
-
-	@Override
-	public void onEventClick(AjaxRequestTarget target, CalendarView view, String eventId)
-	{
-		// noop
-	}
-
-	@Override
-	public void onEventDrop(AjaxRequestTarget target, String eventId, long delta, boolean allDay)
-	{
-		// noop
-	}
-
-	@Override
-	public void onEventResize(AjaxRequestTarget target, String eventId, long delta)
-	{
-		// noop
-	}
-
-	@Override
-	public void onObjectDrop(AjaxRequestTarget target, String title, LocalDateTime date, boolean allDay)
-	{
-		// noop
-	}
-
-	@Override
-	public void onViewRender(AjaxRequestTarget target, CalendarView view, LocalDate start, LocalDate end)
-	{
-		// noop
 	}
 
 	// IJQueryWidget //

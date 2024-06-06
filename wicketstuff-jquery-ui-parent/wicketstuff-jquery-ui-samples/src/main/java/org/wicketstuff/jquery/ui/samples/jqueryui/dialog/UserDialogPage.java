@@ -1,3 +1,6 @@
+/*
+Licensed under the Apache License, Version 2.0 (the "License") http://www.apache.org/licenses/LICENSE-2.0
+ */
 package org.wicketstuff.jquery.ui.samples.jqueryui.dialog;
 
 import java.util.Arrays;
@@ -163,7 +166,7 @@ public class UserDialogPage extends AbstractDialogPage
 			this.feedback = new JQueryFeedbackPanel("feedback");
 			this.form.add(this.feedback);
 		}
-		
+
 		// Methods //
 
 		@Override
@@ -171,7 +174,7 @@ public class UserDialogPage extends AbstractDialogPage
 		{
 			return new Model<User>();
 		}
-		
+
 
 		@Override
 		public void renderHead(IHeaderResponse response)

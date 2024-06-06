@@ -1,3 +1,6 @@
+/*
+Licensed under the Apache License, Version 2.0 (the "License") http://www.apache.org/licenses/LICENSE-2.0
+ */
 package org.wicketstuff.jquery.ui.samples.kendoui.dropdown;
 
 import java.util.Arrays;
@@ -31,12 +34,12 @@ public class TemplateDropDownPage extends AbstractDropDownPage
 		final DropDownList<Genre> dropdown = new DropDownList<Genre>("select", new Model<Genre>(), GenresDAO.all()) {
 
 			private static final long serialVersionUID = 1L;
-			
+
 			@Override
 			protected void onInitialize()
 			{
 				super.onInitialize();
-				
+
 				this.setListWidth(220);
 			}
 

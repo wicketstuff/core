@@ -103,8 +103,7 @@
 			<groupId>org.eclipse.jetty.websocket</groupId>
 			<artifactId>websocket-jakarta-server</artifactId>
 		</dependency>
-
-    </dependencies>
+	</dependencies>
 	<build>
 		<resources>
 			<resource>

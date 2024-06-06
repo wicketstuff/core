@@ -1,3 +1,6 @@
+/*
+Licensed under the Apache License, Version 2.0 (the "License") http://www.apache.org/licenses/LICENSE-2.0
+ */
 package org.wicketstuff.jquery.ui.samples.kendoui.datetimepicker;
 
 import java.util.Date;
@@ -35,7 +38,7 @@ public class AjaxDateTimePickerPage extends AbstractTimePickerPage
 
 				handler.add(feedback);
 			}
-			
+
 			@Override
 			protected void onError(IPartialPageRequestHandler handler)
 			{

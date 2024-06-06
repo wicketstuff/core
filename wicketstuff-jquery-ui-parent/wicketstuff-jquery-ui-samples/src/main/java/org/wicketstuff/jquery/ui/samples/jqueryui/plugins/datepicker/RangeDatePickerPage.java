@@ -1,3 +1,6 @@
+/*
+Licensed under the Apache License, Version 2.0 (the "License") http://www.apache.org/licenses/LICENSE-2.0
+ */
 package org.wicketstuff.jquery.ui.samples.jqueryui.plugins.datepicker;
 
 import java.text.DateFormat;
@@ -13,7 +16,7 @@ import org.wicketstuff.jquery.ui.plugins.datepicker.DateRange;
 import org.wicketstuff.jquery.ui.plugins.datepicker.RangeDatePicker;
 
 /**
- * @deprecated seems to not work with lastest jquery/jquery-ui, and the js plugin seems not maintained anymore 
+ * @deprecated seems to not work with lastest jquery/jquery-ui, and the js plugin seems not maintained anymore
  */
 @Deprecated
 public class RangeDatePickerPage extends AbstractRangeDatePickerPage

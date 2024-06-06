@@ -1,3 +1,6 @@
+/*
+Licensed under the Apache License, Version 2.0 (the "License") http://www.apache.org/licenses/LICENSE-2.0
+ */
 package org.wicketstuff.jquery.ui.samples.jqueryui.slider;
 
 import org.apache.wicket.AttributeModifier;
@@ -123,7 +126,7 @@ public class ColorPickerPage extends AbstractSliderPage
 
 		/**
 		 * Updates the model with the new color.
-		 * 
+		 *
 		 * @param handler the {@link IPartialPageRequestHandler}
 		 */
 		private void changeColor(IPartialPageRequestHandler handler)
@@ -139,7 +142,7 @@ public class ColorPickerPage extends AbstractSliderPage
 		// Events //
 		/**
 		 * Event which will be fired when the color has been changed.
-		 * 
+		 *
 		 * @param handler the {@link IPartialPageRequestHandler}
 		 */
 		protected abstract void onColorChanged(IPartialPageRequestHandler handler);
@@ -147,7 +150,7 @@ public class ColorPickerPage extends AbstractSliderPage
 		// Factories //
 		/**
 		 * Gets a new {@link AjaxSlider} for the specified color model
-		 * 
+		 *
 		 * @param id the markup id
 		 * @param model the (R|G|B) color model
 		 * @return the {@link AjaxSlider}

@@ -1,3 +1,6 @@
+/*
+Licensed under the Apache License, Version 2.0 (the "License") http://www.apache.org/licenses/LICENSE-2.0
+ */
 package org.wicketstuff.jquery.ui.samples;
 
 import java.util.List;
@@ -41,7 +44,7 @@ public class SampleSession extends WebSession implements IJQuerySecurityProvider
 
 	/**
 	 * Check whether one of the supplied roles match a user role
-	 * 
+	 *
 	 * @see IJQuerySecurityProvider#hasRole(String...)
 	 * @param roles the roles to be checked
 	 * @return true or false
