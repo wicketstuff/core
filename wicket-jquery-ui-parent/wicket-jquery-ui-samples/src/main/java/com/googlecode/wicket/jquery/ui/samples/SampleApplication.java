@@ -10,6 +10,7 @@ import com.googlecode.wicket.jquery.ui.samples.jqueryui.accordion.DefaultAccordi
 import com.googlecode.wicket.jquery.ui.samples.jqueryui.autocomplete.DefaultAutoCompletePage;
 import com.googlecode.wicket.jquery.ui.samples.jqueryui.button.DefaultButtonPage;
 import com.googlecode.wicket.jquery.ui.samples.jqueryui.calendar.DefaultCalendarPage;
+import com.googlecode.wicket.jquery.ui.samples.jqueryui.calendar6.DefaultCalendar6Page;
 import com.googlecode.wicket.jquery.ui.samples.jqueryui.datepicker.DefaultDatePickerPage;
 import com.googlecode.wicket.jquery.ui.samples.jqueryui.dialog.MessageDialogPage;
 import com.googlecode.wicket.jquery.ui.samples.jqueryui.draggable.DefaultDraggablePage;
@@ -57,6 +58,8 @@ import com.googlecode.wicket.jquery.ui.samples.kendoui.window.DefaultWindowPage;
 import com.googlecode.wicket.kendo.ui.resource.KendoAllResourceReference;
 import com.googlecode.wicket.kendo.ui.settings.KendoUILibrarySettings;
 
+import de.agilecoders.wicket.webjars.WicketWebjars;
+
 public class SampleApplication extends WebApplication
 {
 	/**
@@ -66,6 +69,8 @@ public class SampleApplication extends WebApplication
 	public void init()
 	{
 		super.init();
+
+		WicketWebjars.install(this);
 
 		this.getResourceSettings().setThrowExceptionOnMissingResource(false);
 
@@ -142,6 +147,9 @@ public class SampleApplication extends WebApplication
 
 		// Calendar //
 		this.mountPackage("/calendar", DefaultCalendarPage.class);
+
+		// Calendar v6 //
+		this.mountPackage("/calendar6", DefaultCalendar6Page.class);
 
 		// Plugins //
 		this.mountPackage("/plugins", FontSizePage.class);

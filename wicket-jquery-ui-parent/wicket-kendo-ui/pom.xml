@@ -13,8 +13,8 @@
 	<artifactId>wicket-kendo-ui</artifactId>
 	<packaging>bundle</packaging>
 
-    <properties>
-	    <bundle.namespace>com.googlecode.wicket.kendo.ui</bundle.namespace>
+	<properties>
+		<bundle.namespace>com.googlecode.wicket.kendo.ui</bundle.namespace>
 	</properties>
 
 	<dependencies>
