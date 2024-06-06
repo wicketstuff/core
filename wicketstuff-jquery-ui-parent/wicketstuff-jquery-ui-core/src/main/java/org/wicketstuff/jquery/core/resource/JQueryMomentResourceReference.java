@@ -16,7 +16,14 @@
  */
 package org.wicketstuff.jquery.core.resource;
 
-import org.apache.wicket.resource.JQueryPluginResourceReference;
+import de.agilecoders.wicket.webjars.request.resource.WebjarsJavaScriptResourceReference;
+import org.apache.wicket.Application;
+import org.apache.wicket.markup.head.HeaderItem;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
+import org.apache.wicket.request.resource.ResourceReference;
+import org.apache.wicket.resource.JQueryResourceReference;
+
+import java.util.List;
 
 /**
  * The resource reference for the jQuery Moment javascript library.
@@ -24,7 +31,7 @@ import org.apache.wicket.resource.JQueryPluginResourceReference;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class JQueryMomentResourceReference extends JQueryPluginResourceReference
+public class JQueryMomentResourceReference extends WebjarsJavaScriptResourceReference
 {
 	private static final long serialVersionUID = 1L;
 
@@ -45,6 +52,25 @@ public class JQueryMomentResourceReference extends JQueryPluginResourceReference
 	 */
 	private JQueryMomentResourceReference()
 	{
-		super(JQueryMomentResourceReference.class, "moment.min.js");
+		super("moment/current/min/moment.min.js");
+	}
+
+	@Override
+	public List<HeaderItem> getDependencies()
+	{
+		final ResourceReference backingLibraryReference;
+		if (Application.exists())
+		{
+			backingLibraryReference = Application.get()
+					.getJavaScriptLibrarySettings()
+					.getJQueryReference();
+		}
+		else
+		{
+			backingLibraryReference = JQueryResourceReference.getV3();
+		}
+		List<HeaderItem> dependencies = super.getDependencies();
+		dependencies.add(JavaScriptHeaderItem.forReference(backingLibraryReference));
+		return dependencies;
 	}
 }
