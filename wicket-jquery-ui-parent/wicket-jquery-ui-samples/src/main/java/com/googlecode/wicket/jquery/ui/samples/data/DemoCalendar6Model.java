@@ -3,7 +3,6 @@ Licensed under the Apache License, Version 2.0 (the "License") http://www.apache
  */
 package com.googlecode.wicket.jquery.ui.samples.data;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import com.googlecode.wicket.jquery.ui.calendar6.CalendarEvent;
@@ -18,10 +17,7 @@ public class DemoCalendar6Model extends CalendarModel implements ICalendarVisito
 	@Override
 	protected List<DemoCalendar6Event> load()
 	{
-		 LocalDate start = this.getStart();
-		 LocalDate end = this.getEnd();
-
-		return Calendar6DAO.getEvents(start, end);
+		return Calendar6DAO.getEvents(this.getStart(), this.getEnd());
 	}
 
 	// ICalendarVisitor //

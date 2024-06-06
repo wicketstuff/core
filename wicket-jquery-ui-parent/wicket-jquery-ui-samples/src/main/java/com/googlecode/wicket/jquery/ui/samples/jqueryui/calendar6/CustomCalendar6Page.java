@@ -48,10 +48,6 @@ public class CustomCalendar6Page extends AbstractCalendar6Page
 			@Override
 			protected List<CalendarEvent> load()
 			{
-				// Loads events from the data access layer, using:
-				// Date start = this.getStart();
-				// Date end = this.getEnd();
-
 				return events;
 			}
 		};

@@ -46,12 +46,10 @@
 		<dependency>
 			<groupId>org.webjars.npm</groupId>
 			<artifactId>fullcalendar</artifactId>
-			<version>${fullcalendar.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.webjars.npm</groupId>
 			<artifactId>fullcalendar__google-calendar</artifactId>
-			<version>${fullcalendar.version}</version>
 		</dependency>
 
 		<!-- JUNIT DEPENDENCY FOR TESTING -->
