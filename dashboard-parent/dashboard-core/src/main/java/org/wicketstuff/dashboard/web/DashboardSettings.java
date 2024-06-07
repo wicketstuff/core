@@ -16,6 +16,7 @@ import org.apache.wicket.Application;
 import org.apache.wicket.MetaDataKey;
 import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
+import de.agilecoders.wicket.webjars.request.resource.WebjarsJavaScriptResourceReference;
 
 /**
  * {@link DashboardSettings} which allows to specify set of resources for inclusion in an page header
@@ -32,10 +33,8 @@ public class DashboardSettings {
 			DashboardSettings.class, "res/dashboard.css");
 	private ResourceReference rtlCssReference = new PackageResourceReference(
 			DashboardSettings.class, "res/dashboard-rtl.css");
-	private ResourceReference jqueryUIReference = new PackageResourceReference(
-			DashboardSettings.class, "res/jquery-ui-1.13.0.min.js");
-	private ResourceReference jqueryJsonReference = new PackageResourceReference(
-			DashboardSettings.class, "res/jquery.json-2.2.min.js");
+	private ResourceReference jqueryUIReference = new WebjarsJavaScriptResourceReference("jquery-ui/current/jquery-ui.js");
+	private ResourceReference jqueryJsonReference = new PackageResourceReference(DashboardSettings.class, "res/jquery.json-2.2.min.js");
 
 	private boolean includeJQueryUI = true;
 	@Deprecated(since = "9.8.0", forRemoval = true)
