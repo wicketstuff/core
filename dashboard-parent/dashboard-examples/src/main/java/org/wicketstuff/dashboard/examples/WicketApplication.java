@@ -14,6 +14,7 @@ package org.wicketstuff.dashboard.examples;
 
 import static org.wicketstuff.dashboard.DashboardContextInitializer.getDashboardContext;
 
+import de.agilecoders.wicket.webjars.WicketWebjars;
 import org.apache.wicket.Page;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.wicketstuff.dashboard.Dashboard;
@@ -39,6 +40,7 @@ public class WicketApplication extends WebApplication {
 	@Override
 	public void init() {
 		super.init();
+		WicketWebjars.install(this);
 
 		getCspSettings().blocking().disabled();
 
