@@ -61,8 +61,6 @@ import com.googlecode.wicket.jquery.ui.samples.kendoui.window.DefaultWindowPage;
 import com.googlecode.wicket.kendo.ui.resource.KendoAllResourceReference;
 import com.googlecode.wicket.kendo.ui.settings.KendoUILibrarySettings;
 
-import de.agilecoders.wicket.webjars.WicketWebjars;
-
 public class SampleApplication extends WebApplication
 {
 	/**
@@ -72,8 +70,6 @@ public class SampleApplication extends WebApplication
 	public void init()
 	{
 		super.init();
-
-		WicketWebjars.install(this);
 
 		this.getResourceSettings().setThrowExceptionOnMissingResource(false);
 
