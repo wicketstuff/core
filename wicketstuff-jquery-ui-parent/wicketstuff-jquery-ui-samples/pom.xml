@@ -14,7 +14,6 @@
 	<packaging>war</packaging>
 
 	<properties>
-		<jetty.version>9.4.44.v20210927</jetty.version>
 		<slf4j.version>2.0.13</slf4j.version>
 	</properties>
 
@@ -163,7 +162,6 @@
 			<plugin>
 				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
-				<version>${jetty.version}</version>
 				<configuration>
 					<systemProperties>
 						<systemProperty>
