@@ -18,8 +18,11 @@ package org.wicketstuff.jquery.ui.theme;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.IInitializer;
+import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.resource.CssResourceReference;
 import org.wicketstuff.jquery.ui.settings.JQueryUILibrarySettings;
+
+import de.agilecoders.wicket.webjars.WicketWebjars;
 
 /**
  * Provides the {@link IInitializer} for this theme
@@ -31,8 +34,9 @@ public class Initializer implements IInitializer
 	@Override
 	public void init(Application application)
 	{
+		WicketWebjars.install((WebApplication)application);
 		application.getMarkupSettings().setStripWicketTags(true);
-		
+
 		JQueryUILibrarySettings.get().setStyleSheetReference(new CssResourceReference(Initializer.class, "jquery-ui.css"));
 	}
 
