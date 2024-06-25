@@ -13,7 +13,7 @@
 	<description>An implementation of Apache Wicket's IDataStore that uses Hazelcast as a backend</description>
 
 	<properties>
-		<hazelcast.version>5.2.3</hazelcast.version>
+		<hazelcast.version>5.3.7</hazelcast.version>
 	</properties>
 	<dependencies>
 

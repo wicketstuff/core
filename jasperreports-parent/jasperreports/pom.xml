@@ -40,7 +40,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.bouncycastle</groupId>
-			<artifactId>bcprov-jdk15on</artifactId>
+			<artifactId>bcprov-jdk18on</artifactId>
 			<version>${bcprov.version}</version> <!-- required to override bundled version -->
 		</dependency>
 

@@ -27,6 +27,7 @@ import org.slf4j.LoggerFactory;
 import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.joran.JoranConfigurator;
 import ch.qos.logback.core.joran.spi.JoranException;
+import ch.qos.logback.core.spi.ScanException;
 import ch.qos.logback.core.util.OptionHelper;
 import ch.qos.logback.core.util.StatusPrinter;
 
@@ -34,12 +35,12 @@ import ch.qos.logback.core.util.StatusPrinter;
  * <p>
  * {@link ServletContextListener} that can be used in web applications to define the location of the
  * logback configuration and optionally to inject the context path into the properties of logback
- * 
+ *
  * <p>
  * Should be the first listener to configure logback before using it. Location is defined in the
  * <code>logbackConfigLocation</code> context param. Snippet from web.xml:
  * </p>
- * 
+ *
  * <pre>
  * <code>
  * {@literal
@@ -48,13 +49,13 @@ import ch.qos.logback.core.util.StatusPrinter;
  *     <param-name>logbackConfigLocation</param-name>
  *     <param-value>/WEB-INF/log-sc.xml</param-value>
  * </context-param>
- * 
+ *
  * <!-- optional, needed if config wants to use the context path -->
  * <context-param>
  *     <param-name>logbackConfigContextPathKey</param-name>
  *     <param-value>contextPath</param-value>
  * </context-param>
- * 
+ *
  * <!-- mandatory, applies custom config location based on the value of
  *      logbackConfigLocation -->
  * <listener>
@@ -63,13 +64,13 @@ import ch.qos.logback.core.util.StatusPrinter;
  * }
  * </code>
  * </pre>
- * 
+ *
  * <p>
  * The above means that logback will be configured using the <code>/WEB-INF/log-sc.xml</code>
  * servlet context resource and <code>${contextPath}</code> can be used in the logback config as a
  * placeholder for the webapp's context path.
  * </p>
- * 
+ *
  * <p>
  * Placeholders (ex: ${user.home}) in <code>logbackConfigLocation</code> are supported. Location
  * examples:<br />
@@ -80,7 +81,7 @@ import ch.qos.logback.core.util.StatusPrinter;
  * <code>log-relfile.xml</code> (is a relative file path) -> loaded as file relative to the servlet
  * container working directory
  * </p>
- * 
+ *
  * @author akiraly
  */
 public class LogbackConfigListener implements ServletContextListener
@@ -126,7 +127,7 @@ public class LogbackConfigListener implements ServletContextListener
 
 	/**
 	 * Configures logback with the custom config location specified in the web.xml.
-	 * 
+	 *
 	 * @param sc
 	 *            represents the webapp, not null
 	 * @param lc
@@ -140,8 +141,13 @@ public class LogbackConfigListener implements ServletContextListener
 
 		String location = rawLocation;
 
-		if (location != null)
-			location = OptionHelper.substVars(location, lc);
+		if (location != null) {
+			try {
+				location = OptionHelper.substVars(location, lc);
+			} catch (ScanException e) {
+				sc.log("Unexpected ScanException", e);
+			}
+		}
 
 		if (location == null)
 		{
@@ -176,7 +182,7 @@ public class LogbackConfigListener implements ServletContextListener
 
 	/**
 	 * Reconfigures logback to use the config from the specified url.
-	 * 
+	 *
 	 * @param sc
 	 *            represents the webapp, not null
 	 * @param lc
@@ -213,7 +219,7 @@ public class LogbackConfigListener implements ServletContextListener
 	/**
 	 * Returns a normalized context path for the webapp. For the root webapp (context path ""),
 	 * {@link #CONTEXT_PATH_ROOT_VAL} is returned.
-	 * 
+	 *
 	 * @param sc
 	 *            represents the webapp, not null
 	 * @return normalized context path, not null, not empty
@@ -233,7 +239,7 @@ public class LogbackConfigListener implements ServletContextListener
 
 	/**
 	 * Converts the passed in location String to an URL.
-	 * 
+	 *
 	 * @param sc
 	 *            represents the webapp, not null
 	 * @param location
