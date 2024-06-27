@@ -972,6 +972,11 @@
 				<version>${jquery-ui.version}</version>
 			</dependency>
 			<dependency>
+				<groupId>org.webjars</groupId>
+				<artifactId>momentjs</artifactId>
+				<version>${moment-js.version}</version>
+			</dependency>
+				<dependency>
 				<groupId>org.webjars.npm</groupId>
 				<artifactId>fullcalendar</artifactId>
 				<version>${fullcalendar.version}</version>
