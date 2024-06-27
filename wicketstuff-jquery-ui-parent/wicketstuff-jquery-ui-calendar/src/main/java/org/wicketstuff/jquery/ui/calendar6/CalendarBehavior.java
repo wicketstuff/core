@@ -16,9 +16,11 @@
  */
 package org.wicketstuff.jquery.ui.calendar6;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -33,6 +35,8 @@ import org.apache.wicket.markup.head.PriorityHeaderItem;
 import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.string.Strings;
 import org.wicketstuff.jquery.ui.calendar6.settings.CalendarLibrarySettings;
+
+import com.github.openjson.JSONObject;
 
 import org.wicketstuff.jquery.core.JQueryEvent;
 import org.wicketstuff.jquery.core.Options;
@@ -536,7 +540,7 @@ public class CalendarBehavior extends Behavior implements IJQueryAjaxAware
 			// https://fullcalendar.io/docs/eventDrop
 			return new CallbackParameter[] {
 					CallbackParameter.context("info"), // lf
-					CallbackParameter.resolved("millisDelta", "info.delta.milliseconds"), // retrieved
+					CallbackParameter.resolved("delta", "JSON.stringify(info.delta)"), // retrieved
 					CallbackParameter.resolved("allDay", "info.event.allDay"), // retrieved
 					CallbackParameter.resolved("eventId", "info.event.id") // retrieved
 			};
@@ -584,7 +588,7 @@ public class CalendarBehavior extends Behavior implements IJQueryAjaxAware
 		{
 			return new CallbackParameter[] {
 					CallbackParameter.context("info"), // lf
-					CallbackParameter.resolved("millisDelta", "info.endDelta.milliseconds"), // retrieved
+					CallbackParameter.resolved("delta", "JSON.stringify(info.endDelta)"), // retrieved
 					CallbackParameter.resolved("allDay", "info.event.allDay"), // retrieved
 					CallbackParameter.resolved("eventId", "info.event.id") // retrieved
 			};
@@ -875,7 +879,7 @@ public class CalendarBehavior extends Behavior implements IJQueryAjaxAware
 	protected abstract static class DeltaEvent extends JQueryEvent
 	{
 		private final String eventId;
-		private final long delta;
+		private final DateTimeDelta delta;
 
 		/**
 		 * Constructor
@@ -883,7 +887,8 @@ public class CalendarBehavior extends Behavior implements IJQueryAjaxAware
 		public DeltaEvent()
 		{
 			this.eventId = RequestCycleUtils.getQueryParameterValue("eventId").toString();
-			this.delta = RequestCycleUtils.getQueryParameterValue("millisDelta").toLong();
+			JSONObject deltaObj = new JSONObject(RequestCycleUtils.getQueryParameterValue("delta").toString());
+			this.delta = new DateTimeDelta(deltaObj.getInt("years"), deltaObj.getInt("months"), deltaObj.getInt("days"), deltaObj.getInt("milliseconds"));
 		}
 
 		/**
@@ -901,7 +906,7 @@ public class CalendarBehavior extends Behavior implements IJQueryAjaxAware
 		 *
 		 * @return the event's delta time
 		 */
-		public long getDelta()
+		public DateTimeDelta getDelta()
 		{
 			return this.delta;
 		}
