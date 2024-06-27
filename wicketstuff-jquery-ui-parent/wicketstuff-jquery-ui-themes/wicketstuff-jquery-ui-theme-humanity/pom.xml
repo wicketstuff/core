@@ -13,8 +13,9 @@
 	<artifactId>wicketstuff-jquery-ui-theme-humanity</artifactId>
 	<packaging>bundle</packaging>
 
-    <properties>
-	    <bundle.namespace>org.wicketstuff.jquery.ui.theme.humanity</bundle.namespace>
+	<properties>
+		<bundle.namespace>org.wicketstuff.jquery.ui.theme</bundle.namespace>
+		<auto.module.name>org.wicketstuff.jquery.ui.theme_humanity</auto.module.name>
 	</properties>
 
     <build>

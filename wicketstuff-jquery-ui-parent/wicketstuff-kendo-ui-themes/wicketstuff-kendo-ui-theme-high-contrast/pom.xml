@@ -13,8 +13,9 @@
 	<artifactId>wicketstuff-kendo-ui-theme-highcontrast</artifactId>
 	<packaging>bundle</packaging>
 
-    <properties>
-	    <bundle.namespace>org.wicketstuff.kendo.ui.theme.highcontrast</bundle.namespace>
+	<properties>
+		<bundle.namespace>org.wicketstuff.kendo.ui.theme</bundle.namespace>
+		<auto.module.name>org.wicketstuff.kendo.ui.theme_highcontrast</auto.module.name>
 	</properties>
 
 	<dependencies>

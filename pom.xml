@@ -323,6 +323,7 @@
 		<jquery-ui.version>1.13.3</jquery-ui.version>
 		<moment-js.version>2.30.1</moment-js.version>
 		<fullcalendar.version>6.1.14</fullcalendar.version>
+		<owasp-sanitizer.version>20240325.1</owasp-sanitizer.version>
 		<!-- plugins -->
 		<maven-surefire-plugin.version>3.3.0</maven-surefire-plugin.version>
 		<maven-javadoc-plugin.version>3.7.0</maven-javadoc-plugin.version>
@@ -345,6 +346,7 @@
 		<maven-release-plugin.version>3.1.0</maven-release-plugin.version>
 		<maven-gpg-plugin.version>3.2.4</maven-gpg-plugin.version>
 		<maven-pmd-plugin.version>3.23.0</maven-pmd-plugin.version>
+		<maven-enforcer-plugin.version>3.5.0</maven-enforcer-plugin.version>
 	</properties>
 
 	<prerequisites>
@@ -986,6 +988,11 @@
 				<artifactId>fullcalendar__google-calendar</artifactId>
 				<version>${fullcalendar.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>com.googlecode.owasp-java-html-sanitizer</groupId>
+				<artifactId>owasp-java-html-sanitizer</artifactId>
+				<version>${owasp-sanitizer.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -1404,6 +1411,11 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-release-plugin</artifactId>
 					<version>${maven-release-plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-enforcer-plugin</artifactId>
+					<version>${maven-enforcer-plugin.version}</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>

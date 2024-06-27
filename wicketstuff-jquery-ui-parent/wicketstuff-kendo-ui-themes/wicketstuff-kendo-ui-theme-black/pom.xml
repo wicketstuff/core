@@ -13,8 +13,9 @@
 	<artifactId>wicketstuff-kendo-ui-theme-black</artifactId>
 	<packaging>bundle</packaging>
 
-    <properties>
-	    <bundle.namespace>org.wicketstuff.kendo.ui.theme.black</bundle.namespace>
+	<properties>
+		<bundle.namespace>org.wicketstuff.kendo.ui.theme</bundle.namespace>
+		<auto.module.name>org.wicketstuff.kendo.ui.theme_black</auto.module.name>
 	</properties>
 
 	<dependencies>

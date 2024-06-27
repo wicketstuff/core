@@ -15,6 +15,7 @@
 
 	<properties>
 		<bundle.namespace>org.wicketstuff.kendo.ui</bundle.namespace>
+		<auto.module.name>org.wicketstuff.kendo.ui</auto.module.name>
 	</properties>
 
 	<dependencies>

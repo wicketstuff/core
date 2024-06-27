@@ -13,8 +13,9 @@
 	<artifactId>wicketstuff-jquery-ui-theme-mintchoc</artifactId>
 	<packaging>bundle</packaging>
 
-    <properties>
-	    <bundle.namespace>org.wicketstuff.jquery.ui.theme.mintchoc</bundle.namespace>
+	<properties>
+		<bundle.namespace>org.wicketstuff.jquery.ui.theme</bundle.namespace>
+		<auto.module.name>org.wicketstuff.jquery.ui.theme_mintchoc</auto.module.name>
 	</properties>
 
     <build>

@@ -13,8 +13,9 @@
 	<artifactId>wicketstuff-kendo-ui-theme-metro</artifactId>
 	<packaging>bundle</packaging>
 
-    <properties>
-	    <bundle.namespace>org.wicketstuff.kendo.ui.theme.metro</bundle.namespace>
+	<properties>
+		<bundle.namespace>org.wicketstuff.kendo.ui.theme</bundle.namespace>
+		<auto.module.name>org.wicketstuff.kendo.ui.theme_metro</auto.module.name>
 	</properties>
 
 	<dependencies>

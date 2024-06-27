@@ -13,8 +13,9 @@
 	<artifactId>wicketstuff-jquery-ui-theme-start</artifactId>
 	<packaging>bundle</packaging>
 
-    <properties>
-	    <bundle.namespace>org.wicketstuff.jquery.ui.theme.start</bundle.namespace>
+	<properties>
+		<bundle.namespace>org.wicketstuff.jquery.ui.theme</bundle.namespace>
+		<auto.module.name>org.wicketstuff.jquery.ui.theme_start</auto.module.name>
 	</properties>
 
     <build>
