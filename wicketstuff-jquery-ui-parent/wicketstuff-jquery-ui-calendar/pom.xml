@@ -15,6 +15,7 @@
 
 	<properties>
 		<bundle.namespace>org.wicketstuff.jquery.ui.calendar</bundle.namespace>
+		<auto.module.name>org.wicketstuff.jquery.ui.calendar</auto.module.name>
 	</properties>
 
 	<dependencies>

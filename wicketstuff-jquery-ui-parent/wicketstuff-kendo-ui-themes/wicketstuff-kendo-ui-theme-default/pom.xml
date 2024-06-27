@@ -13,8 +13,9 @@
 	<artifactId>wicketstuff-kendo-ui-theme-default</artifactId>
 	<packaging>bundle</packaging>
 
-    <properties>
-	    <bundle.namespace>org.wicketstuff.kendo.ui.theme.default</bundle.namespace>
+	<properties>
+		<bundle.namespace>org.wicketstuff.kendo.ui.theme</bundle.namespace>
+		<auto.module.name>org.wicketstuff.kendo.ui.theme_default</auto.module.name>
 	</properties>
 
 	<dependencies>
