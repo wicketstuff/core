@@ -16,11 +16,9 @@
  */
 package org.wicketstuff.jquery.ui.calendar6;
 
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -184,13 +182,21 @@ public class CalendarBehavior extends Behavior implements IJQueryAjaxAware
 
 		/* adds and configure the busy indicator */
 		StringBuilder builder = new StringBuilder();
-		builder.append("const el = document.querySelector('").append(this.selector).append("');")
-				.append("el.calendar = new FullCalendar.Calendar(el, ").append(options).append(");")
-				.append("el.calendar.render();");
+		builder.append("const el = document.querySelector('").append(this.selector).append("');\n")
+				.append("el.calendar = new FullCalendar.Calendar(el, ").append(options).append(");\n")
+				.append("el.calendar.render();\n");
 
-		builder.append("jQuery(\"<img id='calendar-indicator' src='").append(RequestCycleUtils.getAjaxIndicatorUrl()).append("' />\").appendTo('.fc-header-center');\n"); // allows only one calendar.
-		builder.append("jQuery(document).ajaxStart(function() { jQuery('#calendar-indicator').show(); });\n");
-		builder.append("jQuery(document).ajaxStop(function() { jQuery('#calendar-indicator').hide(); });\n");
+		builder.append("window.WicketStuff = window.WicketStuff || {};\n")
+				.append("window.WicketStuff.JqueryUI = window.WicketStuff.JqueryUI || {};\n")
+				.append("window.WicketStuff.JqueryUI.toLocalDateTime = function (d) {\n")
+				.append("\tlet pad = (n) => ('' + n).padStart(2, '0');\n")
+				.append("\treturn d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate())\n")
+				.append("\t\t+ 'T' + pad(d.getHours()) + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds()) + 'Z';\n")
+				.append("};\n");
+
+		builder.append("jQuery(\"<img id='calendar-indicator' src='").append(RequestCycleUtils.getAjaxIndicatorUrl()).append("' />\").appendTo('.fc-header-center');\n") // allows only one calendar.
+				.append("jQuery(document).ajaxStart(function() { jQuery('#calendar-indicator').show(); });\n")
+				.append("jQuery(document).ajaxStop(function() { jQuery('#calendar-indicator').hide(); });\n");
 
 		response.render(OnDomReadyHeaderItem.forScript(builder));
 	}
@@ -429,8 +435,8 @@ public class CalendarBehavior extends Behavior implements IJQueryAjaxAware
 			// https://fullcalendar.io/docs/select-callback
 			return new CallbackParameter[] {
 					CallbackParameter.context("info"), // lf
-					CallbackParameter.resolved("startDate", "info.start.toISOString()"), // retrieved
-					CallbackParameter.resolved("endDate", "info.end.toISOString()"), // retrieved
+					CallbackParameter.resolved("startDate", "WicketStuff.JqueryUI.toLocalDateTime(info.start)"), // retrieved
+					CallbackParameter.resolved("endDate", "WicketStuff.JqueryUI.toLocalDateTime(info.end)"), // retrieved
 					CallbackParameter.resolved("allDay", "info.allDay"), // retrieved
 					CallbackParameter.resolved("viewName", "info.view.type") // retrieved
 			};
@@ -461,7 +467,7 @@ public class CalendarBehavior extends Behavior implements IJQueryAjaxAware
 			// https://fullcalendar.io/docs/dateClick
 			return new CallbackParameter[] {
 					CallbackParameter.context("info"), // lf
-					CallbackParameter.resolved("date", "info.date.toISOString()"), // retrieved
+					CallbackParameter.resolved("date", "WicketStuff.JqueryUI.toLocalDateTime(info.date)"), // retrieved
 					CallbackParameter.resolved("allDay", "info.allDay"), // retrieved
 					CallbackParameter.resolved("viewName", "info.view.type") // retrieved
 			};
@@ -619,7 +625,7 @@ public class CalendarBehavior extends Behavior implements IJQueryAjaxAware
 			// https://fullcalendar.io/docs/drop
 			return new CallbackParameter[] {
 					CallbackParameter.context("info"), // lf
-					CallbackParameter.resolved("date", "info.date.toISOString()"), // retrieved
+					CallbackParameter.resolved("date", "WicketStuff.JqueryUI.toLocalDateTime(info.date)"), // retrieved
 					CallbackParameter.resolved("allDay", "info.allDay"), // retrieved
 					CallbackParameter.resolved("title", "info.draggedEl.getAttribute('data-title')"), // retrieved
 			};
@@ -651,8 +657,8 @@ public class CalendarBehavior extends Behavior implements IJQueryAjaxAware
 			return new CallbackParameter[] {
 					CallbackParameter.context("info"),// lf
 					CallbackParameter.resolved("viewName", "info.view.type"), // retrieved
-					CallbackParameter.resolved("startDate", "info.view.activeStart.toISOString()"), // retrieved
-					CallbackParameter.resolved("endDate", "info.view.activeEnd.toISOString()") }; // retrieved
+					CallbackParameter.resolved("startDate", "WicketStuff.JqueryUI.toLocalDateTime(info.view.activeStart)"), // retrieved
+					CallbackParameter.resolved("endDate", "WicketStuff.JqueryUI.toLocalDateTime(info.view.activeEnd)") }; // retrieved
 		}
 
 		@Override
