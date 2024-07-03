@@ -22,6 +22,8 @@ import java.time.LocalDateTime;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.util.io.IClusterable;
 
+import com.github.openjson.JSONObject;
+
 /**
  * Event listener shared by the {@link Calendar} widget and the {@link CalendarBehavior}
  *
@@ -36,7 +38,10 @@ public interface ICalendarListener extends IClusterable
 	 *
 	 * @return false by default
 	 */
-	boolean isSelectable();
+	default boolean isSelectable()
+	{
+		return false;
+	}
 
 	/**
 	 * Indicates whether a day can be clicked.<br>
@@ -46,7 +51,10 @@ public interface ICalendarListener extends IClusterable
 	 * @return false by default
 	 * @see CalendarEvent#setEditable(Boolean)
 	 */
-	boolean isDateClickEnabled();
+	default boolean isDateClickEnabled()
+	{
+		return false;
+	}
 
 	/**
 	 * Indicates whether an event can be clicked.<br>
@@ -56,35 +64,50 @@ public interface ICalendarListener extends IClusterable
 	 * @return false by default
 	 * @see CalendarEvent#setEditable(Boolean)
 	 */
-	boolean isEventClickEnabled();
+	default boolean isEventClickEnabled()
+	{
+		return false;
+	}
 
 	/**
 	 * Indicates whether the {@link #onObjectDrop(AjaxRequestTarget, String, LocalDateTime, boolean)} event will be triggered
 	 *
 	 * @return false by default
 	 */
-	boolean isObjectDropEnabled();
+	default boolean isObjectDropEnabled()
+	{
+		return false;
+	}
 
 	/**
 	 * Indicates whether the event can be dragged &#38; dropped. If true, the {@link #onEventDrop(AjaxRequestTarget, String, long, boolean)} event will be triggered
 	 *
 	 * @return false by default
 	 */
-	boolean isEventDropEnabled();
+	default boolean isEventDropEnabled()
+	{
+		return false;
+	}
 
 	/**
 	 * Indicates whether the event can be resized. If true, the {@link #onEventResize(AjaxRequestTarget, String, long)} event will be triggered
 	 *
 	 * @return false by default
 	 */
-	boolean isEventResizeEnabled();
+	default boolean isEventResizeEnabled()
+	{
+		return false;
+	}
 
 	/**
 	 * Indicates whether the {@link #onViewDidMount(AjaxRequestTarget, CalendarView, LocalDate, LocalDate)} event will be triggered
 	 *
 	 * @return false by default
 	 */
-	boolean isViewDidMountEnabled();
+	default boolean isViewDidMountEnabled()
+	{
+		return false;
+	}
 
 	/**
 	 * Gets the javascript statement which will be executed before {@link #onEventDrop(AjaxRequestTarget, String, long, boolean)} event is triggered<br>
@@ -93,7 +116,10 @@ public interface ICalendarListener extends IClusterable
 	 * @return the javascript statement, empty string by default
 	 * @see <a href="http://arshaw.com/fullcalendar/docs/event_ui/eventDrop/">http://arshaw.com/fullcalendar/docs/event_ui/eventDrop/</a>
 	 */
-	CharSequence getEventDropPrecondition();
+	default CharSequence getEventDropPrecondition()
+	{
+		return "";
+	}
 
 	/**
 	 * Gets the javascript statement which will be executed before {@link #onEventResize(AjaxRequestTarget, String, long)} event is triggered<br>
@@ -102,7 +128,10 @@ public interface ICalendarListener extends IClusterable
 	 * @return the javascript statement, empty string by default
 	 * @see <a href="http://arshaw.com/fullcalendar/docs/event_ui/eventResize/">http://arshaw.com/fullcalendar/docs/event_ui/eventResize/</a>
 	 */
-	CharSequence getEventResizePrecondition();
+	default CharSequence getEventResizePrecondition()
+	{
+		return "";
+	}
 
 	/**
 	 * Triggered when an cell is selected.<br>
@@ -114,7 +143,10 @@ public interface ICalendarListener extends IClusterable
 	 * @param end the event end {@link LocalDateTime}
 	 * @param allDay the event all-day property
 	 */
-	void onSelect(AjaxRequestTarget target, CalendarView view, LocalDateTime start, LocalDateTime end, boolean allDay);
+	default void onSelect(AjaxRequestTarget target, CalendarView view, LocalDateTime start, LocalDateTime end, boolean allDay)
+	{
+		// noop
+	}
 
 	/**
 	 * Triggered when a calendar day is clicked<br>
@@ -125,7 +157,10 @@ public interface ICalendarListener extends IClusterable
 	 * @param date the day
 	 * @param allDay the event all-day property
 	 */
-	void onDateClick(AjaxRequestTarget target, CalendarView view, LocalDateTime date, boolean allDay);
+	default void onDateClick(AjaxRequestTarget target, CalendarView view, LocalDateTime date, boolean allDay)
+	{
+		// noop
+	}
 
 	/**
 	 * Triggered when an event is clicked.<br>
@@ -135,7 +170,10 @@ public interface ICalendarListener extends IClusterable
 	 * @param view the current calendar view
 	 * @param eventId the {@link CalendarEvent} id
 	 */
-	void onEventClick(AjaxRequestTarget target, CalendarView view, String eventId);
+	default void onEventClick(AjaxRequestTarget target, CalendarView view, String eventId)
+	{
+		// noop
+	}
 
 	/**
 	 * Triggered when an event is dropped (after being dragged).<br>
@@ -146,7 +184,10 @@ public interface ICalendarListener extends IClusterable
 	 * @param delta the delta (time) with the original event date
 	 * @param allDay the event all-day property
 	 */
-	void onEventDrop(AjaxRequestTarget target, String eventId, long delta, boolean allDay);
+	default void onEventDrop(AjaxRequestTarget target, String eventId, DateTimeDelta delta, boolean allDay);
+	{
+		// noop
+	}
 
 	/**
 	 * Triggered when an event is dropped (after being dragged).<br>
@@ -156,7 +197,10 @@ public interface ICalendarListener extends IClusterable
 	 * @param eventId the {@link CalendarEvent} id
 	 * @param delta the delta (time) with the original event date
 	 */
-	void onEventResize(AjaxRequestTarget target, String eventId, long delta);
+	default void onEventResize(AjaxRequestTarget target, String eventId, DateTimeDelta delta);
+	{
+		// noop
+	}
 
 	/**
 	 * Triggered when an event-object is dropped.<br>
@@ -167,7 +211,10 @@ public interface ICalendarListener extends IClusterable
 	 * @param date the day
 	 * @param allDay the event all-day property
 	 */
-	void onObjectDrop(AjaxRequestTarget target, String title, LocalDateTime date, boolean allDay);
+	default void onObjectDrop(AjaxRequestTarget target, String title, LocalDateTime date, boolean allDay)
+	{
+		// noop
+	}
 
 	/**
 	 * Triggered when the calendar loads and every time a different date-range is displayed.<br>
@@ -178,5 +225,8 @@ public interface ICalendarListener extends IClusterable
 	 * @param start the start {@link LocalDate} of the current view
 	 * @param end the event end {@link LocalDate} of the current view
 	 */
-	void onViewDidMount(AjaxRequestTarget target, CalendarView view, LocalDate start, LocalDate end);
+	default void onViewDidMount(AjaxRequestTarget target, CalendarView view, LocalDate start, LocalDate end)
+	{
+		// noop
+	}
 }

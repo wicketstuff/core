@@ -16,11 +16,8 @@
  */
 package com.googlecode.wicket.jquery.ui.calendar6;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
-import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.util.lang.Args;
@@ -122,62 +119,6 @@ public class Calendar extends WebMarkupContainer implements ICalendarListener
 		handler.appendJavaScript(String.format("document.querySelector('%s').calendar.refetchEvents();", JQueryWidget.getSelector(this)));
 	}
 
-	// Properties //
-
-	@Override
-	public boolean isSelectable()
-	{
-		return false;
-	}
-
-	@Override
-	public boolean isDateClickEnabled()
-	{
-		return false;
-	}
-
-	@Override
-	public boolean isEventClickEnabled()
-	{
-		return false;
-	}
-
-	@Override
-	public boolean isEventDropEnabled()
-	{
-		return false;
-	}
-
-	@Override
-	public boolean isEventResizeEnabled()
-	{
-		return false;
-	}
-
-	@Override
-	public boolean isObjectDropEnabled()
-	{
-		return false;
-	}
-
-	@Override
-	public boolean isViewDidMountEnabled()
-	{
-		return false;
-	}
-
-	@Override
-	public CharSequence getEventDropPrecondition()
-	{
-		return "";
-	}
-
-	@Override
-	public CharSequence getEventResizePrecondition()
-	{
-		return "";
-	}
-
 	// Events //
 
 	@Override
@@ -209,48 +150,6 @@ public class Calendar extends WebMarkupContainer implements ICalendarListener
 		}
 
 		behavior.setOption("eventSources", "[" + sourceBuilder + "]");
-	}
-
-	@Override
-	public void onSelect(AjaxRequestTarget target, CalendarView view, LocalDateTime start, LocalDateTime end, boolean allDay)
-	{
-		// noop
-	}
-
-	@Override
-	public void onDateClick(AjaxRequestTarget target, CalendarView view, LocalDateTime date, boolean allDay)
-	{
-		// noop
-	}
-
-	@Override
-	public void onEventClick(AjaxRequestTarget target, CalendarView view, String eventId)
-	{
-		// noop
-	}
-
-	@Override
-	public void onEventDrop(AjaxRequestTarget target, String eventId, long delta, boolean allDay)
-	{
-		// noop
-	}
-
-	@Override
-	public void onEventResize(AjaxRequestTarget target, String eventId, long delta)
-	{
-		// noop
-	}
-
-	@Override
-	public void onObjectDrop(AjaxRequestTarget target, String title, LocalDateTime date, boolean allDay)
-	{
-		// noop
-	}
-
-	@Override
-	public void onViewDidMount(AjaxRequestTarget target, CalendarView view, LocalDate start, LocalDate end)
-	{
-		// noop
 	}
 
 	// IJQueryWidget //

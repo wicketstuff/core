@@ -136,14 +136,26 @@ public class ExtendedCalendar6Page extends AbstractCalendar6Page // NOSONAR
 			}
 
 			@Override
-			public void onEventDrop(AjaxRequestTarget target, String eventId, long delta, boolean allDay)
+			public void onEventDrop(AjaxRequestTarget target, String eventId, DateTimeDelta delta, boolean allDay)
 			{
 				DemoCalendar6Event event = Calendar6DAO.getEvent(eventId);
 
 				if (event != null)
 				{
-					event.setStart(event.getStart() != null ? event.getStart().plus(delta, ChronoUnit.MILLIS) : null); // recompute start date
-					event.setEnd(event.getEnd() != null ? event.getEnd().plus(delta, ChronoUnit.MILLIS) : null); // recompute end date
+					event.setStart(event.getStart() == null
+							? null
+							: event.getStart()
+									.plus(delta.years(), ChronoUnit.YEARS)
+									.plus(delta.months(), ChronoUnit.MONTHS)
+									.plus(delta.days(), ChronoUnit.DAYS)
+									.plus(delta.millis(), ChronoUnit.MILLIS)); // recompute start date
+					event.setEnd(event.getEnd() == null
+							? null
+							: event.getEnd()
+									.plus(delta.years(), ChronoUnit.YEARS)
+									.plus(delta.months(), ChronoUnit.MONTHS)
+									.plus(delta.days(), ChronoUnit.DAYS)
+									.plus(delta.millis(), ChronoUnit.MILLIS)); // recompute end date
 					event.setAllDay(allDay);
 
 					this.info(String.format("%s changed to %s", event.getTitle(), event.getStart()));
@@ -152,14 +164,18 @@ public class ExtendedCalendar6Page extends AbstractCalendar6Page // NOSONAR
 			}
 
 			@Override
-			public void onEventResize(AjaxRequestTarget target, String eventId, long delta)
+			public void onEventResize(AjaxRequestTarget target, String eventId, DateTimeDelta delta)
 			{
 				DemoCalendar6Event event = Calendar6DAO.getEvent(eventId);
 
 				if (event != null)
 				{
 					LocalDateTime date = event.getEnd() == null ? event.getStart() : event.getEnd();
-					event.setEnd(date.plus(delta, ChronoUnit.MILLIS));
+					event.setEnd(date
+							.plus(delta.years(), ChronoUnit.YEARS)
+							.plus(delta.months(), ChronoUnit.MONTHS)
+							.plus(delta.days(), ChronoUnit.DAYS)
+							.plus(delta.millis(), ChronoUnit.MILLIS));
 
 					this.info(String.format("%s now ends the %s", event.getTitle(), event.getEnd()));
 					target.add(feedback);
