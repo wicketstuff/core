@@ -14,7 +14,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.jquery.ui.calendar6;
+package com.googlecode.wicket.jquery.ui.calendar6;
 
-public record DateTimeDelta(int years,int months, int days, int millis) {
+public class DateTimeDelta {
+	private int years;
+	private int months;
+	private int days;
+	private int millis;
+
+	public DateTimeDelta() {}
+
+	public DateTimeDelta(int years,int months, int days, int millis) {
+		this.years = years;
+		this.months = months;
+		this.days = days;
+		this.millis = millis;
+	}
+
+	public int years() {
+		return years;
+	}
+
+	public int months() {
+		return months;
+	}
+
+	public int days() {
+		return days;
+	}
+
+	public int millis() {
+		return millis;
+	}
 }

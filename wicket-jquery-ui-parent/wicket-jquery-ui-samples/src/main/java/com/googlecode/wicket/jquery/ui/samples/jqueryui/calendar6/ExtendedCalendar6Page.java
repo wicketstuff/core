@@ -14,6 +14,7 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.calendar6.Calendar;
 import com.googlecode.wicket.jquery.ui.calendar6.CalendarView;
+import com.googlecode.wicket.jquery.ui.calendar6.DateTimeDelta;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import com.googlecode.wicket.jquery.ui.samples.component.DemoCalendar6Dialog;
 import com.googlecode.wicket.jquery.ui.samples.data.DemoCalendar6Event;

@@ -230,7 +230,7 @@
 		<jetty.version>9.4.54.v20240208</jetty.version>
 		<sf-jung.version>2.1.1</sf-jung.version>
 		<shiro.version>2.0.1</shiro.version>
-		<slf4j.version>2.0.12</slf4j.version>
+		<slf4j.version>2.0.13</slf4j.version>
 		<logback.version>1.5.6</logback.version>
 		<log4j.version>2.23.1</log4j.version>
 		<spring.version>5.3.36</spring.version>
@@ -277,31 +277,33 @@
 		<protobuf.version>4.27.0</protobuf.version>
 		<bootstrap.version>4.6.2</bootstrap.version>
 		<fst.version>2.57</fst.version>
-		<fullcalendar.version>6.1.14</fullcalendar.version>
 		<jquery-ui.version>1.13.3</jquery-ui.version>
-		<moment-js.version>2.29.4</moment-js.version>
+		<moment-js.version>2.30.1</moment-js.version>
+		<fullcalendar.version>6.1.14</fullcalendar.version>
+		<owasp-sanitizer.version>20240325.1</owasp-sanitizer.version>
 		<!-- plugins -->
-		<maven-surefire-plugin.version>3.2.5</maven-surefire-plugin.version>
+		<maven-surefire-plugin.version>3.3.0</maven-surefire-plugin.version>
 		<maven-javadoc-plugin.version>3.7.0</maven-javadoc-plugin.version>
 		<maven-source-plugin.version>3.3.1</maven-source-plugin.version>
 		<maven-bundle-plugin.version>5.1.9</maven-bundle-plugin.version>
 		<maven-assembly-plugin.version>3.7.1</maven-assembly-plugin.version>
 		<maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
 		<maven-eclipse-plugin.version>2.10</maven-eclipse-plugin.version>
-		<maven-help-plugin.version>3.4.0</maven-help-plugin.version>
-		<maven-jar-plugin.version>3.4.1</maven-jar-plugin.version>
+		<maven-help-plugin.version>3.4.1</maven-help-plugin.version>
+		<maven-jar-plugin.version>3.4.2</maven-jar-plugin.version>
 		<maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
 		<animal-sniffer-maven-plugin.version>1.23</animal-sniffer-maven-plugin.version>
 		<maven-pax-plugin.version>1.6.0</maven-pax-plugin.version>
 		<scala-maven-plugin.version>4.9.1</scala-maven-plugin.version>
-		<maven-clean-plugin.version>3.3.2</maven-clean-plugin.version>
+		<maven-clean-plugin.version>3.4.0</maven-clean-plugin.version>
 		<maven-deploy-plugin.version>3.1.2</maven-deploy-plugin.version>
 		<maven-install-plugin.version>3.1.2</maven-install-plugin.version>
 		<maven-site-plugin.version>4.0.0-M15</maven-site-plugin.version>
 		<maven-war-plugin.version>3.4.0</maven-war-plugin.version>
-		<maven-release-plugin.version>3.0.1</maven-release-plugin.version>
-		<maven-gpg-plugin.version>3.2.1</maven-gpg-plugin.version>
-		<maven-pmd-plugin.version>3.22.0</maven-pmd-plugin.version>
+		<maven-release-plugin.version>3.1.0</maven-release-plugin.version>
+		<maven-gpg-plugin.version>3.2.4</maven-gpg-plugin.version>
+		<maven-pmd-plugin.version>3.23.0</maven-pmd-plugin.version>
+		<maven-enforcer-plugin.version>3.5.0</maven-enforcer-plugin.version>
 	</properties>
 
 	<prerequisites>
@@ -929,6 +931,11 @@
 				<artifactId>fullcalendar__google-calendar</artifactId>
 				<version>${fullcalendar.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>com.googlecode.owasp-java-html-sanitizer</groupId>
+				<artifactId>owasp-java-html-sanitizer</artifactId>
+				<version>${owasp-sanitizer.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -1388,6 +1395,11 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-release-plugin</artifactId>
 					<version>${maven-release-plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-enforcer-plugin</artifactId>
+					<version>${maven-enforcer-plugin.version}</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>

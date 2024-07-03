@@ -22,8 +22,6 @@ import java.time.LocalDateTime;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.util.io.IClusterable;
 
-import com.github.openjson.JSONObject;
-
 /**
  * Event listener shared by the {@link Calendar} widget and the {@link CalendarBehavior}
  *
@@ -184,7 +182,7 @@ public interface ICalendarListener extends IClusterable
 	 * @param delta the delta (time) with the original event date
 	 * @param allDay the event all-day property
 	 */
-	default void onEventDrop(AjaxRequestTarget target, String eventId, DateTimeDelta delta, boolean allDay);
+	default void onEventDrop(AjaxRequestTarget target, String eventId, DateTimeDelta delta, boolean allDay)
 	{
 		// noop
 	}
@@ -197,7 +195,7 @@ public interface ICalendarListener extends IClusterable
 	 * @param eventId the {@link CalendarEvent} id
 	 * @param delta the delta (time) with the original event date
 	 */
-	default void onEventResize(AjaxRequestTarget target, String eventId, DateTimeDelta delta);
+	default void onEventResize(AjaxRequestTarget target, String eventId, DateTimeDelta delta)
 	{
 		// noop
 	}
