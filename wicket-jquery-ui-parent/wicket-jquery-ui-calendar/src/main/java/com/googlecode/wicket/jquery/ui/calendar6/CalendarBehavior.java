@@ -182,14 +182,13 @@ public class CalendarBehavior extends Behavior implements IJQueryAjaxAware
 
 		// date-format helper
 		response.render(new PriorityHeaderItem(JavaScriptHeaderItem.forScript(
-				"""
-				window.WicketStuff = window.WicketStuff || {};
-				window.WicketStuff.JqueryUI = window.WicketStuff.JqueryUI || {};
-				window.WicketStuff.JqueryUI.toLocalDateTime = function (d) {
-					let pad = (n) => ('' + n).padStart(2, '0');
-					return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate())
-						+ 'T' + pad(d.getHours()) + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds()) + 'Z';
-				};"""
+				"window.WicketStuff = window.WicketStuff || {};\n"
+				+ "window.WicketStuff.JqueryUI = window.WicketStuff.JqueryUI || {};\n"
+				+ "window.WicketStuff.JqueryUI.toLocalDateTime = function (d) {\n"
+				+ "\tlet pad = (n) => ('' + n).padStart(2, '0');\n"
+				+ "\treturn d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate())\n"
+				+ "\t\t + 'T' + pad(d.getHours()) + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds()) + 'Z';\n"
+				+ "};"
 				, "jquery-ui-date-format-helper")));
 
 		/* adds and configure the busy indicator */
