@@ -180,19 +180,23 @@ public class CalendarBehavior extends Behavior implements IJQueryAjaxAware
 			response.render(new PriorityHeaderItem(JavaScriptHeaderItem.forReference(settings.getLocalesJavaScriptReference())));
 		}
 
+		// date-format helper
+		response.render(new PriorityHeaderItem(JavaScriptHeaderItem.forScript(
+				"""
+				window.WicketStuff = window.WicketStuff || {};
+				window.WicketStuff.JqueryUI = window.WicketStuff.JqueryUI || {};
+				window.WicketStuff.JqueryUI.toLocalDateTime = function (d) {
+					let pad = (n) => ('' + n).padStart(2, '0');
+					return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate())
+						+ 'T' + pad(d.getHours()) + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds()) + 'Z';
+				};"""
+				, "jquery-ui-date-format-helper")));
+
 		/* adds and configure the busy indicator */
 		StringBuilder builder = new StringBuilder();
 		builder.append("const el = document.querySelector('").append(this.selector).append("');\n")
 				.append("el.calendar = new FullCalendar.Calendar(el, ").append(options).append(");\n")
 				.append("el.calendar.render();\n");
-
-		builder.append("window.WicketStuff = window.WicketStuff || {};\n")
-				.append("window.WicketStuff.JqueryUI = window.WicketStuff.JqueryUI || {};\n")
-				.append("window.WicketStuff.JqueryUI.toLocalDateTime = function (d) {\n")
-				.append("\tlet pad = (n) => ('' + n).padStart(2, '0');\n")
-				.append("\treturn d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate())\n")
-				.append("\t\t+ 'T' + pad(d.getHours()) + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds()) + 'Z';\n")
-				.append("};\n");
 
 		builder.append("jQuery(\"<img id='calendar-indicator' src='").append(RequestCycleUtils.getAjaxIndicatorUrl()).append("' />\").appendTo('.fc-header-center');\n") // allows only one calendar.
 				.append("jQuery(document).ajaxStart(function() { jQuery('#calendar-indicator').show(); });\n")

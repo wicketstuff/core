@@ -41,6 +41,9 @@ public abstract class DemoCalendar6Dialog extends AbstractFormDialog<DemoCalenda
 
 	private Form<?> form;
 	private FeedbackPanel feedback;
+	// DateTimePickers //
+	private final DateTimePicker startDateTimePicker = new DateTimePicker("start");
+	private final DateTimePicker endDateTimePicker = new DateTimePicker("end");
 
 	public DemoCalendar6Dialog(String id, String title)
 	{
@@ -51,10 +54,6 @@ public abstract class DemoCalendar6Dialog extends AbstractFormDialog<DemoCalenda
 
 		this.form.add(new RequiredTextField<String>("title"));
 		this.form.add(new RadioChoice<Category>("category", Arrays.asList(Category.values())));
-
-		// DateTimePickers //
-		final DateTimePicker startDateTimePicker = new DateTimePicker("start");
-		final DateTimePicker endDateTimePicker = new DateTimePicker("end");
 
 		this.form.add(startDateTimePicker.setRequired(true));
 		this.form.add(endDateTimePicker);
@@ -125,6 +124,9 @@ public abstract class DemoCalendar6Dialog extends AbstractFormDialog<DemoCalenda
 	@Override
 	protected void onOpen(IPartialPageRequestHandler handler)
 	{
+		boolean timeEnabled = !getModelObject().isAllDay();
+		startDateTimePicker.setTimePickerEnabled(handler, timeEnabled);
+		endDateTimePicker.setTimePickerEnabled(handler, timeEnabled);
 		handler.add(this.form);
 	}
 

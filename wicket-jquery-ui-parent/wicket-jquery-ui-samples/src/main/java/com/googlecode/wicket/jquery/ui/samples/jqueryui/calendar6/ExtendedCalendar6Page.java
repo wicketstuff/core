@@ -62,8 +62,7 @@ public class ExtendedCalendar6Page extends AbstractCalendar6Page // NOSONAR
 
 		// Calendar //
 		Options options = new Options()
-				.set("headerToolbar", "{ left: 'title', right: 'dayGridMonth,timeGridWeek,timeGridDay, today, prev,next' }")
-				.set("timeZone", Options.asString("UTC"));
+				.set("headerToolbar", "{start: 'title', end: 'dayGridMonth,timeGridWeek,timeGridDay today prev,next'}");
 
 		this.calendar = new Calendar("calendar", new DemoCalendar6Model(), options) { // NOSONAR
 
@@ -109,6 +108,7 @@ public class ExtendedCalendar6Page extends AbstractCalendar6Page // NOSONAR
 			public void onDateClick(AjaxRequestTarget target, CalendarView view, LocalDateTime date, boolean allDay)
 			{
 				DemoCalendar6Event event = Calendar6DAO.newEvent(date);
+				event.setEnd(date);
 
 				dialog.setModelObject(event);
 				dialog.open(target);

@@ -203,7 +203,7 @@ public class DateTimePicker extends FormComponentPanel<LocalDateTime> implements
 	{
 		if (LocalDateTime.class.isAssignableFrom(type))
 		{
-			return (IConverter<C>) DateTimePicker.newConverter(this.getTextFormat());
+			return (IConverter<C>) DateTimePicker.newConverter(this.getTextFormat(), isTimePickerEnabled());
 		}
 
 		return super.getConverter(type);
@@ -317,11 +317,11 @@ public class DateTimePicker extends FormComponentPanel<LocalDateTime> implements
 
 	/**
 	 * Gets a new {@link LocalDateTime} {@link IConverter}.
-	 * 
+	 *
 	 * @param format the time format
 	 * @return the converter
 	 */
-	private static IConverter<LocalDateTime> newConverter(final String pattern)
+	private static IConverter<LocalDateTime> newConverter(final String pattern, final boolean timeEnabled)
 	{
 		final String corrected = DatePicker.correctPattern(pattern);
 
@@ -334,7 +334,9 @@ public class DateTimePicker extends FormComponentPanel<LocalDateTime> implements
 			{
 				try
 				{
-					return LocalDateTime.parse(value, DateTimeFormatter.ofPattern(corrected, locale));
+					return timeEnabled
+							? LocalDateTime.parse(value, DateTimeFormatter.ofPattern(corrected, locale))
+							: LocalDate.parse(value, DateTimeFormatter.ofPattern(corrected, locale)).atStartOfDay();
 				}
 				catch (DateTimeParseException e)
 				{
@@ -352,7 +354,7 @@ public class DateTimePicker extends FormComponentPanel<LocalDateTime> implements
 
 	/**
 	 * Gets the {@link DatePicker} {@link Model}
-	 * 
+	 *
 	 * @return the {@code DatePicker} {@code Model}
 	 */
 	private IModel<LocalDate> newDatePickerModel()
@@ -378,7 +380,7 @@ public class DateTimePicker extends FormComponentPanel<LocalDateTime> implements
 
 	/**
 	 * Gets the {@link DatePicker} {@link Model}
-	 * 
+	 *
 	 * @return the {@code DatePicker} {@code Model}
 	 */
 	private IModel<LocalTime> newTimePickerModel()
