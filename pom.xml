@@ -315,7 +315,7 @@
 		<groovy.version>4.0.7</groovy.version>
 		<asm-util.version>9.7</asm-util.version>
 		<hsqldb.version>2.7.3</hsqldb.version>
-		<hazelcast.version>5.4.0</hazelcast.version>
+		<hazelcast.version>5.5.0</hazelcast.version>
 		<jython-standalone.version>2.7.3</jython-standalone.version>
 		<protobuf.version>4.27.2</protobuf.version>
 		<bootstrap.version>5.3.3</bootstrap.version>
