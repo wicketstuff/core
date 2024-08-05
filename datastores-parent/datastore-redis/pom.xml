@@ -13,7 +13,7 @@
 	<description>An implementation of Apache Wicket's IPageStore that uses Redis as a backend</description>
 
 	<properties>
-		<jedis.version>5.1.3</jedis.version>
+		<jedis.version>5.1.4</jedis.version>
 	</properties>
 	<dependencies>
 
