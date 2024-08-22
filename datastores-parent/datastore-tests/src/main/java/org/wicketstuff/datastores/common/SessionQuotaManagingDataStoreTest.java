@@ -3,7 +3,7 @@ package org.wicketstuff.datastores.common;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 import org.apache.wicket.MetaDataKey;
@@ -108,5 +108,18 @@ public class SessionQuotaManagingDataStoreTest {
 		quotaStore.removePage(context, page1);
 		
 		verify(context).getSessionData(any(MetaDataKey.class), eq(null));
+	}
+  
+	@Test
+ 	void addPageDoesNotRemovePageFromDelegate() {
+		IPageStore delegate = mock(IPageStore.class);
+
+		IPageContext context = new MockPageContext();
+
+		IPageStore quotaStore = new SessionQuotaManagingDataStore(delegate, Bytes.bytes(page1.getData().length + page3.getData().length));
+		quotaStore.addPage(context, page1);
+
+		verify(delegate, never()).removePage(context, page1);
+		verify(delegate).addPage(context, page1);
 	}
 }

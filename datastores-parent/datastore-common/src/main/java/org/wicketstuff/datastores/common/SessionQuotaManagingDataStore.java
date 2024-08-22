@@ -109,7 +109,7 @@ public class SessionQuotaManagingDataStore extends DelegatingPageStore {
 		SessionData sessionData = getSessionData(context, false);
 
 		if (sessionData != null) {
-			sessionData.removePage(context, getDelegate(), serializedPage);
+			sessionData.removePage(context, getDelegate(), serializedPage, true);
 		}
 	}
 	
@@ -130,7 +130,7 @@ public class SessionQuotaManagingDataStore extends DelegatingPageStore {
 		synchronized void addPage(IPageContext context, IPageStore delegate, SerializedPage page) {
 			Args.notNull(page, "page");
 
-			removePage(context, delegate, page);
+			removePage(context, delegate, page, false);
 			
 			pages.add(new DelegatedPage(page.getPageId(), page.getData().length));
 			
@@ -146,10 +146,11 @@ public class SessionQuotaManagingDataStore extends DelegatingPageStore {
 		/**
 		 * Removes a page by its identifier
 		 *
-		 * @param pageId The id of the page to remove
-		 * @return 
+		 * @param page The page to remove
+		 * @param removeFromDelegate Whether to remove the page from the delegate
+		 * @return The removed page or {@code null} if no page was removed      
 		 */
-		synchronized DelegatedPage removePage(IPageContext context, IPageStore delegate, SerializedPage page) {
+		synchronized DelegatedPage removePage(IPageContext context, IPageStore delegate, SerializedPage page, boolean removeFromDelegate) {
 			DelegatedPage delegatedPage = null;
 			
 			Iterator<DelegatedPage> pageIterator = pages.iterator();
@@ -163,7 +164,9 @@ public class SessionQuotaManagingDataStore extends DelegatingPageStore {
 				}
 			}
 			
-			delegate.removePage(context, page);
+			if (removeFromDelegate) {
+				delegate.removePage(context, page);
+			}
 			
 			return delegatedPage;
 		}
@@ -184,7 +187,7 @@ public class SessionQuotaManagingDataStore extends DelegatingPageStore {
 			while (pages.size() > maxPages) {
 				DelegatedPage polled = pages.poll();
 				
-				removePage(context, delegate, new SerializedPage(polled.pageId,  new byte[0]));
+				removePage(context, delegate, new SerializedPage(polled.pageId,  new byte[0]), true);
 			}
 		}
 	}
@@ -208,7 +211,7 @@ public class SessionQuotaManagingDataStore extends DelegatingPageStore {
 			while (size > maxBytes.bytes()) {
 				DelegatedPage polled = pages.peek();
 				
-				removePage(context, delegate, new SerializedPage(polled.pageId, new byte[0]));
+				removePage(context, delegate, new SerializedPage(polled.pageId, new byte[0]), true);
 			}
 		}
 		
@@ -220,8 +223,8 @@ public class SessionQuotaManagingDataStore extends DelegatingPageStore {
 		}
 		
 		@Override
-		synchronized DelegatedPage removePage(IPageContext context, IPageStore delegate, SerializedPage page) {
-			DelegatedPage removedPage = super.removePage(context, delegate, page);
+		synchronized DelegatedPage removePage(IPageContext context, IPageStore delegate, SerializedPage page, boolean removeFromDelegate) {
+			DelegatedPage removedPage = super.removePage(context, delegate, page, removeFromDelegate);
 			if (removedPage != null) {
 				size -= removedPage.pageSize;
 			}
