@@ -1096,8 +1096,8 @@
 							<link>https://docs.oracle.com/en/java/javase/17/docs/api/</link>
 							<link>https://ci.apache.org/projects/wicket/apidocs/10.x</link>
 							<link>https://docs.spring.io/spring-framework/docs/6.0.x/javadoc-api</link>
-							<!-- <link>https://logback.qos.ch/apidocs</link> Commented due to certificate error -->
-              <link>http://www.slf4j.org/apidocs/</link>
+							<link>https://logback.qos.ch/apidocs</link>
+              				<link>https://www.slf4j.org/apidocs</link>
 						</links>
 						<skip>${javadoc.disabled}</skip>
 					</configuration>
