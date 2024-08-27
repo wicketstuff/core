@@ -272,7 +272,7 @@
 		<hibernate-ehcache.version>6.0.0.Alpha7</hibernate-ehcache.version>
 		<hibernate-validator.version>8.0.1.Final</hibernate-validator.version>
 		<javassist.version>3.30.2-GA</javassist.version>
-		<jetty.version>11.0.22</jetty.version>
+		<jetty.version>11.0.23</jetty.version>
 		<sf-jung.version>2.1.1</sf-jung.version>
 		<shiro.version>2.0.1</shiro.version>
 		<slf4j.version>2.0.16</slf4j.version>
