@@ -18,7 +18,7 @@
 	</developers>
 
 	<properties>
-		<jstl.version>3.0.1</jstl.version>
+		<jstl.version>3.0.2</jstl.version>
 		<javadoc.disabled>true</javadoc.disabled>
 		<deployment.disabled>true</deployment.disabled>
 		<sources.disabled>true</sources.disabled>
