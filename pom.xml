@@ -320,7 +320,7 @@
 		<protobuf.version>4.27.3</protobuf.version>
 		<bootstrap.version>5.3.3</bootstrap.version>
 		<fst.version>3.0.4-jdk17</fst.version>
-		<jquery-ui.version>1.13.3</jquery-ui.version>
+		<jquery-ui.version>1.14.0</jquery-ui.version>
 		<moment-js.version>2.30.1</moment-js.version>
 		<fullcalendar.version>6.1.14</fullcalendar.version>
 		<owasp-sanitizer.version>20240325.1</owasp-sanitizer.version>
