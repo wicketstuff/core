@@ -311,7 +311,7 @@
 		<joda-time.version>2.12.7</joda-time.version>
 		<ehcache.version>3.10.8</ehcache.version>
 		<jakartaee-api.version>10.0.0</jakartaee-api.version>
-		<clojure.version>1.11.4</clojure.version>
+		<clojure.version>1.12.0</clojure.version>
 		<groovy.version>4.0.7</groovy.version>
 		<asm-util.version>9.7</asm-util.version>
 		<hsqldb.version>2.7.3</hsqldb.version>
