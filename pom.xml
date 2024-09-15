@@ -317,7 +317,7 @@
 		<hsqldb.version>2.7.3</hsqldb.version>
 		<hazelcast.version>5.5.0</hazelcast.version>
 		<jython-standalone.version>2.7.4</jython-standalone.version>
-		<protobuf.version>4.28.0</protobuf.version>
+		<protobuf.version>4.28.1</protobuf.version>
 		<bootstrap.version>5.3.3</bootstrap.version>
 		<fst.version>3.0.4-jdk17</fst.version>
 		<jquery-ui.version>1.13.3</jquery-ui.version>
