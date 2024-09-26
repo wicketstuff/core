@@ -299,6 +299,7 @@
 		<commons-lang3.version>3.17.0</commons-lang3.version>
 		<commons-logging.version>1.3.4</commons-logging.version>
 		<commons-dbcp2.version>2.12.0</commons-dbcp2.version>
+		<commons-compress.version>1.27.1</commons-compress.version>
 		<validation-api.version>3.1.0</validation-api.version>
 		<jta.version>2.0.1</jta.version>
 		<htmlcompressor.version>1.5.2</htmlcompressor.version>
@@ -659,6 +660,11 @@
 				<artifactId>commons-dbcp2</artifactId>
 				<version>${commons-dbcp2.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-compress</artifactId>
+				<version>${commons-compress.version}</version>
+			</dependency>
 
 			<!-- SPRING -->
 			<dependency>
@@ -972,6 +978,12 @@
 				<groupId>org.webjars</groupId>
 				<artifactId>jquery-ui</artifactId>
 				<version>${jquery-ui.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.webjars</groupId>
+						<artifactId>jquery</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 			<dependency>
 				<groupId>org.webjars.npm</groupId>
