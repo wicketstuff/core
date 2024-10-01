@@ -350,10 +350,6 @@
 		<maven-enforcer-plugin.version>3.5.0</maven-enforcer-plugin.version>
 	</properties>
 
-	<prerequisites>
-		<maven>3.5.0</maven>
-	</prerequisites>
-
 	<modules>
 		<module>offline-mode-parent</module>
 		<module>nashorn-parent</module>
@@ -1042,6 +1038,25 @@
 			</testResource>
 		</testResources>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-enforcer-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>enforce-versions</id>
+						<goals>
+							<goal>enforce</goal>
+						</goals>
+						<configuration>
+							<rules>
+								<requireMavenVersion>
+									<version>3.5.0</version>
+								</requireMavenVersion>
+							</rules>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>

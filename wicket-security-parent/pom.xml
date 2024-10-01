@@ -27,9 +27,6 @@
 	<name>wicket-security</name>
 	<inceptionYear>2006</inceptionYear>
 	<description>Parent project for wicket security projects</description>
-	<prerequisites>
-		<maven>2.1</maven>
-	</prerequisites>
 	<!-- Developers -->
 	<developers>
 		<developer>
