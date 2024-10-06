@@ -314,7 +314,7 @@
 		<jakartaee-api.version>10.0.0</jakartaee-api.version>
 		<clojure.version>1.12.0</clojure.version>
 		<groovy.version>4.0.7</groovy.version>
-		<asm-util.version>9.7</asm-util.version>
+		<asm-util.version>9.7.1</asm-util.version>
 		<hsqldb.version>2.7.3</hsqldb.version>
 		<hazelcast.version>5.5.0</hazelcast.version>
 		<jython-standalone.version>2.7.4</jython-standalone.version>
