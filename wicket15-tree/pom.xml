@@ -37,7 +37,7 @@
 		<maven.compiler.showWarnings>true</maven.compiler.showWarnings>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
-		<jetty.version>9.4.51.v20230217</jetty.version>
+		<jetty.version>9.4.55.v20240627</jetty.version>
 		<slf4j.version>1.7.25</slf4j.version>
 		<junit.version>4.13.2</junit.version>
 		<servlet-api.version>3.1.0</servlet-api.version>
