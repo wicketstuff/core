@@ -289,7 +289,7 @@
 		<jquery-selectors.version>4.0.6</jquery-selectors.version>
 		<xstream.version>1.4.20</xstream.version>
 		<hamcrest.version>3.0</hamcrest.version>
-		<jakarta.servlet-api.version>5.0.0</jakarta.servlet-api.version>
+		<jakarta.servlet-api.version>6.0.0</jakarta.servlet-api.version>
 		<junit.version>5.11.3</junit.version>
 		<easymock.version>5.4.0</easymock.version>
 		<mockito.version>5.14.2</mockito.version>
