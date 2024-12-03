@@ -242,7 +242,7 @@
 		<guava.version>33.2.1-jre</guava.version>
 		<wicket-webjars.version>3.0.0</wicket-webjars.version>
 		<jquery-selectors.version>3.0.6</jquery-selectors.version>
-		<xstream.version>1.4.20</xstream.version>
+		<xstream.version>1.4.21</xstream.version>
 		<hamcrest.version>2.2</hamcrest.version>
 		<javax.servlet-api.version>3.1.0</javax.servlet-api.version>
 		<junit.version>5.10.2</junit.version>
