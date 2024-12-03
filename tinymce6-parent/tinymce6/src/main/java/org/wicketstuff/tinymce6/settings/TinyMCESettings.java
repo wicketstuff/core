@@ -36,6 +36,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.tinymce6.TinyMceBehavior;
 
+import de.agilecoders.wicket.webjars.request.resource.WebjarsJavaScriptResourceReference;
+
 /**
  * Settings class for TinyMCE editor. User can add/remove buttons, enable/disable resizing, change
  * positions, orientation, alignment and much more.
@@ -49,10 +51,8 @@ public class TinyMCESettings implements Serializable
 	private static final Logger LOG = LoggerFactory.getLogger(TinyMCESettings.class);
 	private static final String NEWLINE_TAB = "\n\t";
 
-	public static final ResourceReference TINYMCE_JS_REF = new JavaScriptResourceReference(
-		TinyMceBehavior.class, "../../../webjars/tinymce/current/tinymce.js");
-	public static final ResourceReference TINYMCE_JS_REF_MIN = new JavaScriptResourceReference(
-		TinyMceBehavior.class, "../../../webjars/tinymce/current/tinymce.min.js");
+	public static final ResourceReference TINYMCE_JS_REF = new WebjarsJavaScriptResourceReference("tinymce/current/tinymce.js");
+	public static final ResourceReference TINYMCE_JS_REF_MIN = new WebjarsJavaScriptResourceReference("tinymce/current/tinymce.min.js");
 
 	private final Language language;
 	private boolean resizing = false;
