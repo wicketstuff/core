@@ -4,7 +4,7 @@
 
 /**
  * � 2006, 2009. Step Ahead Software Pty Ltd. All rights reserved.
- * 
+ *
  * Source file created and managed by Javelin (TM) Step Ahead Software. To
  * maintain code and model synchronization you may directly edit code in method
  * bodies and any sections starting with the 'Keep_*' marker. Make all other
@@ -15,6 +15,7 @@ package org.wicketstuff.modalx;
 import java.util.Optional;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalDialog;
+import org.apache.wicket.extensions.ajax.markup.html.modal.theme.DefaultTheme;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.request.resource.PackageResourceReference;
@@ -27,7 +28,7 @@ import org.apache.wicket.util.io.IClusterable;
  * Class Name : ModalContentWindow Diagram : Wicket Generic Modal Windows Project : Echobase
  * framework Type : concrete Specialized form of ModalWindow that knows how to interact with
  * ModelContentPanels in a way which simplifies the code that opens a modal window.
- * 
+ *
  * @author Chris Colman
  */
 public class ModalContentWindow extends ModalDialog
@@ -42,8 +43,8 @@ public class ModalContentWindow extends ModalDialog
 
 	protected ModalMgr modalMgr;
 
-        protected WindowClosedCallback windowClosedCallback;
-        
+	protected WindowClosedCallback windowClosedCallback;
+
 	// -[Methods]-
 
 	/**
@@ -59,6 +60,7 @@ public class ModalContentWindow extends ModalDialog
 	 */
 	public void initStyles()
 	{
+		add(new DefaultTheme());
 	}
 
 	@Override
@@ -81,7 +83,7 @@ public class ModalContentWindow extends ModalDialog
 		initStyles();
 	}
 
-        
+
     public void setWindowClosedCallback(final WindowClosedCallback callback) {
         this.windowClosedCallback = callback;
     }
@@ -91,7 +93,7 @@ public class ModalContentWindow extends ModalDialog
         Optional.ofNullable(windowClosedCallback).ifPresent(w -> w.onClose(target));
         return super.close(target);
     }
-    
+
     /**
      * Callback called after the window has been closed. If no callback instance is specified using
      * {@link BaseModal#setWindowClosedCallback(BaseModal.WindowClosedCallback)}, no ajax
@@ -106,5 +108,5 @@ public class ModalContentWindow extends ModalDialog
          * @param target {@link org.apache.wicket.ajax.AjaxRequestTarget} instance bound with the ajax request.
          */
         void onClose(AjaxRequestTarget target);
-    }        
+    }
 }

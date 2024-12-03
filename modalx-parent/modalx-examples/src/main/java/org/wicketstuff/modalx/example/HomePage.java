@@ -29,7 +29,7 @@ public class HomePage extends ModalXPage implements IWindowCloseListener
 
 	/**
 	 * Constructor that is invoked when page is invoked without a session.
-	 * 
+	 *
 	 * @param parameters
 	 *            Page parameters
 	 */
@@ -109,7 +109,7 @@ public class HomePage extends ModalXPage implements IWindowCloseListener
 	 * ModalFormPanel (including MessageBox) is closed. Pass the listener into the constructor of
 	 * the ModelFormPanel or MessageBox
 	 */
-        @Override
+	@Override
 	public void windowClosed(Panel panel, AjaxRequestTarget target)
 	{
 		if (panel instanceof ModalFormPanel)
