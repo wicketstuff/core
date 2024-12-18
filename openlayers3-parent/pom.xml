@@ -21,7 +21,7 @@
 	</description>
 
 	<properties>
-		<openlayers.version>3.10.1</openlayers.version>
+		<openlayers.version>8.2.0</openlayers.version>
 	</properties>
 	<modules>
 		<module>openlayers3</module>
