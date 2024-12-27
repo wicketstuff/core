@@ -274,7 +274,7 @@
 		<hsqldb.version>2.7.4</hsqldb.version>
 		<hazelcast.version>5.3.8</hazelcast.version>
 		<jython-standalone.version>2.7.4</jython-standalone.version>
-		<protobuf.version>4.29.1</protobuf.version>
+		<protobuf.version>4.29.2</protobuf.version>
 		<bootstrap.version>4.6.2</bootstrap.version>
 		<fst.version>2.57</fst.version>
 		<jquery-ui.version>1.14.1</jquery-ui.version>
