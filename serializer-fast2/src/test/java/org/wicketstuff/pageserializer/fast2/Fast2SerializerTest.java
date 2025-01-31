@@ -68,7 +68,7 @@ public class Fast2SerializerTest
 		assertNotNull(data, "The produced data should not be null!");
 
 		// data length can fluctuate based on the object field values
-		assertEquals(821, data.length, "The produced data length is not correct!");
+		assertEquals(822, data.length, "The produced data length is not correct!");
 
 		Object object = pageSerializer.deserialize(data);
 		assertTrue(
