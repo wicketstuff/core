@@ -101,8 +101,19 @@ public class GInfoWindow extends GOverlay
             args.set("zIndex", zIndex.toString());
         }
         
+        configureJSconstructor(args);
+        
         Constructor constructor = new Constructor("google.maps.InfoWindow").add(args.toJS());
         return constructor.toJS();
+    }
+    
+    /**
+     * Allow subclasses to customize InfoWindow initialization.
+     * 
+     * @param args
+     */
+    protected void configureJSconstructor(ObjectLiteral args) 
+    {
     }
 
     /**
