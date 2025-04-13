@@ -284,7 +284,7 @@
 		<scala.version>2.13.16</scala.version>
 		<jackson.version>2.17.3</jackson.version>
 		<poi.version>5.4.0</poi.version>
-		<guava.version>33.4.0-jre</guava.version>
+		<guava.version>33.4.7-jre</guava.version>
 		<wicket-webjars.version>4.0.6</wicket-webjars.version>
 		<jquery-selectors.version>4.0.7</jquery-selectors.version>
 		<xstream.version>1.4.21</xstream.version>
