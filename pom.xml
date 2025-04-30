@@ -293,7 +293,7 @@
 		<junit.version>5.11.4</junit.version>
 		<easymock.version>5.5.0</easymock.version>
 		<mockito.version>5.15.2</mockito.version>
-		<commons-io.version>2.18.0</commons-io.version>
+		<commons-io.version>2.19.0</commons-io.version>
 		<commons-beanutils.version>1.10.0</commons-beanutils.version>
 		<commons-digester3.version>3.2</commons-digester3.version>
 		<commons-lang3.version>3.17.0</commons-lang3.version>
