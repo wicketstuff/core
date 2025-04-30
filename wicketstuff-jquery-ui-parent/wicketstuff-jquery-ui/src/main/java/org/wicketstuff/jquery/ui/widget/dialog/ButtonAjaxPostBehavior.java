@@ -45,6 +45,10 @@ public class ButtonAjaxPostBehavior extends ButtonAjaxBehavior
 		this.form = form;
 	}
 
+    public final Form<?> getForm(){
+        return this.form;
+    }
+
 	/**
 	 * The form may intentionally be null
 	 */
