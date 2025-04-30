@@ -162,7 +162,7 @@ Supported languages:
 - Romanian
 - German
 
-If you want support for another languages please create and send a pull request (or an email) with the translation of [wicket-package.properties.xml](https://github.com/decebals/wicket-dashboard/blob/master/core/src/main/java/ro/fortsoft/wicket/dashboard/wicket-package.properties.xml).
+If you want support for another languages please create and send a pull request (or an email) with the translation of [wicket-package.properties](https://github.com/decebals/wicket-dashboard/blob/master/core/src/main/java/ro/fortsoft/wicket/dashboard/wicket-package.properties).
 
 Demo
 -------------------
@@ -180,11 +180,11 @@ mvn jetty:run
 
 In the internet browser type http://localhost:8081/.
 
-You can see a screenshot of the demo application on the project's [wiki page] (https://github.com/decebals/wicket-dashboard/wiki).
+You can see a screenshot of the demo application on the project's [wiki page](https://github.com/decebals/wicket-dashboard/wiki).
 
 Mailing list
 --------------
-Much of the conversation between developers and users is managed through the project's [mailing list] (http://groups.google.com/group/wicket-dashboard).
+Much of the conversation between developers and users is managed through the project's [mailing list](http://groups.google.com/group/wicket-dashboard).
 
 Versioning
 ------------
