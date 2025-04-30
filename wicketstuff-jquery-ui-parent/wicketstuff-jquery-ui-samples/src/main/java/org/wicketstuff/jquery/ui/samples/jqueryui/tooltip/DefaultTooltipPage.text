@@ -1,0 +1,17 @@
+<code>TooltipBehavior</code> will decorates the '<tt>title</tt>' attribute for one/several/all element(s) or component(s).<br/>
+<br/>
+It may have the following usages:<br/>
+<ul>
+<li>on document level:<br/><code>this.add(new TooltipBehavior());</code></li><br/>
+<li>on a specific html element:<br/><code>this.add(new TooltipBehavior("#mySelector"));</code></li><br/>
+<li>on a specific wicket component:<br/><code>this.add(new TooltipBehavior(JQueryWidget.getSelector(myComponent)));</code></li>
+</ul>
+
+<h4>More info</h4>
+Tooltip: <a class="site icon-new-tab" target="_blank" href="http://api.jqueryui.com/tooltip/">http://api.jqueryui.com/tooltip/</a><br/>
+Position: <a class="site icon-new-tab" target="_blank" href="http://api.jqueryui.com/position/">http://api.jqueryui.com/position/</a>
+
+<br/>
+<h4>Since</h4>
+wicket-jquery-ui-core-1.4.0<br/>
+wicket-jquery-ui-core-6.2.0

@@ -1,0 +1,16 @@
+/*
+Licensed under the Apache License, Version 2.0 (the "License") http://www.apache.org/licenses/LICENSE-2.0
+ */
+package org.wicketstuff.jquery.ui.samples;
+
+import org.wicketstuff.jquery.ui.widget.tabs.TabbedPanel;
+
+public abstract class JQuerySamplePage extends SamplePage
+{
+	private static final long serialVersionUID = 1L;
+
+	public JQuerySamplePage()
+	{
+		this.add(new TabbedPanel("sources", this.newSourceTabList()));
+	}
+}

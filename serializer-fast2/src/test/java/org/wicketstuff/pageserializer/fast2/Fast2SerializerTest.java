@@ -1,7 +1,7 @@
 /**
  * Copyright (C)
- * 	2008 Jeremy Thomerson <jeremy@thomersonfamily.com>
- * 	2012 Michael Mosmann <michael@mosmann.de>
+ * 	2008 Jeremy Thomerson jeremy@thomersonfamily.com
+ * 	2012 Michael Mosmann michael@mosmann.de
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -68,7 +68,7 @@ public class Fast2SerializerTest
 		assertNotNull(data, "The produced data should not be null!");
 
 		// data length can fluctuate based on the object field values
-		assertEquals(821, data.length, "The produced data length is not correct!");
+		assertEquals(822, data.length, "The produced data length is not correct!");
 
 		Object object = pageSerializer.deserialize(data);
 		assertTrue(

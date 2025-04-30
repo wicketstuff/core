@@ -5,6 +5,7 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import de.agilecoders.wicket.webjars.WicketWebjars;
 import org.apache.wicket.Application;
 import org.apache.wicket.MetaDataKey;
 import org.apache.wicket.Page;
@@ -36,6 +37,7 @@ public class AbstractWidgetTest {
 		@Override
 		protected void init() {
 			super.init();
+			WicketWebjars.install(this);
 			DashboardContext dashboardContext = this.getMetaData(DashboardContextInitializer.DASHBOARD_CONTEXT_KEY);
 			WidgetDescriptor widgetDescriptor;
 			dashboardContext.getWidgetRegistry().registerWidget(widgetDescriptor = new MyWidgetDescriptor());

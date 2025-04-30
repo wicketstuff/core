@@ -1,5 +1,6 @@
 package org.wicketstuff.datatables.res;
 
+import de.agilecoders.wicket.webjars.request.resource.WebjarsJavaScriptResourceReference;
 import org.apache.wicket.markup.head.HeaderItem;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.resource.JQueryPluginResourceReference;
@@ -7,14 +8,11 @@ import org.apache.wicket.resource.JQueryPluginResourceReference;
 import java.util.List;
 import java.util.Locale;
 
-public abstract class DataTablesPluginJsReference extends JQueryPluginResourceReference {
+public abstract class DataTablesPluginJsReference extends WebjarsJavaScriptResourceReference {
 
-    public DataTablesPluginJsReference(final Class<?> scope, final String name) {
-        super(scope, name);
-    }
 
-    public DataTablesPluginJsReference(final Class<?> scope, final String name, final Locale locale, final String style, final String variation) {
-        super(scope, name, locale, style, variation);
+    public DataTablesPluginJsReference(String name) {
+        super(name);
     }
 
     @Override

@@ -1,0 +1,3 @@
+This sample shows how to dynamically use a <code>JQueryEffectBehavior</code>.<br/>
+<br/>
+Unlike the effect behavior sample, where the behavior is run directly, the effect behavior here is run after an event occurs (the button's click event). The behavior's javascript statement is added to the <code>AjaxRequestTarget</code>.

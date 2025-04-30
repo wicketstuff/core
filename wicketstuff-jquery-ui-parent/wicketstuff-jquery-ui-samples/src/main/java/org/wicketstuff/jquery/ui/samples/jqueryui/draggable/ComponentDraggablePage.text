@@ -1,0 +1,1 @@
+The <code>draggable</code> component allows to be notified when the drag starts and when the drag stops (<code>onDragStart</code> and <code>onDragStop</code>). 

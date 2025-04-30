@@ -1,0 +1,35 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<name>wicket-kendo-ui-themes</name>
+	<description>Wicket-Kendo UI Themes</description>
+
+	<parent>
+		<groupId>org.wicketstuff</groupId>
+		<artifactId>wicketstuff-jquery-ui-parent</artifactId>
+    <version>10.5.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>wicketstuff-kendo-ui-themes</artifactId>
+	<packaging>pom</packaging>
+
+	<modules>
+		<module>wicketstuff-kendo-ui-theme-black</module>
+		<module>wicketstuff-kendo-ui-theme-blue-opal</module>
+		<module>wicketstuff-kendo-ui-theme-bootstrap</module>
+		<module>wicketstuff-kendo-ui-theme-default</module>
+		<module>wicketstuff-kendo-ui-theme-fiori</module>
+		<module>wicketstuff-kendo-ui-theme-flat</module>
+		<module>wicketstuff-kendo-ui-theme-high-contrast</module>
+		<module>wicketstuff-kendo-ui-theme-material</module>
+		<module>wicketstuff-kendo-ui-theme-material-black</module>
+		<module>wicketstuff-kendo-ui-theme-metro</module>
+		<module>wicketstuff-kendo-ui-theme-metro-black</module>
+		<module>wicketstuff-kendo-ui-theme-moonlight</module>
+		<module>wicketstuff-kendo-ui-theme-nova</module>
+		<module>wicketstuff-kendo-ui-theme-office365</module>
+		<module>wicketstuff-kendo-ui-theme-silver</module>
+		<module>wicketstuff-kendo-ui-theme-uniform</module>
+	</modules>
+
+</project>

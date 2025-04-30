@@ -1,0 +1,1 @@
+The <code>JQueryEffectContainer</code> is a container on which effects can be played. It also triggers an event when the effect completes.

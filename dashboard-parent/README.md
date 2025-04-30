@@ -4,10 +4,10 @@ A dashboard is a panel with quick access to information or common tasks.
 
 Features/Benefits
 -------------------
-With wicketstuff-dashboard you can easily add a dashboard with standard and custom widgets to your wicket application.  
-For a dashboard you can specify the numbers of columns, drag and drop widgets, remove widgets, add new widgets, change widget settings, 
-collapse widgets, or perform any custom action added by you to widget.  
-Also you can save and load the dashboard from a repository (file, database).  
+With wicketstuff-dashboard you can easily add a dashboard with standard and custom widgets to your wicket application.
+For a dashboard you can specify the numbers of columns, drag and drop widgets, remove widgets, add new widgets, change widget settings,
+collapse widgets, or perform any custom action added by you to widget.
+Also you can save and load the dashboard from a repository (file, database).
 Support for internationalization.
 
 Components
@@ -17,11 +17,11 @@ Components
 Widgets make it easy to customize the content of your dashboard.
 Widget has an id, a title, some settings (optional), a location (the column and row in dashboard),
 and more important it has a view.
-- **WidgetView** is the component that displays the widget content (it extends the wicket Panel class). 
+- **WidgetView** is the component that displays the widget content (it extends the wicket Panel class).
 A view can be for example a chart or a table.
 - **WidgetDescriptor** contains widget meta data: name, description, provider and the widget class name.
 - **WidgetFactory** is the object that creates widgets using the widget descriptors.
-- **WidgetRegistry** is the object that stores all active widget descriptors. You can register a new widget 
+- **WidgetRegistry** is the object that stores all active widget descriptors. You can register a new widget
 using a widget descriptor.
 - **DashboardPersister** is responsible for dashboard load and save. XStreamDashboardPersister is a concrete implementation
 that save/load a dashboard to/from a file.
@@ -38,10 +38,8 @@ Artifacts
 -------------------
 - Wicket Dashboard Core `wicketstuff-dashboard-core` (jar)
 - Wicket Dashboard (Standard) Widgets
-    - ofchart `wicketstuff-dashboard-widgets-ofchart`        (jar)
     - jqplot `wicketstuff-dashboard-widgets-jqplot`          (jar)
     - justgage `wicketstuff-dashboard-widgets-justgage`      (jar)
-    - wicked-charts `wicketstuff-dashboard-widgets-charts` (jar)
     - loremipsum `wicketstuff-dashboard-widgets-loremispum`  (jar)
 - Wicket Dashboard Demo `wicketstuff-dashboard-examples` (war)
 
@@ -61,13 +59,6 @@ In your pom.xml you must define the dependencies to wicket dashboard artifacts w
 <!-- OPTIONAL -->
 <dependency>
     <groupId>org.wicketstuff</groupId>
-    <artifactId>wicketstuff-dashboard-widgets-ofchart</artifactId>
-    <version>${wicketstuff.version}</version>
-</dependency>
-
-<!-- OPTIONAL -->
-<dependency>
-    <groupId>org.wicketstuff</groupId>
     <artifactId>wicketstuff-dashboard-widgets-jqplot</artifactId>
     <version>${wicketstuff.version}</version>
 </dependency>
@@ -81,19 +72,10 @@ In your pom.xml you must define the dependencies to wicket dashboard artifacts w
 
 <!-- OPTIONAL -->
 <dependency>
-    <!-- Wicked-Charts is the open source code project that integrates HighCharts in Wicket. -->
-    <!-- HighCharts is a commercial product and a license might be required (http://www.HighCharts.com) -->
-    <groupId>org.wicketstuff</groupId>
-    <artifactId>wicketstuff-dashboard-widgets-charts</artifactId>
-    <version>${wicketstuff.version}</version>
-</dependency>
-
-<!-- OPTIONAL -->
-<dependency>
     <groupId>org.wicketstuff</groupId>
     <artifactId>wicketstuff-dashboard-widgets-loremipsum</artifactId>
     <version>${wicketstuff.version}</version>
-</dependency>    
+</dependency>
 ```
 
 where ${wicketstuff.version} is the last wicketstuff version.
@@ -111,28 +93,24 @@ public void init() {
     ...
 
     // >>> begin dashboard settings
-    
+
     // register some widgets
     DashboardContext dashboardContext = getDashboardContext();
     dashboardContext.getWidgetRegistry()
         .registerWidget(new LoremIpsumWidgetDescriptor())
-        .registerWidget(new ChartWidgetDescriptor())
         .registerWidget(new JqPlotWidgetDescriptor())
         .registerWidget(new JustGageWidgetDescriptor())
-        .registerWidget(new HighChartsWidgetDescriptor());
-    
+
     // add a custom action for all widgets
     dashboardContext.setWidgetActionsFactory(new DemoWidgetActionsFactory());
 
     // set some (data) factory
-    ChartWidget.setChartDataFactory(new DemoChartDataFactory());
     JqPlotWidget.setChartFactory(new DemoChartFactory());
     JustGageWidget.setJustGageFactory(new DemoJustGageFactory());
-    HighChartsWidget.setHighChartsFactory(new DemoHighChartsFactory());
 
     // init dashboard from context
     initDashboard();
-    
+
     // <<< end dashboard settings
 }
 
@@ -146,7 +124,7 @@ private void initDashboard() {
         dashboard = new DefaultDashboard("default", "Default");
     }
 }
-```	
+```
 
 
 In your web page add the dashboard panel:
@@ -162,37 +140,37 @@ the jquery internal version, or to specify another versions for wicketstuff-dash
 ```java
 public void init() {
     ...
-    
+
     DashboardSettings dashboardSettings = DashboardSettings.get();
     // I don't want to add the internal wicket-dashboard's jquery to page head when I used DashboardPanel
-    dashboardSettings.setIncludeJQuery(false); 
+    dashboardSettings.setIncludeJQuery(false);
 
-    ...       
+    ...
 }
 ```
-    
-If you need an dashboard context object in your wicket panel than implements **DashboardContextAware** (see _AddWidgetPanel_ from demo).    
+
+If you need an dashboard context object in your wicket panel than implements **DashboardContextAware** (see _AddWidgetPanel_ from demo).
 
 For more information please see the demo sources.
 
 Internationalization
 -------------------
-Wicketstuff-dashboard has support for internationalization. 
+Wicketstuff-dashboard has support for internationalization.
 Supported languages:
 - English
 - French
 - Romanian
 - German
- 
-If you want support for another languages please create and send a pull request (or an email) with the translation of [wicket-package.properties.xml](https://github.com/decebals/wicket-dashboard/blob/master/core/src/main/java/ro/fortsoft/wicket/dashboard/wicket-package.properties.xml).
+
+If you want support for another languages please create and send a pull request (or an email) with the translation of [wicket-package.properties](https://github.com/decebals/wicket-dashboard/blob/master/core/src/main/java/ro/fortsoft/wicket/dashboard/wicket-package.properties).
 
 Demo
 -------------------
 I have a tiny demo application. In this demo I have implemented four widgets types:
-a chart widget using [Open Flash Chart 2](http://teethgrinder.co.uk/open-flash-chart-2), a chart widget using [jqPlot](http://www.jqplot.com), a chart using [HighCharts](http://www.HighCharts.com), a handy widget for generating and animating nice & clean gauges using [JustGage](http://justgage.com) and a LoremIpsum widget (display a Lorem Ipsum).
+a chart widget using [jqPlot](http://www.jqplot.com), a handy widget for generating and animating nice & clean gauges using [JustGage](http://justgage.com) and a LoremIpsum widget (display a Lorem Ipsum).
 
 The demo application is in demo package.
-To run the demo application use:  
+To run the demo application use:
 
  ```
 mvn install
@@ -202,11 +180,11 @@ mvn jetty:run
 
 In the internet browser type http://localhost:8081/.
 
-You can see a screenshot of the demo application on the project's [wiki page] (https://github.com/decebals/wicket-dashboard/wiki).
+You can see a screenshot of the demo application on the project's [wiki page](https://github.com/decebals/wicket-dashboard/wiki).
 
 Mailing list
 --------------
-Much of the conversation between developers and users is managed through the project's [mailing list] (http://groups.google.com/group/wicket-dashboard).
+Much of the conversation between developers and users is managed through the project's [mailing list](http://groups.google.com/group/wicket-dashboard).
 
 Versioning
 ------------
@@ -222,17 +200,17 @@ And constructed with the following guidelines:
 * New additions without breaking backward compatibility bumps the minor
 * Bug fixes and misc changes bump the patch
 
-For more information on SemVer, please visit http://semver.org/. 
+For more information on SemVer, please visit http://semver.org/.
 
 License
 --------------
 Copyright 2012 Decebal Suiu
- 
+
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this work except in compliance with
 the License. You may obtain a copy of the License in the LICENSE file, or at:
- 
+
 http://www.apache.org/licenses/LICENSE-2.0
- 
+
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
 an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License.

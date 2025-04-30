@@ -7,7 +7,8 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicketstuff-dashboard-parent</artifactId>
-		<version>10.0.0-M3-SNAPSHOT</version>
+		<version>10.5.0-SNAPSHOT</version>
+		<relativePath>..</relativePath>
 	</parent>
 
 	<artifactId>wicketstuff-dashboard-core</artifactId>
@@ -25,6 +26,16 @@
 		<dependency>
 			<groupId>com.thoughtworks.xstream</groupId>
 			<artifactId>xstream</artifactId>
+		</dependency>
+
+		<!-- WebJars -->
+		<dependency>
+			<groupId>de.agilecoders.wicket.webjars</groupId>
+			<artifactId>wicket-webjars</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>jquery-ui</artifactId>
 		</dependency>
 
 		<!-- Testing -->

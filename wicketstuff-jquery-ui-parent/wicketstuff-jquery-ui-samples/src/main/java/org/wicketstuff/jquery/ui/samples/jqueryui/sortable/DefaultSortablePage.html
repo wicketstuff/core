@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<!--
+Licensed under the Apache License, Version 2.0 (the "License") http://www.apache.org/licenses/LICENSE-2.0
+-->
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<wicket:head>
+	<title>Wicket jQuery UI: sortable</title>
+</wicket:head>
+</head>
+<body>
+<wicket:extend>
+	<div>
+		<ul wicket:id="sortable" class="sortable">
+			<li wicket:id="items">
+				<span wicket:id="icon">[icon]</span>
+				<span wicket:id="item" class="item">[label]</span>
+			</li>
+		</ul>
+		<br/>
+		<div wicket:id="feedback" style="width: 60%;"></div>
+	</div>
+</wicket:extend>
+</body>
+</html>

@@ -1,0 +1,10 @@
+This sample shows all <code>Calendar</code> capabilities. Here you can:
+<ul>
+	<li>click on a day cell, to create an event,</li>  
+	<li>click on an event, to edit it,</li> 
+	<li>select a range, to create an event having an end date,</li>
+	<li>dragging & dropping an event to change its dates,</li> 
+	<li>resize an event, to change its end date.<br/>
+</ul>
+<br/>
+The <code>DemoCalendarDialog</code> serves an an example on how to handle <code>DemoCalendarEvent</code> changes, and is therefore not provided in the API. Users have to implement their own in order to manage their own <code>CalendarEvent</code> objects.

@@ -38,8 +38,6 @@ public class XStreamDashboardPersister implements DashboardPersister {
 		xstream = new XStream(new DomDriver("UTF-8"));
 		xstream.setMode(XStream.NO_REFERENCES);
 		xstream.alias("dashboard", DefaultDashboard.class);
-//		xstream.alias("textWidget", TextWidget.class);
-//		xstream.alias("chartWidget", ChartWidget.class);
 	}
 
 	@Override

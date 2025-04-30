@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>datatables-parent</artifactId>
-		<version>10.0.0-M3-SNAPSHOT</version>
+		<version>10.5.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>wicketstuff-datatables</artifactId>
@@ -28,14 +28,39 @@
 			<artifactId>wicket-webjars</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.webjars.bower</groupId>
+			<groupId>org.webjars</groupId>
 			<artifactId>datatables</artifactId>
-			<version>1.10.19</version>
+			<version>2.1.8</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.webjars</groupId>
+					<artifactId>jquery</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>datatables-select</artifactId>
+			<version>2.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars.npm</groupId>
+			<artifactId>datatables.net-scroller</artifactId>
+			<version>2.4.3</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.webjars.npm</groupId>
+					<artifactId>datatables.net</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.webjars.npm</groupId>
+					<artifactId>jquery</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>bootstrap</artifactId>
-			<version>${bootstrap.version}</version>
 			<optional>true</optional>
 		</dependency>
 		<dependency>

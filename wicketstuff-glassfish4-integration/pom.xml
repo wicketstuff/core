@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.wicketstuff</groupId>
         <artifactId>wicketstuff-core</artifactId>
-        <version>10.0.0-M3-SNAPSHOT</version>
+        <version>10.5.0-SNAPSHOT</version>
     </parent>
     <artifactId>wicketstuff-glassfish4-integration</artifactId>
     <packaging>jar</packaging>
@@ -22,7 +22,7 @@
         <dependency>
             <groupId>org.glassfish.main.extras</groupId>
             <artifactId>glassfish-embedded-all</artifactId>
-            <version>4.0</version>
+            <version>7.0.24</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<!--
+Licensed under the Apache License, Version 2.0 (the "License") http://www.apache.org/licenses/LICENSE-2.0
+-->
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<wicket:head>
+	<title>Wicket jQuery UI: droppable</title>
+</wicket:head>
+</head>
+<body>
+<wicket:extend>
+	<div id="demo-panel" style="height: 200px;">
+		<div wicket:id="droppable1" class="ui-corner-all" style="background-color: #9fc;">
+			<p>Drop here - green area</p>
+		</div>
+		<div style="float:left">
+			<div wicket:id="draggable1" class="ui-widget-content">
+				Draggable #1
+			</div>
+			<div wicket:id="draggable2" class="ui-widget-content">
+				Draggable #2
+			</div>
+		</div>
+		<div wicket:id="droppable2" class="ui-corner-all" style="background-color: #9cf;">
+			<p>Drop here - blue area</p>
+		</div>
+		<br/>
+		<div wicket:id="feedback" class="clear-both width-360"></div>
+	</div>
+</wicket:extend>
+</body>
+</html>

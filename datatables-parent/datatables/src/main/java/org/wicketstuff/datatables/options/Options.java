@@ -4,12 +4,12 @@ import de.agilecoders.wicket.jquery.AbstractConfig;
 import de.agilecoders.wicket.jquery.IKey;
 import de.agilecoders.wicket.jquery.Key;
 import de.agilecoders.wicket.jquery.util.Json;
+import de.agilecoders.wicket.webjars.request.resource.WebjarsCssResourceReference;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.request.resource.CssResourceReference;
 import org.apache.wicket.util.lang.Args;
 import org.wicketstuff.datatables.Sort;
-import org.wicketstuff.datatables.res.DataTablesCssReference;
 
 import java.util.List;
 
@@ -48,6 +48,7 @@ public class Options extends AbstractConfig {
     public enum Style {
         dataTables,
         bootstrap,
+        bootstrap5,
         foundation,
         jqueryui,
         none;
@@ -55,8 +56,8 @@ public class Options extends AbstractConfig {
         public void renderHead(IHeaderResponse response, String pluginName) {
             if (none != this) {
                 if (!(dataTables == this && "dataTables".equals(pluginName))) {
-                    String name = "css/" + pluginName + "." + name() + ".css";
-                    CssResourceReference cssReference = new CssResourceReference(DataTablesCssReference.class, name);
+                    String name = "datatables/current/css/" + pluginName + "." + name() + ".min.css";
+                    CssResourceReference cssReference = new WebjarsCssResourceReference(name);
                     response.render(CssHeaderItem.forReference(cssReference));
                 }
             }

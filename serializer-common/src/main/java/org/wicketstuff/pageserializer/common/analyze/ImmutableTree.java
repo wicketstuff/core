@@ -1,7 +1,7 @@
 /**
  * Copyright (C)
- * 	2008 Jeremy Thomerson <jeremy@thomersonfamily.com>
- * 	2012 Michael Mosmann <michael@mosmann.de>
+ * 	2008 Jeremy Thomerson jeremy@thomersonfamily.com
+ * 	2012 Michael Mosmann michael@mosmann.de
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -26,9 +26,9 @@ import java.util.List;
 
 /**
  * immutable implementation of a serialized tree
- * 
+ *
  * @author mosmann
- * 
+ *
  */
 public final class ImmutableTree implements ISerializedObjectTree
 {
@@ -57,7 +57,7 @@ public final class ImmutableTree implements ISerializedObjectTree
 		}
 		this.childSize = childSize;
 	}
-	
+
 	@Override
 	public ObjectId id()
 	{
@@ -93,7 +93,7 @@ public final class ImmutableTree implements ISerializedObjectTree
 	{
 		return children;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "#"+id+" "+type+"("+label+") ["+children().size()+"]";

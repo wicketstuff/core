@@ -1,7 +1,7 @@
 /**
  * Copyright (C)
- * 	2008 Jeremy Thomerson <jeremy@thomersonfamily.com>
- * 	2012 Michael Mosmann <michael@mosmann.de>
+ * 	2008 Jeremy Thomerson jeremy@thomersonfamily.com
+ * 	2012 Michael Mosmann michael@mosmann.de
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -46,7 +46,7 @@ import org.wicketstuff.pageserializer.common.listener.SerializationListeners;
 /**
  * Application object for your web application. If you want to run this
  * application without deploying, run the Start class.
- * 
+ *
  * @see org.wicketstuff.pageserializer.fast2.Start#main(String[])
  */
 public class WicketApplication extends WebApplication

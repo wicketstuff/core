@@ -1,12 +1,12 @@
 /*
  * Copyright 2009 Michael Würtinger (mwuertinger@users.sourceforge.net)
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  * 		http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,6 +17,8 @@ var flotTarget = $("#FlotPanel_drawingArea");
 var flotData = %s;
 var flotOptions = %s;
 var showTooltip = %s;
+
+$.browser = {}; // OLD jQuery HACK
 
 $(function () {
     var plot = $.plot(flotTarget, flotData, flotOptions);
@@ -29,7 +31,7 @@ $(function () {
     	// Redraw the graph with the right size
     	plot = $.plot(flotTarget, flotData, flotOptions);
     });
-    
+
     $(flotTarget).bind("plotclick", function (event, pos, item) {
         alert("You clicked at " + pos.x + ", " + pos.y);
         // secondary axis coordinates if present are in pos.x2, pos.y2,

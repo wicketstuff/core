@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicketstuff-core</artifactId>
-		<version>10.0.0-M3-SNAPSHOT</version>
+		<version>10.5.0-SNAPSHOT</version>
 	</parent>
 
 	<groupId>org.wicketstuff.scala</groupId>
@@ -39,8 +39,8 @@
 	<properties>
 		<version.wicketstuff>${project.version}</version.wicketstuff>
 		<version.scalatest>3.3.0-SNAP4</version.scalatest>
-		<archetype-packaging.version>3.2.1</archetype-packaging.version>
-		<maven-archetype-plugin.version>3.1.0</maven-archetype-plugin.version>
+		<archetype-packaging.version>3.3.1</archetype-packaging.version>
+		<maven-archetype-plugin.version>3.3.1</maven-archetype-plugin.version>
 	</properties>
 
 	<dependencyManagement>

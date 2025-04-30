@@ -1,7 +1,7 @@
 /**
  * Copyright (C)
- * 	2008 Jeremy Thomerson <jeremy@thomersonfamily.com>
- * 	2012 Michael Mosmann <michael@mosmann.de>
+ * 	2008 Jeremy Thomerson jeremy@thomersonfamily.com
+ * 	2012 Michael Mosmann michael@mosmann.de
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -110,9 +110,9 @@ public class TreeTransformations
 		int localSize = 0;
 
 		List<ISerializedObjectTree> filteredList = new ArrayList<ISerializedObjectTree>();
-		
+
 		Level levelOneDown = level.down();
-		
+
 		for (ISerializedObjectTree child : source.children())
 		{
 			if (filter.accept(child, levelOneDown))

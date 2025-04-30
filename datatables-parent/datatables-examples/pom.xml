@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>datatables-parent</artifactId>
-		<version>10.0.0-M3-SNAPSHOT</version>
+		<version>10.5.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>datatables-examples</artifactId>
@@ -83,7 +83,6 @@
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>bootstrap</artifactId>
-			<version>${bootstrap.version}</version>
 		</dependency>
 	</dependencies>
 </project>

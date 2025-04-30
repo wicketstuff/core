@@ -36,6 +36,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.tinymce6.TinyMceBehavior;
 
+import de.agilecoders.wicket.webjars.request.resource.WebjarsJavaScriptResourceReference;
+
 /**
  * Settings class for TinyMCE editor. User can add/remove buttons, enable/disable resizing, change
  * positions, orientation, alignment and much more.
@@ -49,10 +51,8 @@ public class TinyMCESettings implements Serializable
 	private static final Logger LOG = LoggerFactory.getLogger(TinyMCESettings.class);
 	private static final String NEWLINE_TAB = "\n\t";
 
-	public static final ResourceReference TINYMCE_JS_REF = new JavaScriptResourceReference(
-		TinyMceBehavior.class, "../../../webjars/tinymce/6.8.2/tinymce.js");
-	public static final ResourceReference TINYMCE_JS_REF_MIN = new JavaScriptResourceReference(
-		TinyMceBehavior.class, "../../../webjars/tinymce/6.8.2/tinymce.min.js");
+	public static final ResourceReference TINYMCE_JS_REF = new WebjarsJavaScriptResourceReference("tinymce/current/tinymce.js");
+	public static final ResourceReference TINYMCE_JS_REF_MIN = new WebjarsJavaScriptResourceReference("tinymce/current/tinymce.min.js");
 
 	private final Language language;
 	private boolean resizing = false;
@@ -414,7 +414,7 @@ public class TinyMCESettings implements Serializable
 	 */
 	public enum Language
 	{
-		ar, ar_SA, az, be, bg_BG, bn_BD, bs, ca, cs, cs_CZ, cy, da, de, de_AT, dv, el, en_CA,
+		ar, ar_SA, az, be, bg_BG, bn_BD, bs, ca, cs, cy, da, de, de_AT, dv, el, en_CA,
 		/**
 		 * default, no js needed
 		 */

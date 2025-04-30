@@ -1,19 +1,29 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-  <parent>
-    <groupId>org.wicketstuff</groupId>
-    <artifactId>wicketstuff-core</artifactId>
-    <version>10.0.0-M3-SNAPSHOT</version>
-  </parent>
+	<parent>
+		<groupId>org.wicketstuff</groupId>
+		<artifactId>wicketstuff-core</artifactId>
+		<version>10.5.0-SNAPSHOT</version>
+	</parent>
 
-  <artifactId>wicketstuff-serializer-fast2</artifactId>
+	<artifactId>wicketstuff-serializer-fast2</artifactId>
 
-  <name>WicketStuff Fast 2 Serializer</name>
-  <description>ISerializer based on version 2 of Fast https://github.com/RuedigerMoeller/fast-serialization</description>
+	<name>WicketStuff Fast 2 Serializer</name>
+	<description>ISerializer based on version 2 of Fast https://github.com/RuedigerMoeller/fast-serialization</description>
 
-  <dependencies>
+	<dependencies>
+		<dependency>
+			<groupId>de.ruedigermoeller</groupId>
+			<artifactId>fst</artifactId>
+		</dependency>
+		<dependency>
+			<!-- this one is required to override vulnerable commons-compress from de.ruedigermoeller:fst -->
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-compress</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-api</artifactId>
@@ -22,21 +32,16 @@
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-engine</artifactId>
 		</dependency>
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-reload4j</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.wicketstuff</groupId>
-      <artifactId>wicketstuff-serializer-common</artifactId>
-      <version>${project.parent.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>de.ruedigermoeller</groupId>
-      <artifactId>fst</artifactId>
-      <version>2.57</version>
-    </dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-reload4j</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.wicketstuff</groupId>
+			<artifactId>wicketstuff-serializer-common</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-server</artifactId>
@@ -57,49 +62,51 @@
 			<groupId>org.eclipse.jetty.websocket</groupId>
 			<artifactId>websocket-jakarta-server</artifactId>
 		</dependency>
-    <dependency>
-      <groupId>jakarta.servlet</groupId>
-      <artifactId>jakarta.servlet-api</artifactId>
-      <scope>test</scope>
-    </dependency>
+		<dependency>
+			<groupId>jakarta.servlet</groupId>
+			<artifactId>jakarta.servlet-api</artifactId>
+			<scope>test</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket-tester</artifactId>
 		</dependency>
 	</dependencies>
 
-  <build>
-    <plugins>
-      <plugin>
-        <!-- USAGE: mvn license:check OR mvn license:format -->
-        <groupId>com.mycila.maven-license-plugin</groupId>
-        <artifactId>maven-license-plugin</artifactId>
-        <configuration>
-          <header>${header.location}</header>
-          <excludes>
-            <exclude>src/test/java/**.tree</exclude>
-          </excludes>
-        </configuration>
-      </plugin>
+	<build>
+		<plugins>
+			<plugin>
+				<!-- USAGE: mvn license:check OR mvn license:format -->
+				<groupId>com.mycila.maven-license-plugin</groupId>
+				<artifactId>maven-license-plugin</artifactId>
+				<configuration>
+					<header>${header.location}</header>
+					<excludes>
+						<exclude>src/test/java/**.tree</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
 
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <configuration>
-          <argLine>
-            --add-opens java.base/java.lang=ALL-UNNAMED
-            --add-opens java.base/java.math=ALL-UNNAMED
-            --add-opens java.base/java.net=ALL-UNNAMED
-            --add-opens java.base/java.text=ALL-UNNAMED
-            --add-opens java.base/java.util=ALL-UNNAMED
-            --add-opens java.base/java.util.concurrent=ALL-UNNAMED
-          </argLine>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<argLine>
+						--add-opens java.base/java.lang=ALL-UNNAMED
+						--add-opens java.base/java.math=ALL-UNNAMED
+						--add-opens java.base/java.net=ALL-UNNAMED
+						--add-opens java.base/java.text=ALL-UNNAMED
+						--add-opens java.base/java.util=ALL-UNNAMED
+						--add-opens java.base/java.util.concurrent=ALL-UNNAMED
+						--add-opens java.sql/java.sql=ALL-UNNAMED
+						--add-opens java.base/sun.reflect.annotation=ALL-UNNAMED
+					</argLine>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 
-  <properties>
-    <header.location>lic/header.txt</header.location>
-  </properties>
+	<properties>
+		<header.location>lic/header.txt</header.location>
+	</properties>
 </project>

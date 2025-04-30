@@ -1,0 +1,20 @@
+.demo, .sources {
+	font-size: 0.8em !important;
+	font-family: Arial, ​sans-serif
+}
+
+.k-widget {
+	font-size: 13px;
+	font-family: Arial, ​sans-serif
+}
+
+.ui-widget {
+	x-font-size: 0.8em !important;
+}
+
+#wicketDebugLink {
+	color: #e15a2d !important;
+	left: 1em !important;
+	right: 0 !important;
+	display: none;
+}

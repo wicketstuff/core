@@ -19,7 +19,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicketstuff-core</artifactId>
-		<version>10.0.0-M3-SNAPSHOT</version>
+		<version>10.5.0-SNAPSHOT</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>wicket-security-parent</artifactId>
@@ -27,9 +27,6 @@
 	<name>wicket-security</name>
 	<inceptionYear>2006</inceptionYear>
 	<description>Parent project for wicket security projects</description>
-	<prerequisites>
-		<maven>2.1</maven>
-	</prerequisites>
 	<!-- Developers -->
 	<developers>
 		<developer>

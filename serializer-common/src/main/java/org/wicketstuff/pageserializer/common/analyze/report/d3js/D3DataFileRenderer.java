@@ -1,7 +1,7 @@
 /**
  * Copyright (C)
- * 	2008 Jeremy Thomerson <jeremy@thomersonfamily.com>
- * 	2012 Michael Mosmann <michael@mosmann.de>
+ * 	2008 Jeremy Thomerson jeremy@thomersonfamily.com
+ * 	2012 Michael Mosmann michael@mosmann.de
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -29,8 +29,8 @@ import org.wicketstuff.pageserializer.common.analyze.report.IReportRenderer;
 
 public class D3DataFileRenderer implements IReportRenderer {
 
-	static final String TEMPLATE=readTemplateFromResource(D3DataFileRenderer.class,"d3js-partition-template.html"); 
-	
+	static final String TEMPLATE=readTemplateFromResource(D3DataFileRenderer.class,"d3js-partition-template.html");
+
 	@Override
 	public String render(ISerializedObjectTree tree) {
 		JSonBuilder sb = new JSonBuilder(new StringBuilder());
@@ -93,11 +93,11 @@ public class D3DataFileRenderer implements IReportRenderer {
 		JSonBuilder end() {
 			return end(false);
 		}
-		
+
 		JSonBuilder end(boolean lastOne) {
 			indent--;
 			if (lastOne) {
-				indent().raw("}\n"); 
+				indent().raw("}\n");
 			} else {
 				indent().raw("},\n");
 			}
@@ -139,7 +139,7 @@ public class D3DataFileRenderer implements IReportRenderer {
 			return _sb.toString();
 		}
 	}
-	
+
 	private static String readTemplateFromResource(Class<?> clazz, String resourceName) {
 		InputStream resourceAsStream = clazz.getResourceAsStream(resourceName);
 		try {

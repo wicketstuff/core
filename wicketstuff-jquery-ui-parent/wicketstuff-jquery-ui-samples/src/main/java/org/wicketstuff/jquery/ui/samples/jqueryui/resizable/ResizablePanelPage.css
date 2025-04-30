@@ -1,0 +1,9 @@
+/* Licensed under the Apache License, Version 2.0 (the "License") http://www.apache.org/licenses/LICENSE-2.0 */
+.resizable {
+	width: 360px;
+	height: 200px;
+	border: 1px solid #EEEEEE;
+	overflow: hidden;
+	display: inline-block;
+	padding: 12px;
+}

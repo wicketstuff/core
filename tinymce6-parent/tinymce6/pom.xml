@@ -17,7 +17,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>tinymce6-parent</artifactId>
-		<version>10.0.0-M3-SNAPSHOT</version>
+		<version>10.5.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>wicketstuff-tinymce6</artifactId>
@@ -30,9 +30,13 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>de.agilecoders.wicket.webjars</groupId>
+			<artifactId>wicket-webjars</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.webjars.npm</groupId>
 			<artifactId>tinymce</artifactId>
-			<version>6.8.2</version>
+			<version>6.8.3</version>
 		</dependency>
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
@@ -49,10 +53,6 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-simple</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-collections4</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>jakarta.servlet</groupId>

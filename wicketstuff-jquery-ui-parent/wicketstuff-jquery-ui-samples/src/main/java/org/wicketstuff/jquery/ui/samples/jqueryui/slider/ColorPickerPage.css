@@ -1,0 +1,33 @@
+/* Licensed under the Apache License, Version 2.0 (the "License") http://www.apache.org/licenses/LICENSE-2.0 */
+th, td {
+	padding: 5px;
+}
+
+/* style copied from http://jqueryui.com/demos/slider/#colorpicker */
+#red .ui-slider-range {
+	background: #ef2929;
+}
+
+#red .ui-slider-handle {
+	border-color: #ef2929;
+}
+
+#green .ui-slider-range {
+	background: #8ae234;
+}
+
+#green .ui-slider-handle {
+	border-color: #8ae234;
+}
+
+#blue .ui-slider-range {
+	background: #729fcf;
+}
+
+#blue .ui-slider-handle {
+	border-color: #729fcf;
+}
+
+.color-box span {
+	padding: 25px;
+}

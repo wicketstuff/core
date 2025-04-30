@@ -1,0 +1,112 @@
+/* Licensed under the Apache License, Version 2.0 (the "License") http://www.apache.org/licenses/LICENSE-2.0
+ */
+package org.wicketstuff.jquery.ui.samples.component;
+
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.html.panel.Panel;
+import org.wicketstuff.jquery.core.resource.StyleSheetPackageHeaderItem;
+import org.wicketstuff.jquery.ui.JQueryIcon;
+import org.wicketstuff.jquery.ui.form.button.AjaxButton;
+
+public class NavigationAjaxButton extends Panel
+{
+	private static final long serialVersionUID = 1L;
+	private final AjaxButton backwardButton;
+	private final AjaxButton forwardButton;
+
+	public NavigationAjaxButton(String id)
+	{
+		super(id);
+
+		this.backwardButton = this.newBackwardButton();
+		this.add(this.backwardButton);
+
+		this.forwardButton = this.newForwardButton();
+		this.add(this.forwardButton);
+
+		this.setOutputMarkupId(true);
+	}
+
+	// Methods //
+
+	@Override
+	public void renderHead(IHeaderResponse response)
+	{
+		super.renderHead(response);
+
+		response.render(new StyleSheetPackageHeaderItem(NavigationAjaxButton.class));
+	}
+
+	// Properties //
+
+	public final AjaxButton getBackwardButton()
+	{
+		return this.backwardButton;
+	}
+
+	public final AjaxButton getForwardButton()
+	{
+		return this.forwardButton;
+	}
+
+	// Factories //
+
+	private final AjaxButton newBackwardButton()
+	{
+		return new AjaxButton("backward") {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected String getIcon()
+			{
+				return JQueryIcon.CIRCLE_TRIANGLE_W;
+			}
+
+			@Override
+			protected void onSubmit(AjaxRequestTarget target)
+			{
+				NavigationAjaxButton.this.onBackward(target, this);
+			}
+		};
+	}
+
+	private final AjaxButton newForwardButton()
+	{
+		return new AjaxButton("forward") {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected String getIcon()
+			{
+				return JQueryIcon.CIRCLE_TRIANGLE_E;
+			}
+
+			@Override
+			protected void onSubmit(AjaxRequestTarget target)
+			{
+				NavigationAjaxButton.this.onForward(target, this);
+			}
+		};
+	}
+
+	/**
+	 * @param target
+	 * @param button
+	 */
+	protected void onBackward(AjaxRequestTarget target, AjaxButton button)
+	{
+		// noop
+	}
+
+	/**
+	 * @param target
+	 * @param button
+	 */
+	protected void onForward(AjaxRequestTarget target, AjaxButton button)
+	{
+		// noop
+	}
+}

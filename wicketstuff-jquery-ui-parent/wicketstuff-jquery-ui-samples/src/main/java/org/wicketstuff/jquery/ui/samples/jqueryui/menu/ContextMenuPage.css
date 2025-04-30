@@ -1,0 +1,11 @@
+/* Licensed under the Apache License, Version 2.0 (the "License") http://www.apache.org/licenses/LICENSE-2.0 */
+/* labels */
+.label {
+	margin: 10px;
+	text-decoration: underline;
+}
+
+/* sub menus */
+.ui-menu .ui-menu {
+	width: 200px;
+}

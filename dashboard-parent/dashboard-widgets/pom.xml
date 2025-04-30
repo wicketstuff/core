@@ -7,7 +7,8 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicketstuff-dashboard-parent</artifactId>
-		<version>10.0.0-M3-SNAPSHOT</version>
+		<version>10.5.0-SNAPSHOT</version>
+		<relativePath>..</relativePath>
 	</parent>
 
 	<artifactId>wicketstuff-dashboard-widgets</artifactId>
@@ -32,10 +33,8 @@
 	</dependencies>
 
 	<modules>
-		<module>dashboard-widgets-ofchart</module>
 		<module>dashboard-widgets-jqplot</module>
 		<module>dashboard-widgets-loremipsum</module>
 		<module>dashboard-widgets-justgage</module>
-		<module>dashboard-widgets-charts</module>
 	</modules>
 </project>

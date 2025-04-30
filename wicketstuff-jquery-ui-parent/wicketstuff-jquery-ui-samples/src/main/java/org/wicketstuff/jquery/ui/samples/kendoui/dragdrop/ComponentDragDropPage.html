@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<!--
+Licensed under the Apache License, Version 2.0 (the "License") http://www.apache.org/licenses/LICENSE-2.0
+-->
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<wicket:head>
+	<title>Wicket - Kendo UI: droppable</title>
+</wicket:head>
+</head>
+<body>
+<wicket:extend>
+	<div id="demo-panel">
+		<div wicket:id="droppable1" class="droppable" style="background-color: #9fc;">
+			<span>Drop here - green area</span>
+		</div>
+		<div wicket:id="droppable2" class="droppable" style="background-color: #9cf;">
+			<span>Drop here - blue area</span>
+		</div>
+		<div wicket:id="draggable" class="draggable">
+			<span>Draggable</span>
+		</div>
+	</div>
+	<br class="clear-both"/>
+	<div wicket:id="console"></div>
+</wicket:extend>
+</body>
+</html>

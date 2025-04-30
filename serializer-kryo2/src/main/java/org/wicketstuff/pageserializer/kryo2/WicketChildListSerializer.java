@@ -1,7 +1,7 @@
 /**
  * Copyright (C)
- * 	2008 Jeremy Thomerson <jeremy@thomersonfamily.com>
- * 	2012 Michael Mosmann <michael@mosmann.de>
+ * 	2008 Jeremy Thomerson jeremy@thomersonfamily.com
+ * 	2012 Michael Mosmann michael@mosmann.de
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -29,7 +29,7 @@ import com.esotericsoftware.kryo.serializers.FieldSerializer;
 /**
  * A reworked WicketChildListSerializerFactory from <a
  * href="https://github.com/magro/memcached-session-manager">memcached-session-manager</a> project
- * 
+ *
  * @author <a href="mailto:martin.grotzke@javakaffee.de">Martin Grotzke</a>
  */
 public class WicketChildListSerializer extends FieldSerializer
@@ -53,7 +53,7 @@ public class WicketChildListSerializer extends FieldSerializer
 
 	/**
 	 * Creates a new instances.
-	 * 
+	 *
 	 * @param kryo
 	 *            the kryo instance that must be provided.
 	 */

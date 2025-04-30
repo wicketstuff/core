@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<!--
+Licensed under the Apache License, Version 2.0 (the "License") http://www.apache.org/licenses/LICENSE-2.0
+-->
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<wicket:head>
+	<title>Wicket jQuery UI: dynamic effect</title>
+</wicket:head>
+</head>
+<body>
+<wicket:extend>
+	<div id="tabs">
+		<ul>
+			<li><a href="#tab1">Tab 1</a></li>
+		</ul>
+		<div id="tab1">
+			Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam.
+			Integer ut neque. Vivamus nisi metus, molestie vel, gravida in,
+			condimentum sit amet, nunc. Nam a nibh. Donec suscipit eros.
+			Nam mi. Proin viverra leo ut odio. Curabitur malesuada. Vestibulum
+			a velit eu ante scelerisque vulputate.
+		</div>
+	</div>
+	<br/>
+	<form wicket:id="form">
+		<button wicket:id="button">Play effect</button>
+	</form>
+</wicket:extend>
+</body>
+</html>

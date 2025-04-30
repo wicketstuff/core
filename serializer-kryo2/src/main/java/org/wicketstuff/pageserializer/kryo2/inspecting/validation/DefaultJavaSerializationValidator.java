@@ -1,7 +1,7 @@
 /**
  * Copyright (C)
- * 	2008 Jeremy Thomerson <jeremy@thomersonfamily.com>
- * 	2012 Michael Mosmann <michael@mosmann.de>
+ * 	2008 Jeremy Thomerson jeremy@thomersonfamily.com
+ * 	2012 Michael Mosmann michael@mosmann.de
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -50,13 +50,13 @@ public class DefaultJavaSerializationValidator implements ISerializationListener
 	@Override
 	public void end(Object object, Exception ex)
 	{
-		
+
 	}
 
 	private void checkSerializable(Object object)
 	{
 		if (object==null) return;
-		
+
 		if (!(object instanceof Serializable)) {
 			throw new NotSerializableException(""+object.getClass()+" is not Serializable");
 		}
@@ -68,6 +68,6 @@ public class DefaultJavaSerializationValidator implements ISerializationListener
 		{
 			super(message);
 		}
-		
+
 	}
 }

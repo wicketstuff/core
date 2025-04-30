@@ -1,7 +1,13 @@
 package org.wicketstuff.datastores.common;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 
+import org.apache.wicket.MetaDataKey;
 import org.apache.wicket.mock.MockPageContext;
 import org.apache.wicket.mock.MockPageStore;
 import org.apache.wicket.pageStore.IPageContext;
@@ -91,5 +97,30 @@ public class SessionQuotaManagingDataStoreTest {
 		assertEquals(2, delegate.getPages().size());
 		assertEquals(page1, delegate.getPages().get(0));
 		assertEquals(page3, delegate.getPages().get(1));
+	}
+
+	@Test
+	public void removePageShouldNotSupplyDefaultValueWhenGettingSessionData() {
+		MockPageStore delegate = new MockPageStore();
+
+		IPageContext context = mock(IPageContext.class);
+
+		IPageStore quotaStore = new SessionQuotaManagingDataStore(delegate, Bytes.bytes(page1.getData().length + page3.getData().length));
+		quotaStore.removePage(context, page1);
+		
+		verify(context).getSessionData(any(MetaDataKey.class), eq(null));
+	}
+  
+	@Test
+ 	void addPageDoesNotRemovePageFromDelegate() {
+		IPageStore delegate = mock(IPageStore.class);
+
+		IPageContext context = new MockPageContext();
+
+		IPageStore quotaStore = new SessionQuotaManagingDataStore(delegate, Bytes.bytes(page1.getData().length + page3.getData().length));
+		quotaStore.addPage(context, page1);
+
+		verify(delegate, never()).removePage(context, page1);
+		verify(delegate).addPage(context, page1);
 	}
 }
