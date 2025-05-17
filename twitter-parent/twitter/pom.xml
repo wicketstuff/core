@@ -3,7 +3,7 @@
 	<parent>
 		<artifactId>twitter-parent</artifactId>
 		<groupId>org.wicketstuff</groupId>
-		<version>9.21.0-SNAPSHOT</version>
+		<version>9.21.0</version>
 	</parent>
 
 	<artifactId>wicketstuff-twitter</artifactId>

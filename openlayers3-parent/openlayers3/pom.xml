@@ -22,7 +22,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>openlayers3-parent</artifactId>
-		<version>9.21.0-SNAPSHOT</version>
+		<version>9.21.0</version>
 	</parent>
 
     <artifactId>wicketstuff-openlayers3</artifactId>
