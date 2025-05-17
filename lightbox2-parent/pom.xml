@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.wicketstuff</groupId>
         <artifactId>wicketstuff-core</artifactId>
-        <version>9.21.0-SNAPSHOT</version>
+        <version>9.22.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>lightbox2-parent</artifactId>
