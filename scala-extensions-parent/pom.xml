@@ -39,7 +39,7 @@
 	<properties>
 		<version.wicketstuff>${project.version}</version.wicketstuff>
 		<version.scalatest>3.0.8</version.scalatest>
-		<archetype-packaging.version>3.3.1</archetype-packaging.version>
+		<archetype-packaging.version>3.4.0</archetype-packaging.version>
 		<maven-archetype-plugin.version>3.3.1</maven-archetype-plugin.version>
 	</properties>
 
