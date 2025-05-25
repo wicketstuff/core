@@ -66,28 +66,113 @@
 	<distributionManagement>
 		<snapshotRepository>
 			<id>sonatype-nexus-snapshots</id>
-			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+			<url>https://central.sonatype.com/repository/maven-snapshots/</url>
+			<releases><enabled>false</enabled></releases>
+			<snapshots><enabled>true</enabled></snapshots>
 		</snapshotRepository>
 	</distributionManagement>
 
 	<profiles>
 		<profile>
-			<id>oss.sonatype.org-staged-release</id>
-			<!-- This is the profile to use for releasing into the staged release
-				repo. We need to sign the artifacts. -->
-
-			<activation>
-				<property>
-					<name>performRelease</name>
-					<value>true</value>
-				</property>
-			</activation>
-
+			<id>central-release</id>
+			<!-- This is the profile for deploying release artifacts. -->
+			<distributionManagement>
+				<repository>
+					<id>central-sonatype-repo</id>
+					<name>Nexus Release Repository</name>
+					<url>https://central.sonatype.com</url>
+					<releases><enabled>true</enabled></releases>
+					<snapshots><enabled>false</enabled></snapshots>
+				</repository>
+			</distributionManagement>
+		</profile>
+		<profile>
+			<id>do-publish</id>
+			<!-- This is the profile to use for releasing both SNAPSHOT and release. -->
 			<build>
 				<plugins>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-javadoc-plugin</artifactId>
+					</plugin>
+					<plugin>
+						<groupId>org.sonatype.central</groupId>
+						<artifactId>central-publishing-maven-plugin</artifactId>
+						<version>0.7.0</version>
+						<extensions>true</extensions>
+						<configuration>
+							<publishingServerId>central-sonatype-repo</publishingServerId>
+							<autoPublish>true</autoPublish>
+							<excludeArtifacts>
+								<artifactId>wicketstuff-offline-mode-examples</artifactId>
+								<artifactId>wicketstuff-nashorn-examples</artifactId>
+								<artifactId>lightbox2-examples</artifactId>
+								<artifactId>jqplot-examples</artifactId>
+								<artifactId>async-task-demo</artifactId>
+								<artifactId>wicketstuff-autocomplete-tagit-examples</artifactId>
+								<artifactId>datatables-examples</artifactId>
+								<artifactId>flot-examples</artifactId>
+								<artifactId>gae-initializer-example</artifactId>
+								<artifactId>wicket-gchart-examples</artifactId>
+								<artifactId>wicketstuff-gmap3-examples</artifactId>
+								<artifactId>googlecharts-examples</artifactId>
+								<artifactId>wicketstuff-htmlcompressor-examples</artifactId>
+								<artifactId>wicketstuff-inmethod-grid-examples</artifactId>
+								<artifactId>input-events-examples</artifactId>
+								<artifactId>javaee-inject-examples</artifactId>
+								<artifactId>javaee-inject-example-ejb</artifactId>
+								<artifactId>javaee-inject-example-war</artifactId>
+								<artifactId>javaee-inject-example-ear</artifactId>
+								<artifactId>wicketstuff-jee-web-examples</artifactId>
+								<artifactId>mbeanview-examples</artifactId>
+								<artifactId>wicketstuff-minis-examples</artifactId>
+								<artifactId>modalx-examples</artifactId>
+								<artifactId>wicketstuff-objectautocomplete-examples</artifactId>
+								<artifactId>openlayers-examples</artifactId>
+								<artifactId>openlayers3-examples</artifactId>
+								<artifactId>wicketstuff-phonebook</artifactId>
+								<artifactId>wicketstuff-portlet-examples</artifactId>
+								<artifactId>progressbar-example</artifactId>
+								<artifactId>quickview-examples</artifactId>
+								<artifactId>tinymce4-examples</artifactId>
+								<artifactId>tinymce3-examples</artifactId>
+								<artifactId>tinymce6-examples</artifactId>
+								<artifactId>wicketstuff-twitter-examples</artifactId>
+								<artifactId>wicket-poi-examples</artifactId>
+								<artifactId>wicketstuff-logback-examples</artifactId>
+								<artifactId>wicketstuff-sample</artifactId>
+								<artifactId>wicket-shiro-examples</artifactId>
+								<artifactId>wicket-shiro-example-base</artifactId>
+								<artifactId>wicket-shiro-example-realm</artifactId>
+								<artifactId>wicket-shiro-example-spring-jdbc</artifactId>
+								<artifactId>wicket-shiro-example-spring-hibernate</artifactId>
+								<artifactId>wicket-shiro-example-spring-hibernate-native</artifactId>
+								<artifactId>wicket-facebook-examples</artifactId>
+								<artifactId>wicketstuff-html5-examples</artifactId>
+								<artifactId>wicketstuff-servlet3-examples</artifactId>
+								<artifactId>wicketstuff-clipboardjs-examples</artifactId>
+								<artifactId>wicketstuff-springreference-examples</artifactId>
+								<artifactId>jasperreports-examples</artifactId>
+								<artifactId>editable-grid-examples</artifactId>
+								<artifactId>wicketstuff-sitemap-xml-examples</artifactId>
+								<artifactId>wicketstuff-urlfragment-examples</artifactId>
+								<artifactId>wicketstuff-restannotations-examples</artifactId>
+								<artifactId>wicket-mount-example</artifactId>
+								<artifactId>wicketstuff-select2-examples</artifactId>
+								<artifactId>wicketstuff-selectize-examples</artifactId>
+								<artifactId>wicket-foundation-samples</artifactId>
+								<artifactId>wicketstuff-dashboard-examples</artifactId>
+								<artifactId>wicketstuff-jamon-examples</artifactId>
+								<artifactId>wicket-datetime-examples</artifactId>
+								<artifactId>wicketstuff-datetime-yui-examples</artifactId>
+								<artifactId>wicketstuff-datastore-tests</artifactId>
+								<artifactId>wicket-osgi-test-service</artifactId>
+								<artifactId>wicket-osgi-test-web</artifactId>
+								<artifactId>wicketstuff-rest-tests</artifactId>
+								<artifactId>wicketstuff-jquery-ui-samples</artifactId>
+							</excludeArtifacts>
+							<waitUntil>published</waitUntil>
+						</configuration>
 					</plugin>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
@@ -124,31 +209,8 @@
 					</plugin>
 				</plugins>
 			</build>
-
-			<distributionManagement>
-				<repository>
-					<id>sonatype-nexus-staging</id>
-					<name>Nexus Release Repository</name>
-					<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-				</repository>
-			</distributionManagement>
 		</profile>
 
-		<profile>
-			<!-- setup for using oss.sonatype.org to hold snapshots -->
-			<!-- should be active for all sessions except where the release plugin
-				is being used. We keep this in a profile since central sync up requires no
-				<repository> tags at the top level of the POM. -->
-			<id>oss.sonatype.org-snapshots</id>
-
-			<distributionManagement>
-				<snapshotRepository>
-					<id>sonatype-nexus-snapshots</id>
-					<name>Sonatype Nexus Snapshots</name>
-					<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-				</snapshotRepository>
-			</distributionManagement>
-		</profile>
 		<profile>
 			<id>resolve-oss.sonatype.org-snapshots</id>
 			<activation>
@@ -162,25 +224,17 @@
 					<id>wicket-snapshots</id>
 					<name>Apache Wicket Snapshots</name>
 					<url>https://repository.apache.org/content/repositories/snapshots</url>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>false</enabled>
-					</releases>
+					<snapshots><enabled>true</enabled></snapshots>
+					<releases><enabled>false</enabled></releases>
 				</repository>
 
 				<!-- for wicket bootstrap snapshots -->
 				<repository>
 					<id>sonatype-nexus-snapshots</id>
 					<name>Sonatype Nexus Snapshots</name>
-					<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>false</enabled>
-					</releases>
+					<url>central.sonatype.com</url>
+					<snapshots><enabled>true</enabled></snapshots>
+					<releases><enabled>false</enabled></releases>
 				</repository>
 			</repositories>
 		</profile>
