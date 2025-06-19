@@ -19,6 +19,9 @@
 		is the parent for the actual project and the examples.
 	</description>
 
+	<properties>
+		<openlayers.version>10.6.0</openlayers.version>
+	</properties>
 	<modules>
 		<module>openlayers3</module>
 		<module>openlayers3-bootstrap</module>
@@ -34,9 +37,9 @@
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.webjars</groupId>
-				<artifactId>openlayers</artifactId>
-				<version>3.10.1</version>
+				<groupId>org.webjars.npm</groupId>
+				<artifactId>ol</artifactId>
+				<version>${openlayers.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

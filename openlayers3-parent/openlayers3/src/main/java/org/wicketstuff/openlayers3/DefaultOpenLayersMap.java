@@ -1,6 +1,5 @@
 package org.wicketstuff.openlayers3;
 
-import org.apache.wicket.RuntimeConfigurationType;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
@@ -28,13 +27,8 @@ public class DefaultOpenLayersMap extends OpenLayersMap {
 
     @Override
     public void renderHead(final IHeaderResponse response) {
-		response.render(CssHeaderItem.forReference(new WebjarsJavaScriptResourceReference("openlayers/current/ol.css")));
-
-        if (RuntimeConfigurationType.DEVELOPMENT.equals(getApplication().getConfigurationType())) {
-			response.render(JavaScriptHeaderItem.forReference(new WebjarsJavaScriptResourceReference("openlayers/current/ol-debug.js")));
-        } else {
-			response.render(JavaScriptHeaderItem.forReference(new WebjarsJavaScriptResourceReference("openlayers/current/ol.js")));
-        }
+		response.render(CssHeaderItem.forReference(new WebjarsJavaScriptResourceReference("ol/current/ol.css")));
+		response.render(JavaScriptHeaderItem.forReference(new WebjarsJavaScriptResourceReference("ol/current/dist/ol.js")));
 
         response.render(OnDomReadyHeaderItem.forScript(this.renderJs()));
     }
