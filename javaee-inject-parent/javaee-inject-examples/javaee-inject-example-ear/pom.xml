@@ -14,7 +14,7 @@
         <javadoc.disabled>true</javadoc.disabled>
         <deployment.disabled>true</deployment.disabled>
         <sources.disabled>true</sources.disabled>
-        <maven-ear-plugin.version>3.3.0</maven-ear-plugin.version>
+        <maven-ear-plugin.version>3.4.0</maven-ear-plugin.version>
     </properties>
 
     <build>
