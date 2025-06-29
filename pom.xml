@@ -348,7 +348,7 @@
 		<xstream.version>1.4.21</xstream.version>
 		<hamcrest.version>3.0</hamcrest.version>
 		<jakarta.servlet-api.version>5.0.0</jakarta.servlet-api.version>
-		<junit.version>5.12.2</junit.version>
+		<junit.version>5.13.2</junit.version>
 		<easymock.version>5.5.0</easymock.version>
 		<mockito.version>5.17.0</mockito.version>
 		<commons-io.version>2.19.0</commons-io.version>
