@@ -10,6 +10,8 @@
 
     <modelVersion>4.0.0</modelVersion>
 
+    <name>Wicket YUI Integration - Calendar</name>
+    <description>YUI based calendar</description>
     <artifactId>wicketstuff-yui-calendar</artifactId>
 
     <dependencyManagement>

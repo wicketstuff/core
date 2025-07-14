@@ -8,6 +8,7 @@
         <version>10.6.0-SNAPSHOT</version>
     </parent>
 
+    <name>Parent of wicket-mount</name>
     <artifactId>wicket-mount-parent</artifactId>
     <packaging>pom</packaging>
     <organization>

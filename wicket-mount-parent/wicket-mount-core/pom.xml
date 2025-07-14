@@ -10,6 +10,7 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
+    <name>Core of wicket-mount</name>
     <artifactId>wicket-mount-core</artifactId>
 
     <dependencies>
