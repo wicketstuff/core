@@ -21,7 +21,7 @@ package wicket.contrib.phonebook;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.query.BindableType;
+import org.hibernate.type.BindableType;
 import org.hibernate.query.Query;
 import org.hibernate.type.StandardBasicTypes;
 
