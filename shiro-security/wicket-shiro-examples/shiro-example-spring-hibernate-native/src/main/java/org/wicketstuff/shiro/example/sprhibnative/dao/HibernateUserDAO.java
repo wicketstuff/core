@@ -25,14 +25,13 @@ import org.springframework.util.Assert;
 import org.wicketstuff.shiro.example.sprhibnative.model.User;
 
 @Repository("userDAO")
-@SuppressWarnings("unchecked")
 public class HibernateUserDAO extends HibernateDao implements UserDAO
 {
 
 	@Override
 	public User getUser(Long userId)
 	{
-		return getSession().get(User.class, userId);
+		return getSession().find(User.class, userId);
 	}
 
 	@Override
@@ -40,19 +39,19 @@ public class HibernateUserDAO extends HibernateDao implements UserDAO
 	{
 		Assert.hasText(username, "Username is required");
 		String query = "from User u where u.username = :username";
-		return (User)getSession().createQuery(query).setParameter("username", username).uniqueResult();
+		return getSession().createQuery(query, User.class).setParameter("username", username).uniqueResult();
 	}
 
 	@Override
 	public void createUser(User user)
 	{
-		getSession().save(user);
+		getSession().persist(user);
 	}
 
 	@Override
 	public List<User> getAllUsers()
 	{
-		return getSession().createQuery("from User order by username").list();
+		return getSession().createQuery("from User order by username", User.class).list();
 	}
 
 	@Override
@@ -61,14 +60,14 @@ public class HibernateUserDAO extends HibernateDao implements UserDAO
 		User user = getUser(userId);
 		if (user != null)
 		{
-			getSession().delete(user);
+			getSession().remove(user);
 		}
 	}
 
 	@Override
 	public void updateUser(User user)
 	{
-		getSession().update(user);
+		getSession().merge(user);
 	}
 
 }
