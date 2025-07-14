@@ -355,7 +355,7 @@ public class Map extends JavascriptObject implements Serializable {
         }
 
         if (getInteractions() != null && getInteractions().size() > 0) {
-            builder.append("'interactions': ol.interaction.defaults().extend([");
+            builder.append("'interactions': ol.interaction.defaults.defaults().extend([");
 
             for (Interaction interaction : getInteractions()) {
                 builder.append(interaction.getJsId() + " = new " + interaction.getJsType() + "(");
