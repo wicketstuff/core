@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicketstuff-jquery-ui-parent</artifactId>
-    <version>10.6.0-SNAPSHOT</version>
+    <version>10.6.0</version>
 	</parent>
 
 	<artifactId>wicketstuff-jquery-ui-themes</artifactId>
@@ -18,7 +18,7 @@
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
 			<artifactId>wicketstuff-jquery-ui</artifactId>
-			<version>10.6.0-SNAPSHOT</version>
+			<version>10.6.0</version>
 			<scope>provided</scope>
 		</dependency>	
 		<!-- WICKET DEPENDENCIES -->
