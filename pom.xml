@@ -397,7 +397,7 @@
 		<animal-sniffer-maven-plugin.version>1.24</animal-sniffer-maven-plugin.version>
 		<maven-pax-plugin.version>1.6.0</maven-pax-plugin.version>
 		<scala-maven-plugin.version>4.9.5</scala-maven-plugin.version>
-		<maven-clean-plugin.version>3.4.1</maven-clean-plugin.version>
+		<maven-clean-plugin.version>3.5.0</maven-clean-plugin.version>
 		<maven-deploy-plugin.version>3.1.4</maven-deploy-plugin.version>
 		<maven-install-plugin.version>3.1.4</maven-install-plugin.version>
 		<maven-site-plugin.version>4.0.0-M16</maven-site-plugin.version>
