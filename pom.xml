@@ -66,40 +66,27 @@
 	<distributionManagement>
 		<snapshotRepository>
 			<id>sonatype-nexus-snapshots</id>
-			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+			<url>https://central.sonatype.com/repository/maven-snapshots/</url>
+			<releases><enabled>false</enabled></releases>
+			<snapshots><enabled>true</enabled></snapshots>
 		</snapshotRepository>
 	</distributionManagement>
 
 	<profiles>
 		<profile>
-			<id>oss.sonatype.org-staged-release</id>
-			<!-- This is the profile to use for releasing into the staged release
-				repo. We need to sign the artifacts. -->
-
-			<activation>
-				<property>
-					<name>performRelease</name>
-					<value>true</value>
-				</property>
-			</activation>
-
+			<id>central-release</id>
+			<!-- This is the profile for deploying release artifacts. -->
+			<distributionManagement>
+				<repository>
+					<id>central-sonatype-repo</id>
+					<name>Nexus Release Repository</name>
+					<url>https://central.sonatype.com</url>
+					<releases><enabled>true</enabled></releases>
+					<snapshots><enabled>false</enabled></snapshots>
+				</repository>
+			</distributionManagement>
 			<build>
 				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-javadoc-plugin</artifactId>
-					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-deploy-plugin</artifactId>
-						<configuration>
-							<skip>${deployment.disabled}</skip>
-						</configuration>
-					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-source-plugin</artifactId>
-					</plugin>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-gpg-plugin</artifactId>
@@ -114,6 +101,108 @@
 							</execution>
 						</executions>
 					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>do-publish</id>
+			<!-- This is the profile to use for releasing both SNAPSHOT and release. -->
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+					</plugin>
+					<plugin>
+						<groupId>org.sonatype.central</groupId>
+						<artifactId>central-publishing-maven-plugin</artifactId>
+						<version>0.8.0</version>
+						<extensions>true</extensions>
+						<configuration>
+							<publishingServerId>central-sonatype-repo</publishingServerId>
+							<autoPublish>true</autoPublish>
+							<excludeArtifacts>
+								<artifactId>wicketstuff-offline-mode-examples</artifactId>
+								<artifactId>wicketstuff-nashorn-examples</artifactId>
+								<artifactId>lightbox2-examples</artifactId>
+								<artifactId>jqplot-examples</artifactId>
+								<artifactId>async-task-demo</artifactId>
+								<artifactId>wicketstuff-autocomplete-tagit-examples</artifactId>
+								<artifactId>datatables-examples</artifactId>
+								<artifactId>flot-examples</artifactId>
+								<artifactId>gae-initializer-example</artifactId>
+								<artifactId>wicket-gchart-examples</artifactId>
+								<artifactId>wicketstuff-gmap3-examples</artifactId>
+								<artifactId>googlecharts-examples</artifactId>
+								<artifactId>wicketstuff-htmlcompressor-examples</artifactId>
+								<artifactId>wicketstuff-inmethod-grid-examples</artifactId>
+								<artifactId>input-events-examples</artifactId>
+								<artifactId>javaee-inject-examples</artifactId>
+								<artifactId>javaee-inject-example-ejb</artifactId>
+								<artifactId>javaee-inject-example-war</artifactId>
+								<artifactId>javaee-inject-example-ear</artifactId>
+								<artifactId>wicketstuff-jee-web-examples</artifactId>
+								<artifactId>mbeanview-examples</artifactId>
+								<artifactId>wicketstuff-minis-examples</artifactId>
+								<artifactId>modalx-examples</artifactId>
+								<artifactId>wicketstuff-objectautocomplete-examples</artifactId>
+								<artifactId>openlayers-examples</artifactId>
+								<artifactId>openlayers3-examples</artifactId>
+								<artifactId>wicketstuff-phonebook</artifactId>
+								<artifactId>wicketstuff-portlet-examples</artifactId>
+								<artifactId>progressbar-example</artifactId>
+								<artifactId>quickview-examples</artifactId>
+								<artifactId>tinymce4-examples</artifactId>
+								<artifactId>tinymce3-examples</artifactId>
+								<artifactId>tinymce6-examples</artifactId>
+								<artifactId>wicketstuff-twitter-examples</artifactId>
+								<artifactId>wicket-poi-examples</artifactId>
+								<artifactId>wicketstuff-logback-examples</artifactId>
+								<artifactId>wicketstuff-sample</artifactId>
+								<artifactId>wicket-shiro-examples</artifactId>
+								<artifactId>wicket-shiro-example-base</artifactId>
+								<artifactId>wicket-shiro-example-realm</artifactId>
+								<artifactId>wicket-shiro-example-spring-jdbc</artifactId>
+								<artifactId>wicket-shiro-example-spring-hibernate</artifactId>
+								<artifactId>wicket-shiro-example-spring-hibernate-native</artifactId>
+								<artifactId>wicket-facebook-examples</artifactId>
+								<artifactId>wicketstuff-html5-examples</artifactId>
+								<artifactId>wicketstuff-servlet3-examples</artifactId>
+								<artifactId>wicketstuff-clipboardjs-examples</artifactId>
+								<artifactId>wicketstuff-springreference-examples</artifactId>
+								<artifactId>jasperreports-examples</artifactId>
+								<artifactId>editable-grid-examples</artifactId>
+								<artifactId>wicketstuff-sitemap-xml-examples</artifactId>
+								<artifactId>wicketstuff-urlfragment-examples</artifactId>
+								<artifactId>wicketstuff-restannotations-examples</artifactId>
+								<artifactId>wicket-mount-example</artifactId>
+								<artifactId>wicketstuff-select2-examples</artifactId>
+								<artifactId>wicketstuff-selectize-examples</artifactId>
+								<artifactId>wicket-foundation-samples</artifactId>
+								<artifactId>wicketstuff-dashboard-examples</artifactId>
+								<artifactId>wicketstuff-jamon-examples</artifactId>
+								<artifactId>wicket-datetime-examples</artifactId>
+								<artifactId>wicketstuff-datetime-yui-examples</artifactId>
+								<artifactId>wicketstuff-datastore-tests</artifactId>
+								<artifactId>wicket-osgi-test-service</artifactId>
+								<artifactId>wicket-osgi-test-web</artifactId>
+								<artifactId>wicketstuff-rest-tests</artifactId>
+								<artifactId>wicketstuff-jquery-ui-samples</artifactId>
+							</excludeArtifacts>
+							<waitUntil>published</waitUntil>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-deploy-plugin</artifactId>
+						<configuration>
+							<skip>${deployment.disabled}</skip>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-source-plugin</artifactId>
+					</plugin>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-release-plugin</artifactId>
@@ -124,31 +213,8 @@
 					</plugin>
 				</plugins>
 			</build>
-
-			<distributionManagement>
-				<repository>
-					<id>sonatype-nexus-staging</id>
-					<name>Nexus Release Repository</name>
-					<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-				</repository>
-			</distributionManagement>
 		</profile>
 
-		<profile>
-			<!-- setup for using oss.sonatype.org to hold snapshots -->
-			<!-- should be active for all sessions except where the release plugin
-				is being used. We keep this in a profile since central sync up requires no
-				<repository> tags at the top level of the POM. -->
-			<id>oss.sonatype.org-snapshots</id>
-
-			<distributionManagement>
-				<snapshotRepository>
-					<id>sonatype-nexus-snapshots</id>
-					<name>Sonatype Nexus Snapshots</name>
-					<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-				</snapshotRepository>
-			</distributionManagement>
-		</profile>
 		<profile>
 			<id>resolve-oss.sonatype.org-snapshots</id>
 			<activation>
@@ -162,25 +228,17 @@
 					<id>wicket-snapshots</id>
 					<name>Apache Wicket Snapshots</name>
 					<url>https://repository.apache.org/content/repositories/snapshots</url>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>false</enabled>
-					</releases>
+					<snapshots><enabled>true</enabled></snapshots>
+					<releases><enabled>false</enabled></releases>
 				</repository>
 
 				<!-- for wicket bootstrap snapshots -->
 				<repository>
 					<id>sonatype-nexus-snapshots</id>
 					<name>Sonatype Nexus Snapshots</name>
-					<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>false</enabled>
-					</releases>
+					<url>central.sonatype.com</url>
+					<snapshots><enabled>true</enabled></snapshots>
+					<releases><enabled>false</enabled></releases>
 				</repository>
 			</repositories>
 		</profile>
@@ -274,11 +332,11 @@
 		<javassist.version>3.30.2-GA</javassist.version>
 		<jetty.version>11.0.25</jetty.version>
 		<sf-jung.version>2.1.1</sf-jung.version>
-		<shiro.version>2.0.4</shiro.version>
+		<shiro.version>2.0.5</shiro.version>
 		<slf4j.version>2.0.17</slf4j.version>
 		<logback.version>1.5.18</logback.version>
-		<log4j.version>2.24.3</log4j.version>
-		<spring.version>6.2.6</spring.version>
+		<log4j.version>2.25.1</log4j.version>
+		<spring.version>6.2.8</spring.version>
 		<cglib.version>3.3.0</cglib.version>
 		<objenesis.version>3.4</objenesis.version>
 		<scala.version>2.13.16</scala.version>
@@ -286,17 +344,17 @@
 		<poi.version>5.4.1</poi.version>
 		<guava.version>33.4.8-jre</guava.version>
 		<wicket-webjars.version>4.0.6</wicket-webjars.version>
-		<jquery-selectors.version>4.0.7</jquery-selectors.version>
+		<jquery-selectors.version>4.0.9</jquery-selectors.version>
 		<xstream.version>1.4.21</xstream.version>
 		<hamcrest.version>3.0</hamcrest.version>
 		<jakarta.servlet-api.version>5.0.0</jakarta.servlet-api.version>
-		<junit.version>5.12.2</junit.version>
-		<easymock.version>5.5.0</easymock.version>
-		<mockito.version>5.17.0</mockito.version>
+		<junit.version>5.13.3</junit.version>
+		<easymock.version>5.6.0</easymock.version>
+		<mockito.version>5.18.0</mockito.version>
 		<commons-io.version>2.19.0</commons-io.version>
-		<commons-beanutils.version>1.10.1</commons-beanutils.version>
+		<commons-beanutils.version>1.11.0</commons-beanutils.version>
 		<commons-digester3.version>3.2</commons-digester3.version>
-		<commons-lang3.version>3.17.0</commons-lang3.version>
+		<commons-lang3.version>3.18.0</commons-lang3.version>
 		<commons-logging.version>1.3.5</commons-logging.version>
 		<commons-dbcp2.version>2.13.0</commons-dbcp2.version>
 		<commons-compress.version>1.27.1</commons-compress.version>
@@ -307,19 +365,19 @@
 		<ibatis2-sqlmap.version>2.1.7.597</ibatis2-sqlmap.version>
 		<jts.version>1.13</jts.version>
 		<gson.version>2.13.1</gson.version>
-		<wicket-bootstrap-core.version>7.0.9</wicket-bootstrap-core.version>
+		<wicket-bootstrap-core.version>7.0.10</wicket-bootstrap-core.version>
 		<jasperreports.version>6.21.3</jasperreports.version>
 		<joda-time.version>2.14.0</joda-time.version>
 		<ehcache.version>3.10.8</ehcache.version>
 		<jakartaee-api.version>10.0.0</jakartaee-api.version>
-		<clojure.version>1.12.0</clojure.version>
+		<clojure.version>1.12.1</clojure.version>
 		<groovy.version>4.0.7</groovy.version>
 		<asm-util.version>9.8</asm-util.version>
 		<hsqldb.version>2.7.4</hsqldb.version>
 		<hazelcast.version>5.5.0</hazelcast.version>
 		<jython-standalone.version>2.7.4</jython-standalone.version>
 		<protobuf.version>4.30.2</protobuf.version>
-		<bootstrap.version>5.3.5</bootstrap.version>
+		<bootstrap.version>5.3.7</bootstrap.version>
 		<fst.version>3.0.4-jdk17</fst.version>
 		<jquery-ui.version>1.14.1</jquery-ui.version>
 		<moment-js.version>2.30.1</moment-js.version>
@@ -339,15 +397,15 @@
 		<animal-sniffer-maven-plugin.version>1.24</animal-sniffer-maven-plugin.version>
 		<maven-pax-plugin.version>1.6.0</maven-pax-plugin.version>
 		<scala-maven-plugin.version>4.9.5</scala-maven-plugin.version>
-		<maven-clean-plugin.version>3.4.1</maven-clean-plugin.version>
+		<maven-clean-plugin.version>3.5.0</maven-clean-plugin.version>
 		<maven-deploy-plugin.version>3.1.4</maven-deploy-plugin.version>
 		<maven-install-plugin.version>3.1.4</maven-install-plugin.version>
 		<maven-site-plugin.version>4.0.0-M16</maven-site-plugin.version>
 		<maven-war-plugin.version>3.4.0</maven-war-plugin.version>
 		<maven-release-plugin.version>3.1.1</maven-release-plugin.version>
-		<maven-gpg-plugin.version>3.2.7</maven-gpg-plugin.version>
-		<maven-pmd-plugin.version>3.26.0</maven-pmd-plugin.version>
-		<maven-enforcer-plugin.version>3.5.0</maven-enforcer-plugin.version>
+		<maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
+		<maven-pmd-plugin.version>3.27.0</maven-pmd-plugin.version>
+		<maven-enforcer-plugin.version>3.6.0</maven-enforcer-plugin.version>
 	</properties>
 
 	<modules>
