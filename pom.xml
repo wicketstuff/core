@@ -345,7 +345,7 @@
 		<poi.version>5.4.1</poi.version>
 		<guava.version>33.4.8-jre</guava.version>
 		<wicket-webjars.version>4.0.8</wicket-webjars.version>
-		<jquery-selectors.version>4.0.9</jquery-selectors.version>
+		<jquery-selectors.version>4.0.11</jquery-selectors.version>
 		<xstream.version>1.4.21</xstream.version>
 		<hamcrest.version>3.0</hamcrest.version>
 		<jakarta.servlet-api.version>5.0.0</jakarta.servlet-api.version>
