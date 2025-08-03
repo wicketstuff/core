@@ -327,7 +327,7 @@
 		<deployment.disabled>false</deployment.disabled>
 		<sources.disabled>false</sources.disabled>
 
-		<hibernate.version>7.0.6.Final</hibernate.version>
+		<hibernate.version>7.0.9.Final</hibernate.version>
 		<hibernate-ehcache.version>6.0.0.Alpha7</hibernate-ehcache.version>
 		<hibernate-validator.version>9.0.1.Final</hibernate-validator.version>
 		<javassist.version>3.30.2-GA</javassist.version>
