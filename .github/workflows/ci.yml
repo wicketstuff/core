@@ -35,7 +35,7 @@ jobs:
       MVN_COMMAND: 'verify'
       EVENT_NAME: ${{ github.event_name }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Cache Local Maven Repository
         uses: actions/cache@v4
