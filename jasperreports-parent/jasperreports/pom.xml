@@ -23,12 +23,6 @@
 			<artifactId>slf4j-api</artifactId>
 		</dependency>
 
-		<!-- Inherited -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>jcl-over-slf4j</artifactId>
-		</dependency>
-
 		<!-- Module-specific -->
 		<dependency>
 			<groupId>net.sf.jasperreports</groupId>
