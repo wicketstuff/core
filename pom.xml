@@ -315,7 +315,7 @@
 	<!-- mocleiri: for distribution in to central repository sections in the main pom are not allowed -->
 
 	<properties>
-		<wicket.version>10.7.0-SNAPSHOT</wicket.version>
+		<wicket.version>10.7.0</wicket.version>
 
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
@@ -351,7 +351,7 @@
 		<jakarta.servlet-api.version>5.0.0</jakarta.servlet-api.version>
 		<junit.version>5.13.3</junit.version>
 		<easymock.version>5.6.0</easymock.version>
-		<mockito.version>5.18.0</mockito.version>
+		<mockito.version>5.20.0</mockito.version>
 		<commons-io.version>2.19.0</commons-io.version>
 		<commons-beanutils.version>1.11.0</commons-beanutils.version>
 		<commons-digester3.version>3.2</commons-digester3.version>
