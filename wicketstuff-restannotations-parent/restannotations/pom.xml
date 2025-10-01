@@ -25,6 +25,9 @@
 
 	<name>wicketstuff-restannotations</name>
 
+	<properties>
+		<jaxb.version>4.0.6</jaxb.version>
+	</properties>
 	<licenses>
 		<license>
 			<name>The Apache Software License, Version 2.0</name>
@@ -44,19 +47,19 @@
 		<dependency>
 			<groupId>jakarta.xml.bind</groupId>
 			<artifactId>jakarta.xml.bind-api</artifactId>
-			<version>4.0.2</version>
+			<version>4.0.4</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.sun.xml.bind</groupId>
 			<artifactId>jaxb-core</artifactId>
-			<version>4.0.5</version>
+			<version>${jaxb.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.sun.xml.bind</groupId>
 			<artifactId>jaxb-impl</artifactId>
-			<version>4.0.5</version>
+			<version>${jaxb.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
