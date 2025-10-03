@@ -327,7 +327,7 @@
 		<deployment.disabled>false</deployment.disabled>
 		<sources.disabled>false</sources.disabled>
 
-		<hibernate.version>7.1.1.Final</hibernate.version>
+		<hibernate.version>7.1.2.Final</hibernate.version>
 		<hibernate-ehcache.version>6.0.0.Alpha7</hibernate-ehcache.version>
 		<hibernate-validator.version>9.0.1.Final</hibernate-validator.version>
 		<javassist.version>3.30.2-GA</javassist.version>
@@ -335,21 +335,21 @@
 		<sf-jung.version>2.1.1</sf-jung.version>
 		<shiro.version>2.0.5</shiro.version>
 		<slf4j.version>2.0.17</slf4j.version>
-		<logback.version>1.5.18</logback.version>
+		<logback.version>1.5.19</logback.version>
 		<log4j.version>2.25.2</log4j.version>
 		<spring.version>6.2.11</spring.version>
 		<cglib.version>3.3.0</cglib.version>
 		<objenesis.version>3.4</objenesis.version>
-		<scala.version>2.13.16</scala.version>
-		<jackson.version>2.17.3</jackson.version>
+		<scala.version>2.13.17</scala.version>
+		<jackson.version>2.20.0</jackson.version>
 		<poi.version>5.4.1</poi.version>
 		<guava.version>33.5.0-jre</guava.version>
-		<wicket-webjars.version>4.0.11</wicket-webjars.version>
-		<jquery-selectors.version>4.0.11</jquery-selectors.version>
+		<wicket-webjars.version>4.0.13</wicket-webjars.version>
+		<jquery-selectors.version>4.0.13</jquery-selectors.version>
 		<xstream.version>1.4.21</xstream.version>
 		<hamcrest.version>3.0</hamcrest.version>
 		<jakarta.servlet-api.version>5.0.0</jakarta.servlet-api.version>
-		<junit.version>5.13.4</junit.version>
+		<junit.version>6.0.0</junit.version>
 		<easymock.version>5.6.0</easymock.version>
 		<mockito.version>5.20.0</mockito.version>
 		<commons-io.version>2.20.0</commons-io.version>
@@ -366,7 +366,7 @@
 		<ibatis2-sqlmap.version>2.1.7.597</ibatis2-sqlmap.version>
 		<jts.version>1.13</jts.version>
 		<gson.version>2.13.2</gson.version>
-		<wicket-bootstrap-core.version>7.0.10</wicket-bootstrap-core.version>
+		<wicket-bootstrap-core.version>7.0.12</wicket-bootstrap-core.version>
 		<jasperreports.version>6.21.5</jasperreports.version>
 		<joda-time.version>2.14.0</joda-time.version>
 		<ehcache.version>3.11.1</ehcache.version>
@@ -406,7 +406,7 @@
 		<maven-release-plugin.version>3.1.1</maven-release-plugin.version>
 		<maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
 		<maven-pmd-plugin.version>3.27.0</maven-pmd-plugin.version>
-		<maven-enforcer-plugin.version>3.6.1</maven-enforcer-plugin.version>
+		<maven-enforcer-plugin.version>3.6.2</maven-enforcer-plugin.version>
 	</properties>
 
 	<modules>
