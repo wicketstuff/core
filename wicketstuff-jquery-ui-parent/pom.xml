@@ -59,7 +59,6 @@
 								<instructions>
 									<Bundle-Version>${project.version}</Bundle-Version>
 									<Bundle-SymbolicName>${bundle.namespace}</Bundle-SymbolicName>
-									<Embed-Dependency>*;scope=compile|runtime</Embed-Dependency>
 									<Export-Package>${bundle.namespace}.*;version="${project.version}"</Export-Package>
 									<Automatic-Module-Name>${auto.module.name}</Automatic-Module-Name>
 								</instructions>
