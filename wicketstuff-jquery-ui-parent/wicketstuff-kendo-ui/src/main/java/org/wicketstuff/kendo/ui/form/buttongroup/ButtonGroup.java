@@ -139,7 +139,8 @@ public class ButtonGroup<T extends Serializable> extends FormComponentPanel<T> i
 	@Override
 	public void onConfigure(JQueryBehavior behavior)
 	{
-		behavior.setOption("index", this.input.getModelObject());
+		var index = this.input.getModelObject();
+		behavior.setOption("index", index != null ? index : ButtonGroupBehavior.NONE);
 	}
 
 	@Override
@@ -191,7 +192,14 @@ public class ButtonGroup<T extends Serializable> extends FormComponentPanel<T> i
 	@Override
 	public void convertInput()
 	{
-		int index = this.input.getConvertedInput();
+		Integer index = this.input.getConvertedInput();
+		
+		if (index == null)
+		{
+			this.setConvertedInput(null);
+			return;
+		}
+		
 		List<? extends T> choices = this.choices.getObject();
 
 		if (choices != null && 0 <= index && index < choices.size())
@@ -246,7 +254,7 @@ public class ButtonGroup<T extends Serializable> extends FormComponentPanel<T> i
 			{
 				List<? extends T> choices = ButtonGroup.this.choices.getObject();
 
-				if (choices != null && 0 <= index && index < choices.size())
+				if (index != null && choices != null && 0 <= index && index < choices.size())
 				{
 					ButtonGroup.this.setModelObject(choices.get(index));
 				}
@@ -291,7 +299,7 @@ public class ButtonGroup<T extends Serializable> extends FormComponentPanel<T> i
 					@Override
 					public CharSequence getCallbackFunctionBody(CallbackParameter... parameters)
 					{
-						String statement = String.format("jQuery('#%s').val(e.index);", input.getMarkupId());
+						var statement = String.format("jQuery('#%s').val(e.indices[0]);", input.getMarkupId());
 
 						if (ButtonGroup.this.isSelectEventEnabled())
 						{
