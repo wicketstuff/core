@@ -97,6 +97,12 @@ public class KendoUIBehavior extends JQueryBehavior implements IDestroyable
 			this.add(settings.getMobileStyleSheetReference());
 		}
 
+	      // kendo icon font //
+        if (settings.getIconFontStyleSheetReference() != null)
+        {
+            this.add(settings.getIconFontStyleSheetReference());
+        }
+
 		// kendo.ui.core.js //
 		if (settings.getJavaScriptReference() != null)
 		{

@@ -21,6 +21,8 @@ import org.apache.wicket.IInitializer;
 import org.apache.wicket.csp.CSPDirective;
 import org.apache.wicket.csp.CSPDirectiveSrcValue;
 import org.apache.wicket.protocol.http.WebApplication;
+import org.wicketstuff.kendo.ui.resource.icons.KendoUIIconFontCssResourceReference;
+import org.wicketstuff.kendo.ui.settings.KendoUILibrarySettings;
 
 /**
  * Provides the {@link IInitializer} for Kendo UI
@@ -34,12 +36,15 @@ public class Initializer implements IInitializer
 	{
 		if (application instanceof WebApplication)
 		{
-			WebApplication webApplication = (WebApplication) application;
+			var webApplication = (WebApplication) application;
 			webApplication.getAjaxRequestTargetListeners().add(new KendoDestroyListener());
 			webApplication.getCspSettings().blocking() // lf
 					.add(CSPDirective.STYLE_SRC, CSPDirectiveSrcValue.UNSAFE_INLINE) // lf
 					.add(CSPDirective.SCRIPT_SRC, CSPDirectiveSrcValue.UNSAFE_EVAL);
 		}
+		
+        var settings = KendoUILibrarySettings.get();
+        settings.setIconFontStyleSheetReference(KendoUIIconFontCssResourceReference.get());
 	}
 
 	@Override
