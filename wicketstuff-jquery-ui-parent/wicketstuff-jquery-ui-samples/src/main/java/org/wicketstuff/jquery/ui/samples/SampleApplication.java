@@ -57,7 +57,8 @@ import org.wicketstuff.jquery.ui.samples.kendoui.tabs.KendoTabsPage;
 import org.wicketstuff.jquery.ui.samples.kendoui.tooltip.DefaultKendoTooltipPage;
 import org.wicketstuff.jquery.ui.samples.kendoui.treeview.DefaultTreeViewPage;
 import org.wicketstuff.jquery.ui.samples.kendoui.window.DefaultWindowPage;
-import org.wicketstuff.kendo.ui.resource.KendoAllResourceReference;
+import org.wicketstuff.kendo.ui.resource.KendoUIJavaScriptResourceReference;
+import org.wicketstuff.kendo.ui.resource.icons.KendoUIIconFontCssResourceReference;
 import org.wicketstuff.kendo.ui.settings.KendoUILibrarySettings;
 
 public class SampleApplication extends WebApplication
@@ -82,7 +83,10 @@ public class SampleApplication extends WebApplication
 
 		// Kendo UI //
 		KendoUILibrarySettings settings = KendoUILibrarySettings.get();
-		settings.setJavaScriptReference(KendoAllResourceReference.get()); // kendo.all.min.js
+		// settings.setJavaScriptReference(KendoAllResourceReference.get()); // kendo.all.min.js
+		settings.setJavaScriptReference(KendoUIJavaScriptResourceReference.get());
+		settings.setIconFontStyleSheetReference(KendoUIIconFontCssResourceReference.get());
+
 
 		// SiteMap //
 		this.mountPage("/sitemap.xml", SiteMapPage.class);

@@ -14,22 +14,9 @@
 	<packaging>pom</packaging>
 
 	<modules>
-		<module>wicketstuff-kendo-ui-theme-black</module>
-		<module>wicketstuff-kendo-ui-theme-blue-opal</module>
+    <module>wicketstuff-kendo-ui-theme-utils</module>
 		<module>wicketstuff-kendo-ui-theme-bootstrap</module>
 		<module>wicketstuff-kendo-ui-theme-default</module>
-		<module>wicketstuff-kendo-ui-theme-fiori</module>
-		<module>wicketstuff-kendo-ui-theme-flat</module>
-		<module>wicketstuff-kendo-ui-theme-high-contrast</module>
 		<module>wicketstuff-kendo-ui-theme-material</module>
-		<module>wicketstuff-kendo-ui-theme-material-black</module>
-		<module>wicketstuff-kendo-ui-theme-metro</module>
-		<module>wicketstuff-kendo-ui-theme-metro-black</module>
-		<module>wicketstuff-kendo-ui-theme-moonlight</module>
-		<module>wicketstuff-kendo-ui-theme-nova</module>
-		<module>wicketstuff-kendo-ui-theme-office365</module>
-		<module>wicketstuff-kendo-ui-theme-silver</module>
-		<module>wicketstuff-kendo-ui-theme-uniform</module>
 	</modules>
-
 </project>
