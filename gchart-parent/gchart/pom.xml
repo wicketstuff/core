@@ -60,7 +60,7 @@
         <dependency>
 			<groupId>net.javacrumbs.json-unit</groupId>
 			<artifactId>json-unit</artifactId>
-			<version>4.1.1</version>
+			<version>5.1.0</version>
 			<scope>test</scope>
 		</dependency>
     </dependencies>
