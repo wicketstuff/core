@@ -340,7 +340,7 @@
 		<spring.version>6.2.11</spring.version>
 		<cglib.version>3.3.0</cglib.version>
 		<objenesis.version>3.4</objenesis.version>
-		<scala.version>2.13.17</scala.version>
+		<scala.version>2.13.18</scala.version>
 		<jackson.version>2.20.0</jackson.version>
 		<poi.version>5.4.1</poi.version>
 		<guava.version>33.5.0-jre</guava.version>
