@@ -402,7 +402,7 @@
 		<maven-deploy-plugin.version>3.1.4</maven-deploy-plugin.version>
 		<maven-install-plugin.version>3.1.4</maven-install-plugin.version>
 		<maven-site-plugin.version>4.0.0-M16</maven-site-plugin.version>
-		<maven-war-plugin.version>3.4.0</maven-war-plugin.version>
+		<maven-war-plugin.version>3.5.1</maven-war-plugin.version>
 		<maven-release-plugin.version>3.3.1</maven-release-plugin.version>
 		<maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
 		<maven-pmd-plugin.version>3.28.0</maven-pmd-plugin.version>
