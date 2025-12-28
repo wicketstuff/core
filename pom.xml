@@ -344,7 +344,7 @@
 		<jackson.version>2.20.0</jackson.version>
 		<poi.version>5.5.1</poi.version>
 		<guava.version>33.5.0-jre</guava.version>
-		<wicket-webjars.version>4.0.13</wicket-webjars.version>
+		<wicket-webjars.version>4.0.14</wicket-webjars.version>
 		<jquery-selectors.version>4.0.13</jquery-selectors.version>
 		<xstream.version>1.4.21</xstream.version>
 		<hamcrest.version>3.0</hamcrest.version>
