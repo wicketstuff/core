@@ -383,7 +383,7 @@
 		<jquery-ui.version>1.14.1</jquery-ui.version>
 		<moment-js.version>2.30.1</moment-js.version>
 		<fullcalendar.version>6.1.15</fullcalendar.version>
-		<owasp-sanitizer.version>20240325.1</owasp-sanitizer.version>
+		<owasp-sanitizer.version>20260102.1</owasp-sanitizer.version>
 		<!-- plugins -->
 		<maven-surefire-plugin.version>3.5.4</maven-surefire-plugin.version>
 		<maven-javadoc-plugin.version>3.12.0</maven-javadoc-plugin.version>
