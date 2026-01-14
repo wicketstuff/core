@@ -39,13 +39,6 @@
             </resource>
         </resources>
         <plugins>
-            <!-- war configuration -->
-            <plugin>
-                <artifactId>maven-war-plugin</artifactId>
-                <configuration>
-                    <packagingExcludes>WEB-INF/web.xml</packagingExcludes>
-                </configuration>
-            </plugin>
             <!-- Jetty configuration -->
             <plugin>
                 <groupId>org.eclipse.jetty</groupId>
@@ -63,5 +56,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

@@ -116,7 +116,7 @@
 					<plugin>
 						<groupId>org.sonatype.central</groupId>
 						<artifactId>central-publishing-maven-plugin</artifactId>
-						<version>0.9.0</version>
+						<version>0.10.0</version>
 						<extensions>true</extensions>
 						<configuration>
 							<publishingServerId>central-sonatype-repo</publishingServerId>
@@ -333,26 +333,26 @@
 		<javassist.version>3.30.2-GA</javassist.version>
 		<jetty.version>11.0.25</jetty.version>
 		<sf-jung.version>2.1.1</sf-jung.version>
-		<shiro.version>2.0.5</shiro.version>
+		<shiro.version>2.0.6</shiro.version>
 		<slf4j.version>2.0.17</slf4j.version>
-		<logback.version>1.5.23</logback.version>
+		<logback.version>1.5.24</logback.version>
 		<log4j.version>2.25.3</log4j.version>
-		<spring.version>6.2.11</spring.version>
+		<spring.version>7.0.2</spring.version>
 		<cglib.version>3.3.0</cglib.version>
 		<objenesis.version>3.4</objenesis.version>
 		<scala.version>2.13.18</scala.version>
-		<jackson.version>2.20.0</jackson.version>
+		<jackson.version>2.20.1</jackson.version>
 		<poi.version>5.5.1</poi.version>
 		<guava.version>33.5.0-jre</guava.version>
-		<wicket-webjars.version>4.0.13</wicket-webjars.version>
-		<jquery-selectors.version>4.0.13</jquery-selectors.version>
+		<wicket-webjars.version>4.0.14</wicket-webjars.version>
+		<jquery-selectors.version>4.0.14</jquery-selectors.version>
 		<xstream.version>1.4.21</xstream.version>
 		<hamcrest.version>3.0</hamcrest.version>
 		<jakarta.servlet-api.version>5.0.0</jakarta.servlet-api.version>
-		<junit.version>6.0.1</junit.version>
+		<junit.version>6.0.2</junit.version>
 		<easymock.version>5.6.0</easymock.version>
 		<mockito.version>5.21.0</mockito.version>
-		<commons-io.version>2.20.0</commons-io.version>
+		<commons-io.version>2.21.0</commons-io.version>
 		<commons-beanutils.version>1.11.0</commons-beanutils.version>
 		<commons-digester3.version>3.2</commons-digester3.version>
 		<commons-lang3.version>3.20.0</commons-lang3.version>
@@ -366,7 +366,7 @@
 		<ibatis2-sqlmap.version>2.1.7.597</ibatis2-sqlmap.version>
 		<jts.version>1.13</jts.version>
 		<gson.version>2.13.2</gson.version>
-		<wicket-bootstrap-core.version>7.0.13</wicket-bootstrap-core.version>
+		<wicket-bootstrap-core.version>7.0.14</wicket-bootstrap-core.version>
 		<jasperreports.version>6.21.5</jasperreports.version>
 		<joda-time.version>2.14.0</joda-time.version>
 		<ehcache.version>3.11.1</ehcache.version>
@@ -377,13 +377,13 @@
 		<hsqldb.version>2.7.4</hsqldb.version>
 		<hazelcast.version>5.6.0</hazelcast.version>
 		<jython-standalone.version>2.7.4</jython-standalone.version>
-		<protobuf.version>4.33.2</protobuf.version>
+		<protobuf.version>4.33.4</protobuf.version>
 		<bootstrap.version>5.3.8</bootstrap.version>
 		<fst.version>3.0.4-jdk17</fst.version>
 		<jquery-ui.version>1.14.1</jquery-ui.version>
 		<moment-js.version>2.30.1</moment-js.version>
 		<fullcalendar.version>6.1.15</fullcalendar.version>
-		<owasp-sanitizer.version>20240325.1</owasp-sanitizer.version>
+		<owasp-sanitizer.version>20260102.1</owasp-sanitizer.version>
 		<!-- plugins -->
 		<maven-surefire-plugin.version>3.5.4</maven-surefire-plugin.version>
 		<maven-javadoc-plugin.version>3.12.0</maven-javadoc-plugin.version>
@@ -393,16 +393,16 @@
 		<maven-compiler-plugin.version>3.14.1</maven-compiler-plugin.version>
 		<maven-eclipse-plugin.version>2.10</maven-eclipse-plugin.version>
 		<maven-help-plugin.version>3.5.1</maven-help-plugin.version>
-		<maven-jar-plugin.version>3.4.2</maven-jar-plugin.version>
+		<maven-jar-plugin.version>3.5.0</maven-jar-plugin.version>
 		<maven-resources-plugin.version>3.4.0</maven-resources-plugin.version>
-		<animal-sniffer-maven-plugin.version>1.24</animal-sniffer-maven-plugin.version>
+		<animal-sniffer-maven-plugin.version>1.26</animal-sniffer-maven-plugin.version>
 		<maven-pax-plugin.version>1.6.0</maven-pax-plugin.version>
 		<scala-maven-plugin.version>4.9.8</scala-maven-plugin.version>
 		<maven-clean-plugin.version>3.5.0</maven-clean-plugin.version>
 		<maven-deploy-plugin.version>3.1.4</maven-deploy-plugin.version>
 		<maven-install-plugin.version>3.1.4</maven-install-plugin.version>
 		<maven-site-plugin.version>4.0.0-M16</maven-site-plugin.version>
-		<maven-war-plugin.version>3.4.0</maven-war-plugin.version>
+		<maven-war-plugin.version>3.5.1</maven-war-plugin.version>
 		<maven-release-plugin.version>3.3.1</maven-release-plugin.version>
 		<maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
 		<maven-pmd-plugin.version>3.28.0</maven-pmd-plugin.version>
