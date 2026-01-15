@@ -5,6 +5,12 @@ import org.apache.wicket.protocol.http.WebApplication;
 
 public class DemoApplication extends WebApplication {
     @Override
+    protected void init() {
+        getCspSettings().blocking().disabled();
+        super.init();
+    }
+
+    @Override
     public Class<? extends WebPage> getHomePage() {
         return DemoPage.class;
     }
