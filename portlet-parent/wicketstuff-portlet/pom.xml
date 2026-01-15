@@ -10,7 +10,6 @@
 	<artifactId>wicketstuff-portlet</artifactId>
 	<packaging>jar</packaging>
 	<name>Apache Wicket - Portlet Support</name>
-	<description />
 
 	<properties>
 		<portlet-api.version>3.0.1</portlet-api.version>

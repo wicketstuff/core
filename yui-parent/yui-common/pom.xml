@@ -11,6 +11,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>wicketstuff-yui-common</artifactId>
+    <name>Wicket YUI Integration - Common</name>
     <dependencies>
         <dependency>
             <groupId>org.devlib.schmidt</groupId>

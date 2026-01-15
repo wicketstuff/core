@@ -11,6 +11,7 @@
     </parent>
 
     <artifactId>wicket-foundation-core</artifactId>
+    <name>Wicket Foundation Core</name>
 
     <dependencies>
         <dependency>

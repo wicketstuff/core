@@ -12,6 +12,7 @@
 	<artifactId>progressbar-parent</artifactId>
 
 	<packaging>pom</packaging>
+	<name>Progressbar Parent</name>
 	<url>http://wicketstuff.org/</url>
 	<inceptionYear>2007</inceptionYear>
 

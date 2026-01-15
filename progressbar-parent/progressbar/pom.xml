@@ -8,5 +8,6 @@
 	</parent>
 
 	<artifactId>wicketstuff-progressbar</artifactId>
+	<name>Progressbar main module</name>
 	<packaging>jar</packaging>
 </project>
