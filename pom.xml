@@ -362,7 +362,7 @@
 		<validation-api.version>3.1.1</validation-api.version>
 		<jta.version>2.0.1</jta.version>
 		<htmlcompressor.version>1.5.2</htmlcompressor.version>
-		<closure-compiler.version>v20240317</closure-compiler.version>
+		<closure-compiler.version>v20260121</closure-compiler.version>
 		<ibatis2-sqlmap.version>2.1.7.597</ibatis2-sqlmap.version>
 		<jts.version>1.13</jts.version>
 		<gson.version>2.13.2</gson.version>
