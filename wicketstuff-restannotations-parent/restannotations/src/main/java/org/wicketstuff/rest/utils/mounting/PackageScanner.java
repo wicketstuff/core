@@ -141,38 +141,55 @@ public class PackageScanner
 		Enumeration<URL> resources = classLoader.getResources(path);
 		List<File> dirs = new ArrayList<>();
 		List<JarFile> jars = new ArrayList<>();
-
-		while (resources.hasMoreElements())
-		{
-			URL resource = resources.nextElement();
-			String protocol = resource.getProtocol();
-
-			if("jar".equals(protocol) || "wsjar".equals(protocol))
+		try {
+			while (resources.hasMoreElements())
 			{
-				String jarFileName = URLDecoder.decode(resource.getFile(), "UTF-8");
-				jarFileName = jarFileName.substring(5,jarFileName.indexOf("!"));
+				URL resource = resources.nextElement();
+				String protocol = resource.getProtocol();
 
-				jars.add(new JarFile(jarFileName));
+				if("jar".equals(protocol) || "wsjar".equals(protocol))
+				{
+					String jarFileName = URLDecoder.decode(resource.getFile(), "UTF-8");
+					jarFileName = jarFileName.substring(5,jarFileName.indexOf("!"));
+
+					jars.add(new JarFile(jarFileName));
+				}
+				else
+				{
+					dirs.add(new File(resource.toURI()));
+				}
 			}
-			else
+
+			ArrayList<Class<?>> classes = new ArrayList<Class<?>>();
+
+			for (File directory : dirs)
 			{
-				dirs.add(new File(resource.toURI()));
+				classes.addAll(findClasses(directory, packageName));
+			}
+
+			for (JarFile jarFile : jars)
+			{
+				classes.addAll(findClasses(jarFile, path));
+			}
+
+			return classes.toArray(new Class[classes.size()]);
+		} finally {
+			IOException first = null;
+			for (JarFile jarFile : jars) {
+				try {
+					jarFile.close();
+				} catch (IOException e) {
+					if (first == null) {
+						first = e;
+					} else {
+						first.addSuppressed(e);
+					}
+				}
+			}
+			if (first != null) {
+				throw first;
 			}
 		}
-
-		ArrayList<Class<?>> classes = new ArrayList<Class<?>>();
-
-		for (File directory : dirs)
-		{
-			classes.addAll(findClasses(directory, packageName));
-		}
-
-		for (JarFile jarFile : jars)
-		{
-			classes.addAll(findClasses(jarFile, path));
-		}
-
-		return classes.toArray(new Class[classes.size()]);
 	}
 
 
