@@ -339,7 +339,7 @@
 		<log4j.version>2.25.3</log4j.version>
 		<spring.version>7.0.2</spring.version>
 		<cglib.version>3.3.0</cglib.version>
-		<objenesis.version>3.4</objenesis.version>
+		<objenesis.version>3.5</objenesis.version>
 		<scala.version>2.13.18</scala.version>
 		<jackson.version>2.20.1</jackson.version>
 		<poi.version>5.5.1</poi.version>
