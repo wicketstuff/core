@@ -29,7 +29,7 @@ import org.apache.wicket.request.resource.ResourceReference;
  * Component for embedding a jasper report in a page. This component must be attached to an
  * &lt;object&gt; tag. If you don't want to embed the report, but have a link to it instead, use
  * {@link ResourceReference}.
- * 
+ *
  * @author <a href="mailto:evanchooly@gmail.com">Justin Lee</a>
  */
 public final class EmbeddedJRReport extends WebComponent implements IRequestListener
@@ -40,7 +40,7 @@ public final class EmbeddedJRReport extends WebComponent implements IRequestList
 
 	/**
 	 * Construct.
-	 * 
+	 *
 	 * @param componentID
 	 *            component componentID
 	 * @param resource
@@ -57,8 +57,9 @@ public final class EmbeddedJRReport extends WebComponent implements IRequestList
 	{
 		PageParameters pageParams = null;
 		final Page page = findPage();
-		if (page != null)
+		if (page != null) {
 			pageParams = page.getPageParameters();
+		}
 
 		ResourceRequestHandler reqh = new ResourceRequestHandler(resource, pageParams);
 
@@ -67,7 +68,7 @@ public final class EmbeddedJRReport extends WebComponent implements IRequestList
 
 	/**
 	 * Make sure we work only with object tags
-	 * 
+	 *
 	 * @param tag
 	 *            tag applied to component.
 	 * @see org.apache.wicket.Component#onComponentTag(org.apache.wicket.markup.ComponentTag)
