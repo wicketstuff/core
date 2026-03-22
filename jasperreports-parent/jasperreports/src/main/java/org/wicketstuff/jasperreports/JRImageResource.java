@@ -29,16 +29,17 @@ import javax.imageio.ImageWriter;
 
 import net.sf.jasperreports.engine.JRAbstractExporter;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.export.JRGraphics2DExporter;
-import net.sf.jasperreports.engine.export.JRGraphics2DExporterParameter;
+import net.sf.jasperreports.export.SimpleExporterInput;
+import net.sf.jasperreports.export.SimpleGraphics2DExporterOutput;
+import net.sf.jasperreports.export.SimpleGraphics2DReportConfiguration;
 
 import org.apache.wicket.WicketRuntimeException;
 
 /**
  * Resource class for jasper reports PDF resources.
- * 
+ *
  * @author Eelco Hillenius
  */
 public final class JRImageResource extends JRResource
@@ -70,7 +71,7 @@ public final class JRImageResource extends JRResource
 
 	/**
 	 * Construct.
-	 * 
+	 *
 	 * @param report
 	 *            the report input stream
 	 */
@@ -81,7 +82,7 @@ public final class JRImageResource extends JRResource
 
 	/**
 	 * Construct.
-	 * 
+	 *
 	 * @param report
 	 *            the report input stream
 	 */
@@ -92,7 +93,7 @@ public final class JRImageResource extends JRResource
 
 	/**
 	 * Construct.
-	 * 
+	 *
 	 * @param report
 	 *            the report input stream
 	 */
@@ -123,16 +124,18 @@ public final class JRImageResource extends JRResource
 		throws JRException
 	{
 		// prepare a stream to trap the exporter's output
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		exporter.setParameter(JRExporterParameter.JASPER_PRINT, print);
-		exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, baos);
+		exporter.setExporterInput(new SimpleExporterInput(print));
 
 		// create an image object
 		int width = (int)(print.getPageWidth() * getZoomRatio());
 		int height = (int)(print.getPageHeight() * getZoomRatio());
 		BufferedImage image = new BufferedImage(width, height, type);
-		exporter.setParameter(JRGraphics2DExporterParameter.GRAPHICS_2D, image.getGraphics());
-		exporter.setParameter(JRGraphics2DExporterParameter.ZOOM_RATIO, new Float(zoomRatio));
+		SimpleGraphics2DExporterOutput out = new SimpleGraphics2DExporterOutput();
+		out.setGraphics2D(image.createGraphics());
+		exporter.setExporterOutput(out);
+		SimpleGraphics2DReportConfiguration cfg = new SimpleGraphics2DReportConfiguration();
+		cfg.setZoomRatio(zoomRatio);
+		exporter.setConfiguration(cfg);
 
 		// execute the export and return the trapped result
 		exporter.exportReport();
@@ -142,7 +145,7 @@ public final class JRImageResource extends JRResource
 	/**
 	 * @param image
 	 *            The image to turn into data
-	 * 
+	 *
 	 * @return The image data for this dynamic image
 	 */
 	protected byte[] toImageData(final BufferedImage image)
@@ -179,7 +182,7 @@ public final class JRImageResource extends JRResource
 
 	/**
 	 * Gets the zoom ratio.
-	 * 
+	 *
 	 * @return the zoom ratio used for the export. The default value is 1
 	 */
 	public float getZoomRatio()
@@ -189,7 +192,7 @@ public final class JRImageResource extends JRResource
 
 	/**
 	 * Sets the zoom ratio.
-	 * 
+	 *
 	 * @param ratio
 	 *            the zoom ratio used for the export. The default value is 1
 	 */
@@ -200,7 +203,7 @@ public final class JRImageResource extends JRResource
 
 	/**
 	 * Gets the image type.
-	 * 
+	 *
 	 * @return the image type. The default value is 'png'
 	 */
 	public String getFormat()
@@ -210,7 +213,7 @@ public final class JRImageResource extends JRResource
 
 	/**
 	 * Sets the image type.
-	 * 
+	 *
 	 * @param format
 	 *            the image type. The default value is 'png'
 	 */
@@ -221,7 +224,7 @@ public final class JRImageResource extends JRResource
 
 	/**
 	 * Gets type of image (one of BufferedImage.TYPE_*).
-	 * 
+	 *
 	 * @return type of image
 	 */
 	public int getType()
@@ -231,7 +234,7 @@ public final class JRImageResource extends JRResource
 
 	/**
 	 * Sets type of image (one of BufferedImage.TYPE_*).
-	 * 
+	 *
 	 * @param type
 	 *            type of image
 	 */
