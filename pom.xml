@@ -367,7 +367,7 @@
 		<jts.version>1.13</jts.version>
 		<gson.version>2.13.2</gson.version>
 		<wicket-bootstrap-core.version>7.0.14</wicket-bootstrap-core.version>
-		<jasperreports.version>7.0.6</jasperreports.version>
+		<jasperreports.version>6.21.5</jasperreports.version>
 		<joda-time.version>2.14.1</joda-time.version>
 		<ehcache.version>3.11.1</ehcache.version>
 		<jakartaee-api.version>10.0.0</jakartaee-api.version>
@@ -885,16 +885,6 @@
 			<dependency>
 				<groupId>net.sf.jasperreports</groupId>
 				<artifactId>jasperreports</artifactId>
-				<version>${jasperreports.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>net.sf.jasperreports</groupId>
-				<artifactId>jasperreports-pdf</artifactId>
-				<version>${jasperreports.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>net.sf.jasperreports</groupId>
-				<artifactId>jasperreports-excel-poi</artifactId>
 				<version>${jasperreports.version}</version>
 			</dependency>
 			<dependency>

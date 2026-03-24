@@ -17,7 +17,7 @@
 	<description>JasperReports integration components and resources for Wicket.</description>
 
 	<properties>
-		<jasperreportsDirectory>${project.build.directory}/reports</jasperreportsDirectory>
+		<jasperreports.outputDirectory>${project.build.sourceDirectory}/../webapp/reports</jasperreports.outputDirectory>
 		<javadoc.disabled>true</javadoc.disabled>
 		<deployment.disabled>true</deployment.disabled>
 		<sources.disabled>true</sources.disabled>
@@ -62,22 +62,6 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-reload4j</artifactId>
 		</dependency>
+
 	</dependencies>
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.eclipse.jetty</groupId>
-				<artifactId>jetty-maven-plugin</artifactId>
-				<configuration>
-					<systemProperties>
-						<jasperreportsDirectory>${jasperreportsDirectory}</jasperreportsDirectory>
-					</systemProperties>
-					<resourceBases>
-						<resourceBase>src/main/webapp</resourceBase>
-						<resourceBase>${jasperreportsDirectory}</resourceBase>
-					</resourceBases>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
 </project>
