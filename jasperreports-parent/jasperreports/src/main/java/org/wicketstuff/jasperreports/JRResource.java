@@ -18,6 +18,7 @@
 package org.wicketstuff.jasperreports;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
@@ -31,8 +32,8 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
-import net.sf.jasperreports.export.ExporterOutput;
 import net.sf.jasperreports.export.SimpleExporterInput;
+import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.request.resource.AbstractResource;
@@ -294,13 +295,6 @@ public abstract class JRResource extends AbstractResource {
 	public abstract JRAbstractExporter newExporter();
 
 	/**
-	 * Called by getExporterData to obtain an exporter output instance.
-	 *
-	 * @return an exporter instance
-	 */
-	public abstract ExporterOutput newExporterOutput(OutputStream os);
-
-	/**
 	 * @return The content type of the reports
 	 */
 	public abstract String getContentType();
@@ -366,6 +360,7 @@ public abstract class JRResource extends AbstractResource {
 		resp.setContentDisposition(getContentDisposition());
 		if (resp.dataNeedsToBeWritten(attributes)) {
 			resp.setWriteCallback(new WriteCallback() {
+
 				@Override
 				public void writeData(Attributes attributes) {
 					try {
@@ -400,7 +395,7 @@ public abstract class JRResource extends AbstractResource {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
 		exporter.setExporterInput(new SimpleExporterInput(print));
-		exporter.setExporterOutput(newExporterOutput(baos));
+		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(baos));
 		// execute the export and return the trapped result
 		exporter.exportReport();
 

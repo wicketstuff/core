@@ -17,12 +17,9 @@
  */
 package org.wicketstuff.jasperreports.handlers;
 
-import java.io.OutputStream;
 import java.io.Serializable;
 
 import net.sf.jasperreports.engine.JRAbstractExporter;
-import net.sf.jasperreports.export.ExporterOutput;
-import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 import net.sf.jasperreports.pdf.JRPdfExporter;
 
 /**
@@ -38,11 +35,6 @@ public class PdfResourceHandler implements IJRResourceHandler, Serializable
 	public JRAbstractExporter newExporter()
 	{
 		return new JRPdfExporter();
-	}
-
-	@Override
-	public ExporterOutput newExporterOutput(OutputStream os) {
-		return new SimpleOutputStreamExporterOutput(os);
 	}
 
 	/**
