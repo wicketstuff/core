@@ -25,6 +25,7 @@ import org.wicketstuff.jasperreports.handlers.HtmlResourceHandler;
 import org.wicketstuff.jasperreports.handlers.PdfResourceHandler;
 import org.wicketstuff.jasperreports.handlers.RtfResourceHandler;
 import org.wicketstuff.jasperreports.handlers.TextResourceHandler;
+import org.wicketstuff.jasperreports.handlers.XlsResourceHandler;
 
 /**
  * Simple Jasper reports example with PDF output and a jasper reports panel..
@@ -71,6 +72,11 @@ public class ReportLinksPage extends WebPage {
 				new CsvResourceHandler()).setReportParameters(parameters).setReportDataSource(
 						new WebappDataSource());
 		add(new ResourceLink<Void>("linkToCsv", csvResource));
+
+		JRResource xlsResource = new JRConcreteResource<XlsResourceHandler>(reportFile,
+				new XlsResourceHandler()).setReportParameters(parameters).setReportDataSource(
+						new WebappDataSource());
+		add(new ResourceLink<Void>("linkToXls", xlsResource));
 	}
 
 	/**
