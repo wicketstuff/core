@@ -22,6 +22,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URL;
 
 import javax.imageio.ImageIO;
@@ -31,6 +32,7 @@ import net.sf.jasperreports.engine.JRAbstractExporter;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.export.JRGraphics2DExporter;
+import net.sf.jasperreports.export.ExporterOutput;
 import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleGraphics2DExporterOutput;
 import net.sf.jasperreports.export.SimpleGraphics2DReportConfiguration;
@@ -118,6 +120,10 @@ public final class JRImageResource extends JRResource
 		}
 	}
 
+	@Override
+	public ExporterOutput newExporterOutput(OutputStream os) {
+		return null; // not used
+	}
 
 	@Override
 	protected byte[] getExporterData(JasperPrint print, JRAbstractExporter exporter)

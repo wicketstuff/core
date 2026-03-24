@@ -17,11 +17,14 @@
  */
 package org.wicketstuff.jasperreports.handlers;
 
+import java.io.OutputStream;
 import java.io.Serializable;
 
 import net.sf.jasperreports.engine.JRAbstractExporter;
 import net.sf.jasperreports.engine.export.JRTextExporter;
+import net.sf.jasperreports.export.ExporterOutput;
 import net.sf.jasperreports.export.SimpleTextReportConfiguration;
+import net.sf.jasperreports.export.SimpleWriterExporterOutput;
 
 /**
  * @author cdeal
@@ -93,6 +96,11 @@ public class TextResourceHandler implements IJRResourceHandler, Serializable
 		cfg.setPageHeightInChars(pageHeight);
 		exporter.setConfiguration(cfg);
 		return exporter;
+	}
+
+	@Override
+	public ExporterOutput newExporterOutput(OutputStream os) {
+		return new SimpleWriterExporterOutput(os);
 	}
 
 	/**
