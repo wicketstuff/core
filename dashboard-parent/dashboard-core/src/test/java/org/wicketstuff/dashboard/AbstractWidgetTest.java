@@ -20,7 +20,7 @@ import org.wicketstuff.dashboard.web.DashboardContext;
 import org.wicketstuff.dashboard.web.DashboardPanel;
 import org.wicketstuff.dashboard.web.WidgetView;
 
-public class AbstractWidgetTest {
+class AbstractWidgetTest {
 	private static final String MARKUP = "<html><body><div wicket:id=\"dashboard\"></div></body></html>";
 	private WicketTester browser;
 
@@ -96,12 +96,12 @@ public class AbstractWidgetTest {
 	}
 
 	@BeforeEach
-	public void setup() {
+	void setup() {
 		browser = new WicketTester(new WebApp());
 	}
 
 	@Test
-	public void canExposeConfigurationAsString() {
+	void canExposeConfigurationAsString() {
 		Dashboard dashboard = Application.get().getMetaData(DASHBOARD_KEY);
 		browser.startComponentInPage(new DashboardPanel("dashboard", Model.<Dashboard> of(dashboard)), Markup.of(MARKUP));
 		browser.assertNoErrorMessage();
