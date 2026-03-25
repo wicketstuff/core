@@ -48,8 +48,9 @@ import org.slf4j.LoggerFactory;
  * @author Matej Knopp
  * @author Luciano Montebove
  */
-@SuppressWarnings("serial")
 public abstract class JRResource extends AbstractResource {
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * logger.
 	 */
@@ -344,8 +345,7 @@ public abstract class JRResource extends AbstractResource {
 				provider = getConnectionProvider();
 				if (provider == null) {
 					throw new IllegalStateException(
-							"JasperReportsResources must either have a JRDataSource, "
-									+ "or a JDBC Connection provided");
+							"JasperReportsResources must either have a JRDataSource, or a JDBC Connection provided");
 				}
 				jasperPrint = JasperFillManager.fillReport(report, params, provider.get());
 			} finally {
