@@ -20,8 +20,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
 import org.wicketstuff.dashboard.WidgetLocation;
 
-import com.github.openjson.JSONArray;
-import com.github.openjson.JSONObject;
+import com.google.gson.Gson;
 
 /**
  * @author Decebal Suiu
@@ -38,21 +37,54 @@ public abstract class SortableAjaxBehavior extends AbstractDefaultAjaxBehavior {
 	protected void updateAjaxAttributes(AjaxRequestAttributes attributes) {
 		super.updateAjaxAttributes(attributes);
 
-		attributes.getDynamicExtraParameters()
-			.add("var data = serializeWidgetLocations();" +
-				"return {'" + JSON_DATA + "': data};");
+		StringBuilder buffer = new StringBuilder();
+		buffer.append("var data = serializeWidgetLocations();");
+		buffer.append("return {'" + JSON_DATA + "': data};");
+
+		attributes.getDynamicExtraParameters().add(buffer);
 	}
 
 	@Override
 	protected void respond(AjaxRequestTarget target) {
-		Map<String, WidgetLocation> locations = new HashMap<String, WidgetLocation>();
 		String jsonData = getComponent().getRequest().getRequestParameters().getParameterValue(JSON_DATA).toString();
-		JSONArray arr = new JSONArray(jsonData);
-		for (int i = 0; i < arr.length(); ++i) {
-			JSONObject obj = arr.getJSONObject(i);
-			locations.put(obj.getString("widget"),
-					new WidgetLocation(obj.getInt("column"), obj.getInt("sortIndex")));
+		Item[] items = getItems(jsonData);
+		Map<String, WidgetLocation> locations = new HashMap<String, WidgetLocation>();
+		for (Item item : items) {
+			WidgetLocation location = new WidgetLocation(item.column, item.sortIndex);
+			locations.put(item.widget, location);
 		}
+
 		onSort(target, locations);
+	}
+
+	private Item[] getItems(String jsonData) {
+		Gson gson = new Gson();
+		Item[] items = gson.fromJson(jsonData, Item[].class);
+		/*
+		System.out.println(items.length);
+		for (Item item : items) {
+			System.out.println(item);
+		}
+		*/
+
+		return items;
+	}
+
+	static class Item {
+		public int column;
+		public String widget;
+		public int sortIndex;
+
+		@Override
+		public String toString() {
+			StringBuffer buffer = new StringBuffer();
+			buffer.append("Item[");
+			buffer.append("column = ").append(column);
+			buffer.append(" widget = ").append(widget);
+			buffer.append(" sortIndex = ").append(sortIndex);
+			buffer.append("]");
+
+			return buffer.toString();
+		}
 	}
 }

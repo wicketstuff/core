@@ -7,6 +7,6 @@ module org.wicketstuff.dashboard {
 	requires org.apache.wicket.request;
 	requires org.apache.wicket.util;
 	requires xstream;
-	requires com.github.openjson;
+	requires com.google.gson;
 	requires de.agilecoders.wicket.webjars;
 }
