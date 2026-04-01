@@ -9,32 +9,20 @@ import java.util.List;
 
 import org.apache.wicket.feedback.FeedbackMessage;
 import org.apache.wicket.util.tester.FormTester;
-import org.apache.wicket.util.tester.WicketTester;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
  * @author lexx
  */
-public class Select2MultiChoiceTest
-{
-
-	private WicketTester wicketTester;
-
-	@BeforeEach
-	public void setUp() throws Exception
-	{
-		this.wicketTester = new WicketTester();
-	}
-
+public class Select2MultiChoiceTest extends AbstarctSelect2Test {
 	@Test
 	public void testSelect2MultiChoiceRequireValue() throws Exception
 	{
 		Select2MultiChoicePage page = new Select2MultiChoicePage();
-		this.wicketTester.startPage(page);
-		this.wicketTester.assertRenderedPage(Select2MultiChoicePage.class);
+		tester.startPage(page);
+		tester.assertRenderedPage(Select2MultiChoicePage.class);
 
-		FormTester formTester = this.wicketTester.newFormTester(page.form.getPageRelativePath());
+		FormTester formTester = tester.newFormTester(page.form.getPageRelativePath());
 		formTester.setValue(page.city, countriesAsString());
 		formTester.submit();
 
@@ -49,10 +37,10 @@ public class Select2MultiChoiceTest
 	{
 		Select2MultiChoicePage page = new Select2MultiChoicePage();
 		page.country.setRequired(false);
-		this.wicketTester.startPage(page);
-		this.wicketTester.assertRenderedPage(Select2MultiChoicePage.class);
+		tester.startPage(page);
+		tester.assertRenderedPage(Select2MultiChoicePage.class);
 
-		FormTester formTester = this.wicketTester.newFormTester(page.form.getPageRelativePath());
+		FormTester formTester = tester.newFormTester(page.form.getPageRelativePath());
 		formTester.setValue(page.city, countriesAsString());
 		formTester.submit();
 
@@ -64,12 +52,12 @@ public class Select2MultiChoiceTest
 	public void testSelect2MultiChoiceKeepsValueAfterFormValidation() throws Exception
 	{
 		Select2MultiChoicePage page = new Select2MultiChoicePage();
-		this.wicketTester.startPage(page);
-		this.wicketTester.assertRenderedPage(Select2MultiChoicePage.class);
+		tester.startPage(page);
+		tester.assertRenderedPage(Select2MultiChoicePage.class);
 
-		FormTester formTester = this.wicketTester.newFormTester(page.form.getPageRelativePath());
+		FormTester formTester = tester.newFormTester(page.form.getPageRelativePath());
 		for (Country c: countriesAsList()) {
-			wicketTester.getRequest().addParameter(page.country.getInputName(), c.name());
+			tester.getRequest().addParameter(page.country.getInputName(), c.name());
 		}
 		formTester.submit();
 
@@ -77,7 +65,7 @@ public class Select2MultiChoiceTest
 		assertTrue(page.country.isValid());
 		assertFalse(page.city.isValid());
 
-		String responseAsString = this.wicketTester.getLastResponseAsString();
+		String responseAsString = tester.getLastResponseAsString();
 		assertTrue(responseAsString.contains(expectedOptions()));
 	}
 
@@ -85,12 +73,12 @@ public class Select2MultiChoiceTest
 	public void testSelect2MultiChoiceKeepsValueAfterFormSubmit() throws Exception
 	{
 		Select2MultiChoicePage page = new Select2MultiChoicePage();
-		this.wicketTester.startPage(page);
-		this.wicketTester.assertRenderedPage(Select2MultiChoicePage.class);
+		tester.startPage(page);
+		tester.assertRenderedPage(Select2MultiChoicePage.class);
 
-		FormTester formTester = this.wicketTester.newFormTester(page.form.getPageRelativePath());
+		FormTester formTester = tester.newFormTester(page.form.getPageRelativePath());
 		for (Country c: countriesAsList()) {
-			wicketTester.getRequest().addParameter(page.country.getInputName(), c.name());
+			tester.getRequest().addParameter(page.country.getInputName(), c.name());
 		}
 		formTester.setValue(page.city, city());
 		formTester.submit();
@@ -99,7 +87,7 @@ public class Select2MultiChoiceTest
 		assertTrue(page.country.getModelObject().containsAll(countriesAsList()));
 		assertEquals(city(), page.city.getModelObject());
 
-		String responseAsString = this.wicketTester.getLastResponseAsString();
+		String responseAsString = tester.getLastResponseAsString();
 		assertTrue(responseAsString.contains(expectedOptions()));
 	}
 

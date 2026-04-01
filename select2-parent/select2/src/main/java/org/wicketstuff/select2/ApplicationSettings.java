@@ -1,11 +1,11 @@
 /*
  * Copyright 2012 Igor Vaynberg
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this work except in compliance with
  * the License. You may obtain a copy of the License in the LICENSE file, or at:
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
@@ -15,32 +15,29 @@ package org.wicketstuff.select2;
 import org.apache.wicket.Application;
 import org.apache.wicket.MetaDataKey;
 import org.apache.wicket.protocol.http.WebApplication;
-import org.apache.wicket.request.resource.CssResourceReference;
-import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
+
+import de.agilecoders.wicket.webjars.request.resource.WebjarsCssResourceReference;
+import de.agilecoders.wicket.webjars.request.resource.WebjarsJavaScriptResourceReference;
 
 /**
  * Application-wide settings that apply to all Select2 components.
- * 
+ *
  * The settings object is retreived via the static {@link #get()} method and is usually configured
  * in the {@link WebApplication#init()} method.
- * 
+ *
  * @author igor
  */
 public class ApplicationSettings
 {
-
 	private static final MetaDataKey<ApplicationSettings> KEY = new MetaDataKey<ApplicationSettings>()
 	{
 		private static final long serialVersionUID = 1L;
 	};
 
-	private ResourceReference javaScriptReference = new JavaScriptResourceReference(
-		ApplicationSettings.class, "res/js/select2.js");
-	private ResourceReference javaScriptReferenceFull = new JavaScriptResourceReference(
-		ApplicationSettings.class, "res/js/select2.full.js");
-	private ResourceReference cssReference = new CssResourceReference(
-		ApplicationSettings.class, "res/css/select2.css");
+	private ResourceReference javaScriptReference = new WebjarsJavaScriptResourceReference("select2/current/dist/js/select2.js");
+	private ResourceReference javaScriptReferenceFull = new WebjarsJavaScriptResourceReference("select2/current/dist/js/select2.full.js");
+	private ResourceReference cssReference = new WebjarsCssResourceReference("select2/current/dist/css/select2.css");
 
 	private boolean includeJavascriptFull = true;
 	private boolean includeJavascript = false;
@@ -127,7 +124,7 @@ public class ApplicationSettings
 
 	/**
 	 * Retrieves the instance of settings object.
-	 * 
+	 *
 	 * @return settings instance
 	 */
 	public static ApplicationSettings get()
