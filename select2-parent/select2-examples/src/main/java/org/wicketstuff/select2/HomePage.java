@@ -26,7 +26,9 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.DropDownChoice;
+import org.apache.wicket.markup.html.form.EnumChoiceRenderer;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.LambdaChoiceRenderer;
 import org.apache.wicket.markup.html.form.ListMultipleChoice;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.model.PropertyModel;
@@ -50,17 +52,17 @@ public class HomePage extends WebPage
 	@SuppressWarnings("unused")
 	private Country countryDropDownChoice = Country.US;
 	@SuppressWarnings("unused")
-	private List<Country> countries = new ArrayList<>(Arrays.asList(new Country[] { Country.US, Country.CA }));
+	private List<Country> countries = new ArrayList<>(List.of(Country.US, Country.CA));
 	@SuppressWarnings("unused")
-	private List<Country> ajaxcountries = new ArrayList<>(Arrays.asList(new Country[] { Country.US, Country.CA }));
+	private List<Country> ajaxcountries = new ArrayList<>(List.of(Country.US, Country.CA));
 	@SuppressWarnings("unused")
-	private List<Country> ajaxcountriesns = new ArrayList<>(Arrays.asList(new Country[] { Country.US, Country.CA }));
+	private List<Country> ajaxcountriesns = new ArrayList<>(List.of(Country.US, Country.CA));
 	@SuppressWarnings("unused")
-	private List<Country> countriesListMultipleChoice = new ArrayList<>(Arrays.asList(new Country[] { Country.US, Country.CA }));
+	private List<Country> countriesListMultipleChoice = new ArrayList<>(List.of(Country.US, Country.CA));
 	@SuppressWarnings("unused")
 	private List<String> tags = new ArrayList<>(Arrays.asList("tag1", "tag2"));
 	@SuppressWarnings("unused")
-	private List<Country> countriesStateless = new ArrayList<>(Arrays.asList(new Country[] { Country.US, Country.CA }));
+	private List<Country> countriesStateless = new ArrayList<>(List.of(Country.US, Country.CA));
 
 	@Override
 	protected void onInitialize() {
@@ -337,15 +339,12 @@ public class HomePage extends WebPage
 		}
 	}
 
-	public static class CountryRenderer extends ChoiceRenderer<Country>
+	public static class CountryRenderer extends LambdaChoiceRenderer<Country>
 	{
-
 		private static final long serialVersionUID = 1L;
 
 		public CountryRenderer() {
-			super("displayName", "name");
+			super(Country::getDisplayName, Country::name);
 		}
-
 	}
-
 }

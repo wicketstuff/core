@@ -14,6 +14,8 @@ package org.wicketstuff.select2;
 
 import org.apache.wicket.protocol.http.WebApplication;
 
+import de.agilecoders.wicket.webjars.WicketWebjars;
+
 /**
  * Application object
  */
@@ -24,6 +26,7 @@ public class WicketApplication extends WebApplication
 	@Override
 	protected void init() {
 		super.init();
+		WicketWebjars.install(this);
 
 		mountPage("bootstrap", HomeBootstrapPage.class);
 

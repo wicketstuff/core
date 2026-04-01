@@ -64,7 +64,7 @@ public final class Settings implements Serializable
 	private String initSelection;  //TODO Deprecated in Select2 4.0, will be removed in 4.1
 	private String query; //TODO Deprecated in Select2 4.0, will be removed in 4.1
 	private String width;
-	private String containerCss, dropdownCss, containerCssClass, dropdownCssClass; //TODO deprecated
+	private String containerCss, dropdownCss, selectionCssClass, dropdownCssClass; //TODO deprecated
 	private String dropdownParent;
 
 	private AjaxSettings ajax;
@@ -121,7 +121,7 @@ public final class Settings implements Serializable
 			Json.writeObject(writer, "width", width);
 			Json.writeObject(writer, "theme", theme != null ? theme.name() : null);
 			Json.writeFunction(writer, "containerCss", containerCss);
-			Json.writeObject(writer, "containerCssClass", containerCssClass);
+			Json.writeObject(writer, "selectionCssClass", selectionCssClass);
 			Json.writeFunction(writer, "dropdownCss", dropdownCss);
 			Json.writeObject(writer, "dropdownCssClass", dropdownCssClass);
 			Json.writeObject(writer, "separator", separator);
@@ -451,14 +451,27 @@ public final class Settings implements Serializable
 		return this;
 	}
 
+	@Deprecated(forRemoval = true, since = "10.9")
 	public String getContainerCssClass()
 	{
-		return containerCssClass;
+		return selectionCssClass;
 	}
 
-	public Settings setContainerCssClass(String containerCssClass)
+	@Deprecated(forRemoval = true, since = "10.9")
+	public Settings setContainerCssClass(String selectionCssClass)
 	{
-		this.containerCssClass = containerCssClass;
+		this.selectionCssClass = selectionCssClass;
+		return this;
+	}
+
+	public String getSelectionCssClass()
+	{
+		return selectionCssClass;
+	}
+
+	public Settings setSelectionCssClass(String containerCssClass)
+	{
+		this.selectionCssClass = containerCssClass;
 		return this;
 	}
 

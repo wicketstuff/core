@@ -576,7 +576,8 @@
 		<jquery-ui.version>1.14.1</jquery-ui.version>
 		<moment-js.version>2.30.1</moment-js.version>
 		<fullcalendar.version>6.1.15</fullcalendar.version>
-		<owasp-sanitizer.version>20260102.1</owasp-sanitizer.version>
+		<select2.version>4.1.0-rc.0</select2.version>
+		<owasp-sanitizer.version>20260313.1</owasp-sanitizer.version>
 		<!-- plugins -->
 		<maven-surefire-plugin.version>3.5.4</maven-surefire-plugin.version>
 		<maven-javadoc-plugin.version>3.12.0</maven-javadoc-plugin.version>
@@ -1149,6 +1150,11 @@
 				<groupId>org.webjars.npm</groupId>
 				<artifactId>fullcalendar__google-calendar</artifactId>
 				<version>${fullcalendar.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.webjars.npm</groupId>
+				<artifactId>select2</artifactId>
+				<version>${select2.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.googlecode.owasp-java-html-sanitizer</groupId>
