@@ -3,14 +3,19 @@
 	xml:lang="en" lang="en">
 	<head>
 		<title>WicketStuff JasperReports Integration - Embedded PDF</title>
+		<style>
+			object {
+				width: 85vw;
+				height: 85vh;
+				display: block;
+			}
+		</style>
 	</head>
 	<body>
 		<div>
 			Before
 			<br />
-
-                        <object wicket:id="report" height="60%" width="80%"></object>
-
+			<object wicket:id="report" />
 			<br />
 			After
 		</div>
