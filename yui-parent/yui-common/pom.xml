@@ -10,6 +10,7 @@
 
     <modelVersion>4.0.0</modelVersion>
 
+	<name>WicketStuff YUI common</name>
     <artifactId>wicketstuff-yui-common</artifactId>
     <dependencies>
         <dependency>
@@ -18,6 +19,4 @@
             <version>1.9</version>
         </dependency>
     </dependencies>
-
-
 </project>

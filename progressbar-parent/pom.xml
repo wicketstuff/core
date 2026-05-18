@@ -15,6 +15,7 @@
 	<url>http://wicketstuff.org/</url>
 	<inceptionYear>2007</inceptionYear>
 
+	<name>WicketStuff progressbar - parent</name>
 	<description>Parent project for wicketstuff progressbar project</description>
 
 	<modules>
