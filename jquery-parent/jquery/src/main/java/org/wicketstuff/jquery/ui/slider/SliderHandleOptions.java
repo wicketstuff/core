@@ -5,7 +5,7 @@ import org.apache.wicket.util.io.IClusterable;
 
 /**
  * An integration of JQuery UI Slider widget (http://docs.jquery.com/UI/Slider/slider)
- * 
+ *
  * @author Martin Grigorov <martingrigorov @ users.sf.net>
  */
 public class SliderHandleOptions implements IClusterable
