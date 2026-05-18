@@ -1,14 +1,14 @@
 /*
  * $Id: TextResourceHandler.java 5335 2010-06-14 13:28:39Z cdeal $ $Revision:
  * 1.4 $ $Date: 2010-06-14 09:28:39 -0400 (Mon, 14 Jun 2010) $
- * 
+ *
  * ==============================================================================
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -17,11 +17,14 @@
  */
 package org.wicketstuff.jasperreports.handlers;
 
+import java.io.OutputStream;
 import java.io.Serializable;
 
 import net.sf.jasperreports.engine.JRAbstractExporter;
 import net.sf.jasperreports.engine.export.JRTextExporter;
-import net.sf.jasperreports.engine.export.JRTextExporterParameter;
+import net.sf.jasperreports.export.ExporterOutput;
+import net.sf.jasperreports.export.SimpleTextReportConfiguration;
+import net.sf.jasperreports.export.SimpleWriterExporterOutput;
 
 /**
  * @author cdeal
@@ -42,7 +45,7 @@ public class TextResourceHandler implements IJRResourceHandler, Serializable
 
 	/**
 	 * Gets page height.
-	 * 
+	 *
 	 * @return an integer representing the page height in characters
 	 */
 	public int getPageHeight()
@@ -52,7 +55,7 @@ public class TextResourceHandler implements IJRResourceHandler, Serializable
 
 	/**
 	 * Sets page height.
-	 * 
+	 *
 	 * @param height
 	 *            an integer representing the page height in characters
 	 */
@@ -63,7 +66,7 @@ public class TextResourceHandler implements IJRResourceHandler, Serializable
 
 	/**
 	 * Gets page width.
-	 * 
+	 *
 	 * @return an integer representing the page width in characters
 	 */
 	public int getPageWidth()
@@ -73,7 +76,7 @@ public class TextResourceHandler implements IJRResourceHandler, Serializable
 
 	/**
 	 * Sets page width.
-	 * 
+	 *
 	 * @param width
 	 *            an integer representing the page width in characters
 	 */
@@ -88,9 +91,16 @@ public class TextResourceHandler implements IJRResourceHandler, Serializable
 	public JRAbstractExporter newExporter()
 	{
 		JRTextExporter exporter = new JRTextExporter();
-		exporter.setParameter(JRTextExporterParameter.PAGE_WIDTH, Integer.valueOf(pageWidth));
-		exporter.setParameter(JRTextExporterParameter.PAGE_HEIGHT, Integer.valueOf(pageHeight));
+		SimpleTextReportConfiguration cfg = new SimpleTextReportConfiguration();
+		cfg.setPageWidthInChars(pageWidth);
+		cfg.setPageHeightInChars(pageHeight);
+		exporter.setConfiguration(cfg);
 		return exporter;
+	}
+
+	@Override
+	public ExporterOutput newExporterOutput(OutputStream os) {
+		return new SimpleWriterExporterOutput(os);
 	}
 
 	/**
