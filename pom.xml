@@ -6,7 +6,7 @@
 	<groupId>org.wicketstuff</groupId>
 	<artifactId>wicketstuff-core</artifactId>
 	<packaging>pom</packaging>
-	<version>9.23.0-SNAPSHOT</version>
+	<version>9.23.0</version>
 	<name>WicketStuff Core Parent</name>
 	<description>
 		WicketStuff Core Parent is the parent project for all of the core WicketStuff projects.  It tries
@@ -500,7 +500,7 @@
 	</mailingLists>
 
 	<scm>
-		<url>https://github.com/wicketstuff/core</url>
+		<url>https://github.com/wicketstuff/core/tree/wicketstuff-core-9.23.0</url>
 		<connection>scm:git:ssh://git@github.com:wicketstuff/core.git</connection>
 	</scm>
 
@@ -1325,7 +1325,7 @@
 							in the unnamed module.'-->
 							<link>https://nightlies.apache.org/wicket/apidocs/9.x</link>
 							<link>https://docs.spring.io/spring/docs/5.1.x/javadoc-api</link>
-							<link>https://www.slf4j.org/apidocs</link>
+							<!--link>https://www.slf4j.org/apidocs</link-->
 						</links>
 						<skip>${javadoc.disabled}</skip>
 					</configuration>
