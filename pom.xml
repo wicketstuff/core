@@ -315,7 +315,7 @@
 	<!-- mocleiri: for distribution in to central repository sections in the main pom are not allowed -->
 
 	<properties>
-		<wicket.version>10.9.0</wicket.version>
+		<wicket.version>10.9.1</wicket.version>
 
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
@@ -333,7 +333,7 @@
 		<javassist.version>3.31.0-GA</javassist.version>
 		<jetty.version>11.0.25</jetty.version>
 		<sf-jung.version>2.1.1</sf-jung.version>
-		<shiro.version>2.1.0</shiro.version>
+		<shiro.version>2.2.0</shiro.version>
 		<slf4j.version>2.0.18</slf4j.version>
 		<logback.version>1.5.32</logback.version>
 		<log4j.version>2.26.0</log4j.version>
@@ -341,7 +341,7 @@
 		<cglib.version>3.3.0</cglib.version>
 		<objenesis.version>3.5</objenesis.version>
 		<scala.version>2.13.18</scala.version>
-		<jackson.version>2.21.2</jackson.version>
+		<jackson.version>2.21.3</jackson.version>
 		<poi.version>5.5.1</poi.version>
 		<guava.version>33.6.0-jre</guava.version>
 		<wicket-webjars.version>4.0.14</wicket-webjars.version>
@@ -349,7 +349,7 @@
 		<xstream.version>1.4.21</xstream.version>
 		<hamcrest.version>3.0</hamcrest.version>
 		<jakarta.servlet-api.version>5.0.0</jakarta.servlet-api.version>
-		<junit.version>6.0.3</junit.version>
+		<junit.version>6.1.0</junit.version>
 		<easymock.version>5.6.0</easymock.version>
 		<mockito.version>5.23.0</mockito.version>
 		<commons-io.version>2.22.0</commons-io.version>
@@ -373,11 +373,11 @@
 		<jakartaee-api.version>10.0.0</jakartaee-api.version>
 		<clojure.version>1.12.5</clojure.version>
 		<groovy.version>4.0.7</groovy.version>
-		<asm-util.version>9.10</asm-util.version>
+		<asm-util.version>9.10.1</asm-util.version>
 		<hsqldb.version>2.7.4</hsqldb.version>
 		<hazelcast.version>5.7.0</hazelcast.version>
 		<jython-standalone.version>2.7.4</jython-standalone.version>
-		<protobuf.version>4.34.1</protobuf.version>
+		<protobuf.version>4.35.0</protobuf.version>
 		<bootstrap.version>5.3.8</bootstrap.version>
 		<fst.version>3.0.4-jdk17</fst.version>
 		<jquery-ui.version>1.14.2</jquery-ui.version>
@@ -407,7 +407,7 @@
 		<maven-release-plugin.version>3.3.1</maven-release-plugin.version>
 		<maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
 		<maven-pmd-plugin.version>3.28.0</maven-pmd-plugin.version>
-		<maven-enforcer-plugin.version>3.6.2</maven-enforcer-plugin.version>
+		<maven-enforcer-plugin.version>3.6.3</maven-enforcer-plugin.version>
 	</properties>
 
 	<modules>
