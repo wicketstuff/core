@@ -2,6 +2,7 @@ package org.wicketstuff.select2;
 
 import de.agilecoders.wicket.webjars.request.resource.WebjarsJavaScriptResourceReference;
 
+import static org.apache.wicket.util.string.Strings.isEmpty;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 
 /**
@@ -12,7 +13,6 @@ import org.apache.wicket.request.resource.JavaScriptResourceReference;
  */
 class Select2LanguageResourceReference extends WebjarsJavaScriptResourceReference {
 	private static final long serialVersionUID = 1L;
-	//private static final String resourceName = "res/js/i18n/%s.js";
 	private static final String resourceName = "select2/current/dist/js/i18n/%s.js";
     private static final String defaultLanguage = "en";
 
@@ -31,14 +31,10 @@ class Select2LanguageResourceReference extends WebjarsJavaScriptResourceReferenc
      * @return resource name
      */
     private static String getResourceName(String language) {
-        try {
-            String name = String.format(resourceName, language);
-            if (WebjarsJavaScriptResourceReference.class.getResource(name) != null) {
-                return name;
-            }
-        } catch (Exception ignore) {
-            // noop
+        if (isEmpty(language)) {
+            return String.format(resourceName, defaultLanguage);
         }
-        return String.format(resourceName, defaultLanguage);
+
+        return String.format(resourceName, language);
     }
 }
