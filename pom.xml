@@ -172,6 +172,7 @@
 								<artifactId>wicketstuff-servlet3-examples</artifactId>
 								<artifactId>wicketstuff-clipboardjs-examples</artifactId>
 								<artifactId>wicketstuff-springreference-examples</artifactId>
+								<artifactId>wicket-spring-boot-starter-examples</artifactId>
 								<artifactId>jasperreports-examples</artifactId>
 								<artifactId>editable-grid-examples</artifactId>
 								<artifactId>wicketstuff-sitemap-xml-examples</artifactId>
@@ -463,6 +464,7 @@
 		<module>wicket-servlet3-parent</module>
 		<module>wicketstuff-clipboard-js-parent</module>
 		<module>wicketstuff-springreference-parent</module>
+		<module>wicket-spring-boot-starter-parent</module>
 		<module>wicket-security-parent</module>
 
 		<module>yui-parent</module>
