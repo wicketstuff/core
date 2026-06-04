@@ -58,4 +58,12 @@ public abstract class JQueryAbstractTemplateBehavior extends Behavior
 	 * @return the {@link JQueryTemplateResourceStream}
 	 */
 	protected abstract JQueryTemplateResourceStream newResourceStream();
+
+	/**
+	 * @return The JavaScript code rendering the template.
+	 */
+	public String getTemplateRenderingCode()
+	{
+		return null;
+	}
 }

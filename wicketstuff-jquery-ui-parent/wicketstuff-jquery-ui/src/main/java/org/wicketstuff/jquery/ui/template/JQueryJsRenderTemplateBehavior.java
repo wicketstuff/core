@@ -27,25 +27,24 @@ import org.wicketstuff.jquery.core.template.JQueryAbstractTemplateBehavior;
 import org.wicketstuff.jquery.core.template.JQueryTemplateResourceStream;
 
 /**
- * Provides the default implementation of {@link JQueryAbstractTemplateBehavior} that works with a {@link IJQueryTemplate}.<br>
- * The content of the &lt;script /&gt; block (the resource stream) is given by the {@link IJQueryTemplate#getText()}
- * 
- * @author Sebastien Briquet - sebfz1
+ * Templates machinery based on <a href="https://github.com/BorisMoore/jsrender">jsrender</a>
+ *
+ * @author reiern70
  */
-public class JQueryTemplateBehavior extends JQueryAbstractTemplateBehavior
+public class JQueryJsRenderTemplateBehavior extends JQueryAbstractTemplateBehavior
 {
 	private static final long serialVersionUID = 1L;
-	public static final PackageResourceReference TMPL_JS = new JQueryPluginResourceReference(JQueryTemplateBehavior.class, "jquery.tmpl.min.js");
+	public static final PackageResourceReference TMPL_JS = new JQueryPluginResourceReference(JQueryJsRenderTemplateBehavior.class, "jsrender.min.js");
 
 	private String token = null;
 	private final IJQueryTemplate template;
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param template the {@link IJQueryTemplate} that this behavior should render via the resource stream
 	 */
-	public JQueryTemplateBehavior(IJQueryTemplate template)
+	public JQueryJsRenderTemplateBehavior(IJQueryTemplate template)
 	{
 		super();
 
@@ -57,7 +56,7 @@ public class JQueryTemplateBehavior extends JQueryAbstractTemplateBehavior
 	{
 		super.renderHead(component, response);
 
-		response.render(new PriorityHeaderItem(JavaScriptHeaderItem.forReference(JQueryTemplateBehavior.TMPL_JS)));
+		response.render(new PriorityHeaderItem(JavaScriptHeaderItem.forReference(JQueryJsRenderTemplateBehavior.TMPL_JS)));
 	}
 
 	// Methods //
@@ -89,6 +88,6 @@ public class JQueryTemplateBehavior extends JQueryAbstractTemplateBehavior
 	@Override
 	public String getTemplateRenderingCode()
 	{
-		return "jQuery.tmpl(jQuery('#%s').html(), item);";
+		return "jQuery.templates(jQuery('#%s').html()).render(item);";
 	}
 }
