@@ -33,6 +33,18 @@ import org.springframework.context.annotation.Bean;
 public class WicketAutoConfiguration {
 
     /**
+     * Registers a default {@link WebApplication} bean if the application does not define one.
+     * This registers the {@link DefaultWebApplication} which serves the starter's {@link DefaultHomePage}.
+     *
+     * @return the default WebApplication
+     */
+    @Bean
+    @ConditionalOnMissingBean(WebApplication.class)
+    public WebApplication webApplication() {
+        return new DefaultWebApplication();
+    }
+
+    /**
      * Creates and configures the {@link FilterRegistrationBean} for the {@link WicketFilter}.
      * <p>
      * Instantiates WicketFilter with the provided {@link WebApplication} bean and attaches
