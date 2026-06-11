@@ -14,11 +14,13 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.wicketstuff.jquery.core.resource.StyleSheetPackageHeaderItem;
 import org.wicketstuff.jquery.core.template.IJQueryTemplate;
+import org.wicketstuff.jquery.core.template.JQueryAbstractTemplateBehavior;
 import org.wicketstuff.jquery.core.utils.ListUtils;
 import org.wicketstuff.jquery.ui.form.autocomplete.AutoCompleteTextField;
 import org.wicketstuff.jquery.ui.panel.JQueryFeedbackPanel;
 import org.wicketstuff.jquery.ui.samples.data.bean.Genre;
 import org.wicketstuff.jquery.ui.samples.data.dao.GenresDAO;
+import org.wicketstuff.jquery.ui.template.JQueryJsRenderTemplateBehavior;
 
 public class TemplateAutoCompletePage extends AbstractAutoCompletePage
 {
@@ -30,7 +32,7 @@ public class TemplateAutoCompletePage extends AbstractAutoCompletePage
 		final IModel<Genre> model = Model.of(GenresDAO.newGenre());
 
 		// Form //
-		final Form<Void> form = new Form<Void>("form");
+		final Form<Void> form = new Form<>("form");
 		this.add(form);
 
 		// FeedbackPanel //
@@ -38,7 +40,7 @@ public class TemplateAutoCompletePage extends AbstractAutoCompletePage
 		form.add(feedback.setOutputMarkupId(true));
 
 		// Auto-complete //
-		form.add(new AutoCompleteTextField<Genre>("autocomplete", model) {
+		form.add(new AutoCompleteTextField<>("autocomplete", model) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -73,6 +75,69 @@ public class TemplateAutoCompletePage extends AbstractAutoCompletePage
 								" <tr>\n" +
 								"  <td><img src='${coverUrl}' width='50px' /></td>\n" +
 								"  <td>${name}</td>\n" +
+								" </tr>\n" +
+								"</table>";
+					}
+
+					@Override
+					public List<String> getTextProperties()
+					{
+						return Arrays.asList("name", "coverUrl");
+					}
+
+				};
+			}
+		});
+
+		// Form //
+		final Form<Void> form1 = new Form<>("form1");
+		this.add(form1);
+
+		// FeedbackPanel //
+		final FeedbackPanel feedback1 = new JQueryFeedbackPanel("feedback1");
+		form1.add(feedback.setOutputMarkupId(true));
+
+		// Auto-complete //
+		form1.add(new AutoCompleteTextField<>("autocomplete1", model) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected List<Genre> getChoices(String input)
+			{
+				return ListUtils.contains(input, GenresDAO.all());
+			}
+
+			@Override
+			protected void onSelected(AjaxRequestTarget target)
+			{
+				info("Your favorite rock genre is: " + this.getModelObject());
+				target.add(feedback);
+			}
+
+			@Override
+			protected JQueryAbstractTemplateBehavior createTemplateBehavior(IJQueryTemplate template) {
+				return new JQueryJsRenderTemplateBehavior(template);
+			}
+
+			@Override
+			protected IJQueryTemplate newTemplate()
+			{
+				return new IJQueryTemplate() {
+
+					private static final long serialVersionUID = 1L;
+
+					/**
+					 * The template text will be enclosed in a <script type="text/x-jquery-tmpl" />.
+					 * You can use the "\n" character to properly format the template.
+					 */
+					@Override
+					public String getText()
+					{
+						return	"<table style='width: 100%' cellspacing='0' cellpadding='0'>\n" +
+								" <tr>\n" +
+								"  <td><img src='{{coverUrl}}' width='50px' /></td>\n" +
+								"  <td>{{name}}</td>\n" +
 								" </tr>\n" +
 								"</table>";
 					}
