@@ -35,7 +35,6 @@ Ensure you match the correct starter version with your Spring Boot and Java envi
 | WicketStuff / Starter Version | Spring Boot Version | Spring Framework Version | Minimum Java Version |
 | :--- | :--- | :--- | :--- |
 | **`10.x.y`** (Current) | `4.x.y` | `7.x.y` | Java 17 |
-| **`9.x.y`** | `3.x.y` | `6.x.y` | Java 11 |
 
 ---
 
