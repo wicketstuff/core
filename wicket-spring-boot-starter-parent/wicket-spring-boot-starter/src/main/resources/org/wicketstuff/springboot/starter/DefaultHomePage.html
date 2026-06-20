@@ -1,250 +1,59 @@
 <!DOCTYPE html>
 <html xmlns:wicket="http://wicket.apache.org">
-<head>
-	<meta charset="utf-8" />
-	<title>Wicket Spring Boot Starter</title>
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Plus+Jakarta+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
-	<style>
-		:root {
-			--bg-primary: #0b0f19;
-			--bg-secondary: #161b26;
-			--text-primary: #f3f4f6;
-			--text-secondary: #9ca3af;
-			--accent-glow: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
-			--accent-border: rgba(99, 102, 241, 0.2);
-			--card-bg: rgba(22, 27, 38, 0.7);
-		}
-
-		body {
-			margin: 0;
-			padding: 40px 0;
-			background-color: var(--bg-primary);
-			background-image: 
-				radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
-				radial-gradient(at 100% 100%, rgba(168, 85, 247, 0.15) 0px, transparent 50%);
-			font-family: 'Plus Jakarta Sans', sans-serif;
-			color: var(--text-primary);
-			min-height: 100vh;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			overflow-x: hidden;
-		}
-
-		.container {
-			max-width: 700px;
-			width: 90%;
-			padding: 40px;
-			background: var(--card-bg);
-			backdrop-filter: blur(12px);
-			-webkit-backdrop-filter: blur(12px);
-			border: 1px solid rgba(255, 255, 255, 0.08);
-			border-radius: 24px;
-			box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-			text-align: center;
-			animation: fadeIn 0.8s ease-out;
-		}
-
-		@keyframes fadeIn {
-			from { opacity: 0; transform: translateY(20px); }
-			to { opacity: 1; transform: translateY(0); }
-		}
-
-		.logo-container {
-			display: inline-flex;
-			align-items: center;
-			justify-content: center;
-			width: 80px;
-			height: 80px;
-			background: var(--accent-glow);
-			border-radius: 20px;
-			margin-bottom: 24px;
-			box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
-			position: relative;
-		}
-
-		.logo-container::after {
-			content: '';
-			position: absolute;
-			inset: -4px;
-			background: var(--accent-glow);
-			border-radius: 24px;
-			z-index: -1;
-			opacity: 0.4;
-			filter: blur(8px);
-		}
-
-		.logo-icon {
-			font-size: 36px;
-			font-weight: 800;
-			color: #ffffff;
-			font-family: 'Outfit', sans-serif;
-		}
-
-		h1 {
-			font-family: 'Outfit', sans-serif;
-			font-size: 2.5rem;
-			font-weight: 800;
-			margin: 0 0 10px 0;
-			background: linear-gradient(135deg, #ffffff 30%, #a5b4fc 100%);
-			-webkit-background-clip: text;
-			-webkit-text-fill-color: transparent;
-			letter-spacing: -0.02em;
-		}
-
-		.subtitle {
-			font-size: 1.1rem;
-			color: var(--text-secondary);
-			margin-bottom: 35px;
-			font-weight: 400;
-		}
-
-		.card {
-			background: rgba(255, 255, 255, 0.02);
-			border: 1px solid rgba(255, 255, 255, 0.05);
-			border-radius: 16px;
-			padding: 24px;
-			margin-bottom: 30px;
-			text-align: left;
-		}
-
-		.card-title {
-			font-size: 1.15rem;
-			font-weight: 600;
-			color: #ffffff;
-			margin-bottom: 20px;
-			display: flex;
-			align-items: center;
-			gap: 8px;
-		}
-
-		.card-title::before {
-			content: "✨";
-		}
-
-		ol {
-			margin: 0;
-			padding-left: 20px;
-			color: var(--text-secondary);
-		}
-
-		li {
-			margin-bottom: 20px;
-			line-height: 1.6;
-		}
-
-		li > div {
-			font-weight: 600;
-			color: #f3f4f6;
-			margin-bottom: 8px;
-		}
-
-		pre {
-			background: rgba(0, 0, 0, 0.4);
-			border: 1px solid rgba(255, 255, 255, 0.05);
-			border-radius: 8px;
-			padding: 14px;
-			margin: 8px 0 12px 0;
-			overflow-x: auto;
-		}
-
-		pre code {
-			background: none;
-			color: #a5b4fc;
-			padding: 0;
-			border-radius: 0;
-			font-family: 'Fira Code', 'Courier New', Courier, monospace;
-			font-size: 0.85em;
-			border: none;
-			line-height: 1.5;
-			display: block;
-			text-align: left;
-		}
-
-		.keyword { color: #f472b6; }
-		.annotation { color: #38bdf8; }
-		.class-name { color: #34d399; }
-		.comment { color: #6b7280; font-style: italic; }
-
-		.footer {
-			font-size: 0.85rem;
-			color: rgba(156, 163, 175, 0.6);
-			margin-top: 20px;
-		}
-
-		.btn {
-			display: inline-block;
-			background: var(--accent-glow);
-			color: #ffffff;
-			font-weight: 600;
-			padding: 12px 28px;
-			border-radius: 12px;
-			text-decoration: none;
-			box-shadow: 0 4px 15px rgba(99, 102, 241, 0.2);
-			transition: all 0.3s ease;
-		}
-
-		.btn:hover {
-			transform: translateY(-2px);
-			box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
-			opacity: 0.95;
-		}
-	</style>
-</head>
-<body>
-	<div class="container">
-		<div class="logo-container">
-			<span class="logo-icon">W</span>
+	<head>
+		<meta charset="utf-8" />
+		<title>Apache Wicket Quickstart</title>
+		<link href='https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:regular,bold' rel='stylesheet' type='text/css' />
+		<link rel="stylesheet" href="style.css" type="text/css" media="screen" title="Stylesheet" />
+	</head>
+	<body>
+		<div id="hd">
+			<div id="logo">
+				<img src="logo.png" width="50px" height="50px" alt="Wicket Logo" />
+				<h1>Apache Wicket</h1>
+			</div>
 		</div>
-		<h1>Apache Wicket + Spring Boot</h1>
-		<p class="subtitle">Your application is up and running!</p>
-		
-		<div class="card">
-			<div class="card-title">How to customize this application</div>
+		<div id="bd">
+			<h2>Congratulations!</h2>
+			<p>
+				Your quick start works! This project is especially useful to
+				start developing your Wicket application or to create a test
+				case for a bug report.
+			</p>
+			<h3>Get started</h3>
+			<p>
+				From here you can start hacking away at your application and
+				wow your clients:
+			</p>
+			<ul>
+				<li>work through <a href="https://wicket.apache.org/learn/examples" target="_blank" title="Hello world and friends">some examples</a></li>
+				<li>read <a href="https://wicket.apache.org/learn/books" target="_blank" title="Books about Wicket in English, German and Japanese">some books</a></li>
+			</ul>
+			<h3>Get help</h3>
+			<p>
+				We are here to help!
+			</p>
+			<ul>
+				<li>join us on IRC on <a href="irc:%23%23wicket@irc.freenode.net">&#35;&#35;wicket@irc.freenode.net</a></li>
+				<li><a href="http://wicket-users.markmail.org/" target="_blank" title="Search the mailing list archives">search</a> our mailing list archives</li>
+				<li>ask a question on the <a href="https://wicket.apache.org/help/email.html">users list</a></li>
+			</ul>
+			<h3>Reporting a bug</h3>
+			<p>
+				Help us help you:
+			</p>
 			<ol>
-				<li>
-					<div>Create a custom Wicket WebPage:</div>
-					<pre><code><span class="keyword">package</span> com.example;
-
-<span class="keyword">import</span> org.apache.wicket.markup.html.<span class="class-name">WebPage</span>;
-<span class="keyword">import</span> org.apache.wicket.markup.html.basic.<span class="class-name">Label</span>;
-
-<span class="keyword">public</span> <span class="keyword">class</span> <span class="class-name">MyNewHomePage</span> <span class="keyword">extends</span> <span class="class-name">WebPage</span> {
-    <span class="keyword">public</span> MyNewHomePage() {
-        add(<span class="keyword">new</span> <span class="class-name">Label</span>(<span class="string">"message"</span>, <span class="string">"Hello, Wicket!"</span>));
-    }
-}</code></pre>
-				</li>
-				<li>
-					<div>Create your custom WebApplication &amp; register it as a Spring Bean:</div>
-					<pre><code><span class="keyword">package</span> com.example;
-
-<span class="keyword">import</span> org.apache.wicket.<span class="class-name">Page</span>;
-<span class="keyword">import</span> org.apache.wicket.protocol.http.<span class="class-name">WebApplication</span>;
-<span class="keyword">import</span> org.springframework.stereotype.<span class="class-name">Component</span>;
-
-<span class="annotation">@Component</span>
-<span class="keyword">public</span> <span class="keyword">class</span> <span class="class-name">WicketApplication</span> <span class="keyword">extends</span> <span class="class-name">WebApplication</span> {
-    <span class="annotation">@Override</span>
-    <span class="keyword">public</span> <span class="class-name">Class</span>&lt;? <span class="keyword">extends</span> <span class="class-name">Page</span>&gt; getHomePage() {
-        <span class="keyword">return</span> <span class="class-name">MyNewHomePage</span>.<span class="keyword">class</span>;
-    }
-}</code></pre>
-				</li>
+				<li>reproduce the bug with the <strong>least</strong> amount of code</li>
+				<li>create a unit test that shows the bug</li>
+				<li>fix the bug and create a patch</li>
+				<li>attach the result of step 1, 2 or 3 to a <a href="https://issues.apache.org/jira/browse/WICKET" target="_blank">JIRA issue</a></li>
+				<li>profit!</li>
 			</ol>
+			<p>
+				Please mention the correct Wicket version: <wicket:container wicket:id="version">1.5-SNAPSHOT</wicket:container>.
+			</p>
 		</div>
-		
-		<p style="margin-bottom: 25px; color: var(--text-secondary); font-size: 0.95rem;">
-			Once you register your own <code>WebApplication</code> component, this default starter page and the auto-configured application class will automatically deactivate.
-		</p>
-
-		<a href="https://github.com/wicketstuff/core/tree/master/wicket-spring-boot-starter-parent" class="btn" target="_blank">Documentation</a>
-		
-		<div class="footer">
-			Wicket Spring Boot Starter
+		<div id="ft">
 		</div>
-	</div>
-</body>
+	</body>
 </html>

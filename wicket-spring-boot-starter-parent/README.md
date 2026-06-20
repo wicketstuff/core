@@ -143,7 +143,7 @@ initializr:
           description: Apache Wicket component-oriented web application framework integrated with Spring Boot.
           groupId: org.wicketstuff
           artifactId: wicket-spring-boot-starter
-          versionRange: "[4.0.0,4.1.0-M1)"
+          versionRange: "[4.0.0,4.2.0-M1)"
           links:
             - rel: reference
               href: https://github.com/wicketstuff/core/tree/master/wicket-spring-boot-starter-parent
@@ -159,7 +159,7 @@ initializr:
   "description": "Apache Wicket component-oriented web application framework integrated with Spring Boot.",
   "groupId": "org.wicketstuff",
   "artifactId": "wicket-spring-boot-starter",
-  "versionRange": "[4.0.0,4.1.0-M1)",
+  "versionRange": "[4.0.0,4.2.0-M1)",
   "links": [
     {
       "rel": "reference",
