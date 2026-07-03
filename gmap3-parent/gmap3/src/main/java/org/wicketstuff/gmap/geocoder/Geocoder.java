@@ -30,10 +30,12 @@ import org.wicketstuff.gmap.api.GLatLngBounds;
 import org.wicketstuff.gmap.geocoder.pojos.GeocoderResult;
 import org.wicketstuff.gmap.geocoder.pojos.NortheastSoutwestInfo;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.DatabindException;
+import tools.jackson.databind.DeserializationFeature;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
+
 import com.github.openjson.JSONException;
 
 /**
@@ -65,14 +67,15 @@ public class Geocoder implements Serializable
      * Create an {@link ObjectMapper}.<br/>
      * The {@link ObjectMapper} ignores unknown properties when mapping from JSON
      * to POJO.<br/>
-     * <b>Use</b> {@link #Geocoder(com.fasterxml.jackson.databind.ObjectMapper, java.lang.String) } to customize
+     * <b>Use</b> {@link #Geocoder(tools.jackson.databind.ObjectMapper, java.lang.String) } to customize
      *
      * @param apiKey your Google Maps API-key
      */
     public Geocoder(String apiKey)
     {
-        objectMapper = new ObjectMapper();
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        objectMapper = JsonMapper.builder()
+            .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+            .build();
         this.apiKey = apiKey;
     }
 
@@ -108,19 +111,15 @@ public class Geocoder implements Serializable
         {
             geocoderResult = objectMapper.readValue(response, GeocoderResult.class);
         }
-        catch (JsonParseException jpe)
-        {
-            LOGGER.error("Geocoder JSON parsing failed", jpe);
-        }
-        catch (JsonMappingException jme)
+        catch (DatabindException jme)
         {
             LOGGER.error(
                 "Something went wrong during json mapping. Check your ObjectMapper when customize.",
                 jme);
         }
-        catch (IOException ioe)
+        catch (JacksonException jpe)
         {
-            LOGGER.error("Upps. Panic!", ioe);
+            LOGGER.error("Geocoder JSON parsing failed", jpe);
         }
 
         GeocoderStatus status = geocoderResult.getStatus();

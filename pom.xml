@@ -341,7 +341,7 @@
 		<cglib.version>3.3.0</cglib.version>
 		<objenesis.version>3.5</objenesis.version>
 		<scala.version>2.13.18</scala.version>
-		<jackson.version>2.22.0</jackson.version>
+		<jackson.version>3.2.0</jackson.version>
 		<poi.version>5.5.1</poi.version>
 		<guava.version>33.6.0-jre</guava.version>
 		<wicket-webjars.version>4.0.14</wicket-webjars.version>
@@ -874,7 +874,7 @@
 				<version>${gson.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>com.fasterxml.jackson.core</groupId>
+				<groupId>tools.jackson.core</groupId>
 				<artifactId>jackson-databind</artifactId>
 				<version>${jackson.version}</version>
 			</dependency>

@@ -19,58 +19,46 @@ package org.wicketstuff.rest.contenthandling.json.objserialdeserial;
 import org.apache.wicket.WicketRuntimeException;
 import org.wicketstuff.rest.contenthandling.IObjectSerialDeserial;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 
 /**
- * Object serializer/deserailizer that works with JSON format and based on Jackson library.
- * 
+ * Object serializer/deserailizer that works with JSON format and based on
+ * Jackson library.
+ *
  * @author andrea del bene
  *
  */
-public class JacksonObjectSerialDeserial implements
-	IObjectSerialDeserial<String>
-{
+public class JacksonObjectSerialDeserial implements IObjectSerialDeserial<String> {
+	private final ObjectMapper objMapper;
 
-    private final ObjectMapper objMapper;
-
-    public JacksonObjectSerialDeserial(ObjectMapper objMapper)
-    {
-	this.objMapper = objMapper;
-    }
-    
-    public JacksonObjectSerialDeserial()
-    {
-	this.objMapper = new ObjectMapper();
-    }    
-
-    @Override
-    public String serializeObject(Object target, String mimeType)
-    {
-	try
-	{
-	    return objMapper.writeValueAsString(target);
-	} catch (Exception e)
-	{
-	    throw new WicketRuntimeException("An error occurred during object serialization.", e);
+	public JacksonObjectSerialDeserial(ObjectMapper objMapper) {
+		this.objMapper = objMapper;
 	}
-    }
 
-    @Override
-    public <E> E deserializeObject(String source, Class<E> targetClass,
-	    String mimeType)
-    {
-	try
-	{
-	    return objMapper.readValue(source, targetClass);
-	} catch (Exception e)
-	{
-	    throw new WicketRuntimeException("An error occurred during object deserialization.", e);
-	} 
-    }
+	public JacksonObjectSerialDeserial() {
+		this.objMapper = new ObjectMapper();
+	}
 
-    public ObjectMapper getObjMapper()
-    {
-        return objMapper;
-    }
+	@Override
+	public String serializeObject(Object target, String mimeType) {
+		try {
+			return objMapper.writeValueAsString(target);
+		} catch (Exception e) {
+			throw new WicketRuntimeException("An error occurred during object serialization.", e);
+		}
+	}
 
+	@Override
+	public <E> E deserializeObject(String source, Class<E> targetClass,
+			String mimeType) {
+		try {
+			return objMapper.readValue(source, targetClass);
+		} catch (Exception e) {
+			throw new WicketRuntimeException("An error occurred during object deserialization.", e);
+		}
+	}
+
+	public ObjectMapper getObjMapper() {
+		return objMapper;
+	}
 }
