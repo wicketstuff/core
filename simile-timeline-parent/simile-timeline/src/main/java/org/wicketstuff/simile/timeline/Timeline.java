@@ -25,7 +25,7 @@ public class Timeline extends Panel
 {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 
@@ -64,10 +64,6 @@ public class Timeline extends Panel
 
 	private void init(String id, IModel<?> model, List<BandInfoParameters> bandInfo)
 	{
-// add(HeaderContributor
-// .forJavaScript(new ResourceReference(getClass(),
-// "./timeline_js/timeline-api.js?timeline-use-local-resources=true&bundle=true")));
-
 		WebMarkupContainer tl = new WebMarkupContainer("tl");
 		tl.setOutputMarkupId(true);
 		add(tl);
@@ -80,7 +76,7 @@ public class Timeline extends Panel
 		{
 
 			/**
-			 * 
+			 *
 			 */
 			private static final long serialVersionUID = 1L;
 
@@ -135,20 +131,15 @@ public class Timeline extends Panel
 	@Override
 	public void renderHead(IHeaderResponse response)
 	{
+		response.render(JavaScriptHeaderItem.forReference(
+				new PackageResourceReference(getClass(), "timeline_ajax/simile-ajax-api.js"), new PageParameters(), "simile-ajax"));
+
 		PageParameters pp= new PageParameters();
-		pp.add("timeline-use-local-resources", "true");
-		pp.add("bundle", "true");
+		pp.add("timeline-use-local-resources", true);
+		pp.add("bundle", true);
 		response.render(JavaScriptHeaderItem.forReference(
 				new PackageResourceReference(getClass(), "./timeline_js/timeline-api.js"), pp, "timeline-api"));
 
-		StringBuffer parameters = new StringBuffer("");
-
-		parameters.append("Timeline_ajax_url='")
-				.append(timelineUrl())
-				.append("';\n");
-
-		response.render(JavaScriptHeaderItem.forScript(parameters.toString(),
-			TIMELINE_PARAMS_JAVASCRIPT));
 		response.render(OnLoadHeaderItem.forScript(getLoadScriptName() + "()"));
 	}
 

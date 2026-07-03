@@ -152,6 +152,7 @@
 								<artifactId>wicketstuff-portlet-examples</artifactId>
 								<artifactId>progressbar-example</artifactId>
 								<artifactId>quickview-examples</artifactId>
+								<artifactId>simile-timeline-examples</artifactId>
 								<artifactId>tinymce4-examples</artifactId>
 								<artifactId>tinymce3-examples</artifactId>
 								<artifactId>tinymce6-examples</artifactId>
@@ -907,17 +908,6 @@
 				<groupId>org.ehcache</groupId>
 				<artifactId>ehcache</artifactId>
 				<version>${ehcache.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>net.sf.json-lib</groupId>
-				<artifactId>json-lib</artifactId>
-				<version>2.4</version>
-				<classifier>jdk15</classifier>
-			</dependency>
-			<dependency> <!-- this one is required to update ancient dependency in json-lib -->
-				<groupId>commons-collections</groupId>
-				<artifactId>commons-collections</artifactId>
-				<version>3.2.2</version>
 			</dependency>
 			<dependency>
 				<groupId>net.sf.shadesdb</groupId>
