@@ -394,7 +394,7 @@
 		<maven-assembly-plugin.version>3.8.0</maven-assembly-plugin.version>
 		<maven-compiler-plugin.version>3.15.0</maven-compiler-plugin.version>
 		<maven-eclipse-plugin.version>2.10</maven-eclipse-plugin.version>
-		<maven-help-plugin.version>3.5.1</maven-help-plugin.version>
+		<maven-help-plugin.version>3.5.2</maven-help-plugin.version>
 		<maven-jar-plugin.version>3.5.0</maven-jar-plugin.version>
 		<maven-resources-plugin.version>3.5.0</maven-resources-plugin.version>
 		<animal-sniffer-maven-plugin.version>1.27</animal-sniffer-maven-plugin.version>
