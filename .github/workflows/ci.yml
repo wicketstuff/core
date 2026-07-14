@@ -59,4 +59,4 @@ jobs:
           echo "Event name: ${EVENT_NAME}"
           if [ $EVENT_NAME == "push" ]; then export MVN_COMMAND="deploy"; fi
           cp ./config/toolchains.xml $HOME/.m2/
-          mvn -s sonatype-settings.xml $MVN_COMMAND -Pdo-publish -B -V
+          mvn -s sonatype-settings.xml $MVN_COMMAND -Pdo-publish -Djavadoc.disabled=true -B -V
