@@ -6,7 +6,7 @@
 	<groupId>org.wicketstuff</groupId>
 	<artifactId>wicketstuff-core</artifactId>
 	<packaging>pom</packaging>
-	<version>10.8.0-SNAPSHOT</version>
+	<version>10.10.0-SNAPSHOT</version>
 	<name>WicketStuff Core Parent</name>
 	<description>
 		WicketStuff Core Parent is the parent project for all of the core WicketStuff projects.  It tries
@@ -116,7 +116,7 @@
 					<plugin>
 						<groupId>org.sonatype.central</groupId>
 						<artifactId>central-publishing-maven-plugin</artifactId>
-						<version>0.9.0</version>
+						<version>0.11.0</version>
 						<extensions>true</extensions>
 						<configuration>
 							<publishingServerId>central-sonatype-repo</publishingServerId>
@@ -152,6 +152,7 @@
 								<artifactId>wicketstuff-portlet-examples</artifactId>
 								<artifactId>progressbar-example</artifactId>
 								<artifactId>quickview-examples</artifactId>
+								<artifactId>simile-timeline-examples</artifactId>
 								<artifactId>tinymce4-examples</artifactId>
 								<artifactId>tinymce3-examples</artifactId>
 								<artifactId>tinymce6-examples</artifactId>
@@ -315,7 +316,7 @@
 	<!-- mocleiri: for distribution in to central repository sections in the main pom are not allowed -->
 
 	<properties>
-		<wicket.version>10.8.0-SNAPSHOT</wicket.version>
+		<wicket.version>10.10.0-SNAPSHOT</wicket.version>
 
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
@@ -327,37 +328,37 @@
 		<deployment.disabled>false</deployment.disabled>
 		<sources.disabled>false</sources.disabled>
 
-		<hibernate.version>7.1.2.Final</hibernate.version>
+		<hibernate.version>7.4.5.Final</hibernate.version>
 		<hibernate-ehcache.version>6.0.0.Alpha7</hibernate-ehcache.version>
-		<hibernate-validator.version>9.0.1.Final</hibernate-validator.version>
-		<javassist.version>3.30.2-GA</javassist.version>
+		<hibernate-validator.version>9.1.2.Final</hibernate-validator.version>
+		<javassist.version>3.32.0-GA</javassist.version>
 		<jetty.version>11.0.25</jetty.version>
 		<sf-jung.version>2.1.1</sf-jung.version>
-		<shiro.version>2.0.5</shiro.version>
-		<slf4j.version>2.0.17</slf4j.version>
-		<logback.version>1.5.19</logback.version>
-		<log4j.version>2.25.2</log4j.version>
-		<spring.version>6.2.11</spring.version>
+		<shiro.version>2.2.1</shiro.version>
+		<slf4j.version>2.0.18</slf4j.version>
+		<logback.version>1.5.38</logback.version>
+		<log4j.version>2.26.1</log4j.version>
+		<spring.version>7.0.8</spring.version>
 		<cglib.version>3.3.0</cglib.version>
-		<objenesis.version>3.4</objenesis.version>
-		<scala.version>2.13.17</scala.version>
-		<jackson.version>2.20.0</jackson.version>
-		<poi.version>5.4.1</poi.version>
-		<guava.version>33.5.0-jre</guava.version>
-		<wicket-webjars.version>4.0.13</wicket-webjars.version>
-		<jquery-selectors.version>4.0.13</jquery-selectors.version>
+		<objenesis.version>3.5</objenesis.version>
+		<scala.version>2.13.18</scala.version>
+		<jackson.version>3.2.1</jackson.version>
+		<poi.version>5.5.1</poi.version>
+		<guava.version>33.6.0-jre</guava.version>
+		<wicket-webjars.version>4.0.14</wicket-webjars.version>
+		<jquery-selectors.version>4.0.14</jquery-selectors.version>
 		<xstream.version>1.4.21</xstream.version>
 		<hamcrest.version>3.0</hamcrest.version>
 		<jakarta.servlet-api.version>5.0.0</jakarta.servlet-api.version>
-		<junit.version>6.0.0</junit.version>
+		<junit.version>6.1.2</junit.version>
 		<easymock.version>5.6.0</easymock.version>
-		<mockito.version>5.20.0</mockito.version>
-		<commons-io.version>2.20.0</commons-io.version>
+		<mockito.version>5.23.0</mockito.version>
+		<commons-io.version>2.22.0</commons-io.version>
 		<commons-beanutils.version>1.11.0</commons-beanutils.version>
 		<commons-digester3.version>3.2</commons-digester3.version>
-		<commons-lang3.version>3.19.0</commons-lang3.version>
-		<commons-logging.version>1.3.5</commons-logging.version>
-		<commons-dbcp2.version>2.13.0</commons-dbcp2.version>
+		<commons-lang3.version>3.20.0</commons-lang3.version>
+		<commons-logging.version>1.4.0</commons-logging.version>
+		<commons-dbcp2.version>2.14.0</commons-dbcp2.version>
 		<commons-compress.version>1.28.0</commons-compress.version>
 		<validation-api.version>3.1.1</validation-api.version>
 		<jta.version>2.0.1</jta.version>
@@ -365,48 +366,49 @@
 		<closure-compiler.version>v20240317</closure-compiler.version>
 		<ibatis2-sqlmap.version>2.1.7.597</ibatis2-sqlmap.version>
 		<jts.version>1.13</jts.version>
-		<gson.version>2.13.2</gson.version>
-		<wicket-bootstrap-core.version>7.0.12</wicket-bootstrap-core.version>
-		<jasperreports.version>6.21.5</jasperreports.version>
-		<joda-time.version>2.14.0</joda-time.version>
-		<ehcache.version>3.11.1</ehcache.version>
+		<gson.version>2.14.0</gson.version>
+		<wicket-bootstrap-core.version>7.0.14</wicket-bootstrap-core.version>
+		<jasperreports.version>7.0.7</jasperreports.version>
+		<joda-time.version>2.14.2</joda-time.version>
+		<ehcache.version>3.12.0</ehcache.version>
 		<jakartaee-api.version>10.0.0</jakartaee-api.version>
-		<clojure.version>1.12.3</clojure.version>
+		<clojure.version>1.12.5</clojure.version>
 		<groovy.version>4.0.7</groovy.version>
-		<asm-util.version>9.8</asm-util.version>
+		<asm-util.version>9.10.1</asm-util.version>
 		<hsqldb.version>2.7.4</hsqldb.version>
-		<hazelcast.version>5.5.0</hazelcast.version>
+		<hazelcast.version>5.7.0</hazelcast.version>
 		<jython-standalone.version>2.7.4</jython-standalone.version>
-		<protobuf.version>4.32.1</protobuf.version>
+		<protobuf.version>4.35.1</protobuf.version>
 		<bootstrap.version>5.3.8</bootstrap.version>
 		<fst.version>3.0.4-jdk17</fst.version>
-		<jquery-ui.version>1.14.1</jquery-ui.version>
+		<jquery-ui.version>1.14.2</jquery-ui.version>
 		<moment-js.version>2.30.1</moment-js.version>
 		<fullcalendar.version>6.1.15</fullcalendar.version>
-		<owasp-sanitizer.version>20240325.1</owasp-sanitizer.version>
+		<select2.version>4.1.0</select2.version>
+		<owasp-sanitizer.version>20260313.1</owasp-sanitizer.version>
 		<!-- plugins -->
-		<maven-surefire-plugin.version>3.5.4</maven-surefire-plugin.version>
+		<maven-surefire-plugin.version>3.5.6</maven-surefire-plugin.version>
 		<maven-javadoc-plugin.version>3.12.0</maven-javadoc-plugin.version>
-		<maven-source-plugin.version>3.3.1</maven-source-plugin.version>
-		<maven-bundle-plugin.version>6.0.0</maven-bundle-plugin.version>
-		<maven-assembly-plugin.version>3.7.1</maven-assembly-plugin.version>
-		<maven-compiler-plugin.version>3.14.1</maven-compiler-plugin.version>
+		<maven-source-plugin.version>3.4.0</maven-source-plugin.version>
+		<maven-bundle-plugin.version>6.0.2</maven-bundle-plugin.version>
+		<maven-assembly-plugin.version>3.8.0</maven-assembly-plugin.version>
+		<maven-compiler-plugin.version>3.15.0</maven-compiler-plugin.version>
 		<maven-eclipse-plugin.version>2.10</maven-eclipse-plugin.version>
-		<maven-help-plugin.version>3.5.1</maven-help-plugin.version>
-		<maven-jar-plugin.version>3.4.2</maven-jar-plugin.version>
-		<maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
-		<animal-sniffer-maven-plugin.version>1.24</animal-sniffer-maven-plugin.version>
+		<maven-help-plugin.version>3.5.2</maven-help-plugin.version>
+		<maven-jar-plugin.version>3.5.0</maven-jar-plugin.version>
+		<maven-resources-plugin.version>3.5.0</maven-resources-plugin.version>
+		<animal-sniffer-maven-plugin.version>1.27</animal-sniffer-maven-plugin.version>
 		<maven-pax-plugin.version>1.6.0</maven-pax-plugin.version>
-		<scala-maven-plugin.version>4.9.6</scala-maven-plugin.version>
+		<scala-maven-plugin.version>4.9.10</scala-maven-plugin.version>
 		<maven-clean-plugin.version>3.5.0</maven-clean-plugin.version>
 		<maven-deploy-plugin.version>3.1.4</maven-deploy-plugin.version>
 		<maven-install-plugin.version>3.1.4</maven-install-plugin.version>
 		<maven-site-plugin.version>4.0.0-M16</maven-site-plugin.version>
-		<maven-war-plugin.version>3.4.0</maven-war-plugin.version>
-		<maven-release-plugin.version>3.1.1</maven-release-plugin.version>
+		<maven-war-plugin.version>3.5.1</maven-war-plugin.version>
+		<maven-release-plugin.version>3.3.1</maven-release-plugin.version>
 		<maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
-		<maven-pmd-plugin.version>3.27.0</maven-pmd-plugin.version>
-		<maven-enforcer-plugin.version>3.6.2</maven-enforcer-plugin.version>
+		<maven-pmd-plugin.version>3.28.0</maven-pmd-plugin.version>
+		<maven-enforcer-plugin.version>3.6.3</maven-enforcer-plugin.version>
 	</properties>
 
 	<modules>
@@ -873,7 +875,7 @@
 				<version>${gson.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>com.fasterxml.jackson.core</groupId>
+				<groupId>tools.jackson.core</groupId>
 				<artifactId>jackson-databind</artifactId>
 				<version>${jackson.version}</version>
 			</dependency>
@@ -888,6 +890,16 @@
 				<version>${jasperreports.version}</version>
 			</dependency>
 			<dependency>
+				<groupId>net.sf.jasperreports</groupId>
+				<artifactId>jasperreports-pdf</artifactId>
+				<version>${jasperreports.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.sf.jasperreports</groupId>
+				<artifactId>jasperreports-excel-poi</artifactId>
+				<version>${jasperreports.version}</version>
+			</dependency>
+			<dependency>
 				<groupId>joda-time</groupId>
 				<artifactId>joda-time</artifactId>
 				<version>${joda-time.version}</version>
@@ -896,17 +908,6 @@
 				<groupId>org.ehcache</groupId>
 				<artifactId>ehcache</artifactId>
 				<version>${ehcache.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>net.sf.json-lib</groupId>
-				<artifactId>json-lib</artifactId>
-				<version>2.4</version>
-				<classifier>jdk15</classifier>
-			</dependency>
-			<dependency> <!-- this one is required to update ancient dependency in json-lib -->
-				<groupId>commons-collections</groupId>
-				<artifactId>commons-collections</artifactId>
-				<version>3.2.2</version>
 			</dependency>
 			<dependency>
 				<groupId>net.sf.shadesdb</groupId>
@@ -1056,6 +1057,11 @@
 				<version>${fullcalendar.version}</version>
 			</dependency>
 			<dependency>
+				<groupId>org.webjars.npm</groupId>
+				<artifactId>select2</artifactId>
+				<version>${select2.version}</version>
+			</dependency>
+			<dependency>
 				<groupId>com.googlecode.owasp-java-html-sanitizer</groupId>
 				<artifactId>owasp-java-html-sanitizer</artifactId>
 				<version>${owasp-sanitizer.version}</version>
@@ -1180,7 +1186,7 @@
 						<doclint>none</doclint>
 						<links>
 							<link>https://docs.oracle.com/en/java/javase/17/docs/api/</link>
-							<link>https://ci.apache.org/projects/wicket/apidocs/10.x</link>
+							<link>https://nightlies.apache.org/wicket/apidocs/11.x</link>
 							<link>https://docs.spring.io/spring-framework/docs/6.0.x/javadoc-api</link>
 							<link>https://logback.qos.ch/apidocs</link>
               				<link>https://www.slf4j.org/apidocs</link>
@@ -1554,7 +1560,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>taglist-maven-plugin</artifactId>
-				<version>3.2.1</version>
+				<version>3.2.2</version>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

@@ -85,4 +85,10 @@ public class JQueryTemplateBehavior extends JQueryAbstractTemplateBehavior
 	{
 		return new JQueryTemplateResourceStream(this.template.getText(), this.getToken());
 	}
+
+	@Override
+	public String getTemplateRenderingCode()
+	{
+		return "jQuery.tmpl(jQuery('#%s').html(), item);";
+	}
 }

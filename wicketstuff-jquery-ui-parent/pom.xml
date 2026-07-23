@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicketstuff-core</artifactId>
-		<version>10.8.0-SNAPSHOT</version>
+		<version>10.10.0-SNAPSHOT</version>
 	</parent>
 
 	<name>wicket-jquery-ui pom</name>
@@ -39,6 +39,11 @@
 			<name>Martin Grigorov</name>
 			<email>mgrigorov@apache.org</email>
 		</developer>
+        <developer>
+            <id>reiern70</id>
+            <name>Ernesto Reinaldo Barreiro</name>
+            <email>reiern70@apache.org</email>
+        </developer>
 	</developers>
 
 	<build>

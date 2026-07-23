@@ -6,35 +6,19 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 import java.util.Collection;
 
 import org.apache.wicket.model.util.CollectionModel;
-import org.apache.wicket.util.tester.WicketTester;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class Issue644Test {
-
-	private static WicketTester tester;
-
+class Issue644Test extends AbstarctSelect2Test {
 	private Collection<String> selection;
 
-	@BeforeAll
-	public static void beforeClass() {
-		tester = new WicketTester();
-	}
-
-	@AfterAll
-	public static void afterClass() {
-		tester.destroy();
-	}
-
 	@BeforeEach
-	public void before() {
+	void before() {
 		selection = null;
 	}
 
 	@Test
-	public void checkInitModelPreFilled() throws Exception {
+	void checkInitModelPreFilled() throws Exception {
 		// ARRANGE
 		Issue644Page page = new Issue644Page() {
 			private static final long serialVersionUID = 1L;
@@ -56,7 +40,7 @@ public class Issue644Test {
 	}
 
 	@Test
-	public void checkInitModelEmpty() throws Exception {
+	void checkInitModelEmpty() throws Exception {
 		// ARRANGE
 		Issue644Page page = new Issue644Page() {
 
@@ -79,5 +63,4 @@ public class Issue644Test {
 		// ASSERT
 		assertThat(selection, containsInAnyOrder("bob", "alice"));
 	}
-
 }

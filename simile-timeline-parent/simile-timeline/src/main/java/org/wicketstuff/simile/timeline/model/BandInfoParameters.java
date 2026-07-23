@@ -2,6 +2,8 @@ package org.wicketstuff.simile.timeline.model;
 
 import java.util.Date;
 
+import org.apache.wicket.ajax.json.JSONFunction;
+
 public class BandInfoParameters
 {
 	public enum DateTime
@@ -14,8 +16,8 @@ public class BandInfoParameters
 	private Integer intervalPixels = 70;
 	private Date date = new Date();
 	private boolean showEventText = false;
-	private RawString theme = new RawString("theme");
-	private RawString eventSource = new RawString("eventSource");
+	private JSONFunction theme = new JSONFunction("theme");
+	private JSONFunction eventSource = new JSONFunction("eventSource");
 	private Integer syncWith = 0;
 	private boolean highlight = true;
 	private boolean overview = false;
@@ -70,22 +72,22 @@ public class BandInfoParameters
 		this.showEventText = showEventText;
 	}
 
-	public RawString getTheme()
+	public JSONFunction getTheme()
 	{
 		return theme;
 	}
 
-	public void setTheme(RawString theme)
+	public void setTheme(JSONFunction theme)
 	{
 		this.theme = theme;
 	}
 
-	public RawString getEventSource()
+	public JSONFunction getEventSource()
 	{
 		return eventSource;
 	}
 
-	public void setEventSource(RawString eventSource)
+	public void setEventSource(JSONFunction eventSource)
 	{
 		this.eventSource = eventSource;
 	}

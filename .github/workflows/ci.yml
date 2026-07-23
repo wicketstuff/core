@@ -35,10 +35,10 @@ jobs:
       MVN_COMMAND: 'verify'
       EVENT_NAME: ${{ github.event_name }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
       - name: Cache Local Maven Repository
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
@@ -51,7 +51,7 @@ jobs:
           distribution: 'temurin'
           java-version: ${{ matrix.java }}
 
-      - name: Build & test (& deploy) 
+      - name: Build & test (& deploy)
         env:
           CI_DEPLOY_USERNAME: ${{ secrets.CI_DEPLOY_USERNAME }}
           CI_DEPLOY_PASSWORD: ${{ secrets.CI_DEPLOY_PASSWORD }}
@@ -59,4 +59,4 @@ jobs:
           echo "Event name: ${EVENT_NAME}"
           if [ $EVENT_NAME == "push" ]; then export MVN_COMMAND="deploy"; fi
           cp ./config/toolchains.xml $HOME/.m2/
-          mvn -s sonatype-settings.xml $MVN_COMMAND -Pdo-publish -B -V
+          mvn -s sonatype-settings.xml $MVN_COMMAND -Pdo-publish -Djavadoc.disabled=true -B -V

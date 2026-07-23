@@ -30,6 +30,7 @@ import org.wicketstuff.jquery.core.JQueryBehavior;
 import org.wicketstuff.jquery.core.renderer.ITextRenderer;
 import org.wicketstuff.jquery.core.renderer.TextRenderer;
 import org.wicketstuff.jquery.core.template.IJQueryTemplate;
+import org.wicketstuff.jquery.core.template.JQueryAbstractTemplateBehavior;
 import org.wicketstuff.jquery.core.utils.RequestCycleUtils;
 import org.wicketstuff.jquery.ui.template.JQueryTemplateBehavior;
 
@@ -52,7 +53,7 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	private final IConverter<T> converter;
 
 	private final IJQueryTemplate template;
-	private JQueryTemplateBehavior templateBehavior = null;
+	private JQueryAbstractTemplateBehavior templateBehavior = null;
 
 	/**
 	 * Cache of current choices, needed to retrieve the user selected object
@@ -246,9 +247,20 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 
 		if (this.template != null)
 		{
-			this.templateBehavior = new JQueryTemplateBehavior(this.template);
+			this.templateBehavior = createTemplateBehavior(this.template);
 			this.add(this.templateBehavior);
 		}
+	}
+
+	/**
+	 * Factory method for {@link JQueryAbstractTemplateBehavior}
+	 *
+	 * @param template {@link IJQueryTemplate}
+	 * @return
+	 */
+	protected JQueryAbstractTemplateBehavior createTemplateBehavior(IJQueryTemplate template)
+	{
+		return new JQueryTemplateBehavior(this.template);
 	}
 
 	@Override
@@ -311,13 +323,15 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 			{
 				if (templateBehavior != null)
 				{
-					// warning, the template text should be of the form <a>...</a> in order to work
-					String render = "jQuery('%s').data('ui-autocomplete')._renderItem = function( ul, item ) { " // lf
-							+ "var content = jQuery.tmpl(jQuery('#%s').html(), item);" // lf
-							+ "return jQuery('<li/>').data('ui-autocomplete-item', item).append(content).appendTo(ul);" // lf
-							+ "}";
-					
-					return super.$() + String.format(render, this.selector, templateBehavior.getToken());
+					if (templateBehavior.getTemplateRenderingCode() != null) {
+						// warning, the template text should be of the form <a>...</a> in order to work
+						String render = "jQuery('%s').data('ui-autocomplete')._renderItem = function( ul, item ) { " // lf
+								+ "var content = " + templateBehavior.getTemplateRenderingCode() // lf
+								+ "return jQuery('<li/>').data('ui-autocomplete-item', item).append(content).appendTo(ul);" // lf
+								+ "}";
+
+						return super.$() + String.format(render, this.selector, templateBehavior.getToken());
+					}
 				}
 
 				return super.$();

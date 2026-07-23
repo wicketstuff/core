@@ -21,7 +21,7 @@ limitations under the License.
     <parent>
         <groupId>org.wicketstuff</groupId>
         <artifactId>gmap3-parent</artifactId>
-        <version>10.8.0-SNAPSHOT</version>
+        <version>10.10.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>wicketstuff-gmap3</artifactId>
@@ -65,7 +65,7 @@ limitations under the License.
 
         <!-- JSON Parsing -->
         <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
+            <groupId>tools.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
         </dependency>
 

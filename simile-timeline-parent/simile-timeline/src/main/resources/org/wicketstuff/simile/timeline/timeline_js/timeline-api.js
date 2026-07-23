@@ -8,14 +8,14 @@
  *  To run from the MIT copy of Timeline:
  *  Include this file in your HTML file as follows:
  *
- *    <script src="http://static.simile.mit.edu/timeline/api-2.0/timeline-api.js" 
+ *    <script src="http://static.simile.mit.edu/timeline/api-2.0/timeline-api.js"
  *     type="text/javascript"></script>
  *
  *
  * To host the Timeline files on your own server:
  *   1) Install the Timeline and Simile-Ajax files onto your webserver using
  *      timeline_libraries.zip or timeline_source.zip
- * 
+ *
  *   2) Set global js variables used to send parameters to this script:
  *        Timeline_ajax_url -- url for simile-ajax-api.js
  *        Timeline_urlPrefix -- url for the *directory* that contains timeline-api.js
@@ -23,55 +23,55 @@
  *        Timeline_parameters='bundle=true'; // you must set bundle to true if you are using
  *                                           // timeline_libraries.zip since only the
  *                                           // bundled libraries are included
- *      
+ *
  * eg your html page would include
  *
  *   <script>
  *     Timeline_ajax_url="http://YOUR_SERVER/javascripts/timeline/timeline_ajax/simile-ajax-api.js";
- *     Timeline_urlPrefix='http://YOUR_SERVER/javascripts/timeline/timeline_js/';       
+ *     Timeline_urlPrefix='http://YOUR_SERVER/javascripts/timeline/timeline_js/';
  *     Timeline_parameters='bundle=true';
  *   </script>
- *   <script src="http://YOUR_SERVER/javascripts/timeline/timeline_js/timeline-api.js"    
+ *   <script src="http://YOUR_SERVER/javascripts/timeline/timeline_js/timeline-api.js"
  *     type="text/javascript">
  *   </script>
  *
  * SCRIPT PARAMETERS
- * This script auto-magically figures out locale and has defaults for other parameters 
+ * This script auto-magically figures out locale and has defaults for other parameters
  * To set parameters explicity, set js global variable Timeline_parameters or include as
  * parameters on the url using GET style. Eg the two next lines pass the same parameters:
  *     Timeline_parameters='bundle=true';                    // pass parameter via js variable
  *     <script src="http://....timeline-api.js?bundle=true"  // pass parameter via url
- * 
- * Parameters 
- *   timeline-use-local-resources -- 
+ *
+ * Parameters
+ *   timeline-use-local-resources --
  *   bundle -- true: use the single js bundle file; false: load individual files (for debugging)
- *   locales -- 
+ *   locales --
  *   defaultLocale --
  *   forceLocale -- force locale to be a particular value--used for debugging. Normally locale is determined
  *                  by browser's and server's locale settings.
- *================================================== 
+ *==================================================
+ */
+/**
+ * monkey-patched by solomax
  */
 
 (function() {
     var useLocalResources = false;
-    if (document.location.search.length > 0) {
-        var params = document.location.search.substr(1).split("&");
-//        alert("params: " + params)
-        for (var i = 0; i < params.length; i++) {
-            if (params[i] == "timeline-use-local-resources") {
-                useLocalResources = true;
-            }
-        }
-    };
-    
+    try {
+        const localRes = new URLSearchParams(URL.parse(document.currentScript.src).search).get('timeline-use-local-resources');
+        useLocalResources = localRes === 'true';
+    } catch (_) {
+        // no-op
+    }
+
     var loadMe = function() {
         if ("Timeline" in window) {
             return;
         }
-        
+
         window.Timeline = new Object();
         window.Timeline.DateTime = window.SimileAjax.DateTime; // for backward compatibility
-    
+
         var bundle = false;
         var javascriptFiles = [
             "timeline.js",
@@ -91,14 +91,14 @@
             "ethers.css",
             "events.css"
         ];
-        
+
         var localizedJavascriptFiles = [
             "timeline.js",
             "labellers.js"
         ];
         var localizedCssFiles = [
         ];
-        
+
         // ISO-639 language codes, ISO-3166 country codes (2 characters)
         var supportedLocales = [
             "cs",       // Czech
@@ -114,12 +114,12 @@
             "vi",       // Vietnamese
             "zh"        // Chinese
         ];
-        
+
         try {
             var desiredLocales = [ "en" ],
                 defaultServerLocale = "en",
                 forceLocale = null;
-            
+
             var parseURLParameters = function(parameters) {
                 var params = parameters.split("&");
                 for (var p = 0; p < params.length; p++) {
@@ -130,13 +130,13 @@
                         defaultServerLocale = pair[1];
                     } else if (pair[0] == "forceLocale") {
                         forceLocale = pair[1];
-                        desiredLocales = desiredLocales.concat(pair[1].split(","));                        
+                        desiredLocales = desiredLocales.concat(pair[1].split(","));
                     } else if (pair[0] == "bundle") {
                         bundle = pair[1] != "false";
                     }
                 }
             };
-            
+
             (function() {
                 if (typeof Timeline_urlPrefix == "string") {
                     Timeline.urlPrefix = Timeline_urlPrefix;
@@ -149,7 +149,7 @@
                         var scripts = heads[h].getElementsByTagName("script");
                         for (var s = 0; s < scripts.length; s++) {
                             var url = scripts[s].src;
-                            var i = url.indexOf("timeline-api.js");
+                            var i = url.indexOf("timeline-api");
                             if (i >= 0) {
                                 Timeline.urlPrefix = url.substr(0, i);
                                 var q = url.indexOf("?");
@@ -163,14 +163,14 @@
                     throw new Error("Failed to derive URL prefix for Timeline API code files");
                 }
             })();
-            
+
             var includeJavascriptFiles = function(urlPrefix, filenames) {
                 SimileAjax.includeJavascriptFiles(document, urlPrefix, filenames);
             }
             var includeCssFiles = function(urlPrefix, filenames) {
                 SimileAjax.includeCssFiles(document, urlPrefix, filenames);
             }
-            
+
             /*
              *  Include non-localized files
              */
@@ -181,13 +181,13 @@
                 includeJavascriptFiles(Timeline.urlPrefix + "scripts/", javascriptFiles);
                 includeCssFiles(Timeline.urlPrefix + "styles/", cssFiles);
             }
-            
+
             /*
              *  Include localized files
              */
             var loadLocale = [];
             loadLocale[defaultServerLocale] = true;
-            
+
             var tryExactLocale = function(locale) {
                 for (var l = 0; l < supportedLocales.length; l++) {
                     if (locale == supportedLocales[l]) {
@@ -201,19 +201,19 @@
                 if (tryExactLocale(locale)) {
                     return locale;
                 }
-                
+
                 var dash = locale.indexOf("-");
                 if (dash > 0 && tryExactLocale(locale.substr(0, dash))) {
                     return locale.substr(0, dash);
                 }
-                
+
                 return null;
             }
-            
+
             for (var l = 0; l < desiredLocales.length; l++) {
                 tryLocale(desiredLocales[l]);
             }
-            
+
             var defaultClientLocale = defaultServerLocale;
             var defaultClientLocales = ("language" in navigator ? navigator.language : navigator.browserLanguage).split(";");
             for (var l = 0; l < defaultClientLocales.length; l++) {
@@ -223,7 +223,7 @@
                     break;
                 }
             }
-            
+
             for (var l = 0; l < supportedLocales.length; l++) {
                 var locale = supportedLocales[l];
                 if (loadLocale[locale]) {
@@ -231,19 +231,19 @@
                     includeCssFiles(Timeline.urlPrefix + "styles/l10n/" + locale + "/", localizedCssFiles);
                 }
             }
-            
+
             if (forceLocale == null) {
               Timeline.serverLocale = defaultServerLocale;
               Timeline.clientLocale = defaultClientLocale;
             } else {
               Timeline.serverLocale = forceLocale;
               Timeline.clientLocale = forceLocale;
-            }            	
+            }
         } catch (e) {
             alert(e);
         }
     };
-    
+
     /*
      *  Load SimileAjax if it's not already loaded
      */

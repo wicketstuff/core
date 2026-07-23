@@ -1,5 +1,8 @@
 package org.wicketstuff.select2;
 
+import de.agilecoders.wicket.webjars.request.resource.WebjarsJavaScriptResourceReference;
+
+import static org.apache.wicket.util.string.Strings.isEmpty;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 
 /**
@@ -8,16 +11,16 @@ import org.apache.wicket.request.resource.JavaScriptResourceReference;
  *
  * @author Tom Götz (tom@decoded.de)
  */
-class Select2LanguageResourceReference extends JavaScriptResourceReference {
+class Select2LanguageResourceReference extends WebjarsJavaScriptResourceReference {
 	private static final long serialVersionUID = 1L;
-	private static final String resourceName = "res/js/i18n/%s.js";
+	private static final String resourceName = "select2/current/dist/js/i18n/%s.js";
     private static final String defaultLanguage = "en";
 
     /**
      * @param language i18n file to load (e.g. "en", "de", "fr" ...)
      */
     Select2LanguageResourceReference(String language) {
-        super(Select2LanguageResourceReference.class, getResourceName(language));
+        super(getResourceName(language));
     }
 
     /**
@@ -28,14 +31,10 @@ class Select2LanguageResourceReference extends JavaScriptResourceReference {
      * @return resource name
      */
     private static String getResourceName(String language) {
-        try {
-            String name = String.format(resourceName, language);
-            if (Select2LanguageResourceReference.class.getResource(name) != null) {
-                return name;
-            }
-        } catch (Exception ignore) {
-            // noop
+        if (isEmpty(language)) {
+            return String.format(resourceName, defaultLanguage);
         }
-        return String.format(resourceName, defaultLanguage);
+
+        return String.format(resourceName, language);
     }
 }

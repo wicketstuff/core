@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicketstuff-core</artifactId>
-		<version>10.8.0-SNAPSHOT</version>
+		<version>10.10.0-SNAPSHOT</version>
 		<relativePath>..</relativePath>
 	</parent>
 
@@ -21,7 +21,7 @@
 	</description>
 
 	<properties>
-		<openlayers.version>10.6.0</openlayers.version>
+		<openlayers.version>10.7.0</openlayers.version>
 	</properties>
 	<modules>
 		<module>openlayers3</module>
