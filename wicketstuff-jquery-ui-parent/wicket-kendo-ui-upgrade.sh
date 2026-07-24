@@ -41,8 +41,8 @@ set -euo pipefail
 #                         gh api repos/telerik/kendo-ui-core/releases/tags/$KENDO_VERSION --jq .body
 #                       Keep the four theme packages on the SAME version.
 # ---------------------------------------------------------------------------
-KENDO_VERSION="2025.3.1002"
-KENDO_THEME_VERSION="12.0.1"   # per the "Supported themes" list in the 2025.3.1002 release notes
+KENDO_VERSION="2026.2.520"
+KENDO_THEME_VERSION="14.1.0"   # per the "Supported themes" list in the 2026.2.520 release notes
 
 # KENDO_DRAWING_VERSION : @progress/kendo-drawing is imported by src/kendo.color.js
 #   but is NOT declared in kendo-ui-core's package.json, so a stock build cannot
@@ -50,11 +50,12 @@ KENDO_THEME_VERSION="12.0.1"   # per the "Supported themes" list in the 2025.3.1
 #   at load unless a separate kendo-drawing is present). We install it explicitly
 #   below so the build INLINES it, producing a self-contained core (matching the
 #   historically bundled file). Upstream pins no version; pick the latest 1.x
-#   released at/just before KENDO_VERSION's date (the color API is stable across 1.x).
-KENDO_DRAWING_VERSION="1.22.1"
+#   released at/just before KENDO_VERSION's date (the color API is stable across
+#   1.x). 1.25.2 (2026-05-19) is the latest at the 2026.2.520 (2026-05-20) release.
+KENDO_DRAWING_VERSION="1.25.2"
 
 # Themes that are actual Maven modules (see wicketstuff-kendo-ui-themes/pom.xml).
-THEMES=(bootstrap default material)
+THEMES=(bootstrap default material meridian)
 
 # ---------------------------------------------------------------------------
 # Layout
@@ -109,48 +110,34 @@ cat <<'EOF'
 EOF
 }
 
-# Number of lines the license header occupies (computed, so it stays correct if
-# the header text is ever edited).
-HEADER_LINES="$(license_header | wc -l | tr -d ' ')"
-
-# Copy $1 -> $2 with the license header prepended.
+# Copy $1 -> $2 with the license header prepended. Used for the theme CSS, whose
+# upstream packages ship without a banner. (The core/culture/message JS come
+# from the kendo-ui-core build, which already applies its own banner + aligned
+# source maps, so those are copied verbatim and do not use this.)
 copy_with_header() { { license_header; cat "$1"; } > "$2"; }
-
-# Copy a source map $1 -> $2, shifting its mappings down by HEADER_LINES so it
-# still lines up with the .js AFTER we prepend the license header. A source-map
-# "mappings" string encodes one line per ';'-separated segment, so prepending
-# HEADER_LINES semicolons offsets every mapping by that many lines. The build
-# emits maps against the header-less JS; without this shift every mapped
-# position would be wrong by the header height.
-copy_map_with_shift() {
-  local src="$1" dst="$2"
-  KENDO_MAP_SHIFT="$(printf ';%.0s' $(seq 1 "$HEADER_LINES"))" \
-  node -e '
-    const fs = require("fs");
-    const m = JSON.parse(fs.readFileSync(process.argv[1], "utf8"));
-    m.mappings = process.env.KENDO_MAP_SHIFT + (m.mappings || "");
-    fs.writeFileSync(process.argv[2], JSON.stringify(m));
-  ' "$src" "$dst"
-}
 
 ##############################################################################
 # A) Fetch + build kendo-ui-core (JS + cultures + messages)
 #
-# We deliberately do NOT run `npm run build` (which is `npm ci && gulp build`):
-# its inner `npm ci` wipes node_modules and reinstalls strictly from the
-# lockfile, which does not include @progress/kendo-drawing. Instead we:
-#   1. npm ci
-#   2. npm install @progress/kendo-drawing (so rollup can resolve + INLINE it)
-#   3. run rollup directly, then the gulp minify tasks
-# This yields a SELF-CONTAINED core (drawing inlined) that loads without a
-# separate kendo-drawing script. Running the stock `npm run build` instead
-# would externalise drawing and the core would throw at load.
+# Build notes for the 2026.x line (Rolldown-based build):
+#   - The build tool is Rolldown (`rolldown.config.mjs`), driven by the
+#     `scripts:min` npm script; there is no more `rollup.config.js`.
+#   - `kendo.ui.core.js` carries a `'bundle all';` marker; rolldown configures
+#     `external: []` for such files, so it INLINES all imports — including
+#     @progress/kendo-drawing — giving a self-contained core.
+#   - kendo-drawing is imported by src/kendo.color.js but is NOT a declared
+#     dependency, so we still `npm install` it (otherwise it cannot be resolved
+#     and thus cannot be inlined).
+#   - The build applies the Apache license banner itself and emits source maps
+#     already aligned to that banner, so section "copy" below uses plain cp (no
+#     header prepend / map shift — that would double the header).
+#   - We run `scripts:min` (NOT `build`, whose inner `npm ci` would wipe the
+#     kendo-drawing we just installed).
 ##############################################################################
 echo ">> [A] kendo-ui-core $KENDO_VERSION"
 
 # Cache only the downloaded zip; always extract a FRESH source tree so a stale
-# dist/ or node_modules from a previous run can never be silently reused (that
-# would defeat the drawing-inlining step below).
+# dist/ or node_modules from a previous run can never be silently reused.
 core_zip="$work/kendo-ui-core-$KENDO_VERSION.zip"
 if [ ! -f "$core_zip" ]; then
   echo "   downloading source tag ..."
@@ -165,13 +152,11 @@ echo "   installing dependencies (npm ci) ..."
 ( cd "$core_src" && npm ci )
 echo "   adding @progress/kendo-drawing@$KENDO_DRAWING_VERSION so it gets inlined ..."
 ( cd "$core_src" && npm install --no-audit --no-fund "@progress/kendo-drawing@$KENDO_DRAWING_VERSION" )
-echo "   compiling (rollup) — this can take a while ..."
-# rollup -c => dist/raw-js ; then gulp 'scripts' minifies raw-js => dist/js.
-# NB: invoke gulp's 'scripts' task, NOT 'build'/'ci' (those re-run npm ci and
-# would wipe the kendo-drawing we just installed).
-( cd "$core_src" \
-    && node --max-old-space-size=8192 ./node_modules/rollup/dist/bin/rollup -c \
-    && npx gulp scripts )
+echo "   compiling (rolldown) — this can take a while ..."
+# scripts:min => `scripts:clean && rolldown -c rolldown.config.mjs -- --minify`,
+# writing minified UMD + maps to dist/js (and ESM to dist/mjs). NOT `build`,
+# which re-runs npm ci and would wipe the kendo-drawing we just installed.
+( cd "$core_src" && npm run scripts:min )
 
 # sanity: the build must have produced what we copy ...
 for p in js/kendo.ui.core.min.js js/cultures js/messages; do
@@ -180,7 +165,7 @@ done
 # ... and the core must be self-contained (drawing inlined, not externalised).
 if grep -q 'require("@progress/kendo-drawing")' "$core_dist/js/kendo.ui.core.min.js"; then
   echo "ERROR: built core still externalises @progress/kendo-drawing — it was not inlined." >&2
-  echo "       Check that 'npm install @progress/kendo-drawing' succeeded before the rollup step." >&2
+  echo "       Check that 'npm install @progress/kendo-drawing' succeeded before the rolldown build." >&2
   exit 1
 fi
 
@@ -201,53 +186,45 @@ themes_dist() { echo "$themes_dl/$1/package/dist"; }
 
 ##############################################################################
 # Copy CORE js + cultures + messages
+#
+# The kendo-ui-core (rolldown) build already applies the Apache license banner
+# and emits source maps aligned to it, so these are copied verbatim.
 ##############################################################################
 echo ">> copying core assets"
 
-# js (+ license header) and its source map
-#
-# NB: the vanilla `dist/js/kendo.ui.core.min.js` produced above is a UMD bundle
-# that treats jquery and @progress/kendo-drawing as EXTERNAL requires. The
-# bundle historically committed here is a different, larger variant (drawing
-# neither required externally nor inlined). If byte-parity with the previous
-# bundle matters, verify the produced kendo.ui.core.min.js loads correctly in
-# the samples; the exact upstream bundle recipe is not reproduced by the
-# default build target.
-copy_with_header  "$core_dist/js/kendo.ui.core.min.js"     "$repo_js/kendo.ui.core.min.js"
-copy_map_with_shift "$core_dist/js/kendo.ui.core.min.js.map" "$repo_js/kendo.ui.core.min.js.map"
+# core js + source map
+cp "$core_dist"/js/kendo.ui.core.min.js*    "$repo_js/"
 
-# cultures — prepend the license header to the JS and shift each map to match.
-for f in "$core_dist"/js/cultures/*.min.js; do
-  base="$(basename "$f")"
-  copy_with_header    "$f"       "$repo_cultures/$base"
-  copy_map_with_shift "$f.map"   "$repo_cultures/$base.map"
-done
+# cultures (js + maps)
+cp "$core_dist"/js/cultures/*.min.js*       "$repo_cultures/"
 echo '   check if there are new cultures, and create enums if needed'
 
-# messages — same: header on the JS, shifted map alongside.
-for f in "$core_dist"/js/messages/*.min.js; do
-  base="$(basename "$f")"
-  copy_with_header    "$f"       "$repo_messages/$base"
-  copy_map_with_shift "$f.map"   "$repo_messages/$base.map"
-done
+# messages (js + maps)
+cp "$core_dist"/js/messages/*.min.js*       "$repo_messages/"
 echo '   check if there are new messages, and create enums if needed'
 
 ##############################################################################
-# Copy THEME CSS  (license header prepended — see copy_with_header above)
-#   bootstrap/default/material -> <theme>-main.css + <theme>-main-dark.css
-#   utils                      -> all.css  renamed to  kendo-theme-utils.css
+# Copy THEME CSS
+#   bootstrap/default/material/meridian -> <theme>-main.css + <theme>-main-dark.css
+#   utils                               -> all.css renamed to kendo-theme-utils.css
+#
+# Unlike the core build, the @progress/kendo-theme-* dist CSS ships WITHOUT a
+# license banner, so we prepend it here via copy_with_header. (CSS has no source
+# maps, so no map shifting is involved.)
 ##############################################################################
 echo ">> copying theme CSS"
 
 for theme in "${THEMES[@]}"; do
   dest="$repo_themes_root/wicketstuff-kendo-ui-theme-$theme/$repo_theme_res"
   src="$(themes_dist "$theme")"
+  mkdir -p "$dest"   # create it for a newly-added theme module
   copy_with_header "$src/$theme-main.css"       "$dest/$theme-main.css"
   copy_with_header "$src/$theme-main-dark.css"  "$dest/$theme-main-dark.css"
 done
 
 # theme-utils: upstream ships this as dist/all.css; the module keeps it as
 # kendo-theme-utils.css.
+mkdir -p "$repo_themes_root/wicketstuff-kendo-ui-theme-utils/$repo_theme_res/utils"
 copy_with_header "$(themes_dist utils)/all.css" \
    "$repo_themes_root/wicketstuff-kendo-ui-theme-utils/$repo_theme_res/utils/kendo-theme-utils.css"
 

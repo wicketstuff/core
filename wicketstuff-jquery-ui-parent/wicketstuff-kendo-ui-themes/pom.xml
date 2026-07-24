@@ -18,5 +18,6 @@
 		<module>wicketstuff-kendo-ui-theme-bootstrap</module>
 		<module>wicketstuff-kendo-ui-theme-default</module>
 		<module>wicketstuff-kendo-ui-theme-material</module>
+		<module>wicketstuff-kendo-ui-theme-meridian</module>
 	</modules>
 </project>

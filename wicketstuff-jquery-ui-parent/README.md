@@ -1,15 +1,20 @@
 # wicket-jquery-ui
-**jQuery UI & Kendo UI integration in Wicket 7.x, Wicket 8.x &amp; Wicket9.x**
-[![TravisCI](https://travis-ci.org/sebfz1/wicket-jquery-ui.svg?branch=wicket9.x)](https://travis-ci.org/sebfz1/wicket-jquery-ui)
+**jQuery UI &amp; Kendo UI integration in Wicket 10.x**
+
+Part of [WicketStuff](https://github.com/wicketstuff/core); the sources live in
+the [`wicketstuff-jquery-ui-parent`](https://github.com/wicketstuff/core/tree/master/wicketstuff-jquery-ui-parent)
+module.
+
+[![Build](https://github.com/wicketstuff/core/actions/workflows/ci.yml/badge.svg)](https://github.com/wicketstuff/core/actions/workflows/ci.yml)
 
 ## Getting started
 In order to get started using this API, you may download appropriate jar(s) or set a maven dependency.
 
 ### Download jar(s)
 If you are not using maven, you need to download the core jar here:
-<http://central.maven.org/maven2/com/googlecode/wicket-jquery-ui/>
+<https://repo1.maven.org/maven2/org/wicketstuff/wicketstuff-jquery-ui/>
 
-You may also download other jars as required (ie: `wicket-kendo-ui`).
+You may also download other jars as required (ie: `wicketstuff-kendo-ui`).
 Once done, just include the jar(s) in your project's build path.
 
 ### Using Maven
@@ -113,6 +118,24 @@ To use wicket-kendo-ui with a standard theme, just add the corresponding theme d
 Please follow the instruction on [How to change resource references](https://github.com/sebfz1/wicket-jquery-ui/wiki/%5Bhowto%5D-change-resource-references)
 
 ## You are now ready to use wicket-jquery-ui!
-Look at the samples provided in the demo site to get started with the code...
-<http://www.7thweb.net/wicket-jquery-ui>
+Look at the samples in the `wicketstuff-jquery-ui-samples` module to get started
+with the code. To run them locally:
+
+1. Build the modules (from the repository root):
+   ```
+   mvn install -DskipTests -pl wicketstuff-jquery-ui-parent/wicketstuff-jquery-ui-samples -am
+   ```
+2. Run the `org.wicketstuff.jquery.ui.samples.Start` class (in the
+   `wicketstuff-jquery-ui-samples` module, under `src/test/java`). It starts an
+   embedded Jetty server. Run it from your IDE, or from the command line:
+   ```
+   cd wicketstuff-jquery-ui-parent/wicketstuff-jquery-ui-samples
+   mvn test-compile
+   java -cp "target/classes:target/test-classes:$(mvn -q dependency:build-classpath -Dmdep.outputFile=/dev/stdout -DincludeScope=test)" org.wicketstuff.jquery.ui.samples.Start
+   ```
+   The working directory must be the `wicketstuff-jquery-ui-samples` module, as
+   `Start` loads the web application from the relative path `src/main/webapp`.
+3. Open <http://localhost:8080/wicket-jquery-ui> — the application is mounted on
+   the `/wicket-jquery-ui` context path, **not** the root (opening `/` returns a
+   404).
 
