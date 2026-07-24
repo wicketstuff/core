@@ -87,6 +87,8 @@ public class SampleApplication extends WebApplication
 		settings.setJavaScriptReference(KendoUIJavaScriptResourceReference.get());
 		settings.setIconFontStyleSheetReference(KendoUIIconFontCssResourceReference.get());
 
+		settings.setThemeStyleSheetReference(null);
+
 
 		// SiteMap //
 		this.mountPage("/sitemap.xml", SiteMapPage.class);
