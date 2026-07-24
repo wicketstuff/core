@@ -454,12 +454,7 @@ nav.home ul li a.site:focus {
     left: 0;
     position: absolute;
 }
-.more .right {
-    right: 0;
-    position: absolute;
-}
-.infos,
-.donation {
+.infos {
     display: block;
     position: relative;
     background: #E15A2D;
@@ -467,8 +462,7 @@ nav.home ul li a.site:focus {
     line-height: 2em;
     padding: 11px 15px;
 }
-.infos p,
-.donation p {
+.infos p {
     margin: 0;
 }
 .infos {
@@ -479,32 +473,12 @@ nav.home ul li a.site:focus {
     -webkit-transition: all 0.3s ease;
     transition: all 0.3s ease;
 }
-.donation {
-    top: 0;
-    right: -100%;
-    position: relative;
-    -webkit-transition: all 0.3s ease;
-    transition: all 0.3s ease;
-}
-button.site.donate {
-    padding: 0 0.4em;
-    border: 1px solid #fff;
-    background-color: #e15a2d;
-    display: block;
-}
 .infos:hover {
     left: 0%;
-}
-.donation:hover {
-    right: 0%;
 }
 .infos:hover,
 .infos:hover p:after {
     box-shadow: 3px 3px 3px 0 rgba(0, 0, 0, 0.3);
-}
-.donation:hover,
-.donation:hover p:before {
-    box-shadow: -3px 3px 3px 0 rgba(0, 0, 0, 0.3);
 }
 .more a.site,
 .more a.site:visited {
@@ -523,8 +497,7 @@ button.site.donate {
 .more button.site:active {
     box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.1), 2px 2px 0px 0 rgba(0, 0, 0, 0.2);
 }
-.infos p:after,
-.donation p:before {
+.infos p:after {
     background: #E15A2D;
     color: #fff;
     text-align: center;
@@ -535,11 +508,6 @@ button.site.donate {
 .infos p:after {
     top: 0;
     right: -66px;
-    position: absolute;
-}
-.donation p:before {
-    top: 0;
-    left: -66px;
     position: absolute;
 }
 #wicketDebugBar {
@@ -725,16 +693,13 @@ html.kendo {
     color: #E15A2D;
 }
 .kendo .infos p:after,
-.kendo .donation p:before,
 .kendo .more a.site,
 .kendo .more a.site:visited,
-.kendo .infos,
-.kendo .donation {
+.kendo .infos {
     color: #313131;
 }
 .kendo .more a.site,
-.kendo .more a.site:visited,
-.kendo button.site.donate {
+.kendo .more a.site:visited {
     border-color: #313131;
 }
 .kendo .contentZone a.site,
