@@ -117,6 +117,25 @@ To use wicket-kendo-ui with a standard theme, just add the corresponding theme d
 ### Using a custom theme
 Please follow the instruction on [How to change resource references](https://github.com/sebfz1/wicket-jquery-ui/wiki/%5Bhowto%5D-change-resource-references)
 
+## Widgets requiring the commercial (pro) Kendo UI distribution
+
+The bundled `kendo.ui.core.min.js` is built from Telerik's open-source
+[kendo-ui-core](https://github.com/telerik/kendo-ui-core) (Apache License 2.0).
+A few widgets have been removed from that open-source core over time and are now
+only shipped in the commercial *Kendo UI for jQuery* distribution. This module
+still provides Java wrappers for them, but they only work if you replace the
+bundled core resource reference with a commercial `kendo.all.min.js` on your
+classpath (see [How to change resource references](https://github.com/sebfz1/wicket-jquery-ui/wiki/%5Bhowto%5D-change-resource-references)).
+
+Currently affected (removed from Kendo UI Core after the 2022.x line):
+
+- **TreeView** (`org.wicketstuff.kendo.ui.widget.treeview`)
+- **Editor** (`org.wicketstuff.kendo.ui.widget.editor`)
+
+These wrappers are validated only against the widgets' client-side API and are
+not exercised by the samples running on Kendo UI Core. If you use them with a
+commercial distribution and hit an API mismatch, please open an issue.
+
 ## You are now ready to use wicket-jquery-ui!
 Look at the samples in the `wicketstuff-jquery-ui-samples` module to get started
 with the code. To run them locally:

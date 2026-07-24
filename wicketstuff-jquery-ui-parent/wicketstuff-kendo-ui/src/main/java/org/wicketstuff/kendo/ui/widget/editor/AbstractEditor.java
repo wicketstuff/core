@@ -29,6 +29,11 @@ import org.wicketstuff.kendo.ui.KendoUIBehavior;
 /**
  * Provides the Kendo UI Editor base widget.<br>
  * It should be created on a HTML &lt;textarea /&gt; element
+ * <p>
+ * <b>Note:</b> the Editor widget is <b>not part of the Kendo UI Core</b> distribution bundled by this module (as of Kendo UI 2025.x, it is only
+ * available in the commercial Kendo UI for jQuery distribution). To use it, replace the bundled {@code kendo.ui.core.min.js} resource reference with a
+ * commercial {@code kendo.all.min.js} on your classpath. This wrapper is kept for users who do so; it is validated only against the widget's
+ * client-side API and is not exercised by the samples running on Kendo UI Core.
  *
  * @author Sebastien Briquet - sebfz1
  */

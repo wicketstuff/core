@@ -7,7 +7,9 @@ Kendo UI "Core" is <b>Apache License 2.0 licensed</b>, starting from version <b>
 Prior to version 2014.1.416, Kendo UI "Web" was licensed under <b>GPLv3</b>.<br/>
 <br/>
 A pro version - with a <b>commercial license</b> - is also available, it provides additional widgets (see <a href="http://docs.telerik.com/kendo-ui/intro/supporting/list-of-widgets">http://docs.telerik.com/kendo-ui/intro/supporting/list-of-widgets</a>)<br/>
-To be able to use it, you need to change the <code>ResourceReference</code> with <code>kendo.all.min.js</code>
+To be able to use it, you need to change the <code>ResourceReference</code> with <code>kendo.all.min.js</code><br/>
+<br/>
+<b>Note:</b> the <b>Editor</b> widget is no longer part of Kendo UI Core (removed after 2022.x). This demo therefore requires the pro <code>kendo.all.min.js</code>; running it against the bundled Core will show a plain textarea.
 
 <br/>
 <h4>See also</h4>

@@ -12,7 +12,7 @@ independent upstream projects:
   fonts/textures or the old `kendo.common*.min.css` / `.mobile.min.css` files.
 
 Only the themes that are actual Maven modules are bundled: `bootstrap`,
-`default`, `material`, and the shared `utils` stylesheet.
+`default`, `material`, `meridian`, and the shared `utils` stylesheet.
 
 The [`wicket-kendo-ui-upgrade.sh`](wicket-kendo-ui-upgrade.sh) script does the
 whole upgrade — download, build, and copy into the module resource trees. You
@@ -43,10 +43,12 @@ do **not** build anything by hand; you only set three version numbers and run it
    ./wicket-kendo-ui-upgrade.sh
    ```
 
-   It downloads and builds the core, fetches the theme packages, prepends the
-   Apache license header to every JS/CSS file, shifts the source maps to match,
-   and copies everything into the resource trees. Its work happens under
-   `target/` (removed by `mvn clean`).
+   It downloads and builds the core, fetches the theme packages, and copies
+   everything into the resource trees. The 2026.x kendo-ui-core build (Rolldown)
+   applies the Apache license banner itself and emits source maps aligned to it,
+   so the core/cultures/messages JS are copied verbatim; only the theme CSS
+   (which ships without a banner) gets the header prepended by the script. Its
+   work happens under `target/` (removed by `mvn clean`).
 
 3. **Post-upgrade checks** (the script also prints these):
    - New cultures/messages — create the corresponding enums if needed.
@@ -66,7 +68,27 @@ present, because the color utilities are dereferenced during core init.
 
 To avoid shipping a second dependency, the script instead builds a
 **self-contained** core: it `npm install`s `@progress/kendo-drawing` and then
-runs rollup directly (not `npm run build`, whose inner `npm ci` would wipe the
-just-installed package), so drawing gets **inlined**. The resulting
-`kendo.ui.core.min.js` loads with no external kendo-drawing, matching the
-historically bundled file.
+runs the build directly via `npm run scripts:min` (not `npm run build`, whose
+inner `npm ci` would wipe the just-installed package). Because
+`kendo.ui.core.js` carries a `'bundle all';` marker, Rolldown treats it as
+`external: []` and **inlines** all imports, including kendo-drawing. The
+resulting `kendo.ui.core.min.js` loads with no external kendo-drawing, matching
+the historically bundled file. The script also asserts the built core no longer
+contains `require("@progress/kendo-drawing")` and aborts if it does.
+
+## Widgets no longer in Kendo UI Core (pro-only)
+
+Some widgets that this module wraps have been **removed from the open-source
+kendo-ui-core** and are now only available in the commercial *Kendo UI for
+jQuery* distribution — currently **TreeView** and **Editor** (dropped after the
+2022.x line). A from-source build of kendo-ui-core therefore cannot include
+them, and their sample pages render an empty/unstyled element against the
+bundled core. The Java wrappers are kept so they work when a user swaps in a
+commercial `kendo.all.min.js`. When upgrading, don't treat these as a build
+regression — verify against the upstream `src/kendo.ui.core.js` import list
+whether a widget is still part of core:
+
+```bash
+grep -c 'kendo.treeview.js\|kendo.editor.js' \
+  target/kendo-upgrade/kendo-ui-core-$KENDO_VERSION/src/kendo.ui.core.js
+```
