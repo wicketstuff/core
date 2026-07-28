@@ -95,7 +95,7 @@ public class TemplateAutoCompletePage extends AbstractAutoCompletePage
 
 		// FeedbackPanel //
 		final FeedbackPanel feedback1 = new JQueryFeedbackPanel("feedback1");
-		form1.add(feedback.setOutputMarkupId(true));
+		form1.add(feedback1.setOutputMarkupId(true));
 
 		// Auto-complete //
 		form1.add(new AutoCompleteTextField<>("autocomplete1", model) {
@@ -136,8 +136,8 @@ public class TemplateAutoCompletePage extends AbstractAutoCompletePage
 					{
 						return	"<table style='width: 100%' cellspacing='0' cellpadding='0'>\n" +
 								" <tr>\n" +
-								"  <td><img src='{{coverUrl}}' width='50px' /></td>\n" +
-								"  <td>{{name}}</td>\n" +
+								"  <td><img src='{{:coverUrl}}' width='50px' /></td>\n" +
+								"  <td>{{:name}}</td>\n" +
 								" </tr>\n" +
 								"</table>";
 					}
