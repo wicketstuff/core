@@ -1,5 +1,6 @@
 <script type="text/javascript">
 function init${wicketComponentId}() {
+	shortcut.remove("${keys}");
 	shortcut.add("${keys}",function() {
 				
 				window.location=document.getElementById('${wicketComponentId}').href;

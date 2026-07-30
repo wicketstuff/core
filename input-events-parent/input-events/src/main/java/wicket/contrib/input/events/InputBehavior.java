@@ -192,9 +192,7 @@ public class InputBehavior extends Behavior {
 		variables.put("propagate", getPropagate().toString());
 		variables.put("target", getTarget());
 
-		textTemplate.interpolate(variables);
-		return textTemplate.asString();
-
+		return textTemplate.asString(variables);
 	}
 
 	/**
