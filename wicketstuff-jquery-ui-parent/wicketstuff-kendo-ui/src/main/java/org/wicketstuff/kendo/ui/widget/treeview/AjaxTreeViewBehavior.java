@@ -30,6 +30,9 @@ import org.wicketstuff.kendo.ui.KendoDataSource.HierarchicalDataSource;
 
 /**
  * Provides the Kendo UI TreeView behavior
+ * <p>
+ * <b>Note:</b> the TreeView widget is <b>not part of the Kendo UI Core</b> distribution bundled by this module; it requires a commercial
+ * {@code kendo.all.min.js} on the classpath. See {@link AjaxTreeView} for details.
  *
  * @author Sebastien Briquet - sebfz1
  *

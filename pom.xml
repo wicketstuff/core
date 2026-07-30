@@ -1184,6 +1184,9 @@
 						<notimestamp>true</notimestamp>
 						<quiet>true</quiet>
 						<doclint>none</doclint>
+						<!-- Plugin passes the javadoc no-fonts flag by default (since 3.11.3), but that
+						     flag only exists in JDK 24+ javadoc; disable it so the JDK 17 toolchain works. -->
+						<disableNoFonts>true</disableNoFonts>
 						<links>
 							<link>https://docs.oracle.com/en/java/javase/17/docs/api/</link>
 							<link>https://nightlies.apache.org/wicket/apidocs/11.x</link>

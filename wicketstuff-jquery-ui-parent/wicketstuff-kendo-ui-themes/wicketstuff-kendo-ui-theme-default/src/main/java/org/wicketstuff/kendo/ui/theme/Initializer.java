@@ -33,10 +33,8 @@ public class Initializer implements IInitializer
 	{
 		application.getMarkupSettings().setStripWicketTags(true);
 
-		KendoUILibrarySettings settings = KendoUILibrarySettings.get();
-		settings.setCommonStyleSheetReference(new CssResourceReference(Initializer.class, "kendo.common.min.css"));
-		settings.setThemeStyleSheetReference(new CssResourceReference(Initializer.class, "kendo.default.min.css"));
-		settings.setMobileStyleSheetReference(new CssResourceReference(Initializer.class, "kendo.default.mobile.min.css"));
+		var settings = KendoUILibrarySettings.get();
+		settings.setThemeStyleSheetReference(new CssResourceReference(Initializer.class, "default-main.css"));
 	}
 
 	@Override
@@ -48,6 +46,6 @@ public class Initializer implements IInitializer
 	@Override
 	public String toString()
 	{
-		return "Wicket Kendo UI initializer (theme-default)";
+		return "Wicket Kendo UI initializer (theme-default-main)";
 	}
 }

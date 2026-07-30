@@ -68,6 +68,7 @@ public class KendoUILibrarySettings
 	private ResourceReference stylesheetReferenceC = null;
 	private ResourceReference stylesheetReferenceT = null;
 	private ResourceReference stylesheetReferenceM = null;
+    private ResourceReference stylesheetReferenceF = null;
 
 	/**
 	 * Constructor
@@ -138,13 +139,32 @@ public class KendoUILibrarySettings
 	{
 		this.stylesheetReferenceT = reference;
 	}
+	
+    /**
+     * @return the Kendo UI icon font stylesheet resource reference
+     */
+    public ResourceReference getIconFontStyleSheetReference() {
+        return this.stylesheetReferenceF;
+    }
+	
+	
+    /**
+     * Sets the Kendo UI icon font stylesheet resource reference
+     *
+     * @param reference the {@link ResourceReference}
+     */
+	public void setIconFontStyleSheetReference(ResourceReference reference) {
+	    this.stylesheetReferenceF = reference;
+	}
 
 	/**
 	 * Gets the Kendo UI mobile stylesheet resource reference
 	 *
 	 * @return {@code null} by default, meaning the style is supplied through the HTML page (&lt;link rel="stylesheet" type="text/css" href="..." /&gt;)
 	 * @see #setMobileStyleSheetReference(ResourceReference)
+     * @deprecated Kendo UI no longer provides a separate mobile stylesheet
 	 */
+    @Deprecated(forRemoval = true)
 	public ResourceReference getMobileStyleSheetReference()
 	{
 		return this.stylesheetReferenceM;
@@ -154,7 +174,9 @@ public class KendoUILibrarySettings
 	 * Sets the Kendo UI mobile stylesheet resource reference
 	 *
 	 * @param reference the {@link ResourceReference}
+	 * @deprecated Kendo UI no longer provides a separate mobile stylesheet
 	 */
+    @Deprecated(forRemoval = true)
 	public void setMobileStyleSheetReference(ResourceReference reference)
 	{
 		this.stylesheetReferenceM = reference;

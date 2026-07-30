@@ -15,7 +15,12 @@ public class SampleSession extends WebSession implements IJQuerySecurityProvider
 {
 	private static final long serialVersionUID = 1L;
 
+	/** Default Kendo theme; matches a {@code <theme>-main.css} bundled by the samples app. */
+	public static final String DEFAULT_KENDO_THEME = "default";
+
 	private final List<String> roles;
+
+	private String kendoTheme = DEFAULT_KENDO_THEME;
 
 	public SampleSession(Request request)
 	{
@@ -27,6 +32,27 @@ public class SampleSession extends WebSession implements IJQuerySecurityProvider
 	public static SampleSession get()
 	{
 		return (SampleSession) Session.get();
+	}
+
+	/**
+	 * Gets the Kendo UI theme selected for this session (a {@code <theme>-main.css} basename, ie: {@code default}, {@code bootstrap}, {@code material},
+	 * {@code meridian}).
+	 *
+	 * @return the theme name
+	 */
+	public String getKendoTheme()
+	{
+		return this.kendoTheme;
+	}
+
+	/**
+	 * Sets the Kendo UI theme for this session
+	 *
+	 * @param kendoTheme the theme name
+	 */
+	public void setKendoTheme(String kendoTheme)
+	{
+		this.kendoTheme = kendoTheme;
 	}
 
 	public final void login()

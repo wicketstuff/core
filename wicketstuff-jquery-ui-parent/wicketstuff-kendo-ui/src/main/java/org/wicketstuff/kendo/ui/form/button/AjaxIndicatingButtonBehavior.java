@@ -23,7 +23,6 @@ import org.apache.wicket.markup.head.IHeaderResponse;
 import org.wicketstuff.jquery.core.JQueryBehavior;
 import org.wicketstuff.jquery.core.Options;
 import org.wicketstuff.jquery.core.utils.RequestCycleUtils;
-import org.wicketstuff.kendo.ui.KendoIcon;
 
 /**
  * Provides a Kendo UI button {@link JQueryBehavior} with an ajax indicator
@@ -35,7 +34,7 @@ public class AjaxIndicatingButtonBehavior extends ButtonBehavior
 {
 	private static final long serialVersionUID = 1L;
 
-	protected static final String CSS_INDICATOR = "indicator";
+	protected static final String CSS_INDICATOR = "wkui-indicator";
 
 	private IIndicatingButton button = null;
 
@@ -93,9 +92,9 @@ public class AjaxIndicatingButtonBehavior extends ButtonBehavior
 
 		// busy indicator stops //
 		builder.append("jQuery(document).ajaxStop(function() { ");
-		builder.append("jQuery('").append(selector).append(" .").append(KendoIcon.K_ICON).append("').remove(); "); // TODO: open issue (icon should be removed manually!)
 		builder.append("jQuery('").append(selector).append("').removeAttr('disabled'); "); // TODO: open issue ({enable: true} does not remove disabled attr!)
-		builder.append($(this.options));
+		builder.append($(this.options)); // reinitialize button with original options (without indicator)
+		builder.append("jQuery('").append(selector).append(" .").append(CSS_INDICATOR).append("').remove(); "); // remove indicator icon if it still exists after reinitialization
 		builder.append(" }); ");
 		
 		return builder.toString();
@@ -121,7 +120,7 @@ public class AjaxIndicatingButtonBehavior extends ButtonBehavior
 	 */
 	private static HeaderItem newIndicatorCssHeaderItem()
 	{
-		String css = String.format(".k-i-%s { background-image: url(%s); background-position: 0 0; }", CSS_INDICATOR, RequestCycleUtils.getAjaxIndicatorUrl());
+		String css = String.format(".%s { background-image: url(%s); background-position: 0 0; }", CSS_INDICATOR, RequestCycleUtils.getAjaxIndicatorUrl());
 
 		return CssHeaderItem.forCSS(css, "kendo-ui-icon-indicator");
 	}
@@ -134,7 +133,7 @@ public class AjaxIndicatingButtonBehavior extends ButtonBehavior
 	protected Options newOnClickOptions()
 	{
 		Options options = new Options();
-		options.set("icon", Options.asString(CSS_INDICATOR));
+		options.set("iconClass", Options.asString(CSS_INDICATOR));
 
 		if (this.button != null && this.button.isDisabledOnClick())
 		{

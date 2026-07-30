@@ -38,7 +38,7 @@ public class ButtonGroupBehavior extends KendoUIBehavior implements IJQueryAjaxA
 {
 	private static final long serialVersionUID = 1L;
 
-	public static final String METHOD = "kendoMobileButtonGroup";
+	public static final String METHOD = "kendoButtonGroup";
 
 	static final int NONE = -1;
 
