@@ -18,6 +18,34 @@ Our release process allows end users an easy way to track a project relative to 
 
 For example, if a user sees a org.wicketstuff:someproject artifact with a version of 1.4.16.1 they can know immediately that it is based on wicket 1.4.16 and that it is the first point release (the 1.4.16 version would have been the original release).
 
+Bill of Materials (BOM):
+----------------------
+
+WicketStuff publishes a BOM that manages the versions of all released WicketStuff artifacts. Import it
+into the `dependencyManagement` section of your project and you can then declare WicketStuff
+dependencies without specifying a version for each of them:
+
+```xml
+<dependencyManagement>
+  <dependencies>
+    <dependency>
+      <groupId>org.wicketstuff</groupId>
+      <artifactId>wicketstuff-bom</artifactId>
+      <version>10.10.0</version>
+      <type>pom</type>
+      <scope>import</scope>
+    </dependency>
+  </dependencies>
+</dependencyManagement>
+
+<dependencies>
+  <dependency>
+    <groupId>org.wicketstuff</groupId>
+    <artifactId>wicketstuff-select2</artifactId>
+  </dependency>
+</dependencies>
+```
+
 Project Documentation (Wiki):
 ----------------------
 
