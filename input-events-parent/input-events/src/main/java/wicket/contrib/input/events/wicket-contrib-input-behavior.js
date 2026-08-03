@@ -1,4 +1,5 @@
 function init${wicketComponentId}() {
+	shortcut.remove("${keys}");
 	shortcut.add("${keys}",function() {
 		
 		document.getElementById('${wicketComponentId}').${event}();
