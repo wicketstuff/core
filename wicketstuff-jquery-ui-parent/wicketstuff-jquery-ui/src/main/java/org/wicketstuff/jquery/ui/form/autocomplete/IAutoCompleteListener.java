@@ -44,16 +44,17 @@ public interface IAutoCompleteListener<T> extends IClusterable
 	 * Triggered when a selection has been made
 	 *
 	 * @param target the {@link AjaxRequestTarget}
-	 * @param choice the selected choice
+	 * @param choice the selected choice, or {@code null} if the identifier could not be resolved
+	 * @param identifier the identifier of the selected item (JSON {@code id}; list index by default, or a business id)
 	 */
-	void onSelect(AjaxRequestTarget target, T choice);
+	void onSelect(AjaxRequestTarget target, T choice, String identifier);
 
 	/**
 	 * Triggered when a selection has been made, using the identifier posted by the client.
 	 * <p>
 	 * The default implementation resolves the choice from {@code choiceList} via
 	 * {@link #getElementSelectionStrategy()} and {@link IElementSelectionStrategy#findChoice(List, String)},
-	 * then delegates to {@link #onSelect(AjaxRequestTarget, Object)}.
+	 * then delegates to {@link #onSelect(AjaxRequestTarget, Object, String)}.
 	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param choiceList the cached list of choices matching the last query
@@ -61,8 +62,7 @@ public interface IAutoCompleteListener<T> extends IClusterable
 	 */
 	default void onSelect(AjaxRequestTarget target, List<T> choiceList, String identifier)
 	{
-		
         T choice = getElementSelectionStrategy().findChoice(choiceList, identifier);
-        onSelect(target, choice);
+        onSelect(target, choice, identifier);
 	}
 }

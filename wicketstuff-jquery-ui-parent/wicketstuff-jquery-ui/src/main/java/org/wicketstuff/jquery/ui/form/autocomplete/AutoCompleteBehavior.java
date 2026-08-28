@@ -23,6 +23,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.lang.Args;
+import org.danekja.java.util.function.serializable.SerializableSupplier;
 import org.wicketstuff.jquery.core.JQueryEvent;
 import org.wicketstuff.jquery.core.Options;
 import org.wicketstuff.jquery.core.ajax.IJQueryAjaxAware;
@@ -45,7 +46,7 @@ public abstract class AutoCompleteBehavior<T> extends JQueryUIBehavior implement
 
     /** the model producing values */
 
-    private final IModel<List<T>> valuesModel;
+    private final SerializableSupplier<List<T>> supplier;
 
 	private JQueryAjaxBehavior onSelectAjaxBehavior = null;
 
@@ -55,9 +56,9 @@ public abstract class AutoCompleteBehavior<T> extends JQueryUIBehavior implement
 	 * @param selector the HTML selector (ie: "#myId")
 	 * @param listener the {@link IAutoCompleteListener}
 	 */
-	public AutoCompleteBehavior(String selector, IAutoCompleteListener<T> listener, IModel<List<T>> valuesModel)
+	public AutoCompleteBehavior(String selector, IAutoCompleteListener<T> listener, SerializableSupplier<List<T>> supplier)
 	{
-		this(selector, new Options(), listener, valuesModel);
+		this(selector, new Options(), listener, supplier);
 	}
 
 	/**
@@ -67,12 +68,12 @@ public abstract class AutoCompleteBehavior<T> extends JQueryUIBehavior implement
 	 * @param options the {@link Options}
 	 * @param listener the {@link IAutoCompleteListener}
 	 */
-	public AutoCompleteBehavior(String selector, Options options, IAutoCompleteListener<T> listener, IModel<List<T>> valuesModel)
+	public AutoCompleteBehavior(String selector, Options options, IAutoCompleteListener<T> listener, SerializableSupplier<List<T>> supplier)
 	{
 		super(selector, METHOD, options);
 
 		this.listener = Args.notNull(listener, "listener");
-        this.valuesModel = valuesModel;
+        this.supplier = supplier;
     }
 
 	// Methods //
@@ -118,7 +119,7 @@ public abstract class AutoCompleteBehavior<T> extends JQueryUIBehavior implement
 	{
 		if (event instanceof SelectEvent selectEvent)
 		{
-			this.listener.onSelect(target, listener.getElementSelectionStrategy().findChoice(valuesModel.getObject(), selectEvent.getIdentifier()));
+			this.listener.onSelect(target, listener.getElementSelectionStrategy().findChoice(supplier.get(), selectEvent.getIdentifier()), selectEvent.getIdentifier());
 		}
 	}
 
@@ -135,7 +136,7 @@ public abstract class AutoCompleteBehavior<T> extends JQueryUIBehavior implement
 		return new OnSelectAjaxBehavior(source);
 	}
 
-	// Ajax classes //
+	// Ajax classes //,
 
 	/**
 	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'select' event
@@ -187,5 +188,15 @@ public abstract class AutoCompleteBehavior<T> extends JQueryUIBehavior implement
 		{
 			return this.identifier;
 		}
+	}
+
+	/**
+	 * Gets the {@link JQueryAjaxBehavior} wired to the 'select' event
+	 *
+	 * @return the {@code OnSelectAjaxBehavior}, or {@code null} if the behavior has not been bound yet
+	 */
+	public final JQueryAjaxBehavior getOnSelectAjaxBehavior()
+	{
+		return this.onSelectAjaxBehavior;
 	}
 }
