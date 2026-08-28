@@ -313,7 +313,7 @@ public class ListUtils
 	/**
 	 * Converts a {@link StringValue} to a list of {@code String}
 	 * 
-	 * @param value the {@link StringValue}
+	 * @param values the {@link StringValue}
 	 * @return a list of {@code String}
 	 */
 	public static List<String> toStringList(StringValue values)

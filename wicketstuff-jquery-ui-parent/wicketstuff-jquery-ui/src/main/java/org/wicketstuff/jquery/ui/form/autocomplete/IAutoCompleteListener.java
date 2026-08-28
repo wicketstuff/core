@@ -16,8 +16,12 @@
  */
 package org.wicketstuff.jquery.ui.form.autocomplete;
 
+import java.util.List;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.util.io.IClusterable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Event listener shared by the {@link AutoCompleteTextField} widget and the {@link AutoCompleteBehavior}
@@ -25,13 +29,40 @@ import org.apache.wicket.util.io.IClusterable;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public interface IAutoCompleteListener extends IClusterable
+public interface IAutoCompleteListener<T> extends IClusterable
 {
+	Logger LOG = LoggerFactory.getLogger(IAutoCompleteListener.class);
+
+	/**
+	 * Gets the {@link IElementSelectionStrategy} used to identify a selected choice and to resolve it from the cached choice list.
+	 *
+	 * @return the {@link IElementSelectionStrategy}
+	 */
+	IElementSelectionStrategy<T> getElementSelectionStrategy();
+
 	/**
 	 * Triggered when a selection has been made
 	 *
 	 * @param target the {@link AjaxRequestTarget}
-	 * @param index the index of the selected item
+	 * @param choice the selected choice
 	 */
-	void onSelect(AjaxRequestTarget target, int index);
+	void onSelect(AjaxRequestTarget target, T choice);
+
+	/**
+	 * Triggered when a selection has been made, using the identifier posted by the client.
+	 * <p>
+	 * The default implementation resolves the choice from {@code choiceList} via
+	 * {@link #getElementSelectionStrategy()} and {@link IElementSelectionStrategy#findChoice(List, String)},
+	 * then delegates to {@link #onSelect(AjaxRequestTarget, Object)}.
+	 *
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param choiceList the cached list of choices matching the last query
+	 * @param identifier the identifier of the selected item (JSON {@code id}; list index by default, or a business id)
+	 */
+	default void onSelect(AjaxRequestTarget target, List<T> choiceList, String identifier)
+	{
+		
+        T choice = getElementSelectionStrategy().findChoice(choiceList, identifier);
+        onSelect(target, choice);
+	}
 }
