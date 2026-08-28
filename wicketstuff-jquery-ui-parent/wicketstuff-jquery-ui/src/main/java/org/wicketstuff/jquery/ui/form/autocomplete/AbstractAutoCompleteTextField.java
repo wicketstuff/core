@@ -16,6 +16,7 @@
  */
 package org.wicketstuff.jquery.ui.form.autocomplete;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -23,7 +24,6 @@ import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.convert.IConverter;
-import org.apache.wicket.util.lang.Args;
 import org.wicketstuff.jquery.core.IJQueryWidget;
 import org.wicketstuff.jquery.core.JQueryBehavior;
 import org.wicketstuff.jquery.core.renderer.ITextRenderer;
@@ -40,7 +40,7 @@ import org.wicketstuff.jquery.ui.template.JQueryTemplateBehavior;
  * @author Sebastien Briquet - sebfz1
  * @author reiern70
  */
-public abstract class AbstractAutoCompleteTextField<T> extends TextField<T> implements IJQueryWidget, IAutoCompleteListener // NOSONAR
+public abstract class AbstractAutoCompleteTextField<T> extends TextField<T> implements IJQueryWidget, IAutoCompleteListener<T> // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
 
@@ -51,6 +51,7 @@ public abstract class AbstractAutoCompleteTextField<T> extends TextField<T> impl
 
 	private final ITextRenderer<? super T> renderer;
 	private final IConverter<T> converter;
+	private final IElementSelectionStrategy<T> elementSelectionStrategy;
 
 	private final IJQueryTemplate template;
 	private JQueryAbstractTemplateBehavior templateBehavior = null;
@@ -108,6 +109,7 @@ public abstract class AbstractAutoCompleteTextField<T> extends TextField<T> impl
 		this.renderer = renderer;
 		this.template = this.newTemplate();
 		this.converter = this.newConverter();
+		this.elementSelectionStrategy = this.newElementSelectionStrategy();
 	}
 
 	/**
@@ -145,7 +147,8 @@ public abstract class AbstractAutoCompleteTextField<T> extends TextField<T> impl
 		this(id, model, renderer, null);
 	}
 
-	/**
+
+    /**
 	 * Constructor
 	 *
 	 * @param id the markup id
@@ -160,6 +163,7 @@ public abstract class AbstractAutoCompleteTextField<T> extends TextField<T> impl
 		this.renderer = renderer;
 		this.template = this.newTemplate();
 		this.converter = this.newConverter();
+		this.elementSelectionStrategy = this.newElementSelectionStrategy();
 	}
 
 	// Methods //
@@ -243,6 +247,16 @@ public abstract class AbstractAutoCompleteTextField<T> extends TextField<T> impl
 		return this.renderer;
 	}
 
+	/**
+	 * Gets the {@link IElementSelectionStrategy} used to identify and resolve selected choices.
+	 *
+	 * @return the selection strategy, never {@code null}
+	 */
+	public IElementSelectionStrategy<T> getElementSelectionStrategy()
+	{
+		return this.elementSelectionStrategy;
+	}
+
 	// Events //
 
 	@Override
@@ -292,17 +306,14 @@ public abstract class AbstractAutoCompleteTextField<T> extends TextField<T> impl
 		tag.put("autocomplete", "off"); // disable browser's autocomplete
 	}
 
-	@Override
-	public final void onSelect(AjaxRequestTarget target, int index)
-	{
-		if (-1 < index && index < this.choices.getObject().size())
-		{
-			T choice = this.choices.getObject().get(index);
-
-			this.setModelObject(choice);
-			this.onSelected(target);
-		}
-	}
+    @Override
+    public void onSelect(AjaxRequestTarget target, T choice) {
+        if (choice != null) {
+            LOG.error("Cannot select choice: " + choice);
+        }
+        this.setModelObject(choice);
+        this.onSelected(target);
+    }
 
 	/**
 	 * Triggered when the user selects an item from results that matched its input
@@ -318,7 +329,12 @@ public abstract class AbstractAutoCompleteTextField<T> extends TextField<T> impl
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new AutoCompleteBehavior(selector, this) { // NOSONAR
+		return new AutoCompleteBehavior<T>(selector, this, new IModel<List<T>>() {
+            @Override
+            public List<T> getObject() {
+                return choices != null ? choices.getObject() : Collections.emptyList();
+            }
+        }) { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 
@@ -395,6 +411,16 @@ public abstract class AbstractAutoCompleteTextField<T> extends TextField<T> impl
 	}
 
 	/**
+	 * Gets a new {@link IElementSelectionStrategy}. Index-based selection is used by default.
+	 *
+	 * @return the selection strategy
+	 */
+	protected IElementSelectionStrategy<T> newElementSelectionStrategy()
+	{
+		return IndexBasedElementSelectionStrategy.get();
+	}
+
+	/**
 	 * Gets a new {@link AutoCompleteChoiceModelBehavior}
 	 *
 	 * @return the {@link AutoCompleteChoiceModelBehavior}
@@ -405,6 +431,12 @@ public abstract class AbstractAutoCompleteTextField<T> extends TextField<T> impl
 
 			private static final long serialVersionUID = 1L;
 			private static final String TERM = "term";
+
+			@Override
+			protected IElementSelectionStrategy<T> getElementSelectionStrategy()
+			{
+				return AbstractAutoCompleteTextField.this.getElementSelectionStrategy();
+			}
 
 			@Override
 			public List<T> getChoices()

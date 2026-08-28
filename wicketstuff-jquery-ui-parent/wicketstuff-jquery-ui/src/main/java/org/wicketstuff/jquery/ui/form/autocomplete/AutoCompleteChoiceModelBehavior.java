@@ -47,6 +47,16 @@ abstract class AutoCompleteChoiceModelBehavior<T> extends ChoiceModelBehavior<T>
 		super(renderer, template);
 	}
 
+	/**
+	 * Gets the {@link IElementSelectionStrategy}. Index-based selection is used by default.
+	 *
+	 * @return the selection strategy
+	 */
+	protected IElementSelectionStrategy<T> getElementSelectionStrategy()
+	{
+		return IndexBasedElementSelectionStrategy.get();
+	}
+
 	@Override
 	protected String getResponse(IRequestParameters parameters)
 	{
@@ -61,7 +71,8 @@ abstract class AutoCompleteChoiceModelBehavior<T> extends ChoiceModelBehavior<T>
 
 				// ITextRenderer //
 				final JSONObject object = this.renderer.render(choice);
-				object.put("id", Integer.toString(index)); /* 'id' is a reserved word */
+				String identifier = this.getElementSelectionStrategy().getIdentifier(choice, index);
+				object.put("id", identifier != null ? identifier : Integer.toString(index)); /* 'id' is a reserved word */
 				object.put("value", this.renderer.getText(choice)); /* 'value' is a reserved word */
 
 				// Additional properties (like template properties) //
