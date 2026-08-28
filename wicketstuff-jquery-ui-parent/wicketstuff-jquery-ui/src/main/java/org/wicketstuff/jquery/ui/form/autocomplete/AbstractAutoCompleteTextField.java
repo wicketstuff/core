@@ -24,6 +24,7 @@ import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.convert.IConverter;
+import org.danekja.java.util.function.serializable.SerializableSupplier;
 import org.wicketstuff.jquery.core.IJQueryWidget;
 import org.wicketstuff.jquery.core.JQueryBehavior;
 import org.wicketstuff.jquery.core.renderer.ITextRenderer;
@@ -307,9 +308,9 @@ public abstract class AbstractAutoCompleteTextField<T> extends TextField<T> impl
 	}
 
     @Override
-    public void onSelect(AjaxRequestTarget target, T choice) {
+    public void onSelect(AjaxRequestTarget target, T choice,String identifier) {
         if (choice != null) {
-            LOG.error("Cannot select choice: " + choice);
+            LOG.error("Cannot select choice with ID: {}", identifier);
         }
         this.setModelObject(choice);
         this.onSelected(target);
@@ -329,9 +330,10 @@ public abstract class AbstractAutoCompleteTextField<T> extends TextField<T> impl
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new AutoCompleteBehavior<T>(selector, this, new IModel<List<T>>() {
+		return new AutoCompleteBehavior<T>(selector, this, new SerializableSupplier<List<T>>() {
+
             @Override
-            public List<T> getObject() {
+            public List<T> get() {
                 return choices != null ? choices.getObject() : Collections.emptyList();
             }
         }) { // NOSONAR
@@ -427,8 +429,8 @@ public abstract class AbstractAutoCompleteTextField<T> extends TextField<T> impl
 	 */
 	private AutoCompleteChoiceModelBehavior<T> newChoiceModelBehavior()
 	{
-		return new AutoCompleteChoiceModelBehavior<T>(this.renderer, this.template) { // NOSONAR
-
+		return new AutoCompleteChoiceModelBehavior<T>(this.renderer, this.template) // NOSONAR
+		{
 			private static final long serialVersionUID = 1L;
 			private static final String TERM = "term";
 
@@ -446,5 +448,35 @@ public abstract class AbstractAutoCompleteTextField<T> extends TextField<T> impl
 				return AbstractAutoCompleteTextField.this.internalGetChoices(input).getObject();
 			}
 		};
+	}
+
+	/**
+	 * Gets the {@link AutoCompleteChoiceModelBehavior} that serves the choices to the widget
+	 *
+	 * @return the {@link AutoCompleteChoiceModelBehavior}, or {@code null} if the component has not been initialized yet
+	 */
+	public final AutoCompleteChoiceModelBehavior<T> getChoiceModelBehavior()
+	{
+		return this.choiceModelBehavior;
+	}
+
+	/**
+	 * Gets the cached choices of the last query, used to resolve the user selected object
+	 *
+	 * @return the {@link IModel} of choices, or {@code null} if no query has been performed yet
+	 */
+	public final IModel<List<T>> getChoices()
+	{
+		return this.choices;
+	}
+
+	/**
+	 * Gets the {@link JQueryAbstractTemplateBehavior} supplied by {@link #newTemplate()}
+	 *
+	 * @return the {@link JQueryAbstractTemplateBehavior}, or {@code null} if there is no template
+	 */
+	public final JQueryAbstractTemplateBehavior getTemplateBehavior()
+	{
+		return this.templateBehavior;
 	}
 }

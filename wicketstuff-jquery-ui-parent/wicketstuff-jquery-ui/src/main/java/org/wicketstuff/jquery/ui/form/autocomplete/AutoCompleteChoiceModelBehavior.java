@@ -33,7 +33,7 @@ import com.github.openjson.JSONObject;
  * @param <T> the model object type
  * @author Sebastien Briquet - sebfz1
  */
-abstract class AutoCompleteChoiceModelBehavior<T> extends ChoiceModelBehavior<T>
+public abstract class AutoCompleteChoiceModelBehavior<T> extends ChoiceModelBehavior<T>
 {
 	private static final long serialVersionUID = 1L;
 
