@@ -17,7 +17,7 @@
 	<description>JasperReports integration components and resources for Wicket.</description>
 
 	<properties>
-		<jasperreports.outputDirectory>${project.build.sourceDirectory}/../webapp/reports</jasperreports.outputDirectory>
+		<jasperreportsDirectory>${project.build.directory}/reports</jasperreportsDirectory>
 		<javadoc.disabled>true</javadoc.disabled>
 		<deployment.disabled>true</deployment.disabled>
 		<sources.disabled>true</sources.disabled>
@@ -39,7 +39,7 @@
 		<dependency>
 			<groupId>org.eclipse.jetty.aggregate</groupId>
 			<artifactId>jetty-all</artifactId>
-            <classifier>uber</classifier>
+			<classifier>uber</classifier>
 		</dependency>
 
 		<!-- LOGGING DEPENDENCIES - LOG4J -->
@@ -47,6 +47,26 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
 		</dependency>
-		
 	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<configuration>
+					<systemProperties>
+						<systemProperty>
+							<name>jasperreportsDirectory</name>
+							<value>${jasperreportsDirectory}</value>
+						</systemProperty>
+					</systemProperties>
+					<resourceBases>
+						<resourceBase>src/main/webapp</resourceBase>
+						<resourceBase>${jasperreportsDirectory}</resourceBase>
+					</resourceBases>
+					<useProvidedScope>true</useProvidedScope>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>

@@ -36,7 +36,11 @@
 		</dependency>
 		<dependency>
 			<groupId>net.sf.jasperreports</groupId>
-			<artifactId>jasperreports</artifactId>
+			<artifactId>jasperreports-pdf</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports-excel-poi</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.bouncycastle</groupId>
