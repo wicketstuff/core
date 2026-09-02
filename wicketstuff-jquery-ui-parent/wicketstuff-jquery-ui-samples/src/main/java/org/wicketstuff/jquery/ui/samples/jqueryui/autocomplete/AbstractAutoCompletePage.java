@@ -20,7 +20,8 @@ abstract class AbstractAutoCompletePage extends JQuerySamplePage
 				new DemoLink(CustomAutoCompletePage.class, "Auto-complete: custom beans"), // lf
 				new DemoLink(TemplateAutoCompletePage.class, "Auto-complete: custom template"), // lf
 				new DemoLink(RendererAutoCompletePage.class, "Auto-complete: custom renderer"), // lf
-				new DemoLink(ConverterAutoCompletePage.class, "Auto-complete: form submit") // lf
+				new DemoLink(ConverterAutoCompletePage.class, "Auto-complete: form submit"), // lf
+				new DemoLink(IdBasedAutoCompletePage.class, "Auto-complete: id based selection") // lf
 		);
 	}
 }
