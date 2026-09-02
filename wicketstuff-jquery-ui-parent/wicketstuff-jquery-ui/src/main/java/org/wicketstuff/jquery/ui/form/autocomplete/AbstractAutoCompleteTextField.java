@@ -148,7 +148,6 @@ public abstract class AbstractAutoCompleteTextField<T> extends TextField<T> impl
 		this(id, model, renderer, null);
 	}
 
-
     /**
 	 * Constructor
 	 *
