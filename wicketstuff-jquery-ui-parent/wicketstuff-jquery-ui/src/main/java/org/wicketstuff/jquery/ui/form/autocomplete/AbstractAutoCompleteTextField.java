@@ -308,12 +308,23 @@ public abstract class AbstractAutoCompleteTextField<T> extends TextField<T> impl
 	}
 
     @Override
-    public void onSelect(AjaxRequestTarget target, T choice,String identifier) {
-        if (choice != null) {
-            LOG.error("Cannot select choice with ID: {}", identifier);
-        }
+    public final void onSelect(AjaxRequestTarget target, T choice, String identifier) {
         this.setModelObject(choice);
-        this.onSelected(target);
+        if (choice == null) {
+            LOG.debug("Cannot select choice with ID: {}", identifier);
+            onSelectionFailed(target);
+        } else {
+            this.onSelected(target);
+        }
+    }
+
+    /**
+     * Triggered when it was not possible to find an element to select
+     *
+     * @param target the {@link AjaxRequestTarget}
+     */
+    protected void onSelectionFailed(AjaxRequestTarget target)
+    {
     }
 
 	/**
