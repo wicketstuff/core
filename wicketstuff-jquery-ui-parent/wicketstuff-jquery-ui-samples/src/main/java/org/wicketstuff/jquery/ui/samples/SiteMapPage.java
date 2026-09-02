@@ -20,6 +20,7 @@ import org.wicketstuff.jquery.ui.samples.jqueryui.accordion.DefaultAccordionPage
 import org.wicketstuff.jquery.ui.samples.jqueryui.autocomplete.ConverterAutoCompletePage;
 import org.wicketstuff.jquery.ui.samples.jqueryui.autocomplete.CustomAutoCompletePage;
 import org.wicketstuff.jquery.ui.samples.jqueryui.autocomplete.DefaultAutoCompletePage;
+import org.wicketstuff.jquery.ui.samples.jqueryui.autocomplete.IdBasedAutoCompletePage;
 import org.wicketstuff.jquery.ui.samples.jqueryui.autocomplete.RendererAutoCompletePage;
 import org.wicketstuff.jquery.ui.samples.jqueryui.autocomplete.TemplateAutoCompletePage;
 import org.wicketstuff.jquery.ui.samples.jqueryui.button.AjaxButtonPage;
@@ -191,6 +192,7 @@ public class SiteMapPage extends WebPage
 			ContextMenuPage.class,
 			ConverterAutoCompletePage.class,
 			CustomAutoCompletePage.class,
+            IdBasedAutoCompletePage.class,
 			CustomCalendarPage.class,
 			CustomCalendar6Page.class,
 			CustomComboBoxPage.class,
