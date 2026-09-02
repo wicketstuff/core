@@ -313,7 +313,7 @@ public abstract class AbstractAutoCompleteTextField<T> extends TextField<T> impl
         if (choice == null)
         {
             LOG.debug("Cannot select choice with ID: {}", identifier);
-            onSelectionFailed(target);
+            onSelectionFailed(target, identifier);
         }
         else
         {
@@ -325,8 +325,9 @@ public abstract class AbstractAutoCompleteTextField<T> extends TextField<T> impl
      * Triggered when it was not possible to find an element to select
      *
      * @param target the {@link AjaxRequestTarget}
+     * @param identifier THe id of the Choice that could not be retrieved.
      */
-    protected void onSelectionFailed(AjaxRequestTarget target)
+    protected void onSelectionFailed(AjaxRequestTarget target, String identifier)
     {
     }
 
