@@ -308,12 +308,16 @@ public abstract class AbstractAutoCompleteTextField<T> extends TextField<T> impl
 	}
 
     @Override
-    public final void onSelect(AjaxRequestTarget target, T choice, String identifier) {
+    public final void onSelect(AjaxRequestTarget target, T choice, String identifier)
+    {
         this.setModelObject(choice);
-        if (choice == null) {
+        if (choice == null)
+        {
             LOG.debug("Cannot select choice with ID: {}", identifier);
             onSelectionFailed(target);
-        } else {
+        }
+        else
+        {
             this.onSelected(target);
         }
     }
