@@ -3,16 +3,16 @@ package org.wicketstuff.nashorn.resource;
 import java.io.IOException;
 
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.webapp.WebAppContext;
+import org.eclipse.jetty.ee10.webapp.WebAppContext;
 
 public class Start
 {
 	public static void main(String[] args) throws IOException
 	{
-		
+
 		System.setProperty("java.security.policy", Start.class.getResource("nashorn.policy").toString());
 		System.setSecurityManager(new NashornSecurityManager(false));
-		
+
 		Server server = new Server(8080);
 		WebAppContext bb = new WebAppContext();
 		bb.setServer(server);

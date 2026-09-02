@@ -3,7 +3,7 @@ package ${package}
 import org.eclipse.jetty.server.Connector
 import org.eclipse.jetty.server.Server
 import org.eclipse.jetty.server.bio.SocketConnector
-import org.eclipse.jetty.webapp.WebAppContext
+import org.eclipse.jetty.ee10.webapp.WebAppContext;
 
 object Start {
 

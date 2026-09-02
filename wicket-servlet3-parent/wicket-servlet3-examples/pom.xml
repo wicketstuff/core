@@ -61,14 +61,14 @@
 			<artifactId>junit-jupiter-engine</artifactId>
 		</dependency>
 
-		<!-- JETTY DEPENDENCIES FOR TESTING -->
+		<!--  JETTY DEPENDENCIES FOR TESTING  -->
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-server</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-webapp</artifactId>
+			<groupId>org.eclipse.jetty.ee10</groupId>
+			<artifactId>jetty-ee10-webapp</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
@@ -79,8 +79,8 @@
 			<artifactId>wicket-native-websocket-javax</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.eclipse.jetty.websocket</groupId>
-			<artifactId>websocket-jakarta-server</artifactId>
+			<groupId>org.eclipse.jetty.ee10.websocket</groupId>
+			<artifactId>jetty-ee10-websocket-jakarta-server</artifactId>
 		</dependency>
 
 		<dependency>
@@ -99,20 +99,22 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>org.eclipse.jetty</groupId>
-				<artifactId>jetty-maven-plugin</artifactId>
+				<groupId>org.eclipse.jetty.ee10</groupId>
+				<artifactId>jetty-ee10-maven-plugin</artifactId>
 				<configuration>
-					<scanIntervalSeconds>10</scanIntervalSeconds>
-					<webAppConfig>
-						<contextPath>/</contextPath>
-					</webAppConfig>
-					<connectors>
-						<connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
-							<port>9090</port>
-							<maxIdleTime>60000</maxIdleTime>
-						</connector>
-					</connectors>
-				    <webAppXml>src/test/resources/jetty-test.xml</webAppXml>
+					<scan>10</scan>
+					<httpConnector>
+						<port>9090</port>
+						<idleTimeout>60000</idleTimeout>
+					</httpConnector>
+					<loginServices>
+						<loginService implementation="org.eclipse.jetty.security.HashLoginService">
+							<name>UserDatabaseRealm</name>
+							<config implementation="org.eclipse.jetty.maven.MavenResource">
+								<resourceAsString>${project.basedir}/src/test/resources/jetty-users.properties</resourceAsString>
+							</config>
+						</loginService>
+					</loginServices>
 				</configuration>
 			</plugin>
 		</plugins>

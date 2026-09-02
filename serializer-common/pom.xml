@@ -12,7 +12,7 @@
   <name>WicketStuff Common Serializer</name>
   <description>common serializer functionality</description>
 
-  <dependencies>
+	<dependencies>
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-api</artifactId>
@@ -21,32 +21,33 @@
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-engine</artifactId>
 		</dependency>
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-reload4j</artifactId>
-      <scope>test</scope>
-    </dependency>
-	<dependency>
-		<groupId>org.eclipse.jetty</groupId>
-		<artifactId>jetty-server</artifactId>
-	</dependency>
-	<dependency>
-		<groupId>org.eclipse.jetty</groupId>
-		<artifactId>jetty-webapp</artifactId>
-	</dependency>
-	<dependency>
-		<groupId>org.eclipse.jetty</groupId>
-		<artifactId>jetty-jmx</artifactId>
-	</dependency>
-	<dependency>
-		<groupId>org.apache.wicket</groupId>
-		<artifactId>wicket-native-websocket-javax</artifactId>
-	</dependency>
-	<dependency>
-		<groupId>org.eclipse.jetty.websocket</groupId>
-		<artifactId>websocket-jakarta-server</artifactId>
-	</dependency>
-  </dependencies>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-reload4j</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<!--  JETTY DEPENDENCIES FOR TESTING  -->
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-server</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty.ee10</groupId>
+			<artifactId>jetty-ee10-webapp</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-jmx</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-native-websocket-javax</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty.ee10.websocket</groupId>
+			<artifactId>jetty-ee10-websocket-jakarta-server</artifactId>
+		</dependency>
+	</dependencies>
 
 	<build>
 		<plugins>

@@ -32,29 +32,29 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-reload4j</artifactId>
         </dependency>
-        <dependency>
+		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-core</artifactId>
-        </dependency>
+		</dependency>
 
-        <!-- JUNIT DEPENDENCY FOR TESTING -->
-        <dependency>
+		<!-- JUNIT DEPENDENCY FOR TESTING -->
+		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-api</artifactId>
-        </dependency>
+		</dependency>
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-engine</artifactId>
 		</dependency>
 
-        <!-- JETTY DEPENDENCIES FOR TESTING -->
+		<!--  JETTY DEPENDENCIES FOR TESTING  -->
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-server</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-webapp</artifactId>
+			<groupId>org.eclipse.jetty.ee10</groupId>
+			<artifactId>jetty-ee10-webapp</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
@@ -65,8 +65,8 @@
 			<artifactId>wicket-native-websocket-javax</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.eclipse.jetty.websocket</groupId>
-			<artifactId>websocket-jakarta-server</artifactId>
+			<groupId>org.eclipse.jetty.ee10.websocket</groupId>
+			<artifactId>jetty-ee10-websocket-jakarta-server</artifactId>
 		</dependency>
-    </dependencies>
+	</dependencies>
 </project>

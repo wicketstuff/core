@@ -24,11 +24,10 @@ import org.apache.wicket.protocol.http.WebApplication;
  */
 public class DatesApplication extends WebApplication
 {
-	/**
-	 * Constructor.
-	 */
-	public DatesApplication()
-	{
+	@Override
+	protected void init() {
+		getCspSettings().blocking().disabled();
+		super.init();
 	}
 
 	/**

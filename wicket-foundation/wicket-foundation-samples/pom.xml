@@ -23,22 +23,23 @@
             <groupId>org.apache.wicket</groupId>
             <artifactId>wicket-core</artifactId>
         </dependency>
-        <dependency>
+		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-api</artifactId>
-        </dependency>
+		</dependency>
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-engine</artifactId>
 		</dependency>
 
+		<!--  JETTY DEPENDENCIES FOR TESTING  -->
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-server</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-webapp</artifactId>
+			<groupId>org.eclipse.jetty.ee10</groupId>
+			<artifactId>jetty-ee10-webapp</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
@@ -49,18 +50,17 @@
 			<artifactId>wicket-native-websocket-javax</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.eclipse.jetty.websocket</groupId>
-			<artifactId>websocket-jakarta-server</artifactId>
+			<groupId>org.eclipse.jetty.ee10.websocket</groupId>
+			<artifactId>jetty-ee10-websocket-jakarta-server</artifactId>
 		</dependency>
-        <dependency>
-          <groupId>jakarta.servlet</groupId>
-          <artifactId>jakarta.servlet-api</artifactId>
-          <scope>test</scope>
-        </dependency>
+		<dependency>
+			<groupId>jakarta.servlet</groupId>
+			<artifactId>jakarta.servlet-api</artifactId>
+			<scope>test</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket-tester</artifactId>
 		</dependency>
-    </dependencies>
-
+	</dependencies>
 </project>

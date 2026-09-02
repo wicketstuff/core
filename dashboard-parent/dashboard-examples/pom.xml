@@ -24,18 +24,12 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.eclipse.jetty</groupId>
-				<artifactId>jetty-maven-plugin</artifactId>
+				<groupId>org.eclipse.jetty.ee10</groupId>
+				<artifactId>jetty-ee10-maven-plugin</artifactId>
 				<configuration>
 					<systemProperties>
-						<systemProperty>
-							<name>jetty.port</name>
-							<value>8081</value>
-						</systemProperty>
-						<systemProperty>
-							<name>maven.project.build.directory.test-classes</name>
-							<value>${project.build.directory}/test-classes</value>
-						</systemProperty>
+						<jetty.http.port>8081</jetty.http.port>
+						<maven.project.build.directory.test-classes>${project.build.directory}/test-classes</maven.project.build.directory.test-classes>
 					</systemProperties>
 				</configuration>
 			</plugin>
@@ -102,14 +96,14 @@
 			<artifactId>junit-jupiter-engine</artifactId>
 		</dependency>
 
-		<!-- JETTY DEPENDENCIES FOR TESTING -->
+		<!--  JETTY DEPENDENCIES FOR TESTING  -->
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-server</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-webapp</artifactId>
+			<groupId>org.eclipse.jetty.ee10</groupId>
+			<artifactId>jetty-ee10-webapp</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
@@ -120,8 +114,8 @@
 			<artifactId>wicket-native-websocket-javax</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.eclipse.jetty.websocket</groupId>
-			<artifactId>websocket-jakarta-server</artifactId>
+			<groupId>org.eclipse.jetty.ee10.websocket</groupId>
+			<artifactId>jetty-ee10-websocket-jakarta-server</artifactId>
 		</dependency>
 	</dependencies>
 </project>

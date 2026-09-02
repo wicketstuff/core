@@ -38,22 +38,19 @@
                 </excludes>
             </resource>
         </resources>
-        <plugins>
-            <!-- Jetty configuration -->
-            <plugin>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-maven-plugin</artifactId>
-                <configuration>
-                    <connectors>
-                        <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
-                            <port>8080</port>
-                            <maxIdleTime>3600000</maxIdleTime>
-                        </connector>
-                    </connectors>
-                    <scanIntervalSeconds>0</scanIntervalSeconds>
-                    <reload>manual</reload>
-                </configuration>
-            </plugin>
-        </plugins>
+		<plugins>
+			<!-- Jetty configuration -->
+			<plugin>
+				<groupId>org.eclipse.jetty.ee10</groupId>
+				<artifactId>jetty-ee10-maven-plugin</artifactId>
+				<configuration>
+					<httpConnector>
+						<port>8080</port>
+						<idleTimeout>3600000</idleTimeout>
+					</httpConnector>
+					<scan>0</scan>
+				</configuration>
+			</plugin>
+		</plugins>
     </build>
 </project>

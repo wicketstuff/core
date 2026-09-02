@@ -43,8 +43,8 @@
 			<artifactId>wicket-native-websocket-javax</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.eclipse.jetty.websocket</groupId>
-			<artifactId>websocket-jakarta-server</artifactId>
+			<groupId>org.eclipse.jetty.ee10.websocket</groupId>
+			<artifactId>jetty-ee10-websocket-jakarta-server</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.mockito</groupId>

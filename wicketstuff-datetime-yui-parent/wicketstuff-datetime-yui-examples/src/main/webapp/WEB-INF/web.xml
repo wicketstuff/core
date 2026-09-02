@@ -18,7 +18,7 @@
 
 	<filter-mapping>
 		<filter-name>DatesApplication</filter-name>
-		<url-pattern>/dates/*</url-pattern>
+		<url-pattern>/*</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>
 	</filter-mapping>

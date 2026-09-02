@@ -17,7 +17,7 @@ import org.eclipse.jetty.server.HttpConfiguration;
 import org.eclipse.jetty.server.HttpConnectionFactory;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
-import org.eclipse.jetty.webapp.WebAppContext;
+import org.eclipse.jetty.ee10.webapp.WebAppContext;
 
 /**
  * Separate startup class for people that want to run the examples directly.
@@ -26,7 +26,7 @@ public class RunWebApp
 {
 	/**
 	 * Main function, starts the jetty server.
-	 * 
+	 *
 	 * @param args
 	 */
 	public static void main(String[] args)

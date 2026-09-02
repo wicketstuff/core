@@ -30,22 +30,16 @@ import org.eclipse.jetty.server.SecureRequestCustomizer;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.server.SslConnectionFactory;
-import org.eclipse.jetty.server.session.DefaultSessionCache;
-import org.eclipse.jetty.server.session.FileSessionDataStore;
-import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.session.DefaultSessionCache;
+import org.eclipse.jetty.session.FileSessionDataStore;
+import org.eclipse.jetty.ee10.servlet.ServletContextHandler;
 import org.eclipse.jetty.util.resource.Resource;
+import org.eclipse.jetty.util.resource.ResourceFactory;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
-import org.eclipse.jetty.webapp.WebAppContext;
-import org.eclipse.jetty.websocket.jakarta.server.config.JakartaWebSocketServletContainerInitializer;
-
+import org.eclipse.jetty.ee10.webapp.WebAppContext;
+import org.eclipse.jetty.ee10.websocket.jakarta.server.config.JakartaWebSocketServletContainerInitializer;
 
 import java.time.Duration;
-
-import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.ServerConnector;
-import org.eclipse.jetty.util.resource.Resource;
-import org.eclipse.jetty.util.ssl.SslContextFactory;
-import org.eclipse.jetty.webapp.WebAppContext;
 
 public class StartExamples {
 	public static void main(String[] args) throws Exception {
@@ -64,7 +58,7 @@ public class StartExamples {
 
 		server.addConnector(http);
 
-		Resource keystore = Resource.newClassPathResource("/keystore");
+		Resource keystore = ResourceFactory.root().newClassLoaderResource("/keystore");
 		if (keystore != null && keystore.exists())
 		{
 			// if a keystore for a SSL certificate is available, start a SSL

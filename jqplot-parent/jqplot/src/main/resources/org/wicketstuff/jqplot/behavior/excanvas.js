@@ -1,4 +1,4 @@
-// Memory Leaks patch from http://explorercanvas.googlecode.com/svn/trunk/ 
+// Memory Leaks patch from http://explorercanvas.googlecode.com/svn/trunk/
 //  svn : r73
 // ------------------------------------------------------------------
 // Copyright 2006 Google Inc.
@@ -340,7 +340,7 @@ if (!document.createElement('canvas').getContext) {
     lightcoral: '#F08080',
     lightcyan: '#E0FFFF',
     lightgoldenrodyellow: '#FAFAD2',
-    lightgreen: '#90EE90',
+    lightgreen: '#90ee100',
     lightgrey: '#D3D3D3',
     lightpink: '#FFB6C1',
     lightsalmon: '#FFA07A',
