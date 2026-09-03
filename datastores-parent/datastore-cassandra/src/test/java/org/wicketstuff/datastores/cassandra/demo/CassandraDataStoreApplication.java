@@ -7,11 +7,11 @@ import org.wicketstuff.datastores.cassandra.ICassandraSettings;
 import org.wicketstuff.datastores.common.app.BaseDataStoreApplication;
 
 public class CassandraDataStoreApplication extends BaseDataStoreApplication {
-	
+
 	@Override
 	protected IPageStore createDataStore() {
 		ICassandraSettings settings = new CassandraSettings();
-		settings.getContactPoints().add("localhost");
+		settings.addContactPoint("localhost");
 		return new CassandraDataStore(this.getName(), settings);
 	}
 }

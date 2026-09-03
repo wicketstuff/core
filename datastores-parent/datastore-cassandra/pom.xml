@@ -13,7 +13,7 @@
 	<description>An implementation of Apache Wicket's IPageStore that uses Apache Cassandra as a backend</description>
 
 	<properties>
-		<cassandra-driver-core.version>3.11.5</cassandra-driver-core.version>
+		<cassandra-driver-core.version>4.19.3</cassandra-driver-core.version>
 	</properties>
 	<dependencies>
 
@@ -30,21 +30,25 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!--
+			the application should provide the version of the driver
+			for version of its Cassandra installation
+		-->
 		<dependency>
-			<groupId>com.datastax.cassandra</groupId>
-			<artifactId>cassandra-driver-core</artifactId>
+			<groupId>org.apache.cassandra</groupId>
+			<artifactId>java-driver-core</artifactId>
 			<version>${cassandra-driver-core.version}</version>
-			<!--
-			 the application should provide the version of the driver
-			 for version of its Cassandra installation
-			 -->
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.cassandra</groupId>
+			<artifactId>java-driver-query-builder</artifactId>
+			<version>${cassandra-driver-core.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 		</dependency>
-
 	</dependencies>
-
 </project>

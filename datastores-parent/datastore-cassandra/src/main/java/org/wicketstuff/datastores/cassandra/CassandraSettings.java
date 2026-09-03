@@ -1,11 +1,16 @@
 package org.wicketstuff.datastores.cassandra;
 
+import java.net.InetSocketAddress;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 import org.apache.wicket.util.lang.Args;
+
+import com.datastax.oss.driver.api.core.metadata.EndPoint;
+import com.datastax.oss.driver.internal.core.metadata.DefaultEndPoint;
 
 /**
  * @see org.wicketstuff.datastores.cassandra.ICassandraSettings
@@ -18,7 +23,7 @@ public class CassandraSettings implements ICassandraSettings
 
 	private Duration recordTtl = Duration.ofMinutes(30);
 
-	private final List<String> contactPoints = new ArrayList<>();
+	private final List<EndPoint> contactPoints = new ArrayList<>();
 
 	public CassandraSettings()
 	{
@@ -64,9 +69,38 @@ public class CassandraSettings implements ICassandraSettings
 	}
 
 	@Override
+	@Deprecated(since = "10.11.0", forRemoval = true)
 	public List<String> getContactPoints()
 	{
-		return contactPoints;
+		return contactPoints.stream()
+				.map(e -> e.resolve().toString())
+				.toList();
 	}
 
+	@Override
+	public ICassandraSettings addContactPoint(String point) {
+		String host = null;
+		int port = 9042;
+		String[] parts = point.split(":");
+		if (parts.length == 2) {
+			host = parts[0];
+			port = Integer.parseInt(parts[1]);
+		} else if (parts.length == 1) {
+			try {
+				port = Integer.parseInt(parts[0]);
+			} catch (Exception e) {
+				// this should be host
+				host = parts[0];
+			}
+		} else {
+			return this;
+		}
+		contactPoints.add(new DefaultEndPoint(new InetSocketAddress(host, port)));
+		return this;
+	}
+
+	@Override
+	public List<EndPoint> getContactEndPoints() {
+		return contactPoints;
+	}
 }
