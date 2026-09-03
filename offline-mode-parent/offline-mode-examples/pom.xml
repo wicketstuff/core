@@ -67,10 +67,6 @@
 			<artifactId>jetty-ee10-websocket-jakarta-server</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.wicket</groupId>
-			<artifactId>wicket-native-websocket-javax</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>jakarta.servlet</groupId>
 			<artifactId>jakarta.servlet-api</artifactId>
 			<version>${jakarta.servlet-api.version}</version><!--$NO-MVN-MAN-VER$ -->
