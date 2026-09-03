@@ -49,7 +49,7 @@
     </bean>
 
     <!-- Hibernate SessionFactory -->
-    <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+    <bean id="sessionFactory" class="org.springframework.orm.jpa.hibernate.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <!-- Scan packages for JPA annotations -->
         <property name="packagesToScan" value="org.wicketstuff.shiro.example.sprhib.model"/>
@@ -61,14 +61,14 @@
                 <prop key="hibernate.hbm2ddl.auto">update</prop>
                 <prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect</prop>
                 <prop key="hibernate.jdbc.fetch_size">100</prop>
-                <prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>
+                <prop key="hibernate.cache.region.factory_class">org.hibernate.cache.jcache.internal.JCacheRegionFactory</prop>
                 <prop key="hibernate.cache.use_query_cache">true</prop>
             </props>
         </property>
     </bean>
 
     <!-- Transaction support beans -->
-    <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+    <bean id="transactionManager" class="org.springframework.orm.jpa.hibernate.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
@@ -105,4 +105,3 @@
 	  <bean id="wicketApplication" class="org.wicketstuff.shiro.example.sprhib.ExampleHibernateApp" />
 
 </beans>
-

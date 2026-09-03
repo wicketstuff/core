@@ -39,6 +39,7 @@ public abstract class BasePhonebookApplication extends WebApplication
 	@Override
 	protected void init()
 	{
+		getCspSettings().blocking().disabled();
 		super.init();
 
 		getComponentInstantiationListeners().add(new SpringComponentInjector(this, context(), true));

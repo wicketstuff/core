@@ -29,7 +29,7 @@ import org.wicketstuff.shiro.example.pages.UnauthorizedPage;
 import org.wicketstuff.shiro.page.LogoutPage;
 
 /**
- * 
+ *
  */
 public abstract class ExampleApplication extends WebApplication
 {
@@ -37,6 +37,7 @@ public abstract class ExampleApplication extends WebApplication
 	@Override
 	protected void init()
 	{
+		getCspSettings().blocking().disabled();
 		getMarkupSettings().setStripWicketTags(true);
 
 		// Configure Shiro
