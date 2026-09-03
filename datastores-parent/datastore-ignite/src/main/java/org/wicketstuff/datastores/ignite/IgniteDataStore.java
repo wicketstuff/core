@@ -16,19 +16,18 @@
  */
 package org.wicketstuff.datastores.ignite;
 
+import static org.apache.ignite.catalog.definitions.ColumnDefinition.column;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.ignite.DataRegionMetrics;
-import org.apache.ignite.Ignite;
-import org.apache.ignite.IgniteCache;
-import org.apache.ignite.IgniteException;
-import org.apache.ignite.binary.BinaryObjectException;
-import org.apache.ignite.binary.BinaryReader;
-import org.apache.ignite.binary.BinaryWriter;
-import org.apache.ignite.binary.Binarylizable;
+import org.apache.ignite.catalog.ColumnType;
+import org.apache.ignite.catalog.definitions.TableDefinition;
+import org.apache.ignite.client.IgniteClient;
+import org.apache.ignite.sql.ResultSet;
+import org.apache.ignite.sql.SqlRow;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.page.IManageablePage;
 import org.apache.wicket.pageStore.AbstractPersistentPageStore;
@@ -55,71 +54,105 @@ import org.slf4j.LoggerFactory;
  */
 public class IgniteDataStore extends AbstractPersistentPageStore  implements IPersistentPageStore {
 	private static final Logger LOGGER = LoggerFactory.getLogger(IgniteDataStore.class);
+	/**
+	 * The name of the column where the session ids will be stored
+	 */
+	private static final String COLUMN_SESSION_ID = "sessionId";
+
+	/**
+	 * The name of the column where the page ids will be stored
+	 */
+	private static final String COLUMN_PAGE_ID = "pageId";
+
+	/**
+	 * The name of the column where the pages' type will be stored
+	 */
+	private static final String COLUMN_PAGE_TYPE = "type";
+
+	/**
+	 * The name of the column where the pages' size will be stored
+	 */
+	private static final String COLUMN_PAGE_SIZE = "size";
+
+	/**
+	 * The name of the column where the pages' bytes will be stored
+	 */
+	private static final String COLUMN_DATA = "data";
 
 	/**
 	 * Apache Ignite instance
 	 */
-	private final Ignite ignite;
+	private final IgniteClient ignite;
+
+	/**
+	 * The various settings
+	 */
+	private final IIgniteSettings settings;
 
 	/**
 	 * Constructor
 	 *
 	 * @param ignite The Apache Ignite instance
 	 */
-	public IgniteDataStore(String applicatioName, Ignite ignite) {
+	public IgniteDataStore(String applicatioName, IIgniteSettings settings) {
 		super(applicatioName);
+		Args.notNull(settings, "settings");
 
-		this.ignite = Args.notNull(ignite, "ignite");
-	}
+		if (settings.getAddresses().isEmpty()) {
+			throw new IllegalArgumentException("At least one address must be provided to be able to connect to Ignite. See IIgniteSettings#getAddresses.");
+		}
+		this.settings = settings;
+		this.ignite = IgniteClient.builder()
+			.addresses(settings.getAddresses().toArray(new String[]{}))
+			.build();
 
-	/**
-	 * Returns (and creates if needed) named cache from Ignite instance
-	 *
-	 * @param cacheName Cache name
-	 */
-	private IgniteCache<Integer, BinarylizableWrapper> getIgniteCache(String cacheName, boolean create) {
-		if (create) {
-			return ignite.getOrCreateCache(cacheName);
-		} else {
-			return ignite.cache(cacheName);
+		if (ignite.tables().table(settings.getTableName()) == null) {
+			ignite.catalog().createTable(
+				TableDefinition.builder(settings.getTableName())
+					.primaryKey(COLUMN_SESSION_ID, COLUMN_PAGE_ID)
+					.columns(
+						//, COLUMN_PAGE_SIZE, COLUMN_PAGE_TYPE, COLUMN_DATA
+						column(COLUMN_SESSION_ID, ColumnType.VARCHAR),
+						column(COLUMN_PAGE_ID, ColumnType.INT32),
+						column(COLUMN_PAGE_SIZE, ColumnType.INT32),
+						column(COLUMN_PAGE_TYPE, ColumnType.VARCHAR),
+						column(COLUMN_DATA, ColumnType.VARBINARY)
+					)
+					.build()
+				);
 		}
 	}
 
 	@Override
-	protected IManageablePage getPersistedPage(String sessionIdentifier, int id) {
-		IgniteCache<Integer, BinarylizableWrapper> cache = getIgniteCache(sessionIdentifier, false);
-		if (cache != null) {
-			BinarylizableWrapper wrapper = cache.get(id);
-
+	protected IManageablePage getPersistedPage(String sessionIdentifier, int pageId) {
+		String sql = String.format("SELECT %s, %s FROM %s WHERE %s = ? AND %s = ?"
+				, COLUMN_PAGE_TYPE, COLUMN_DATA, settings.getTableName(), COLUMN_SESSION_ID, COLUMN_PAGE_ID);
+		try (ResultSet<SqlRow> rs = ignite.sql().execute(null, sql, sessionIdentifier, pageId)) {
+			if (!rs.hasRowSet()) {
+				return null;
+			}
+			SqlRow row = rs.next();
 			if (LOGGER.isDebugEnabled()) {
-				LOGGER.debug("Got {} for session '{}' and page id '{}'", wrapper, sessionIdentifier, id);
+				LOGGER.debug("Got Data for session '{}' and page id '{}'", sessionIdentifier, pageId);
 			}
-
-			if (wrapper != null) {
-				return wrapper.page;
-			}
+			return new SerializedPage(pageId, row.stringValue(COLUMN_PAGE_TYPE), row.bytesValue(COLUMN_DATA));
 		}
-
-		return null;
 	}
 
 	@Override
 	protected void removePersistedPage(String sessionIdentifier, IManageablePage page) {
-		IgniteCache<Integer, BinarylizableWrapper> cache = getIgniteCache(sessionIdentifier, false);
-		if (cache != null) {
-			cache.remove(page.getPageId());
-			LOGGER.debug("Deleted page for session '{}' and page with id '{}'", sessionIdentifier,
-					page.getPageId());
-		}
+		String sql = String.format("DELETE FROM %s WHERE %s = ? AND %s = ?"
+				, settings.getTableName(), COLUMN_SESSION_ID, COLUMN_PAGE_ID);
+		ignite.sql().execute(null, sql, sessionIdentifier, page.getPageId());
+		LOGGER.debug("Deleted data for session '{}' and page with id '{}'", sessionIdentifier, page.getPageId());
 	}
 
 	@Override
 	protected void removeAllPersistedPages(String sessionIdentifier) {
-		IgniteCache<Integer, BinarylizableWrapper> cache = getIgniteCache(sessionIdentifier, false);
-		if (cache != null) {
-			cache.clear();
-			LOGGER.debug("Deleted page for session '{}'", sessionIdentifier);
-		}
+		String sql = String.format("DELETE FROM %s WHERE %s = ?"
+				, settings.getTableName(), COLUMN_SESSION_ID);
+		ignite.sql().execute(null, sql, sessionIdentifier);
+		LOGGER.debug("Deleted data for session '{}'", sessionIdentifier);
 	}
 
 	@Override
@@ -129,19 +162,26 @@ public class IgniteDataStore extends AbstractPersistentPageStore  implements IPe
 		}
 		SerializedPage serializedPage = (SerializedPage) page;
 
-		IgniteCache<Integer, BinarylizableWrapper> cache = getIgniteCache(sessionIdentifier, true);
-		cache.put(page.getPageId(), new BinarylizableWrapper(serializedPage));
+		String sql = String.format("INSERT INTO %s (%s, %s, %s, %s, %s) VALUES (?, ?, ?, ?, ?)"
+				, settings.getTableName()
+				, COLUMN_SESSION_ID
+				, COLUMN_PAGE_ID
+				, COLUMN_PAGE_SIZE
+				, COLUMN_PAGE_TYPE
+				, COLUMN_DATA);
+		ignite.sql().execute(null, sql
+				, sessionIdentifier
+				, page.getPageId()
+				, serializedPage.getData().length
+				, serializedPage.getPageType()
+				, serializedPage.getData());
 		LOGGER.debug("Inserted page for session '{}' and page id '{}'", sessionIdentifier, page.getPageId());
 	}
 
 	@Override
 	public void destroy() {
 		if (ignite != null) {
-			try {
-				ignite.close();
-			} catch (IgniteException e) {
-				LOGGER.error("Can't close ignite instance", e);
-			}
+			ignite.close();
 		}
 	}
 
@@ -152,22 +192,30 @@ public class IgniteDataStore extends AbstractPersistentPageStore  implements IPe
 
 	@Override
 	public Set<String> getSessionIdentifiers() {
-		return new HashSet<>(ignite.cacheNames());
+		Set<String> sessions = new HashSet<>();
+		String sql = String.format("SELECT DISTINCT(%s) FROM %s"
+				, COLUMN_SESSION_ID, settings.getTableName());
+		try (ResultSet<SqlRow> rs = ignite.sql().execute(null, sql)) {
+			while (rs.hasNext()) {
+				SqlRow row = rs.next();
+				sessions.add(row.stringValue(0));
+			}
+		}
+		return sessions;
 	}
 
 	@Override
 	public List<IPersistedPage> getPersistedPages(String contextIdentifier) {
 		List<IPersistedPage> pages = new ArrayList<>();
 
-		IgniteCache<Integer, BinarylizableWrapper> cache = getIgniteCache(contextIdentifier, false);
-		if (cache != null) {
-			cache.forEach(entry -> {
-				SerializedPage serializedPage = entry.getValue().page;
-				pages.add(new PersistedPage(serializedPage.getPageId(), serializedPage.getPageType(),
-						serializedPage.getData().length));
-			});
+		String sql = String.format("SELECT %s, %s, %s FROM %s WHERE %s = ?"
+				, COLUMN_PAGE_ID, COLUMN_PAGE_TYPE, COLUMN_PAGE_SIZE, settings.getTableName(), COLUMN_SESSION_ID);
+		try (ResultSet<SqlRow> rs = ignite.sql().execute(null, sql, contextIdentifier)) {
+			while (rs.hasNext()) {
+				SqlRow row = rs.next();
+				pages.add(new PersistedPage(row.intValue(COLUMN_PAGE_ID), row.stringValue(COLUMN_PAGE_TYPE), row.intValue(COLUMN_PAGE_SIZE)));
+			}
 		}
-
 		return pages;
 	}
 
@@ -175,45 +223,13 @@ public class IgniteDataStore extends AbstractPersistentPageStore  implements IPe
 	public Bytes getTotalSize() {
 		long bytes = 0;
 
-		for (DataRegionMetrics metrics : ignite.dataRegionMetrics()) {
-			bytes += metrics.getTotalAllocatedSize();
+		String sql = String.format("SELECT SUM(%s) FROM %s"
+				, COLUMN_PAGE_SIZE, settings.getTableName());
+		try (ResultSet<SqlRow> rs = ignite.sql().execute(null, sql)) {
+			if (rs.hasNext()) {
+				bytes = rs.next().intValue(0);
+			}
 		}
-
 		return Bytes.bytes(bytes);
-	}
-
-	/**
-	 * A wrapper around a {@link SerializedPage} that implements Ignite's
-	 * {@link Binarylizable} for performance.
-	 *
-	 * @author sven
-	 */
-	private static final class BinarylizableWrapper implements Binarylizable {
-
-		private static final String DATA = "data";
-		private static final String TYPE = "type";
-		private static final String ID = "id";
-		public SerializedPage page;
-
-		public BinarylizableWrapper(SerializedPage page) {
-			this.page = page;
-		}
-
-		@Override
-		public String toString() {
-			return page.toString();
-		}
-
-		@Override
-		public void writeBinary(BinaryWriter writer) throws BinaryObjectException {
-			writer.writeInt(ID, page.getPageId());
-			writer.writeString(TYPE, page.getPageType());
-			writer.writeByteArray(DATA, page.getData());
-		}
-
-		@Override
-		public void readBinary(BinaryReader reader) throws BinaryObjectException {
-			page = new SerializedPage(reader.readInt(ID), reader.readString(TYPE), reader.readByteArray(DATA));
-		}
 	}
 }
