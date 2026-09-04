@@ -18,14 +18,15 @@
   ~ under the License.
   -->
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:util="http://www.springframework.org/schema/util"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
-						http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
-						http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd
-						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:tx="http://www.springframework.org/schema/tx"
+		xmlns:util="http://www.springframework.org/schema/util"
+		xmlns:context="http://www.springframework.org/schema/context"
+		xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+			http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
 
 	<!-- Enable annotation configuration -->
 	<context:annotation-config />
@@ -59,8 +60,7 @@
 				<prop key="hibernate.hbm2ddl.auto">update</prop>
 				<prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect</prop>
 				<prop key="hibernate.jdbc.fetch_size">100</prop>
-				<prop key="hibernate.cache.region.factory_class">
-					org.hibernate.cache.jcache.internal.JCacheRegionFactory</prop>
+				<prop key="hibernate.cache.region.factory_class">org.hibernate.cache.jcache.internal.JCacheRegionFactory</prop>
 				<prop key="hibernate.cache.use_query_cache">true</prop>
 			</props>
 		</property>
@@ -73,14 +73,13 @@
 
 	<tx:annotation-driven />
 
-
 	<!-- =========================================================
 		Shiro Components
 		========================================================= -->
-
 	<bean id="ShiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
 		<property name="securityManager" ref="securityManager" />
 
+		<property name="allowAccessByDefault" value="true" />
 		<property name="loginUrl" value="/account/login" />
 		<!-- override these for application-specific URLs if you like:
 		<property name="loginUrl" value="/login.jsp"/>
@@ -136,7 +135,7 @@
 	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
 
 	<!-- =========================================================
-		 Wicket Application
-		 ========================================================= -->
+		Wicket Application
+		========================================================= -->
 	<bean id="wicketApplication" class="org.wicketstuff.shiro.example.sprhibnative.ExampleHibernateApp" />
 </beans>

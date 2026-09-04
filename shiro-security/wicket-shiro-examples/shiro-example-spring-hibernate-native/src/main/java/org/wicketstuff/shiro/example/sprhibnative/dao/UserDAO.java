@@ -27,7 +27,6 @@ import org.wicketstuff.shiro.example.sprhibnative.model.User;
  */
 public interface UserDAO
 {
-
 	User getUser(Long userId);
 
 	User findUser(String username);
