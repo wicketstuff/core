@@ -84,10 +84,14 @@ public class IgniteDataStore extends AbstractPersistentPageStore  implements IPe
 	 */
 	private final IgniteClient ignite;
 
-	/**
-	 * The various settings
-	 */
-	private final IIgniteSettings settings;
+	// queries
+	private final String pageSql;
+	private final String pagesSql;
+	private final String delPageSql;
+	private final String delPagesSql;
+	private final String addPageSql;
+	private final String sessionsSql;
+	private final String sizeSql;
 
 	/**
 	 * Constructor
@@ -101,7 +105,6 @@ public class IgniteDataStore extends AbstractPersistentPageStore  implements IPe
 		if (settings.getAddresses().isEmpty()) {
 			throw new IllegalArgumentException("At least one address must be provided to be able to connect to Ignite. See IIgniteSettings#getAddresses.");
 		}
-		this.settings = settings;
 		this.ignite = IgniteClient.builder()
 			.addresses(settings.getAddresses().toArray(new String[]{}))
 			.build();
@@ -121,13 +124,30 @@ public class IgniteDataStore extends AbstractPersistentPageStore  implements IPe
 					.build()
 				);
 		}
+		pageSql = String.format("SELECT %s, %s FROM %s WHERE %s = ? AND %s = ?"
+			, COLUMN_PAGE_TYPE, COLUMN_DATA, settings.getTableName(), COLUMN_SESSION_ID, COLUMN_PAGE_ID);
+		delPageSql = String.format("DELETE FROM %s WHERE %s = ? AND %s = ?"
+			, settings.getTableName(), COLUMN_SESSION_ID, COLUMN_PAGE_ID);
+		delPagesSql = String.format("DELETE FROM %s WHERE %s = ?"
+			, settings.getTableName(), COLUMN_SESSION_ID);
+		addPageSql = String.format("INSERT INTO %s (%s, %s, %s, %s, %s) VALUES (?, ?, ?, ?, ?)"
+			, settings.getTableName()
+			, COLUMN_SESSION_ID
+			, COLUMN_PAGE_ID
+			, COLUMN_PAGE_SIZE
+			, COLUMN_PAGE_TYPE
+			, COLUMN_DATA);
+		sessionsSql = String.format("SELECT DISTINCT(%s) FROM %s"
+			, COLUMN_SESSION_ID, settings.getTableName());
+		pagesSql = String.format("SELECT %s, %s, %s FROM %s WHERE %s = ?"
+			, COLUMN_PAGE_ID, COLUMN_PAGE_TYPE, COLUMN_PAGE_SIZE, settings.getTableName(), COLUMN_SESSION_ID);
+		sizeSql = String.format("SELECT SUM(%s) FROM %s"
+			, COLUMN_PAGE_SIZE, settings.getTableName());
 	}
 
 	@Override
 	protected IManageablePage getPersistedPage(String sessionIdentifier, int pageId) {
-		String sql = String.format("SELECT %s, %s FROM %s WHERE %s = ? AND %s = ?"
-				, COLUMN_PAGE_TYPE, COLUMN_DATA, settings.getTableName(), COLUMN_SESSION_ID, COLUMN_PAGE_ID);
-		try (ResultSet<SqlRow> rs = ignite.sql().execute(null, sql, sessionIdentifier, pageId)) {
+		try (ResultSet<SqlRow> rs = ignite.sql().execute(null, pageSql, sessionIdentifier, pageId)) {
 			if (!rs.hasRowSet()) {
 				return null;
 			}
@@ -141,17 +161,13 @@ public class IgniteDataStore extends AbstractPersistentPageStore  implements IPe
 
 	@Override
 	protected void removePersistedPage(String sessionIdentifier, IManageablePage page) {
-		String sql = String.format("DELETE FROM %s WHERE %s = ? AND %s = ?"
-				, settings.getTableName(), COLUMN_SESSION_ID, COLUMN_PAGE_ID);
-		ignite.sql().execute(null, sql, sessionIdentifier, page.getPageId());
+		ignite.sql().execute(null, delPageSql, sessionIdentifier, page.getPageId());
 		LOGGER.debug("Deleted data for session '{}' and page with id '{}'", sessionIdentifier, page.getPageId());
 	}
 
 	@Override
 	protected void removeAllPersistedPages(String sessionIdentifier) {
-		String sql = String.format("DELETE FROM %s WHERE %s = ?"
-				, settings.getTableName(), COLUMN_SESSION_ID);
-		ignite.sql().execute(null, sql, sessionIdentifier);
+		ignite.sql().execute(null, delPagesSql, sessionIdentifier);
 		LOGGER.debug("Deleted data for session '{}'", sessionIdentifier);
 	}
 
@@ -162,14 +178,7 @@ public class IgniteDataStore extends AbstractPersistentPageStore  implements IPe
 		}
 		SerializedPage serializedPage = (SerializedPage) page;
 
-		String sql = String.format("INSERT INTO %s (%s, %s, %s, %s, %s) VALUES (?, ?, ?, ?, ?)"
-				, settings.getTableName()
-				, COLUMN_SESSION_ID
-				, COLUMN_PAGE_ID
-				, COLUMN_PAGE_SIZE
-				, COLUMN_PAGE_TYPE
-				, COLUMN_DATA);
-		ignite.sql().execute(null, sql
+		ignite.sql().execute(null, addPageSql
 				, sessionIdentifier
 				, page.getPageId()
 				, serializedPage.getData().length
@@ -193,9 +202,7 @@ public class IgniteDataStore extends AbstractPersistentPageStore  implements IPe
 	@Override
 	public Set<String> getSessionIdentifiers() {
 		Set<String> sessions = new HashSet<>();
-		String sql = String.format("SELECT DISTINCT(%s) FROM %s"
-				, COLUMN_SESSION_ID, settings.getTableName());
-		try (ResultSet<SqlRow> rs = ignite.sql().execute(null, sql)) {
+		try (ResultSet<SqlRow> rs = ignite.sql().execute(null, sessionsSql)) {
 			while (rs.hasNext()) {
 				SqlRow row = rs.next();
 				sessions.add(row.stringValue(0));
@@ -208,9 +215,7 @@ public class IgniteDataStore extends AbstractPersistentPageStore  implements IPe
 	public List<IPersistedPage> getPersistedPages(String contextIdentifier) {
 		List<IPersistedPage> pages = new ArrayList<>();
 
-		String sql = String.format("SELECT %s, %s, %s FROM %s WHERE %s = ?"
-				, COLUMN_PAGE_ID, COLUMN_PAGE_TYPE, COLUMN_PAGE_SIZE, settings.getTableName(), COLUMN_SESSION_ID);
-		try (ResultSet<SqlRow> rs = ignite.sql().execute(null, sql, contextIdentifier)) {
+		try (ResultSet<SqlRow> rs = ignite.sql().execute(null, pagesSql, contextIdentifier)) {
 			while (rs.hasNext()) {
 				SqlRow row = rs.next();
 				pages.add(new PersistedPage(row.intValue(COLUMN_PAGE_ID), row.stringValue(COLUMN_PAGE_TYPE), row.intValue(COLUMN_PAGE_SIZE)));
@@ -223,9 +228,7 @@ public class IgniteDataStore extends AbstractPersistentPageStore  implements IPe
 	public Bytes getTotalSize() {
 		long bytes = 0;
 
-		String sql = String.format("SELECT SUM(%s) FROM %s"
-				, COLUMN_PAGE_SIZE, settings.getTableName());
-		try (ResultSet<SqlRow> rs = ignite.sql().execute(null, sql)) {
+		try (ResultSet<SqlRow> rs = ignite.sql().execute(null, sizeSql)) {
 			if (rs.hasNext()) {
 				bytes = rs.next().intValue(0);
 			}
