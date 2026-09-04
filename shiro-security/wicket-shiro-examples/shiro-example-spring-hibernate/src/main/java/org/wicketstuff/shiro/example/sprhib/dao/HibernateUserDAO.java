@@ -21,13 +21,14 @@ package org.wicketstuff.shiro.example.sprhib.dao;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.wicketstuff.shiro.example.sprhib.model.User;
 
+@Transactional
 @Repository("userDAO")
 public class HibernateUserDAO extends HibernateDao implements UserDAO
 {
-
 	@Override
 	public User getUser(Long userId)
 	{
@@ -69,5 +70,4 @@ public class HibernateUserDAO extends HibernateDao implements UserDAO
 	{
 		getSession().merge(user);
 	}
-
 }

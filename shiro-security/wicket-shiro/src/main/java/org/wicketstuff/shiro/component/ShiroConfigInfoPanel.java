@@ -20,6 +20,7 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.Model;
 import org.wicketstuff.shiro.ShiroServletRequestModel;
 import org.wicketstuff.shiro.ShiroSubjectModel;
 
@@ -35,7 +36,7 @@ public class ShiroConfigInfoPanel extends Panel
 		final WebMarkupContainer request = new WebMarkupContainer("request",
 			new CompoundPropertyModel<ShiroServletRequestModel>(shiroRequestModel));
 		request.add(new Label("toString", shiroRequestModel));
-		request.add(new Label("class.name"));
+		request.add(new Label("class.name", Model.of(getClass().getName())));
 		request.add(new Label("RemoteUser"));
 		request.add(new Label("RequestedSessionId"));
 		request.add(new Label("UserPrincipal"));
@@ -50,7 +51,7 @@ public class ShiroConfigInfoPanel extends Panel
 		final WebMarkupContainer subject = new WebMarkupContainer("subject",
 			new CompoundPropertyModel<ShiroSubjectModel>(shiroSubjectModel));
 		subject.add(new Label("toString", shiroSubjectModel));
-		subject.add(new Label("class.name"));
+		subject.add(new Label("class.name", Model.of(getClass().getName())));
 		subject.add(new Label("authenticated"));
 		subject.add(new Label("principal"));
 		subject.add(new Label("session"));

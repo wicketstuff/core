@@ -61,7 +61,7 @@ public class SillyRealm extends AuthorizingRealm
 	 * <p/>
 	 * All that is required is that the account information include directly the credentials found
 	 * in the EIS.
-	 * 
+	 *
 	 * @param username
 	 *            the username for the account data to retrieve
 	 * @return the Account information corresponding to the specified username:
@@ -121,7 +121,7 @@ public class SillyRealm extends AuthorizingRealm
 
 		// get only the principals that this realm cares about:
 		@SuppressWarnings("unchecked")
-		Collection<String> thisRealmPrincipals = principals.fromRealm(getName());
+		Collection<String> thisRealmPrincipals = (Collection<String>)principals.fromRealm(getName());
 		if (thisRealmPrincipals == null || thisRealmPrincipals.isEmpty())
 		{
 			return null;

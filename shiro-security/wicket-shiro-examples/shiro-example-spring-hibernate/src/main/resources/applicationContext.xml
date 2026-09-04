@@ -18,91 +18,88 @@
   ~ under the License.
   -->
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:tx="http://www.springframework.org/schema/tx"
-       xmlns:util="http://www.springframework.org/schema/util"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="
-       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
-       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
-       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
-       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd">
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:tx="http://www.springframework.org/schema/tx"
+		xmlns:util="http://www.springframework.org/schema/util"
+		xmlns:context="http://www.springframework.org/schema/context"
+		xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+			http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd">
 
-    <!-- Enable annotation configuration -->
-    <context:annotation-config/>
+	<!-- Enable annotation configuration -->
+	<context:annotation-config/>
 
-    <!-- Scan sample packages for Spring annotations -->
-    <context:component-scan base-package="org.wicketstuff.shiro.example.sprhib.dao"/>
-    <context:component-scan base-package="org.wicketstuff.shiro.example.sprhib.security"/>
-    <context:component-scan base-package="org.wicketstuff.shiro.example.sprhib.service"/>
+	<!-- Scan sample packages for Spring annotations -->
+	<context:component-scan base-package="org.wicketstuff.shiro.example.sprhib.dao"/>
+	<context:component-scan base-package="org.wicketstuff.shiro.example.sprhib.security"/>
+	<context:component-scan base-package="org.wicketstuff.shiro.example.sprhib.service"/>
 
-    <!-- Spring AOP auto-proxy creation (required to support Shiro annotations) -->
-    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"/>
+	<!-- Spring AOP auto-proxy creation (required to support Shiro annotations) -->
+	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" />
 
-
-    <!-- Sample RDBMS data source that would exist in any application.  Sample is just using an in-memory HSQLDB
-         instance.  Change to your application's settings for a real app. -->
-    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="org.hsqldb.jdbcDriver"/>
-        <property name="url" value="jdbc:hsqldb:mem:wicket-shiro-sprhib"/>
-        <property name="username" value="sa"/>
-    </bean>
-
-    <!-- Hibernate SessionFactory -->
-    <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
-        <property name="dataSource" ref="dataSource"/>
-        <!-- Scan packages for JPA annotations -->
-        <property name="packagesToScan" value="org.wicketstuff.shiro.example.sprhib.model"/>
-        <property name="hibernateProperties">
-            <props>
-                <!-- Because we're using an in-memory database for demo purposes (which is lost every time the app
-                     shuts down), we have to ensure that the HSQLDB DDL is run each time the app starts.  The
-                     DDL is auto-generated based on the *.hbm.xml mapping definitions below. -->
-                <prop key="hibernate.hbm2ddl.auto">update</prop>
-                <prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect</prop>
-                <prop key="hibernate.jdbc.fetch_size">100</prop>
-                <prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>
-                <prop key="hibernate.cache.use_query_cache">true</prop>
-            </props>
-        </property>
-    </bean>
-
-    <!-- Transaction support beans -->
-    <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
-        <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
-
-    <tx:annotation-driven/>
-
-
-    <!-- =========================================================
-         Shiro Components
-         ========================================================= -->
-
-	<bean id="ShiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
-		<property name="securityManager" ref="securityManager" />
+	<!-- Sample RDBMS data source that would exist in any application.  Sample is just using an in-memory HSQLDB
+		instance.  Change to your application's settings for a real app. -->
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="org.hsqldb.jdbcDriver" />
+		<property name="url" value="jdbc:hsqldb:mem:wicket-shiro-sprhib" />
+		<property name="username" value="sa" />
 	</bean>
 
-    <!-- Shiro's main business-tier object for web-enabled applications
-         (use org.apache.shiro.web.DefaultWebSecurityManager instead when there is no web environment)-->
-    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-        <!-- Single realm app (realm configured next, below).  If you have multiple realms, use the 'realms'
-      property instead. -->
-        <property name="realm" ref="sampleRealm"/>
-        <!-- Uncomment this next property if you want heterogenous session access or clusterable/distributable
-             sessions.  The default value is 'http' which uses the Servlet container's HttpSession as the underlying
-             Session implementation.
-        <property name="sessionMode" value="shiro"/> -->
-    </bean>
+	<!-- Hibernate SessionFactory -->
+	<bean id="sessionFactory" class="org.springframework.orm.jpa.hibernate.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<!-- Scan packages for JPA annotations -->
+		<property name="packagesToScan" value="org.wicketstuff.shiro.example.sprhib.model" />
+		<property name="hibernateProperties">
+			<props>
+				<!-- Because we're using an in-memory database for demo purposes (which is lost every time the app
+					shuts down), we have to ensure that the HSQLDB DDL is run each time the app starts.  The
+					DDL is auto-generated based on the *.hbm.xml mapping definitions below. -->
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect</prop>
+				<prop key="hibernate.jdbc.fetch_size">100</prop>
+				<prop key="hibernate.cache.region.factory_class">org.hibernate.cache.jcache.internal.JCacheRegionFactory</prop>
+				<prop key="hibernate.cache.use_query_cache">true</prop>
+			</props>
+		</property>
+	</bean>
 
+	<!-- Transaction support beans -->
+	<bean id="transactionManager" class="org.springframework.orm.jpa.hibernate.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
 
-    <!-- Post processor that automatically invokes init() and destroy() methods -->
-    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+	<tx:annotation-driven />
 
-    <!-- =========================================================
-         Wicket Application
-         ========================================================= -->
-	  <bean id="wicketApplication" class="org.wicketstuff.shiro.example.sprhib.ExampleHibernateApp" />
+	<!-- =========================================================
+		Shiro Components
+		========================================================= -->
+	<bean id="ShiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<property name="securityManager" ref="securityManager" />
 
+		<property name="allowAccessByDefault" value="true" />
+		<property name="loginUrl" value="/account/login" />
+	</bean>
+
+	<!-- Shiro's main business-tier object for web-enabled applications
+		(use org.apache.shiro.web.DefaultWebSecurityManager instead when there is no web environment)-->
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<!-- Single realm app (realm configured next, below).  If you have multiple realms, use the
+			'realms' property instead. -->
+		<property name="realm" ref="sampleRealm" />
+		<!-- Uncomment this next property if you want heterogenous session access or clusterable/distributable
+			sessions.  The default value is 'http' which uses the Servlet container's HttpSession as the underlying
+			Session implementation.
+		<property name="sessionMode" value="shiro"/> -->
+	</bean>
+
+	<!-- Post processor that automatically invokes init() and destroy() methods -->
+	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
+
+	<!-- =========================================================
+		Wicket Application
+		========================================================= -->
+	<bean id="wicketApplication" class="org.wicketstuff.shiro.example.sprhib.ExampleHibernateApp" />
 </beans>
-

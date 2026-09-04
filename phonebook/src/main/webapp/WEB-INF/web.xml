@@ -11,16 +11,6 @@
 		<param-value>classpath:applicationContext.xml</param-value>
 	</context-param>
 
-
-	<!-- Enable the filters for Hibernate -->
-
-    <filter>
-        <filter-name>opensessioninview</filter-name>
-        <filter-class>org.springframework.orm.hibernate5.support.OpenSessionInViewFilter</filter-class>
-    </filter>
-	<!-- END hibernate filters -->
-
-
     <filter>
         <filter-name>phonebook</filter-name>
         <filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
@@ -29,13 +19,6 @@
             <param-value>org.apache.wicket.spring.SpringWebApplicationFactory</param-value>
         </init-param>
     </filter>
-
-	<!-- Enable the filters for Hibernate -->
-    <filter-mapping>
-        <filter-name>opensessioninview</filter-name>
-        <url-pattern>/hibernate/*</url-pattern>
-    </filter-mapping>
-	<!-- END hibernate filters -->
 
     <filter-mapping>
         <filter-name>phonebook</filter-name>
