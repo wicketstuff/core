@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.jquery.ui.calendar;
+package org.wicketstuff.jquery.ui.calendar7;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -27,7 +27,6 @@ import org.wicketstuff.jquery.core.Options;
  * @author Sebastien Briquet - sebfz1
  *
  */
-@Deprecated(since = "10.0.0", forRemoval = true)
 public class CalendarEvent implements Serializable
 {
 	private static final long serialVersionUID = 1L;

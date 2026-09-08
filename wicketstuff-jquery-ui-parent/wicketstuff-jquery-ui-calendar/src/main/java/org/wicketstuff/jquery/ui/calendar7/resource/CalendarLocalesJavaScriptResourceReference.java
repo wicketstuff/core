@@ -14,38 +14,39 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.jquery.ui.calendar.resource;
+package org.wicketstuff.jquery.ui.calendar7.resource;
 
-import org.apache.wicket.resource.JQueryPluginResourceReference;
+import de.agilecoders.wicket.webjars.request.resource.WebjarsJavaScriptResourceReference;
 
 /**
- * Provides the resource reference for the fullcalendar gcal library.
+ * Provides the resource reference for the fullcalendar javascript library.
  *
  * @author Sebastien Briquet - sebfz1
  *
  */
-@Deprecated(since = "10.0.0", forRemoval = true)
-public class GCalJavaScriptResourceReference extends JQueryPluginResourceReference
+public class CalendarLocalesJavaScriptResourceReference extends WebjarsJavaScriptResourceReference
 {
 	private static final long serialVersionUID = 1L;
 
-	private static final GCalJavaScriptResourceReference INSTANCE = new GCalJavaScriptResourceReference();
+	private static class Holder {
+		private static final CalendarLocalesJavaScriptResourceReference INSTANCE = new CalendarLocalesJavaScriptResourceReference();
+	}
 
 	/**
 	 * Gets the instance of the resource reference
 	 *
 	 * @return the single instance of the resource reference
 	 */
-	public static GCalJavaScriptResourceReference get()
+	public static CalendarLocalesJavaScriptResourceReference get()
 	{
-		return INSTANCE;
+		return Holder.INSTANCE;
 	}
 
 	/**
 	 * Private constructor
 	 */
-	private GCalJavaScriptResourceReference()
+	private CalendarLocalesJavaScriptResourceReference()
 	{
-		super(GCalJavaScriptResourceReference.class, "gcal.js");
+		super("fullcalendar/current/locales-all/global.js");
 	}
 }

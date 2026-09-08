@@ -14,13 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.jquery.ui.calendar.settings;
+package org.wicketstuff.jquery.ui.calendar7.settings;
 
 import org.apache.wicket.request.resource.ResourceReference;
-import org.wicketstuff.jquery.ui.calendar.resource.CalendarJavaScriptResourceReference;
-import org.wicketstuff.jquery.ui.calendar.resource.CalendarLocalesJavaScriptResourceReference;
-import org.wicketstuff.jquery.ui.calendar.resource.CalendarStyleSheetResourceReference;
-import org.wicketstuff.jquery.ui.calendar.resource.GCalJavaScriptResourceReference;
+import org.wicketstuff.jquery.ui.calendar7.resource.CalendarJavaScriptResourceReference;
+import org.wicketstuff.jquery.ui.calendar7.resource.CalendarLocalesJavaScriptResourceReference;
+import org.wicketstuff.jquery.ui.calendar7.resource.GCalJavaScriptResourceReference;
 
 /**
  * Provides library settings for FullCalendar resource references<br>
@@ -37,7 +36,6 @@ import org.wicketstuff.jquery.ui.calendar.resource.GCalJavaScriptResourceReferen
  *
  *         CalendarLibrarySettings settings = CalendarLibrarySettings.get();
  *         settings.setJavaScriptReference(new JavaScriptResourceReference(...));
- *         settings.setStyleSheetReference(new CssResourceReference(...));
  *         settings.setGCalJavaScriptReference(new JavaScriptResourceReference(...));
  *     }
  * }
@@ -47,13 +45,11 @@ import org.wicketstuff.jquery.ui.calendar.resource.GCalJavaScriptResourceReferen
  * @author Sebastien Briquet - sebfz1
  *
  */
-@Deprecated(since = "10.0.0", forRemoval = true)
 public class CalendarLibrarySettings
 {
 	private static CalendarLibrarySettings instance = null;
 
 	private ResourceReference javascriptReference = CalendarJavaScriptResourceReference.get();
-	private ResourceReference stylesheetReference = CalendarStyleSheetResourceReference.get();
 
 	private ResourceReference gcalReference = GCalJavaScriptResourceReference.get();
 	private ResourceReference localesReference = CalendarLocalesJavaScriptResourceReference.get();
@@ -98,26 +94,6 @@ public class CalendarLibrarySettings
 	public void setJavascriptReference(ResourceReference reference)
 	{
 		this.javascriptReference = reference;
-	}
-
-	/**
-	 * Gets the fullcalendar's stylesheet resource reference
-	 *
-	 * @return the {@link ResourceReference}
-	 */
-	public ResourceReference getStyleSheetReference()
-	{
-		return this.stylesheetReference;
-	}
-
-	/**
-	 * Sets the fullcalendar's stylesheet resource reference
-	 *
-	 * @param reference the {@link ResourceReference}
-	 */
-	public void setStylesheetReference(ResourceReference reference)
-	{
-		this.stylesheetReference = reference;
 	}
 
 	/**

@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.jquery.ui.calendar6;
+package org.wicketstuff.jquery.ui.calendar7;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -28,7 +28,6 @@ import org.apache.wicket.util.io.IClusterable;
  * @author Sebastien Briquet - sebfz1
  *
  */
-@Deprecated(since = "10.11.0", forRemoval = true)
 public interface ICalendarListener extends IClusterable
 {
 	/**

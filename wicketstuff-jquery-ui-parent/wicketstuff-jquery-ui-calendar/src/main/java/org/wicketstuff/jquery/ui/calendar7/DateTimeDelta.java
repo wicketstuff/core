@@ -14,8 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.jquery.ui.calendar6;
+package org.wicketstuff.jquery.ui.calendar7;
 
-@Deprecated(since = "10.11.0", forRemoval = true)
 public record DateTimeDelta(int years,int months, int days, int millis) {
 }

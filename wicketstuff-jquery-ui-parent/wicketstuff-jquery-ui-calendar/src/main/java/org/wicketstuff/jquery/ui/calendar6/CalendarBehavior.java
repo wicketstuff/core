@@ -48,6 +48,7 @@ import org.wicketstuff.jquery.core.utils.RequestCycleUtils;
  * @author Sebastien Briquet - sebfz1
  *
  */
+@Deprecated(since = "10.11.0", forRemoval = true)
 public class CalendarBehavior extends Behavior implements IJQueryAjaxAware
 {
 	private static final long serialVersionUID = 1L;

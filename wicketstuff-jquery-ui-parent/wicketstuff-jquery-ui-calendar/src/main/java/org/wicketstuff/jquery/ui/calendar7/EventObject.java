@@ -14,15 +14,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.jquery.ui.calendar;
+package org.wicketstuff.jquery.ui.calendar7;
 
 import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.Component;
+import org.apache.wicket.behavior.Behavior;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.lang.Args;
-import org.wicketstuff.jquery.core.IJQueryWidget;
-import org.wicketstuff.jquery.core.JQueryBehavior;
+
 import org.wicketstuff.jquery.core.Options;
 
 /**
@@ -30,8 +33,7 @@ import org.wicketstuff.jquery.core.Options;
  *
  * @author Sebastien Briquet - sebfz1
  */
-@Deprecated(since = "10.0.0", forRemoval = true)
-public class EventObject extends Label implements IJQueryWidget
+public class EventObject extends Label
 {
 	private static final long serialVersionUID = 1L;
 
@@ -83,6 +85,7 @@ public class EventObject extends Label implements IJQueryWidget
 		super(id, title);
 
 		this.options = Args.notNull(options, "options");
+		this.options.set("title", Options.asString(title.getObject()));
 	}
 
 	@Override
@@ -90,7 +93,19 @@ public class EventObject extends Label implements IJQueryWidget
 	{
 		super.onInitialize();
 
-		this.add(JQueryWidget.newWidgetBehavior(this));
+		this.add(new Behavior()
+		{
+			@Override
+			public void renderHead(Component component, IHeaderResponse response)
+			{
+				super.renderHead(component, response);
+
+				response.render(OnDomReadyHeaderItem.forScript(
+						"new FullCalendar.Draggable("
+							+ "document.getElementById('" + component.setOutputMarkupId(true).getMarkupId() + "'),"
+							+ "{eventData: " + EventObject.this.onConfigure(EventObject.this.options) + "});"));
+			}
+		});
 	}
 
 	// Events //
@@ -99,26 +114,12 @@ public class EventObject extends Label implements IJQueryWidget
 	{
 		super.onConfigure();
 
-		this.add(AttributeModifier.replace("data-title", this.getDefaultModel()));
+		this.add(AttributeModifier.replace("data-event", this.options));
+		this.add(AttributeModifier.replace("data-title", this.getDefaultModel())); // for easier retrieving
 	}
 
-	@Override
-	public void onConfigure(JQueryBehavior behavior)
+	public Options onConfigure(Options options)
 	{
-		// noop
-	}
-
-	@Override
-	public void onBeforeRender(JQueryBehavior behavior)
-	{
-		// noop
-	}
-
-	// IJQueryWidget //
-
-	@Override
-	public JQueryBehavior newWidgetBehavior(String selector)
-	{
-		return new JQueryBehavior(selector, "draggable", this.options);
+		return options;
 	}
 }

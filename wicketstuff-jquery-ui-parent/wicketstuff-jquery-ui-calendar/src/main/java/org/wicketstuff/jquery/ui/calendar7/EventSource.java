@@ -14,18 +14,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.jquery.ui.calendar;
+package org.wicketstuff.jquery.ui.calendar7;
 
 import org.apache.wicket.util.io.IClusterable;
+
 import org.wicketstuff.jquery.core.Options;
 
 /**
  * Provides an event source Object
  *
  * @author Sebastien Briquet - sebfz1
- * @see <a href="http://fullcalendar.io/docs/event_data/Event_Source_Object/">http://fullcalendar.io/docs/event_data/Event_Source_Object/</a>
+ * @see <a href="https://fullcalendar.io/docs/event-source-object">https://fullcalendar.io/docs/event-source-object</a>
  */
-@Deprecated(since = "10.0.0", forRemoval = true)
 public class EventSource implements IClusterable
 {
 	private static final long serialVersionUID = 1L;
@@ -41,7 +41,7 @@ public class EventSource implements IClusterable
 	private String rendering = null;
 	private Boolean overlap = null;
 	private String constraint = null;
-	private Boolean allDayDefault = null;
+	private Boolean defaultAllDay = null;
 	private String eventDataTransform = null;
 
 	/**
@@ -308,24 +308,24 @@ public class EventSource implements IClusterable
 	}
 
 	/**
-	 * Gets the allDayDefault option, but only for this source.
+	 * Gets the defaultAllDay option, but only for this source.
 	 *
 	 * @return true or false
 	 */
-	public Boolean getAllDayDefault()
+	public Boolean getDefaultAllDay()
 	{
-		return this.allDayDefault;
+		return this.defaultAllDay;
 	}
 
 	/**
-	 * Sets the allDayDefault option, but only for this source.
+	 * Sets the defaultAllDay option, but only for this source.
 	 *
 	 * @param allDay true or false
 	 * @return this, for chaining
 	 */
-	public EventSource setAllDayDefault(Boolean allDay)
+	public EventSource setDefaultAllDay(Boolean allDay)
 	{
-		this.allDayDefault = allDay;
+		this.defaultAllDay = allDay;
 
 		return this;
 	}
@@ -414,9 +414,9 @@ public class EventSource implements IClusterable
 			options.set("constraint", Options.asString(this.constraint));
 		}
 
-		if (this.allDayDefault != null)
+		if (this.defaultAllDay != null)
 		{
-			options.set("allDayDefault", this.allDayDefault);
+			options.set("defaultAllDay", this.defaultAllDay);
 		}
 
 		if (this.eventDataTransform != null)

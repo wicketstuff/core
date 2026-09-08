@@ -26,6 +26,7 @@ import org.wicketstuff.jquery.core.Options;
  * @author Sebastien Briquet - sebfz1
  * @see <a href="https://fullcalendar.io/docs/event-source-object">https://fullcalendar.io/docs/event-source-object</a>
  */
+@Deprecated(since = "10.11.0", forRemoval = true)
 public class EventSource implements IClusterable
 {
 	private static final long serialVersionUID = 1L;

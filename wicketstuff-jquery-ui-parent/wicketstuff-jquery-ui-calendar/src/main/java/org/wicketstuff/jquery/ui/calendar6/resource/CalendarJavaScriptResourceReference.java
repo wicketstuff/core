@@ -24,6 +24,7 @@ import de.agilecoders.wicket.webjars.request.resource.WebjarsJavaScriptResourceR
  * @author Sebastien Briquet - sebfz1
  *
  */
+@Deprecated(since = "10.11.0", forRemoval = true)
 public class CalendarJavaScriptResourceReference extends WebjarsJavaScriptResourceReference
 {
 	private static final long serialVersionUID = 1L;

@@ -14,20 +14,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.jquery.ui.calendar;
+package org.wicketstuff.jquery.ui.calendar7;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
-import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.lang.Generics;
-import org.wicketstuff.jquery.core.JQueryBehavior;
-import org.wicketstuff.jquery.core.JQueryContainer;
+import org.wicketstuff.jquery.ui.calendar7.EventSource.GoogleCalendar;
+import org.wicketstuff.jquery.core.IJQueryWidget.JQueryWidget;
 import org.wicketstuff.jquery.core.Options;
-import org.wicketstuff.jquery.ui.calendar.EventSource.GoogleCalendar;
 
 /**
  * Provides calendar widget, based on the jQuery fullcalendar plugin.
@@ -36,13 +33,13 @@ import org.wicketstuff.jquery.ui.calendar.EventSource.GoogleCalendar;
  * @author Martin Grigorov - martin-g
  *
  */
-@Deprecated(since = "10.0.0", forRemoval = true)
-public class Calendar extends JQueryContainer implements ICalendarListener
+public class Calendar extends WebMarkupContainer implements ICalendarListener
 {
 	private static final long serialVersionUID = 1L;
 
 	private List<EventSource> sources;
 	private CalendarModelBehavior modelBehavior; // events load
+	private CalendarBehavior behavior;
 
 	protected final Options options;
 
@@ -118,7 +115,7 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	 */
 	public void refresh(IPartialPageRequestHandler handler)
 	{
-		handler.appendJavaScript(String.format("jQuery('%s').fullCalendar('refetchEvents');", JQueryWidget.getSelector(this)));
+		handler.appendJavaScript(String.format("document.querySelector('%s').calendar.refetchEvents();", JQueryWidget.getSelector(this)));
 	}
 
 	// Events //
@@ -129,39 +126,29 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 		super.onInitialize();
 
 		this.modelBehavior = this.newCalendarModelBehavior(this.getModel());
-		this.add(this.modelBehavior);
+		this.behavior = new CalendarBehavior(JQueryWidget.getSelector(this), this.options, this);
+		this.add(this.behavior, this.modelBehavior);
 	}
 
 	@Override
-	public void onConfigure(JQueryBehavior behavior)
+	public void onConfigure()
 	{
-		super.onConfigure(behavior);
+		super.onConfigure();
 
 		// builds sources //
 		StringBuilder sourceBuilder = new StringBuilder();
-		sourceBuilder.append(String.format("{ url: '%s' }", Calendar.this.modelBehavior.getCallbackUrl()));
+		sourceBuilder.append("{ url: '" + modelBehavior.getCallbackUrl() + "' }");
 
-		if (Calendar.this.sources != null)
+		if (this.sources != null)
 		{
-			for (EventSource source : Calendar.this.sources)
+			for (EventSource source : this.sources)
 			{
 				sourceBuilder.append(", ");
 				sourceBuilder.append(source.toString());
 			}
 		}
 
-		behavior.setOption("eventSources", String.format("[%s]", sourceBuilder.toString()));
-	}
-
-	// IJQueryWidget //
-
-	/**
-	 * see {@link JQueryContainer#newWidgetBehavior(String)}
-	 */
-	@Override
-	public JQueryBehavior newWidgetBehavior(String selector)
-	{
-		return new CalendarBehavior(selector, this.options, this);
+		behavior.setOption("eventSources", "[" + sourceBuilder + "]");
 	}
 
 	// Factory methods //

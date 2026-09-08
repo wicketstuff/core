@@ -14,26 +14,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.jquery.ui.calendar;
+package org.wicketstuff.jquery.ui.calendar7;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.AjaxCallListener;
 import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
+import org.apache.wicket.behavior.Behavior;
+import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
+import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
+import org.apache.wicket.markup.head.PriorityHeaderItem;
 import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.string.Strings;
-import org.wicketstuff.jquery.core.JQueryBehavior;
+import org.wicketstuff.jquery.ui.calendar7.resource.SkeletonCssResourceReference;
+import org.wicketstuff.jquery.ui.calendar7.settings.CalendarLibrarySettings;
+
+import com.github.openjson.JSONObject;
+
 import org.wicketstuff.jquery.core.JQueryEvent;
 import org.wicketstuff.jquery.core.Options;
 import org.wicketstuff.jquery.core.ajax.IJQueryAjaxAware;
 import org.wicketstuff.jquery.core.ajax.JQueryAjaxBehavior;
 import org.wicketstuff.jquery.core.utils.RequestCycleUtils;
-import org.wicketstuff.jquery.ui.calendar.settings.CalendarLibrarySettings;
 
 /**
  * Provides the jQuery fullCalendar behavior
@@ -41,35 +50,36 @@ import org.wicketstuff.jquery.ui.calendar.settings.CalendarLibrarySettings;
  * @author Sebastien Briquet - sebfz1
  *
  */
-@Deprecated(since = "10.0.0", forRemoval = true)
-public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
+public class CalendarBehavior extends Behavior implements IJQueryAjaxAware
 {
 	private static final long serialVersionUID = 1L;
 	public static final String METHOD = "fullCalendar";
+	private final Options options;
+	private final String selector;
 
 	/** event listener */
 	private final ICalendarListener listener;
 
 	/** date range-select behavior */
-	private JQueryAjaxBehavior onSelectAjaxBehavior = null;
+	private JQueryAjaxBehavior onSelectAjaxBehavior;
 
 	/** day click */
-	private JQueryAjaxBehavior onDayClickAjaxBehavior;
+	private JQueryAjaxBehavior onDateClickAjaxBehavior;
 
 	/** event click */
 	private JQueryAjaxBehavior onEventClickAjaxBehavior;
 
 	/** event drop */
-	private JQueryAjaxBehavior onEventDropAjaxBehavior = null;
+	private JQueryAjaxBehavior onEventDropAjaxBehavior;
 
 	/** event resize */
-	private JQueryAjaxBehavior onEventResizeAjaxBehavior = null;
+	private JQueryAjaxBehavior onEventResizeAjaxBehavior;
 
 	/** event-object drop */
-	private JQueryAjaxBehavior onObjectDropAjaxBehavior = null;
+	private JQueryAjaxBehavior onObjectDropAjaxBehavior;
 
 	/** view render */
-	private JQueryAjaxBehavior onViewRenderAjaxBehavior = null;
+	private JQueryAjaxBehavior onViewDidMountAjaxBehavior;
 
 	/**
 	 * Constructor
@@ -91,42 +101,10 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 	 */
 	public CalendarBehavior(final String selector, Options options, ICalendarListener listener)
 	{
-		super(selector, METHOD, options);
-
+		super();
+		this.selector = Args.notNull(selector, "selector");
+		this.options = Args.notNull(options, "options");
 		this.listener = Args.notNull(listener, "listener");
-		this.initReferences();
-	}
-
-	/**
-	 * Initializes CSS & JavaScript resource references
-	 */
-	private void initReferences()
-	{
-		CalendarLibrarySettings settings = CalendarLibrarySettings.get();
-
-		// fullcalendar.css //
-		if (settings.getStyleSheetReference() != null)
-		{
-			this.add(settings.getStyleSheetReference());
-		}
-
-		// fullcalendar.min.js //
-		if (settings.getJavaScriptReference() != null)
-		{
-			this.add(settings.getJavaScriptReference());
-		}
-
-		// gcal.js //
-		if (settings.getGCalJavaScriptReference() != null)
-		{
-			this.add(settings.getGCalJavaScriptReference());
-		}
-
-		// locale-all.js //
-		if (settings.getLocalesJavaScriptReference() != null)
-		{
-			this.add(settings.getLocalesJavaScriptReference());
-		}
 	}
 
 	// Methods //
@@ -142,10 +120,10 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 			component.add(this.onSelectAjaxBehavior);
 		}
 
-		if (this.listener.isDayClickEnabled())
+		if (this.listener.isDateClickEnabled())
 		{
-			this.onDayClickAjaxBehavior = this.newOnDayClickAjaxBehavior(this);
-			component.add(this.onDayClickAjaxBehavior);
+			this.onDateClickAjaxBehavior = this.newOnDateClickAjaxBehavior(this);
+			component.add(this.onDateClickAjaxBehavior);
 		}
 
 		if (this.listener.isEventClickEnabled())
@@ -172,10 +150,10 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 			component.add(this.onObjectDropAjaxBehavior);
 		}
 
-		if (this.listener.isViewRenderEnabled())
+		if (this.listener.isViewDidMountEnabled())
 		{
-			this.onViewRenderAjaxBehavior = this.newOnViewRenderAjaxBehavior(this);
-			component.add(this.onViewRenderAjaxBehavior);
+			this.onViewDidMountAjaxBehavior = this.newViewDidMountAjaxBehavior(this);
+			component.add(this.onViewDidMountAjaxBehavior);
 		}
 	}
 
@@ -184,14 +162,52 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 	{
 		super.renderHead(component, response);
 
+		CalendarLibrarySettings settings = CalendarLibrarySettings.get();
+
+		// fullcalendar.min.js //
+		if (settings.getJavaScriptReference() != null)
+		{
+			response.render(new PriorityHeaderItem(JavaScriptHeaderItem.forReference(settings.getJavaScriptReference())));
+		}
+
+		// gcal.js //
+		if (settings.getGCalJavaScriptReference() != null)
+		{
+			response.render(new PriorityHeaderItem(JavaScriptHeaderItem.forReference(settings.getGCalJavaScriptReference())));
+		}
+
+		// locale-all.js //
+		if (settings.getLocalesJavaScriptReference() != null)
+		{
+			response.render(new PriorityHeaderItem(JavaScriptHeaderItem.forReference(settings.getLocalesJavaScriptReference())));
+		}
+
+		// skeleton.css
+		response.render(new PriorityHeaderItem(CssHeaderItem.forReference(SkeletonCssResourceReference.get())));
+
+		// date-format helper
+		response.render(new PriorityHeaderItem(JavaScriptHeaderItem.forScript(
+				"""
+				window.WicketStuff = window.WicketStuff || {};
+				window.WicketStuff.JqueryUI = window.WicketStuff.JqueryUI || {};
+				window.WicketStuff.JqueryUI.toLocalDateTime = function (d) {
+					let pad = (n) => ('' + n).padStart(2, '0');
+					return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate())
+						+ 'T' + pad(d.getHours()) + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds()) + 'Z';
+				};"""
+				, "jquery-ui-date-format-helper")));
+
 		/* adds and configure the busy indicator */
 		StringBuilder builder = new StringBuilder();
+		builder.append("const el = document.querySelector('").append(this.selector).append("');\n")
+				.append("el.calendar = new FullCalendar.Calendar(el, ").append(options).append(");\n")
+				.append("el.calendar.render();\n");
 
-		builder.append("jQuery(\"<img id='calendar-indicator' src='").append(RequestCycleUtils.getAjaxIndicatorUrl()).append("' />\").appendTo('.fc-header-center');\n"); // allows only one calendar.
-		builder.append("jQuery(document).ajaxStart(function() { jQuery('#calendar-indicator').show(); });\n");
-		builder.append("jQuery(document).ajaxStop(function() { jQuery('#calendar-indicator').hide(); });\n");
+		builder.append("jQuery(\"<img id='calendar-indicator' src='").append(RequestCycleUtils.getAjaxIndicatorUrl()).append("' />\").appendTo('.fc-header-center');\n") // allows only one calendar.
+				.append("jQuery(document).ajaxStart(function() { jQuery('#calendar-indicator').show(); });\n")
+				.append("jQuery(document).ajaxStop(function() { jQuery('#calendar-indicator').hide(); });\n");
 
-		this.renderOnDomReadyScript(builder.toString(), response);
+		response.render(OnDomReadyHeaderItem.forScript(builder));
 	}
 
 	// Properties //
@@ -199,23 +215,47 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 	/**
 	 * Indicates whether the Calendar will be editable
 	 *
-	 * @return by default, true if {@link ICalendarListener#isDayClickEnabled()} is true or {@link ICalendarListener#isEventClickEnabled()} is true
+	 * @return by default, true if {@link ICalendarListener#isDateClickEnabled()} is true or {@link ICalendarListener#isEventClickEnabled()} is true
 	 */
 	protected boolean isEditable()
 	{
-		return (this.onDayClickAjaxBehavior != null) || (this.onEventClickAjaxBehavior != null);
+		return (this.onDateClickAjaxBehavior != null) || (this.onEventClickAjaxBehavior != null);
 	}
 
 	// Events //
+	/**
+	 * Gets a behavior option, referenced by its key
+	 *
+	 * @param <T> the object type
+	 * @param key the option key
+	 * @return {@code null} if the key does not exists
+	 */
+	public <T> T getOption(String key)
+	{
+		return this.options.get(key);
+	}
+
+	/**
+	 * Sets a behavior option.
+	 *
+	 * @param key the option key
+	 * @param value the option value
+	 * @return the {@link CalendarBehavior} (this)
+	 */
+	public CalendarBehavior setOption(String key, Object value)
+	{
+		this.options.set(key, value);
+
+		return this;
+	}
 
 	@Override
 	public void onConfigure(Component component)
 	{
 		this.setOption("editable", this.isEditable());
 		this.setOption("selectable", this.listener.isSelectable());
-		this.setOption("selectHelper", this.listener.isSelectable());
-		this.setOption("disableDragging", !this.listener.isEventDropEnabled());
-		this.setOption("disableResizing", !this.listener.isEventResizeEnabled());
+		this.setOption("eventStartEditable", !this.listener.isEventDropEnabled());
+		this.setOption("eventDurationEditable", !this.listener.isEventResizeEnabled());
 		this.setOption("droppable", this.listener.isObjectDropEnabled());
 
 		if (this.onSelectAjaxBehavior != null)
@@ -223,9 +263,9 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 			this.setOption("select", this.onSelectAjaxBehavior.getCallbackFunction());
 		}
 
-		if (this.onDayClickAjaxBehavior != null)
+		if (this.onDateClickAjaxBehavior != null)
 		{
-			this.setOption("dayClick", this.onDayClickAjaxBehavior.getCallbackFunction());
+			this.setOption("dateClick", this.onDateClickAjaxBehavior.getCallbackFunction());
 		}
 
 		if (this.onEventClickAjaxBehavior != null)
@@ -248,9 +288,9 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 			this.setOption("drop", this.onObjectDropAjaxBehavior.getCallbackFunction());
 		}
 
-		if (this.onViewRenderAjaxBehavior != null)
+		if (this.onViewDidMountAjaxBehavior != null)
 		{
-			this.setOption("viewRender", this.onViewRenderAjaxBehavior.getCallbackFunction());
+			this.setOption("viewDidMount", this.onViewDidMountAjaxBehavior.getCallbackFunction());
 		}
 
 		super.onConfigure(component);
@@ -265,10 +305,10 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 			this.listener.onSelect(target, selectEvent.getView(), selectEvent.getStart(), selectEvent.getEnd(), selectEvent.isAllDay());
 		}
 
-		else if (event instanceof DayClickEvent)
+		else if (event instanceof DateClickEvent)
 		{
-			DayClickEvent dayClickEvent = (DayClickEvent) event;
-			this.listener.onDayClick(target, dayClickEvent.getView(), dayClickEvent.getDate(), dayClickEvent.isAllDay());
+			DateClickEvent dayClickEvent = (DateClickEvent) event;
+			this.listener.onDateClick(target, dayClickEvent.getView(), dayClickEvent.getDate(), dayClickEvent.isAllDay());
 		}
 
 		else if (event instanceof ClickEvent)
@@ -295,10 +335,10 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 			this.listener.onObjectDrop(target, dropEvent.getTitle(), dropEvent.getDate(), dropEvent.isAllDay());
 		}
 
-		else if (event instanceof ViewRenderEvent)
+		else if (event instanceof ViewDidMountEvent)
 		{
-			ViewRenderEvent renderEvent = (ViewRenderEvent) event;
-			this.listener.onViewRender(target, renderEvent.getView(), renderEvent.getStart(), renderEvent.getEnd());
+			ViewDidMountEvent renderEvent = (ViewDidMountEvent) event;
+			this.listener.onViewDidMount(target, renderEvent.getView(), renderEvent.getStart(), renderEvent.getEnd());
 		}
 	}
 
@@ -319,11 +359,11 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'dayClick' event, triggered when the user clicks on a day cell
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@code OnDayClickAjaxBehavior} by default
+	 * @return a new {@code OnDateClickAjaxBehavior} by default
 	 */
-	protected JQueryAjaxBehavior newOnDayClickAjaxBehavior(IJQueryAjaxAware source)
+	protected JQueryAjaxBehavior newOnDateClickAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new OnDayClickAjaxBehavior(source);
+		return new OnDateClickAjaxBehavior(source);
 	}
 
 	/**
@@ -373,14 +413,14 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 	}
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'viewRender' event, triggered when the user changes the view, or when any of the date navigation methods are called.
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'viewDidMount' event, triggered when the user changes the view, or when any of the date navigation methods are called.
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@code OnViewRenderAjaxBehavior} by default
+	 * @return a new {@code OnViewDidMountAjaxBehavior} by default
 	 */
-	protected JQueryAjaxBehavior newOnViewRenderAjaxBehavior(IJQueryAjaxAware source)
+	protected JQueryAjaxBehavior newViewDidMountAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new OnViewRenderAjaxBehavior(source);
+		return new OnViewDidMountAjaxBehavior(source);
 	}
 
 	// Ajax classes //
@@ -400,13 +440,13 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 		@Override
 		protected CallbackParameter[] getCallbackParameters()
 		{
-			// http://fullcalendar.io/docs/selection/select_callback/
-			return new CallbackParameter[] { CallbackParameter.converted("startDate", "startDate.format()"), // retrieved
-					CallbackParameter.converted("endDate", "endDate.format()"), // retrieved
-					CallbackParameter.resolved("allDay", "!startDate.hasTime()"), // retrieved
-					CallbackParameter.context("jsEvent"), // lf
-					CallbackParameter.context("view"), // lf
-					CallbackParameter.resolved("viewName", "view.name") // retrieved
+			// https://fullcalendar.io/docs/select-callback
+			return new CallbackParameter[] {
+					CallbackParameter.context("info"), // lf
+					CallbackParameter.resolved("startDate", "WicketStuff.JqueryUI.toLocalDateTime(info.start)"), // retrieved
+					CallbackParameter.resolved("endDate", "WicketStuff.JqueryUI.toLocalDateTime(info.end)"), // retrieved
+					CallbackParameter.resolved("allDay", "info.allDay"), // retrieved
+					CallbackParameter.resolved("viewName", "info.view.type") // retrieved
 			};
 		}
 
@@ -418,13 +458,13 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 	}
 
 	/**
-	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'dayClick' event
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'dateClick' event
 	 */
-	protected static class OnDayClickAjaxBehavior extends JQueryAjaxBehavior
+	protected static class OnDateClickAjaxBehavior extends JQueryAjaxBehavior
 	{
 		private static final long serialVersionUID = 1L;
 
-		public OnDayClickAjaxBehavior(IJQueryAjaxAware source)
+		public OnDateClickAjaxBehavior(IJQueryAjaxAware source)
 		{
 			super(source);
 		}
@@ -432,19 +472,19 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 		@Override
 		protected CallbackParameter[] getCallbackParameters()
 		{
-			// http://fullcalendar.io/docs/mouse/dayClick/
-			return new CallbackParameter[] { CallbackParameter.converted("date", "date.format()"), // retrieved
-					CallbackParameter.resolved("allDay", "!date.hasTime()"), // retrieved
-					CallbackParameter.context("jsEvent"), // lf
-					CallbackParameter.context("view"),// lf
-					CallbackParameter.resolved("viewName", "view.name") // retrieved
+			// https://fullcalendar.io/docs/dateClick
+			return new CallbackParameter[] {
+					CallbackParameter.context("info"), // lf
+					CallbackParameter.resolved("date", "WicketStuff.JqueryUI.toLocalDateTime(info.date)"), // retrieved
+					CallbackParameter.resolved("allDay", "info.allDay"), // retrieved
+					CallbackParameter.resolved("viewName", "info.view.type") // retrieved
 			};
 		}
 
 		@Override
 		protected JQueryEvent newEvent()
 		{
-			return new DayClickEvent();
+			return new DateClickEvent();
 		}
 	}
 
@@ -463,12 +503,11 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 		@Override
 		protected CallbackParameter[] getCallbackParameters()
 		{
-			// http://arshaw.com/fullcalendar/docs/mouse/eventClick/
-			return new CallbackParameter[] { CallbackParameter.context("event"), // lf
-					CallbackParameter.context("jsEvent"), // lf
-					CallbackParameter.context("view"), // lf
-					CallbackParameter.resolved("eventId", "event.id"),// retrieved
-					CallbackParameter.resolved("viewName", "view.name") // retrieved
+			// https://fullcalendar.io/docs/eventClick
+			return new CallbackParameter[] {
+					CallbackParameter.context("info"), // lf
+					CallbackParameter.resolved("eventId", "info.event.id"),// retrieved
+					CallbackParameter.resolved("viewName", "info.view.type") // retrieved
 			};
 		}
 
@@ -512,16 +551,12 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 		@Override
 		protected CallbackParameter[] getCallbackParameters()
 		{
-			// http://fullcalendar.io/docs/event_ui/eventDrop/
-			return new CallbackParameter[] { CallbackParameter.context("event"), // lf
-					CallbackParameter.context("delta"), // lf
-					CallbackParameter.resolved("millisDelta", "delta.asMilliseconds()"), // retrieved
-					CallbackParameter.resolved("allDay", "!event.start.hasTime()"), // retrieved
-					CallbackParameter.context("revertFunc"), // lf
-					CallbackParameter.context("jsEvent"), // lf
-					CallbackParameter.context("ui"), // lf
-					CallbackParameter.context("view"), // lf
-					CallbackParameter.resolved("eventId", "event.id") // retrieved
+			// https://fullcalendar.io/docs/eventDrop
+			return new CallbackParameter[] {
+					CallbackParameter.context("info"), // lf
+					CallbackParameter.resolved("delta", "JSON.stringify(info.delta)"), // retrieved
+					CallbackParameter.resolved("allDay", "info.event.allDay"), // retrieved
+					CallbackParameter.resolved("eventId", "info.event.id") // retrieved
 			};
 		}
 
@@ -565,15 +600,11 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 		@Override
 		protected CallbackParameter[] getCallbackParameters()
 		{
-			return new CallbackParameter[] { CallbackParameter.context("event"), // lf
-					CallbackParameter.context("delta"), // lf
-					CallbackParameter.context("revertFunc"), // lf
-					CallbackParameter.context("jsEvent"), // lf
-					CallbackParameter.context("ui"), // lf
-					CallbackParameter.context("view"), // lf
-					CallbackParameter.resolved("millisDelta", "delta.asMilliseconds()"), // retrieved
-					CallbackParameter.resolved("allDay", "!event.start.hasTime()"), // retrieved
-					CallbackParameter.resolved("eventId", "event.id") // retrieved
+			return new CallbackParameter[] {
+					CallbackParameter.context("info"), // lf
+					CallbackParameter.resolved("delta", "JSON.stringify(info.endDelta)"), // retrieved
+					CallbackParameter.resolved("allDay", "info.event.allDay"), // retrieved
+					CallbackParameter.resolved("eventId", "info.event.id") // retrieved
 			};
 		}
 
@@ -599,12 +630,12 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 		@Override
 		protected CallbackParameter[] getCallbackParameters()
 		{
-			// http://fullcalendar.io/docs/dropping/drop/
-			return new CallbackParameter[] { CallbackParameter.converted("date", "date.format()"), // retrieved
-					CallbackParameter.resolved("allDay", "!date.hasTime()"), // retrieved
-					CallbackParameter.context("jsEvent"), // lf
-					CallbackParameter.context("ui"), // lf
-					CallbackParameter.resolved("title", "jQuery(this).data('title')") // retrieved
+			// https://fullcalendar.io/docs/drop
+			return new CallbackParameter[] {
+					CallbackParameter.context("info"), // lf
+					CallbackParameter.resolved("date", "WicketStuff.JqueryUI.toLocalDateTime(info.date)"), // retrieved
+					CallbackParameter.resolved("allDay", "info.allDay"), // retrieved
+					CallbackParameter.resolved("title", "info.draggedEl.getAttribute('data-title')"), // retrieved
 			};
 		}
 
@@ -616,13 +647,13 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 	}
 
 	/**
-	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'viewRender' event
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'viewDidMount' event
 	 */
-	protected static class OnViewRenderAjaxBehavior extends JQueryAjaxBehavior
+	protected static class OnViewDidMountAjaxBehavior extends JQueryAjaxBehavior
 	{
 		private static final long serialVersionUID = 1L;
 
-		public OnViewRenderAjaxBehavior(IJQueryAjaxAware source)
+		public OnViewDidMountAjaxBehavior(IJQueryAjaxAware source)
 		{
 			super(source);
 		}
@@ -630,18 +661,18 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 		@Override
 		protected CallbackParameter[] getCallbackParameters()
 		{
-			// http://arshaw.com/fullcalendar/docs/display/viewRender/
-			return new CallbackParameter[] { CallbackParameter.context("view"),// lf
-					CallbackParameter.context("element"), // lf
-					CallbackParameter.resolved("viewName", "view.name"), // retrieved
-					CallbackParameter.resolved("startDate", "view.start.format()"), // retrieved
-					CallbackParameter.resolved("endDate", "view.end.format()") }; // retrieved
+			// https://fullcalendar.io/docs/view-render-hooks
+			return new CallbackParameter[] {
+					CallbackParameter.context("info"),// lf
+					CallbackParameter.resolved("viewName", "info.view.type"), // retrieved
+					CallbackParameter.resolved("startDate", "WicketStuff.JqueryUI.toLocalDateTime(info.view.activeStart)"), // retrieved
+					CallbackParameter.resolved("endDate", "WicketStuff.JqueryUI.toLocalDateTime(info.view.activeEnd)") }; // retrieved
 		}
 
 		@Override
 		protected JQueryEvent newEvent()
 		{
-			return new ViewRenderEvent();
+			return new ViewDidMountEvent();
 		}
 	}
 
@@ -662,10 +693,10 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 			this.isAllDay = RequestCycleUtils.getQueryParameterValue("allDay").toBoolean();
 
 			String start = RequestCycleUtils.getQueryParameterValue("startDate").toString();
-			this.start = this.isAllDay ? LocalDate.parse(start).atStartOfDay() : LocalDateTime.parse(start);
+			this.start = parse(start, this.isAllDay);
 
 			String end = RequestCycleUtils.getQueryParameterValue("endDate").toString();
-			this.end = this.isAllDay ? LocalDate.parse(end).atStartOfDay() : LocalDateTime.parse(end);
+			this.end = parse(end, this.isAllDay);
 
 			this.viewName = RequestCycleUtils.getQueryParameterValue("viewName").toString();
 		}
@@ -712,9 +743,9 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 	}
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link OnDayClickAjaxBehavior} callback
+	 * Provides an event object that will be broadcasted by the {@link OnDateClickAjaxBehavior} callback
 	 */
-	protected static class DayClickEvent extends JQueryEvent
+	protected static class DateClickEvent extends JQueryEvent
 	{
 		private final LocalDateTime day;
 		private final boolean isAllDay;
@@ -723,12 +754,12 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 		/**
 		 * Constructor
 		 */
-		public DayClickEvent()
+		public DateClickEvent()
 		{
 			this.isAllDay = RequestCycleUtils.getQueryParameterValue("allDay").toBoolean();
 
 			String date = RequestCycleUtils.getQueryParameterValue("date").toString();
-			this.day = this.isAllDay ? LocalDate.parse(date).atStartOfDay() : LocalDateTime.parse(date);
+			this.day = parse(date, this.isAllDay);
 
 			this.viewName = RequestCycleUtils.getQueryParameterValue("viewName").toString();
 		}
@@ -803,26 +834,26 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 	}
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link OnViewRenderAjaxBehavior} callback
+	 * Provides an event object that will be broadcasted by the {@link OnViewDidMountAjaxBehavior} callback
 	 */
-	protected static class ViewRenderEvent extends JQueryEvent
+	protected static class ViewDidMountEvent extends JQueryEvent
 	{
 		private final LocalDate start;
 		private final LocalDate end;
-		private final String viewName;
+		private final CalendarView viewName;
 
 		/**
 		 * Constructor
 		 */
-		public ViewRenderEvent()
+		public ViewDidMountEvent()
 		{
 			String start = RequestCycleUtils.getQueryParameterValue("startDate").toString();
-			this.start = LocalDate.parse(start);
+			this.start = parseDate(start);
 
 			String end = RequestCycleUtils.getQueryParameterValue("endDate").toString();
-			this.end = LocalDate.parse(end);
+			this.end = parseDate(end);
 
-			this.viewName = RequestCycleUtils.getQueryParameterValue("viewName").toString();
+			this.viewName = CalendarView.get(RequestCycleUtils.getQueryParameterValue("viewName").toString());
 		}
 
 		/**
@@ -852,7 +883,7 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 		 */
 		public CalendarView getView()
 		{
-			return CalendarView.get(this.viewName);
+			return this.viewName;
 		}
 	}
 
@@ -862,7 +893,7 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 	protected abstract static class DeltaEvent extends JQueryEvent
 	{
 		private final String eventId;
-		private final long delta;
+		private final DateTimeDelta delta;
 
 		/**
 		 * Constructor
@@ -870,7 +901,8 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 		public DeltaEvent()
 		{
 			this.eventId = RequestCycleUtils.getQueryParameterValue("eventId").toString();
-			this.delta = RequestCycleUtils.getQueryParameterValue("millisDelta").toLong();
+			JSONObject deltaObj = new JSONObject(RequestCycleUtils.getQueryParameterValue("delta").toString());
+			this.delta = new DateTimeDelta(deltaObj.getInt("years"), deltaObj.getInt("months"), deltaObj.getInt("days"), deltaObj.getInt("milliseconds"));
 		}
 
 		/**
@@ -888,7 +920,7 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 		 *
 		 * @return the event's delta time
 		 */
-		public long getDelta()
+		public DateTimeDelta getDelta()
 		{
 			return this.delta;
 		}
@@ -944,7 +976,7 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 			this.isAllDay = RequestCycleUtils.getQueryParameterValue("allDay").toBoolean();
 
 			String date = RequestCycleUtils.getQueryParameterValue("date").toString();
-			this.day = this.isAllDay ? LocalDate.parse(date).atStartOfDay() : LocalDateTime.parse(date);
+			this.day = parse(date, this.isAllDay);
 
 			this.title = RequestCycleUtils.getQueryParameterValue("title").toString();
 		}
@@ -978,5 +1010,15 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 		{
 			return this.isAllDay;
 		}
+	}
+
+	protected static LocalDate parseDate(String dateStr) {
+		return LocalDate.parse(dateStr, DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+	}
+
+	protected static LocalDateTime parse(String dateStr, boolean allDay) {
+		return allDay
+				? parseDate(dateStr).atStartOfDay()
+				: LocalDateTime.parse(dateStr, DateTimeFormatter.ISO_OFFSET_DATE_TIME);
 	}
 }

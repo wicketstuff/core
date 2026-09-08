@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.jquery.ui.calendar;
+package org.wicketstuff.jquery.ui.calendar7;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -28,7 +28,6 @@ import org.apache.wicket.model.LoadableDetachableModel;
  * @author Sebastien Briquet - sebfz1
  *
  */
-@Deprecated(since = "10.0.0", forRemoval = true)
 public abstract class CalendarModel extends LoadableDetachableModel<List<? extends CalendarEvent>>
 {
 	private static final long serialVersionUID = 1L;

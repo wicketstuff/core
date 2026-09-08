@@ -24,6 +24,7 @@ import org.apache.wicket.resource.JQueryPluginResourceReference;
  * @author Sebastien Briquet - sebfz1
  *
  */
+@Deprecated(since = "10.0.0", forRemoval = true)
 public class CalendarLocalesJavaScriptResourceReference extends JQueryPluginResourceReference
 {
 	private static final long serialVersionUID = 1L;

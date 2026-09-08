@@ -14,38 +14,54 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.jquery.ui.calendar.resource;
+package org.wicketstuff.jquery.ui.calendar7;
 
-import org.apache.wicket.resource.JQueryPluginResourceReference;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * Provides the resource reference for the fullcalendar gcal library.
+ * Provides an enum of available calendar views
  *
  * @author Sebastien Briquet - sebfz1
- *
  */
-@Deprecated(since = "10.0.0", forRemoval = true)
-public class GCalJavaScriptResourceReference extends JQueryPluginResourceReference
+public enum CalendarView
 {
-	private static final long serialVersionUID = 1L;
+	dayGridMonth,
+	dayGridWeek,
+	dayGridDay,
 
-	private static final GCalJavaScriptResourceReference INSTANCE = new GCalJavaScriptResourceReference();
+	timeGridWeek,
+	timeGridDay,
+
+	multiMonthYear,
+
+	listDay,
+	listWeek,
+	listMonth,
+	listYear;
+
+	private static final Logger LOG = LoggerFactory.getLogger(CalendarView.class);
 
 	/**
-	 * Gets the instance of the resource reference
+	 * Safely get the {@link CalendarView} corresponding to the supplied view name
 	 *
-	 * @return the single instance of the resource reference
+	 * @param viewName the view name
+	 * @return null if the view name does not correspond to a view of the enum
 	 */
-	public static GCalJavaScriptResourceReference get()
+	public static CalendarView get(String viewName)
 	{
-		return INSTANCE;
-	}
+		try
+		{
+			return CalendarView.valueOf(viewName);
+		}
+		catch (IllegalArgumentException e)
+		{
+			if (LOG.isDebugEnabled())
+			{
+				LOG.debug(e.getMessage(), e);
+			}
+		}
 
-	/**
-	 * Private constructor
-	 */
-	private GCalJavaScriptResourceReference()
-	{
-		super(GCalJavaScriptResourceReference.class, "gcal.js");
+		return null;
 	}
 }

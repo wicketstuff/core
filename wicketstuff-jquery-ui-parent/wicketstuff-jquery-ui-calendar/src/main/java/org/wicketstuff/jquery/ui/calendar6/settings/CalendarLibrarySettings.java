@@ -46,6 +46,7 @@ import org.wicketstuff.jquery.ui.calendar6.resource.GCalJavaScriptResourceRefere
  * @author Sebastien Briquet - sebfz1
  *
  */
+@Deprecated(since = "10.11.0", forRemoval = true)
 public class CalendarLibrarySettings
 {
 	private static CalendarLibrarySettings instance = null;

@@ -28,6 +28,7 @@ import org.apache.wicket.util.io.IClusterable;
  * @author Sebastien Briquet - sebfz1
  *
  */
+@Deprecated(since = "10.0.0", forRemoval = true)
 public interface ICalendarListener extends IClusterable
 {
 	/**

@@ -28,6 +28,7 @@ import org.apache.wicket.model.LoadableDetachableModel;
  * @author Sebastien Briquet - sebfz1
  *
  */
+@Deprecated(since = "10.11.0", forRemoval = true)
 public abstract class CalendarModel extends LoadableDetachableModel<List<? extends CalendarEvent>>
 {
 	private static final long serialVersionUID = 1L;

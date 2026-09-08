@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.jquery.ui.calendar6;
+package org.wicketstuff.jquery.ui.calendar7;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -30,7 +30,6 @@ import org.wicketstuff.jquery.core.behavior.AjaxCallbackBehavior;
  * @author Sebastien Briquet - sebfz1
  *
  */
-@Deprecated(since = "10.11.0", forRemoval = true)
 public class CalendarModelBehavior extends AjaxCallbackBehavior
 {
 	private static final long serialVersionUID = 1L;

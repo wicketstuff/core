@@ -383,7 +383,7 @@
 		<fst.version>3.0.4-jdk17</fst.version>
 		<jquery-ui.version>1.14.2</jquery-ui.version>
 		<moment-js.version>2.30.1</moment-js.version>
-		<fullcalendar.version>6.1.15</fullcalendar.version>
+		<fullcalendar.version>7.1.0</fullcalendar.version>
 		<select2.version>4.1.0</select2.version>
 		<owasp-sanitizer.version>20260313.1</owasp-sanitizer.version>
 		<!-- plugins -->
