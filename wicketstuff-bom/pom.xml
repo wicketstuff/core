@@ -281,10 +281,6 @@
 								</dependencyExclusion>
 								<dependencyExclusion>
 									<groupId>org.wicketstuff</groupId>
-									<artifactId>wicketstuff-jamon-examples</artifactId>
-								</dependencyExclusion>
-								<dependencyExclusion>
-									<groupId>org.wicketstuff</groupId>
 									<artifactId>wicket-datetime-examples</artifactId>
 								</dependencyExclusion>
 								<dependencyExclusion>

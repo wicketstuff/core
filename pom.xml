@@ -182,7 +182,6 @@
 								<artifactId>wicketstuff-selectize-examples</artifactId>
 								<artifactId>wicket-foundation-samples</artifactId>
 								<artifactId>wicketstuff-dashboard-examples</artifactId>
-								<artifactId>wicketstuff-jamon-examples</artifactId>
 								<artifactId>wicket-datetime-examples</artifactId>
 								<artifactId>wicketstuff-datetime-yui-examples</artifactId>
 								<artifactId>wicketstuff-datastore-tests</artifactId>
@@ -481,7 +480,6 @@
 		<module>wicketstuff-glassfish4-integration</module>
 		<module>wicket-foundation</module>
 		<module>dashboard-parent</module>
-		<module>jamon-parent</module>
 		<module>wicketstuff-rest-lambda</module>
 		<module>wicketstuff-lambda-components</module>
 		<module>wicket-datetime-parent</module>
