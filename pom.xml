@@ -387,7 +387,7 @@
 		<select2.version>4.1.0</select2.version>
 		<owasp-sanitizer.version>20260313.1</owasp-sanitizer.version>
 		<!-- plugins -->
-		<maven-surefire-plugin.version>3.5.6</maven-surefire-plugin.version>
+		<maven-surefire-plugin.version>3.6.0</maven-surefire-plugin.version>
 		<maven-javadoc-plugin.version>3.12.0</maven-javadoc-plugin.version>
 		<maven-source-plugin.version>3.4.0</maven-source-plugin.version>
 		<maven-bundle-plugin.version>6.1.2</maven-bundle-plugin.version>
@@ -638,6 +638,13 @@
 				<artifactId>jakarta.servlet-api</artifactId>
 				<version>${jakarta.servlet-api.version}</version>
 				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<!-- this one is required to update outdated transitive dependencies -->
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>4.13.2</version>
+				<scope>test</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.junit.jupiter</groupId>
