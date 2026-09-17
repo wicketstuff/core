@@ -16,13 +16,15 @@ A lightweight, zero-boilerplate starter that integrates **Apache Wicket 10.x** w
 
 ## Dependency Configuration
 
-To use the starter, add the following dependency to your Maven `pom.xml`:
+To use the starter, add the following dependency to your Maven `pom.xml` (check
+[Maven Central](https://central.sonatype.com/artifact/org.wicketstuff/wicket-spring-boot-starter)
+for the latest released version):
 
 ```xml
 <dependency>
     <groupId>org.wicketstuff</groupId>
     <artifactId>wicket-spring-boot-starter</artifactId>
-    <version>${wicketstuff.version}</version>
+    <version>10.12.0-SNAPSHOT</version>
 </dependency>
 ```
 
@@ -129,7 +131,7 @@ wicket.filter-name=my-custom-wicket-filter
 
 ## Spring Initializr Metadata Registration
 
-If you are requesting this starter to be listed on `start.spring.io` (or registering it in an internal Initializr instance), configure the dependency metadata as follows:
+If you are requesting this starter to be listed on `start.spring.io` (or registering it in an internal Initializr instance), configure the dependency metadata as follows. `versionRange` expresses the Spring Boot versions this starter supports (see the Compatibility Matrix above), not the starter's own version. It's left open-ended here (`4.0.0` and any later version) since nothing in the starter's autoconfiguration mechanism is expected to break across future Spring Boot majors — add an explicit upper bound only once a specific incompatibility is found:
 
 ### YAML Configuration (e.g. `application.yml`)
 ```yaml
@@ -142,7 +144,7 @@ initializr:
           description: Apache Wicket component-oriented web application framework integrated with Spring Boot.
           groupId: org.wicketstuff
           artifactId: wicket-spring-boot-starter
-          versionRange: "[4.0.0,4.2.0-M1)"
+          versionRange: "4.0.0"
           links:
             - rel: reference
               href: https://github.com/wicketstuff/core/tree/master/wicket-spring-boot-starter-parent
@@ -158,7 +160,7 @@ initializr:
   "description": "Apache Wicket component-oriented web application framework integrated with Spring Boot.",
   "groupId": "org.wicketstuff",
   "artifactId": "wicket-spring-boot-starter",
-  "versionRange": "[4.0.0,4.2.0-M1)",
+  "versionRange": "4.0.0",
   "links": [
     {
       "rel": "reference",
