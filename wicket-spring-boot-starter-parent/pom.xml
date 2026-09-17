@@ -22,6 +22,20 @@
 		<spring-boot.version>4.1.0</spring-boot.version>
 	</properties>
 
+	<dependencyManagement>
+		<dependencies>
+			<!-- Manage all org.springframework.boot artifact versions from the official BOM,
+			     rather than hardcoding ${spring-boot.version} on each individual dependency. -->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>${spring-boot.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 	<modules>
 		<module>wicket-spring-boot-starter</module>
 		<module>wicket-spring-boot-starter-examples</module>

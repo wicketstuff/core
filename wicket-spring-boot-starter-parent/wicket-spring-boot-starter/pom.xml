@@ -48,16 +48,15 @@
 			</exclusions>
 		</dependency>
 
-		<!-- Spring Boot AutoConfigure and Starter dependencies -->
+		<!-- Spring Boot AutoConfigure and Starter dependencies (versions managed by the
+		     spring-boot-dependencies BOM imported in the parent pom) -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-autoconfigure</artifactId>
-			<version>${spring-boot.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-configuration-processor</artifactId>
-			<version>${spring-boot.version}</version>
 			<optional>true</optional>
 		</dependency>
 
