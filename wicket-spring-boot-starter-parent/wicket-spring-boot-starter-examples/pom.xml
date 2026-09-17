@@ -46,6 +46,22 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<!-- TestRestTemplate: since Spring Boot 4, this is no longer pulled in transitively
+		     by spring-boot-starter-test and must be declared explicitly. -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-resttestclient</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<!-- spring-boot-resttestclient's TestRestTemplateTestAutoConfiguration references
+		     RestTemplateBuilder but doesn't declare spring-boot-restclient as a dependency
+		     itself, so it must be added explicitly too. -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-restclient</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>

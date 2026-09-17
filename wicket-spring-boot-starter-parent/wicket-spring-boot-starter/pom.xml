@@ -66,5 +66,26 @@
 			<artifactId>jakarta.servlet-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
+
+		<!-- Test dependencies -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-tester</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<!-- WebApplicationContextRunner (used to test WicketAutoConfiguration) needs
+		     spring-web's ConfigurableWebApplicationContext, which isn't pulled in
+		     transitively: spring-boot-autoconfigure's dependencies are all optional, and
+		     wicket-spring excludes spring-web above. -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 </project>
