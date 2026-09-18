@@ -1,7 +1,5 @@
 package org.wicketstuff.springboot.starter;
 
-import jakarta.servlet.FilterConfig;
-import jakarta.servlet.ServletException;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.protocol.http.WicketFilter;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
@@ -46,37 +44,44 @@ public class WicketAutoConfiguration {
     }
 
     /**
-     * Creates and configures the {@link FilterRegistrationBean} for the {@link WicketFilter}.
+     * Registers the {@link SpringComponentInjector} against the {@link WebApplication} bean so that
+     * Wicket pages and components can inject Spring beans via
+     * {@link org.apache.wicket.spring.injection.annot.SpringBean}.
      * <p>
-     * Instantiates WicketFilter with the provided {@link WebApplication} bean and attaches
-     * a {@link SpringComponentInjector} during filter initialization to enable Spring bean injection.
+     * This is deliberately bound to the {@link WebApplication} rather than to the filter
+     * registration: an application that supplies its own {@link FilterRegistrationBean} still gets
+     * working Spring injection.
      * </p>
      *
      * @param webApplication     the auto-discovered Wicket WebApplication subclass bean
-     * @param properties         the externalized Wicket properties
      * @param applicationContext the Spring application context
+     * @return the injector registered as a component instantiation listener
+     */
+    @Bean
+    @ConditionalOnMissingBean
+    public SpringComponentInjector springComponentInjector(
+            WebApplication webApplication,
+            ApplicationContext applicationContext) {
+
+        SpringComponentInjector injector = new SpringComponentInjector(webApplication, applicationContext);
+        webApplication.getComponentInstantiationListeners().add(injector);
+        return injector;
+    }
+
+    /**
+     * Creates and configures the {@link FilterRegistrationBean} for the {@link WicketFilter}.
+     *
+     * @param webApplication the auto-discovered Wicket WebApplication subclass bean
+     * @param properties     the externalized Wicket properties
      * @return the configured FilterRegistrationBean for WicketFilter
      */
     @Bean
     @ConditionalOnMissingBean
     public FilterRegistrationBean<WicketFilter> wicketFilterRegistration(
             WebApplication webApplication,
-            WicketProperties properties,
-            ApplicationContext applicationContext) {
+            WicketProperties properties) {
 
-        WicketFilter filter = new WicketFilter(webApplication) {
-            @Override
-            public void init(boolean isServlet, FilterConfig filterConfig) throws ServletException {
-                super.init(isServlet, filterConfig);
-                // Register SpringComponentInjector so Wicket pages can inject Spring @Components / @Beans using @SpringBean.
-                webApplication.getComponentInstantiationListeners().add(
-                        new SpringComponentInjector(webApplication, applicationContext)
-                );
-            }
-        };
-
-        return configureWicketFilter(properties, filter);
-
+        return configureWicketFilter(properties, new WicketFilter(webApplication));
     }
 
     /**
