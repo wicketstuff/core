@@ -35,10 +35,10 @@ public class WicketProperties {
 	 * Wicket execution configuration type.
 	 * <p>
 	 * Can be set to {@link RuntimeConfigurationType#DEVELOPMENT} or {@link RuntimeConfigurationType#DEPLOYMENT}.
-	 * If not explicitly defined, it defaults to {@code DEVELOPMENT}.
+	 * Default is {@link RuntimeConfigurationType#DEVELOPMENT}.
 	 * </p>
 	 */
-	private RuntimeConfigurationType configuration;
+	private RuntimeConfigurationType configuration = RuntimeConfigurationType.DEVELOPMENT;
 
 	/**
 	 * Gets the URL mapping pattern for the Wicket Filter.
@@ -79,7 +79,7 @@ public class WicketProperties {
 	/**
 	 * Gets the Wicket execution configuration type.
 	 *
-	 * @return the configuration type, or {@code null} if not configured
+	 * @return the configuration type
 	 */
 	public RuntimeConfigurationType getConfiguration() {
 		return configuration;

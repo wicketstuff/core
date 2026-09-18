@@ -2,7 +2,6 @@ package org.wicketstuff.springboot.starter;
 
 import jakarta.servlet.FilterConfig;
 import jakarta.servlet.ServletException;
-import org.apache.wicket.RuntimeConfigurationType;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.protocol.http.WicketFilter;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
@@ -99,12 +98,7 @@ public class WicketAutoConfiguration {
 
         // Specify configuration parameter mapping for Wicket
         registration.addInitParameter(WicketFilter.FILTER_MAPPING_PARAM, properties.getFilterPath());
-
-        RuntimeConfigurationType configType = properties.getConfiguration();
-        if (configType == null) {
-            configType = RuntimeConfigurationType.DEVELOPMENT;
-        }
-        registration.addInitParameter("configuration", configType.name());
+        registration.addInitParameter("configuration", properties.getConfiguration().name());
         return registration;
     }
 }
