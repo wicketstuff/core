@@ -5,7 +5,6 @@ import jakarta.servlet.ServletException;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.protocol.http.WicketFilter;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
-import org.jspecify.annotations.NonNull;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -59,7 +58,7 @@ public class WicketAutoConfiguration {
      * @return the configured FilterRegistrationBean for WicketFilter
      */
     @Bean
-    @ConditionalOnMissingBean(WicketFilter.class)
+    @ConditionalOnMissingBean
     public FilterRegistrationBean<WicketFilter> wicketFilterRegistration(
             WebApplication webApplication,
             WicketProperties properties,
@@ -89,7 +88,7 @@ public class WicketAutoConfiguration {
      * @param filter     the {@link WicketFilter} to be configured and registered
      * @return a configured {@link FilterRegistrationBean} instance for the provided {@link WicketFilter}
      */
-    private static @NonNull FilterRegistrationBean<WicketFilter> configureWicketFilter(
+    private static FilterRegistrationBean<WicketFilter> configureWicketFilter(
             WicketProperties properties, WicketFilter filter) {
         FilterRegistrationBean<WicketFilter> registration = new FilterRegistrationBean<>();
         registration.setFilter(filter);

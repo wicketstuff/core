@@ -1,8 +1,6 @@
 package org.wicketstuff.springboot.starter;
 
 import org.apache.wicket.Page;
-import org.apache.wicket.markup.html.IPackageResourceGuard;
-import org.apache.wicket.markup.html.SecurePackageResourceGuard;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.resource.PackageResourceReference;
 
@@ -24,12 +22,5 @@ public class DefaultWebApplication extends WebApplication {
 		// Mount resources to serve style.css and logo.png from the application root path
 		mountResource("style.css", new PackageResourceReference(DefaultHomePage.class, "style.css"));
 		mountResource("logo.png", new PackageResourceReference(DefaultHomePage.class, "logo.png"));
-
-		// Ensure the package resource guard allows requests for these resources
-		IPackageResourceGuard guard = getResourceSettings().getPackageResourceGuard();
-		if (guard instanceof SecurePackageResourceGuard secureGuard) {
-			secureGuard.addPattern("+*.css");
-			secureGuard.addPattern("+*.png");
-		}
 	}
 }

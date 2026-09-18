@@ -60,6 +60,17 @@ class WicketAutoConfigurationTest {
 	}
 
 	@Test
+	void backsOffWhenACustomWicketFilterRegistrationIsPresent() {
+		servletContextRunner.withUserConfiguration(CustomFilterRegistrationConfig.class).run(context -> {
+			assertThat(context).hasSingleBean(FilterRegistrationBean.class);
+
+			FilterRegistrationBean<?> registration = context.getBean(FilterRegistrationBean.class);
+			assertThat(registration.getFilterName()).isEqualTo("custom-wicket-filter");
+			assertThat(registration.getUrlPatterns()).containsExactly("/custom/*");
+		});
+	}
+
+	@Test
 	void doesNotActivateOutsideServletWebApplications() {
 		new ApplicationContextRunner()
 				.withConfiguration(AutoConfigurations.of(WicketAutoConfiguration.class))
@@ -72,6 +83,19 @@ class WicketAutoConfigurationTest {
 		@Bean
 		WebApplication webApplication() {
 			return new CustomWebApplication();
+		}
+	}
+
+	@Configuration
+	static class CustomFilterRegistrationConfig {
+
+		@Bean
+		FilterRegistrationBean<WicketFilter> customWicketFilterRegistration() {
+			FilterRegistrationBean<WicketFilter> registration = new FilterRegistrationBean<>();
+			registration.setFilter(new WicketFilter(new CustomWebApplication()));
+			registration.addUrlPatterns("/custom/*");
+			registration.setName("custom-wicket-filter");
+			return registration;
 		}
 	}
 
