@@ -14,6 +14,46 @@ A lightweight, zero-boilerplate starter that integrates **Apache Wicket 10.x** w
 
 ---
 
+## How It Works
+
+The starter contributes a single auto-configuration, `WicketAutoConfiguration`. It applies only when
+all of the following hold:
+
+- the application is a **servlet** web application (a reactive application is left alone);
+- Wicket's `WebApplication` and `WicketFilter` are on the classpath;
+- `wicket.enabled` is not set to `false`.
+
+When it applies, three beans are contributed:
+
+| Bean | What it does |
+|---|---|
+| `webApplication` | The Wicket `WebApplication`. Falls back to a built-in default (see below) if you have not defined one. |
+| `springComponentInjector` | Registers Wicket's `SpringComponentInjector` against the `WebApplication`, which is what makes `@SpringBean` work inside pages and components. |
+| `wicketFilterRegistration` | Registers `WicketFilter` with the servlet container, mapped at `wicket.filter-path`, passing Wicket's filter-mapping and `configuration` init parameters from your settings. |
+
+### Living alongside Spring MVC
+
+The starter brings `spring-boot-starter-web`, so your application also has Spring MVC available.
+Wicket's filter is mapped at `/*` but forwards anything it does not handle further down the filter
+chain, so `@RestController` endpoints keep working next to Wicket pages:
+
+```java
+@RestController
+class GreetingController {
+
+    @GetMapping("/api/greeting")
+    String greeting() {
+        return "hello";
+    }
+}
+```
+
+With the defaults, `/api/greeting` reaches the controller while `/` renders your Wicket home page.
+If you would rather keep the two strictly apart, confine Wicket to its own prefix with
+`wicket.filter-path=/app/*`.
+
+---
+
 ## Dependency Configuration
 
 This is the only dependency you need: it brings Apache Wicket, the Wicket/Spring bridge and the
@@ -38,6 +78,18 @@ Ensure you match the correct starter version with your Spring Boot and Java envi
 | WicketStuff / Starter Version | Spring Boot Version | Spring Framework Version | Minimum Java Version |
 | :--- | :--- | :--- | :--- |
 | **`10.x.y`** (Current) | `4.x.y` | `7.x.y` | Java 17 |
+
+---
+
+## The Default Page
+
+Add the dependency, start the application, and you already have a running Wicket application: with
+no `WebApplication` bean of your own, the starter registers a built-in one that serves a placeholder
+home page telling you how to replace it.
+
+That default disappears the moment you declare your own `WebApplication` bean, which is what the
+Quickstart below does. It exists so a freshly generated project runs and shows something, not as a
+page you are meant to keep.
 
 ---
 
@@ -108,6 +160,40 @@ public class ExampleApplication {
     }
 }
 ```
+
+---
+
+## Overriding the Defaults
+
+Every bean the starter contributes steps aside as soon as you define your own, so you can take over
+as much or as little as you need:
+
+| Bean | Steps aside when | Define your own to |
+|---|---|---|
+| `webApplication` | any `WebApplication` bean exists | use your own Wicket application (the usual case — see the Quickstart) |
+| `springComponentInjector` | any `SpringComponentInjector` bean exists | control how Spring injection is wired |
+| `wicketFilterRegistration` | a `FilterRegistrationBean<WicketFilter>` bean exists | control the filter registration, e.g. its order relative to other filters |
+
+Overriding the filter registration does **not** cost you Spring injection: the injector is bound to
+the `WebApplication` rather than to the filter, so `@SpringBean` keeps working in your pages either
+way.
+
+### Migrating an existing Wicket + Spring application
+
+Applications that wire Wicket and Spring by hand usually register the injector themselves, along
+these lines:
+
+```java
+@Override
+protected void init() {
+    super.init();
+    getComponentInstantiationListeners().add(new SpringComponentInjector(this));
+}
+```
+
+Keeping that line as well as the starter's bean would register two injectors. Either drop it and let
+the starter do it, or, if you want to keep control of the wiring, declare your own
+`SpringComponentInjector` bean so the starter's backs off.
 
 ---
 
@@ -197,3 +283,13 @@ initializr:
   ]
 }
 ```
+
+---
+
+## Further Reading
+
+- [Apache Wicket documentation](https://wicket.apache.org/) — writing pages, components and markup.
+- [WicketStuff wiki](https://github.com/wicketstuff/core/wiki) — documentation for the other modules
+  in this project.
+- [API documentation](https://www.javadoc.io/doc/org.wicketstuff/wicket-spring-boot-starter) — the
+  starter's own Javadoc, published per release.
