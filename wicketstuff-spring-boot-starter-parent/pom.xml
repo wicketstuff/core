@@ -10,10 +10,10 @@
 		<version>10.12.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>wicket-spring-boot-starter-parent</artifactId>
+	<artifactId>wicketstuff-spring-boot-starter-parent</artifactId>
 	<packaging>pom</packaging>
 
-	<name>Wicket Spring Boot Starter - Parent</name>
+	<name>WicketStuff Spring Boot Starter - Parent</name>
 	<description>
 		Parent project for Wicket Spring Boot Starter module and its example application.
 	</description>
@@ -73,7 +73,7 @@
 	</dependencyManagement>
 
 	<modules>
-		<module>wicket-spring-boot-starter</module>
-		<module>wicket-spring-boot-starter-examples</module>
+		<module>wicketstuff-spring-boot-starter</module>
+		<module>wicketstuff-spring-boot-starter-examples</module>
 	</modules>
 </project>

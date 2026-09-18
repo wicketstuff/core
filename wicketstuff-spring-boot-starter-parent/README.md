@@ -4,6 +4,37 @@ A lightweight, zero-boilerplate starter that integrates **Apache Wicket 10.x** w
 
 ---
 
+## Motivation
+
+Running Wicket on Spring Boot always needs the same handful of pieces: a `WebApplication`, a filter
+registration for it, and a `SpringComponentInjector` so that `@SpringBean` works. None of it is
+difficult, but it is the same every time, it is easy to get subtly wrong, and it is the first thing
+standing between someone and a running Wicket page.
+
+This starter supplies exactly those pieces and then gets out of the way. Everything past that point
+is ordinary Wicket and ordinary Spring, documented in their own projects.
+
+**Staying small is the point, not a limitation.** A deliberately narrow starter is cheap to keep
+alive: when Wicket or Spring Boot publishes a new major version, there is very little surface to
+re-verify. It also lives inside `wicketstuff-core` and is released with it, so the version you need
+is simply the one matching your Wicket version — there is no separate compatibility matrix to
+consult and no second release cycle to wait for.
+
+### Is this the right starter for you?
+
+There is an established alternative, [`MarcGiffing/wicket-spring-boot`][giffing]
+(`com.giffing.wicket.spring.boot.starter`), which is a much broader integration: Spring Security,
+native WebSockets, bean validation, CSRF protection, several serializers, session datastores,
+monitoring and a set of development-mode helpers.
+
+Pick that one if you want those batteries included. Pick this one if you would rather start from the
+smallest thing that works and add what you need yourself. They solve the same problem with opposite
+philosophies, and neither is a replacement for the other.
+
+[giffing]: https://github.com/MarcGiffing/wicket-spring-boot
+
+---
+
 ## Features
 
 - **Auto-Configuration**: Automatically registers Wicket's `WicketFilter` in Spring Boot's embedded servlet container.
@@ -58,13 +89,13 @@ If you would rather keep the two strictly apart, confine Wicket to its own prefi
 
 This is the only dependency you need: it brings Apache Wicket, the Wicket/Spring bridge and the
 embedded servlet container with it. Add it to your Maven `pom.xml` (check
-[Maven Central](https://central.sonatype.com/artifact/org.wicketstuff/wicket-spring-boot-starter)
+[Maven Central](https://central.sonatype.com/artifact/org.wicketstuff/wicketstuff-spring-boot-starter)
 for the latest released version):
 
 ```xml
 <dependency>
     <groupId>org.wicketstuff</groupId>
-    <artifactId>wicket-spring-boot-starter</artifactId>
+    <artifactId>wicketstuff-spring-boot-starter</artifactId>
     <version>10.12.0-SNAPSHOT</version>
 </dependency>
 ```
@@ -253,11 +284,11 @@ initializr:
           id: wicket
           description: Apache Wicket component-oriented web application framework integrated with Spring Boot.
           groupId: org.wicketstuff
-          artifactId: wicket-spring-boot-starter
+          artifactId: wicketstuff-spring-boot-starter
           versionRange: "4.0.0"
           links:
             - rel: reference
-              href: https://github.com/wicketstuff/core/tree/master/wicket-spring-boot-starter-parent
+              href: https://github.com/wicketstuff/core/tree/master/wicketstuff-spring-boot-starter-parent
             - rel: guide
               href: https://wicket.apache.org/start/quickstart.html
 ```
@@ -269,12 +300,12 @@ initializr:
   "id": "wicket",
   "description": "Apache Wicket component-oriented web application framework integrated with Spring Boot.",
   "groupId": "org.wicketstuff",
-  "artifactId": "wicket-spring-boot-starter",
+  "artifactId": "wicketstuff-spring-boot-starter",
   "versionRange": "4.0.0",
   "links": [
     {
       "rel": "reference",
-      "href": "https://github.com/wicketstuff/core/tree/master/wicket-spring-boot-starter-parent"
+      "href": "https://github.com/wicketstuff/core/tree/master/wicketstuff-spring-boot-starter-parent"
     },
     {
       "rel": "guide",
@@ -291,5 +322,5 @@ initializr:
 - [Apache Wicket documentation](https://wicket.apache.org/) — writing pages, components and markup.
 - [WicketStuff wiki](https://github.com/wicketstuff/core/wiki) — documentation for the other modules
   in this project.
-- [API documentation](https://www.javadoc.io/doc/org.wicketstuff/wicket-spring-boot-starter) — the
+- [API documentation](https://www.javadoc.io/doc/org.wicketstuff/wicketstuff-spring-boot-starter) — the
   starter's own Javadoc, published per release.

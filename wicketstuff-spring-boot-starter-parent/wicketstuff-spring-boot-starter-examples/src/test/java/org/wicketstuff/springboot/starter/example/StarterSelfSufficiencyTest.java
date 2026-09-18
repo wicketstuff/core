@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Guards the contract that {@code wicket-spring-boot-starter} is the only dependency an
+ * Guards the contract that {@code wicketstuff-spring-boot-starter} is the only dependency an
  * application needs.
  * <p>
  * This module deliberately declares nothing but the starter at compile scope, so the embedded

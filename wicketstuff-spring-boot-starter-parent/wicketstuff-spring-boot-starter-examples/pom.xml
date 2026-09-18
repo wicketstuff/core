@@ -6,15 +6,15 @@
 
 	<parent>
 		<groupId>org.wicketstuff</groupId>
-		<artifactId>wicket-spring-boot-starter-parent</artifactId>
+		<artifactId>wicketstuff-spring-boot-starter-parent</artifactId>
 		<version>10.12.0-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
-	<artifactId>wicket-spring-boot-starter-examples</artifactId>
+	<artifactId>wicketstuff-spring-boot-starter-examples</artifactId>
 	<packaging>jar</packaging>
 
-	<name>Wicket Spring Boot Starter - Examples</name>
+	<name>WicketStuff Spring Boot Starter - Examples</name>
 	<description>
 		Example application demonstrating the use of Wicket Spring Boot Starter.
 	</description>
@@ -24,7 +24,7 @@
 		     declares nothing else at compile scope. -->
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
-			<artifactId>wicket-spring-boot-starter</artifactId>
+			<artifactId>wicketstuff-spring-boot-starter</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
@@ -55,7 +55,7 @@
 	<build>
 		<plugins>
 			<!-- Keeps StarterSelfSufficiencyTest meaningful: this module must get its web stack
-			     from wicket-spring-boot-starter alone, never from a Spring Boot starter declared
+			     from wicketstuff-spring-boot-starter alone, never from a Spring Boot starter declared
 			     here. Only direct declarations are checked, so what the starter pulls in
 			     transitively is unaffected. -->
 			<plugin>
@@ -78,7 +78,7 @@
 										<include>org.springframework.boot:spring-boot-starter-*:*:*:test</include>
 									</includes>
 									<message>
-										This example must depend on nothing but wicket-spring-boot-starter at
+										This example must depend on nothing but wicketstuff-spring-boot-starter at
 										compile scope, so that StarterSelfSufficiencyTest proves the starter
 										brings a working web application on its own. Declaring a Spring Boot
 										starter here would satisfy that test without the starter supplying
