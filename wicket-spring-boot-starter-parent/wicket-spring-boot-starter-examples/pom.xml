@@ -20,24 +20,12 @@
 	</description>
 
 	<dependencies>
-		<!-- The Starter -->
+		<!-- The Starter. It brings the web stack with it, so this example deliberately
+		     declares nothing else at compile scope. -->
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
 			<artifactId>wicket-spring-boot-starter</artifactId>
 			<version>${project.version}</version>
-		</dependency>
-
-		<!-- Spring Boot Web Starter (version managed by the spring-boot-dependencies BOM
-		     imported in the parent pom) -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-
-		<!-- Spring Boot Starter Logging -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-logging</artifactId>
 		</dependency>
 
 		<!-- Spring Boot Starter Test -->

@@ -1,5 +1,5 @@
 body, p, li, a { font-family: georgia, times, serif;font-size:13pt;}
-h1, h2, h3 { font-family: 'Yanone Kaffeesatz', arial, serif; }
+h1, h2, h3 { font-family: "Helvetica Neue", helvetica, arial, sans-serif; }
 body { margin:0;padding:0;}
 #hd {
 	width : 100%;

@@ -16,7 +16,8 @@ A lightweight, zero-boilerplate starter that integrates **Apache Wicket 10.x** w
 
 ## Dependency Configuration
 
-To use the starter, add the following dependency to your Maven `pom.xml` (check
+This is the only dependency you need: it brings Apache Wicket, the Wicket/Spring bridge and the
+embedded servlet container with it. Add it to your Maven `pom.xml` (check
 [Maven Central](https://central.sonatype.com/artifact/org.wicketstuff/wicket-spring-boot-starter)
 for the latest released version):
 
