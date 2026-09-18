@@ -64,7 +64,7 @@ When it applies, three beans are contributed:
 
 ### Living alongside Spring MVC
 
-The starter brings `spring-boot-starter-web`, so your application also has Spring MVC available.
+The starter brings `spring-boot-starter-webmvc`, so your application also has Spring MVC available.
 Wicket's filter is mapped at `/*` but forwards anything it does not handle further down the filter
 chain, so `@RestController` endpoints keep working next to Wicket pages:
 
@@ -82,6 +82,23 @@ class GreetingController {
 With the defaults, `/api/greeting` reaches the controller while `/` renders your Wicket home page.
 If you would rather keep the two strictly apart, confine Wicket to its own prefix with
 `wicket.filter-path=/app/*`.
+
+### Deploying as a WAR
+
+The starter brings an embedded Tomcat, but it does not commit you to it. Spring Boot's usual recipe
+for deploying to an external servlet container works unchanged — set `war` packaging, extend
+`SpringBootServletInitializer`, and re-declare the container at `provided` scope:
+
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-tomcat</artifactId>
+    <scope>provided</scope>
+</dependency>
+```
+
+A direct declaration wins over the transitive one, so the embedded container is demoted to
+`provided` and stays out of `WEB-INF/lib` while Wicket and the starter are packaged as normal.
 
 ---
 

@@ -56,10 +56,11 @@
 		</dependency>
 		<!-- Brings the embedded servlet container and web infrastructure Wicket needs.
 		     Without it an application depending only on this starter would boot as a
-		     non-web application, and the auto-configuration would never activate. -->
+		     non-web application, and the auto-configuration would never activate.
+		     spring-boot-starter-web is deprecated as of Spring Boot 4 in favour of this. -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
+			<artifactId>spring-boot-starter-webmvc</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
