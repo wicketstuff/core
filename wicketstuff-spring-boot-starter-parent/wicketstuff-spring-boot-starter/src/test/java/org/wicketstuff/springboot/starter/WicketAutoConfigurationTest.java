@@ -15,6 +15,9 @@ import org.springframework.context.annotation.Configuration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * @author Daniel Bartl
+ */
 class WicketAutoConfigurationTest {
 
 	private final WebApplicationContextRunner servletContextRunner = new WebApplicationContextRunner()

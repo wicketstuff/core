@@ -7,6 +7,8 @@ import org.apache.wicket.request.resource.PackageResourceReference;
 /**
  * The default {@link WebApplication} used by the Wicket Spring Boot Starter
  * when the user does not provide their own custom implementation bean.
+ *
+ * @author Daniel Bartl
  */
 public class DefaultWebApplication extends WebApplication {
 

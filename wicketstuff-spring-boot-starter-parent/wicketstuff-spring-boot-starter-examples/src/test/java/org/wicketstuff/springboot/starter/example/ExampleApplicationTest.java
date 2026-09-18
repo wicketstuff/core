@@ -9,6 +9,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * Basic Spring Boot context integration test.
+ *
+ * @author Daniel Bartl
  */
 @SpringBootTest
 public class ExampleApplicationTest {

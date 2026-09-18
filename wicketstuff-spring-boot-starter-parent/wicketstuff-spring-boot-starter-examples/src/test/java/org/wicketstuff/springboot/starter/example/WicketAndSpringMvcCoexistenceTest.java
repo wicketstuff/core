@@ -18,6 +18,8 @@ import static org.assertj.core.api.Assertions.assertThat;
  * MVC's {@code DispatcherServlet} while Wicket's filter is mapped at {@code /*}. This pins down
  * that the two coexist: Wicket serves its pages and passes anything it does not handle further
  * down the filter chain, so {@code @RestController} endpoints stay reachable.
+ *
+ * @author Daniel Bartl
  */
 @SpringBootTest(
 		webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,

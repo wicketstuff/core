@@ -15,6 +15,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 /**
  * Verifies that the starter auto-configures {@link DefaultWebApplication}
  * when no custom {@link WebApplication} bean is present in the application context.
+ *
+ * @author Daniel Bartl
  */
 @SpringBootTest(classes = DefaultWebApplicationTest.TestConfig.class)
 public class DefaultWebApplicationTest {

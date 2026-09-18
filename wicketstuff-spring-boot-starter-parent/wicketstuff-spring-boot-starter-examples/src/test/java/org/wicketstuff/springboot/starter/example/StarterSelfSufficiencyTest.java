@@ -29,6 +29,8 @@ import static org.assertj.core.api.Assertions.assertThat;
  * The filter name is overridden because Wicket keys its application registry by it, so two tests
  * that each start a real container in the same JVM collide on the default name.
  * </p>
+ *
+ * @author Daniel Bartl
  */
 @SpringBootTest(
 		webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,

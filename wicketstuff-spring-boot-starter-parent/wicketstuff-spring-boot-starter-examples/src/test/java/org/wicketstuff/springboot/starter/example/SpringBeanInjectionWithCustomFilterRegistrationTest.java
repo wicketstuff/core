@@ -21,6 +21,8 @@ import static org.assertj.core.api.Assertions.assertThat;
  * registration back off. Spring injection must keep working regardless, which is why the
  * {@code SpringComponentInjector} is bound to the {@link WebApplication} bean rather than to the
  * filter registration.
+ *
+ * @author Daniel Bartl
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureTestRestTemplate

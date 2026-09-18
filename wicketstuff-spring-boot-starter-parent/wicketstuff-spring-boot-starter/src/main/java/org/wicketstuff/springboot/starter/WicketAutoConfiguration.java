@@ -27,7 +27,7 @@ import org.springframework.context.annotation.Bean;
  * Set {@code wicket.enabled=false} to switch the whole autoconfiguration off.
  * </p>
  *
- * @author WicketStuff
+ * @author Daniel Bartl
  */
 @AutoConfiguration
 @ConditionalOnWebApplication(type = Type.SERVLET)

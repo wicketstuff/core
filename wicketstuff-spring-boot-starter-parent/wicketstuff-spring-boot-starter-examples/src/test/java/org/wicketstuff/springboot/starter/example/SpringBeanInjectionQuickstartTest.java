@@ -17,6 +17,8 @@ import static org.assertj.core.api.Assertions.assertThat;
  * {@link WebApplication} bean makes the starter's {@code @ConditionalOnMissingBean} default
  * back off, and {@code @SpringBean} injects a Spring-managed service into the page that gets
  * rendered through a real embedded servlet container.
+ *
+ * @author Daniel Bartl
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureTestRestTemplate

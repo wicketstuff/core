@@ -16,6 +16,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * integration tests in {@code src/test/java}, where they are also verified on every build. See this
  * module's README for a map of which test shows what.
  * </p>
+ *
+ * @author Daniel Bartl
  */
 @SpringBootApplication
 public class ExampleApplication {

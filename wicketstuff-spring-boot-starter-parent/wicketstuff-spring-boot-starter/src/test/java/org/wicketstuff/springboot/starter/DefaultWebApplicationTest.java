@@ -9,6 +9,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * @author Daniel Bartl
+ */
 class DefaultWebApplicationTest {
 
 	private WicketTester tester;

@@ -13,6 +13,8 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Verifies that the {@code wicket.*} properties set in this example's
  * {@code application.properties} are actually bound and applied to the registered Wicket
  * filter, rather than the starter's built-in defaults.
+ *
+ * @author Daniel Bartl
  */
 @SpringBootTest
 class WicketPropertiesBindingTest {

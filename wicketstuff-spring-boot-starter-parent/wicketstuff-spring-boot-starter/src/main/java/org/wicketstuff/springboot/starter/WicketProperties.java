@@ -10,7 +10,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * or {@code application.yml}) under the {@code wicket} prefix.
  * </p>
  *
- * @author WicketStuff
+ * @author Daniel Bartl
  */
 @ConfigurationProperties(prefix = "wicket")
 public class WicketProperties {

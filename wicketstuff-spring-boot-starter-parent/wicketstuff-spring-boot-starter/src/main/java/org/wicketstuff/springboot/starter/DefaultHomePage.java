@@ -8,6 +8,8 @@ import java.io.Serial;
 /**
  * The default home page loaded by the Wicket Spring Boot Starter
  * when the application provides no custom WebApplication bean.
+ *
+ * @author Daniel Bartl
  */
 public class DefaultHomePage extends WebPage {
 	@Serial

@@ -7,6 +7,8 @@ import org.apache.wicket.protocol.http.WebApplication;
  * Mirrors the custom {@code WebApplication} from the README's Quickstart section: a
  * hand-written subclass that the starter's {@code @ConditionalOnMissingBean} default backs
  * off for, once it is registered as a Spring bean.
+ *
+ * @author Daniel Bartl
  */
 class QuickstartWebApplication extends WebApplication {
 
