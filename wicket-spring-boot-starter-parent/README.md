@@ -131,6 +131,28 @@ wicket.filter-name=my-custom-wicket-filter
 
 ---
 
+## Testing
+
+Wicket keys its application registry by the filter name, and Spring keeps test contexts cached for
+the lifetime of the JVM. Two tests that each start a real servlet container therefore collide on the
+default filter name, failing with `Application with name 'wicket-filter' already exists`.
+
+Give each such test its own filter name:
+
+```java
+@SpringBootTest(
+        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
+        properties = "wicket.filter-name=my-test-filter")
+class MyIntegrationTest {
+    // ...
+}
+```
+
+Tests that do not start a container (the default `MOCK` web environment) are unaffected, because the
+filter is never initialised.
+
+---
+
 ## Spring Initializr Metadata Registration
 
 If you are requesting this starter to be listed on `start.spring.io` (or registering it in an internal Initializr instance), configure the dependency metadata as follows. `versionRange` expresses the Spring Boot versions this starter supports (see the Compatibility Matrix above), not the starter's own version. It's left open-ended here (`4.0.0` and any later version) since nothing in the starter's autoconfiguration mechanism is expected to break across future Spring Boot majors — add an explicit upper bound only once a specific incompatibility is found:

@@ -54,6 +54,42 @@
 
 	<build>
 		<plugins>
+			<!-- Keeps StarterSelfSufficiencyTest meaningful: this module must get its web stack
+			     from wicket-spring-boot-starter alone, never from a Spring Boot starter declared
+			     here. Only direct declarations are checked, so what the starter pulls in
+			     transitively is unaffected. -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-enforcer-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>enforce-starter-is-the-only-compile-dependency</id>
+						<goals>
+							<goal>enforce</goal>
+						</goals>
+						<configuration>
+							<rules>
+								<bannedDependencies>
+									<searchTransitive>false</searchTransitive>
+									<excludes>
+										<exclude>org.springframework.boot:spring-boot-starter-*</exclude>
+									</excludes>
+									<includes>
+										<include>org.springframework.boot:spring-boot-starter-*:*:*:test</include>
+									</includes>
+									<message>
+										This example must depend on nothing but wicket-spring-boot-starter at
+										compile scope, so that StarterSelfSufficiencyTest proves the starter
+										brings a working web application on its own. Declaring a Spring Boot
+										starter here would satisfy that test without the starter supplying
+										anything. Add the dependency to the starter instead.
+									</message>
+								</bannedDependencies>
+							</rules>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
