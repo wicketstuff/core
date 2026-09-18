@@ -6,6 +6,7 @@ import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication.Type;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -22,12 +23,16 @@ import org.springframework.context.annotation.Bean;
  * to enable Spring bean injection (via {@link org.apache.wicket.spring.injection.annot.SpringBean})
  * inside Wicket pages and components.
  * </p>
+ * <p>
+ * Set {@code wicket.enabled=false} to switch the whole auto-configuration off.
+ * </p>
  *
  * @author WicketStuff
  */
 @AutoConfiguration
 @ConditionalOnWebApplication(type = Type.SERVLET)
 @ConditionalOnClass({WebApplication.class, WicketFilter.class})
+@ConditionalOnProperty(prefix = "wicket", name = "enabled", havingValue = "true", matchIfMissing = true)
 @EnableConfigurationProperties(WicketProperties.class)
 public class WicketAutoConfiguration {
 

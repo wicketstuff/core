@@ -4,6 +4,7 @@ import org.apache.wicket.Page;
 import org.apache.wicket.RuntimeConfigurationType;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.protocol.http.WicketFilter;
+import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.autoconfigure.AutoConfigurations;
 import org.springframework.boot.test.context.runner.ApplicationContextRunner;
@@ -67,6 +68,15 @@ class WicketAutoConfigurationTest {
 			FilterRegistrationBean<?> registration = context.getBean(FilterRegistrationBean.class);
 			assertThat(registration.getFilterName()).isEqualTo("custom-wicket-filter");
 			assertThat(registration.getUrlPatterns()).containsExactly("/custom/*");
+		});
+	}
+
+	@Test
+	void doesNotActivateWhenDisabledByProperty() {
+		servletContextRunner.withPropertyValues("wicket.enabled=false").run(context -> {
+			assertThat(context).doesNotHaveBean(WebApplication.class);
+			assertThat(context).doesNotHaveBean(FilterRegistrationBean.class);
+			assertThat(context).doesNotHaveBean(SpringComponentInjector.class);
 		});
 	}
 

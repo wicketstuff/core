@@ -1,0 +1,10 @@
+{
+  "properties": [
+    {
+      "name": "wicket.enabled",
+      "type": "java.lang.Boolean",
+      "description": "Whether the Wicket auto-configuration is enabled. When false, no WebApplication, SpringComponentInjector or Wicket filter registration is contributed.",
+      "defaultValue": true
+    }
+  ]
+}

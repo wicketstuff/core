@@ -116,6 +116,7 @@ The following properties can be configured in your `application.properties` or `
 
 | Property | Default Value | Description |
 |---|---|---|
+| `wicket.enabled` | `true` | Set to `false` to switch the auto-configuration off entirely. |
 | `wicket.filter-path` | `/*` | URL mapping pattern for the Wicket filter. |
 | `wicket.filter-name` | `wicket-filter` | The name of the registered Wicket servlet filter. |
 | `wicket.configuration` | `DEVELOPMENT` | The configuration type: `DEVELOPMENT` or `DEPLOYMENT`. |
