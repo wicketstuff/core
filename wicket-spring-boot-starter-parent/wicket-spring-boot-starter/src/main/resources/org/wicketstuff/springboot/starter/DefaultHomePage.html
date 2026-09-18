@@ -2,7 +2,7 @@
 <html xmlns:wicket="http://wicket.apache.org">
 	<head>
 		<meta charset="utf-8" />
-		<title>Apache Wicket Quickstart</title>
+		<title>Wicket Spring Boot Starter</title>
 		<link href='https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:regular,bold' rel='stylesheet' type='text/css' />
 		<link rel="stylesheet" href="style.css" type="text/css" media="screen" title="Stylesheet" />
 	</head>
@@ -10,47 +10,32 @@
 		<div id="hd">
 			<div id="logo">
 				<img src="logo.png" width="50px" height="50px" alt="Wicket Logo" />
-				<h1>Apache Wicket</h1>
+				<h1>Wicket Spring Boot Starter</h1>
 			</div>
 		</div>
 		<div id="bd">
-			<h2>Congratulations!</h2>
+			<h2>It works!</h2>
 			<p>
-				Your quick start works! This project is especially useful to
-				start developing your Wicket application or to create a test
-				case for a bug report.
+				This is the default page served by the Wicket Spring Boot Starter, running on
+				Apache Wicket <wicket:container wicket:id="version">10.x</wicket:container>.
+				It's shown because your application hasn't registered its own <code>WebApplication</code>
+				bean yet.
 			</p>
-			<h3>Get started</h3>
+			<h3>Next steps</h3>
 			<p>
-				From here you can start hacking away at your application and
-				wow your clients:
-			</p>
-			<ul>
-				<li>work through <a href="https://wicket.apache.org/learn/examples" target="_blank" title="Hello world and friends">some examples</a></li>
-				<li>read <a href="https://wicket.apache.org/learn/books" target="_blank" title="Books about Wicket in English, German and Japanese">some books</a></li>
-			</ul>
-			<h3>Get help</h3>
-			<p>
-				We are here to help!
-			</p>
-			<ul>
-				<li>join us on IRC on <a href="irc:%23%23wicket@irc.freenode.net">&#35;&#35;wicket@irc.freenode.net</a></li>
-				<li><a href="http://wicket-users.markmail.org/" target="_blank" title="Search the mailing list archives">search</a> our mailing list archives</li>
-				<li>ask a question on the <a href="https://wicket.apache.org/help/email.html">users list</a></li>
-			</ul>
-			<h3>Reporting a bug</h3>
-			<p>
-				Help us help you:
+				Replace this page by registering your own Wicket application as a Spring bean:
 			</p>
 			<ol>
-				<li>reproduce the bug with the <strong>least</strong> amount of code</li>
-				<li>create a unit test that shows the bug</li>
-				<li>fix the bug and create a patch</li>
-				<li>attach the result of step 1, 2 or 3 to a <a href="https://issues.apache.org/jira/browse/WICKET" target="_blank">JIRA issue</a></li>
-				<li>profit!</li>
+				<li>Create a <code>WebApplication</code> subclass annotated with <code>@Component</code>.</li>
+				<li>Point its <code>getHomePage()</code> to your own <code>WebPage</code>.</li>
+				<li>Optionally inject Spring beans into your pages with <code>@SpringBean</code>.</li>
 			</ol>
 			<p>
-				Please mention the correct Wicket version: <wicket:container wicket:id="version">1.5-SNAPSHOT</wicket:container>.
+				See the starter's
+				<a href="https://github.com/wicketstuff/core/tree/master/wicket-spring-boot-starter-parent" target="_blank">README</a>
+				for the full Quickstart, or the
+				<a href="https://wicket.apache.org/" target="_blank">Apache Wicket documentation</a>
+				to learn more about building pages and components.
 			</p>
 		</div>
 		<div id="ft">
