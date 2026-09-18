@@ -16,7 +16,10 @@
 
 	<name>WicketStuff Spring Boot Starter - Examples</name>
 	<description>
-		Example application demonstrating the use of Wicket Spring Boot Starter.
+		Runnable example for the WicketStuff Spring Boot Starter. The application itself is
+		deliberately empty, showing what the starter gives you with no configuration at all; the
+		integration tests alongside it demonstrate and verify the documented patterns, from
+		injecting Spring beans into pages to overriding the filter registration.
 	</description>
 
 	<dependencies>
