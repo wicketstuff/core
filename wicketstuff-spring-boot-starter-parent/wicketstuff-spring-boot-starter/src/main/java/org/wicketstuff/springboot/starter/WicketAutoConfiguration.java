@@ -15,16 +15,16 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
 /**
- * Spring Boot auto-configuration for Apache Wicket.
+ * Spring Boot autoconfiguration for Apache Wicket.
  * <p>
- * This auto-configuration is activated when Wicket's core classes are present on the classpath.
+ * This autoconfiguration is activated when Wicket's core classes are present on the classpath.
  * It registers Wicket's {@link WicketFilter} into the embedded servlet container and binds the
  * registered {@link WebApplication} bean. Additionally, it registers the {@link SpringComponentInjector}
  * to enable Spring bean injection (via {@link org.apache.wicket.spring.injection.annot.SpringBean})
  * inside Wicket pages and components.
  * </p>
  * <p>
- * Set {@code wicket.enabled=false} to switch the whole auto-configuration off.
+ * Set {@code wicket.enabled=false} to switch the whole autoconfiguration off.
  * </p>
  *
  * @author WicketStuff
