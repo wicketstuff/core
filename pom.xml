@@ -402,7 +402,7 @@
 		<scala-maven-plugin.version>4.9.10</scala-maven-plugin.version>
 		<maven-clean-plugin.version>3.5.0</maven-clean-plugin.version>
 		<maven-deploy-plugin.version>3.1.4</maven-deploy-plugin.version>
-		<maven-install-plugin.version>3.1.4</maven-install-plugin.version>
+		<maven-install-plugin.version>3.2.0</maven-install-plugin.version>
 		<maven-site-plugin.version>4.0.0-M16</maven-site-plugin.version>
 		<maven-war-plugin.version>3.5.1</maven-war-plugin.version>
 		<maven-release-plugin.version>3.3.1</maven-release-plugin.version>
