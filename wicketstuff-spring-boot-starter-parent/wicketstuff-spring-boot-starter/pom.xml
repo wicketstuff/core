@@ -74,13 +74,6 @@
 			<optional>true</optional>
 		</dependency>
 
-		<!-- Servlet API -->
-		<dependency>
-			<groupId>jakarta.servlet</groupId>
-			<artifactId>jakarta.servlet-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
-
 		<!-- Test dependencies -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -105,6 +98,25 @@
 
 	<build>
 		<plugins>
+			<!-- Hands BuildAlignedWithSpringBootTest the version overrides from the parent pom and
+			     the Spring Boot BOM they must agree with. -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<systemPropertyVariables>
+						<springBootBom>${settings.localRepository}/org/springframework/boot/spring-boot-dependencies/${spring-boot.version}/spring-boot-dependencies-${spring-boot.version}.pom</springBootBom>
+						<aligned.spring-framework.version>${spring.version}</aligned.spring-framework.version>
+						<aligned.jackson-bom.version>${jackson.version}</aligned.jackson-bom.version>
+						<aligned.jackson-2-bom.version>${jackson2.version}</aligned.jackson-2-bom.version>
+						<aligned.slf4j.version>${slf4j.version}</aligned.slf4j.version>
+						<aligned.logback.version>${logback.version}</aligned.logback.version>
+						<aligned.log4j2.version>${log4j.version}</aligned.log4j2.version>
+						<aligned.commons-logging.version>${commons-logging.version}</aligned.commons-logging.version>
+						<aligned.junit-jupiter.version>${junit.version}</aligned.junit-jupiter.version>
+					</systemPropertyVariables>
+				</configuration>
+			</plugin>
 			<!-- Builds the projects under src/it against the freshly built starter. They inherit from
 			     spring-boot-starter-parent rather than from this build, so they run against the
 			     library versions Spring Boot manages (the ones a user actually gets) instead of
