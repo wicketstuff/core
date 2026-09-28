@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Settings for the invoker integration tests. The tests run against an isolated local
+     repository (target/local-repo) holding the freshly built starter; everything else is served
+     from the regular local repository first and from Maven Central as a fallback. -->
+<settings>
+	<profiles>
+		<profile>
+			<id>it-repo</id>
+			<repositories>
+				<repository>
+					<id>local.central</id>
+					<url>@localRepositoryUrl@</url>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+				</repository>
+			</repositories>
+			<pluginRepositories>
+				<pluginRepository>
+					<id>local.central</id>
+					<url>@localRepositoryUrl@</url>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+				</pluginRepository>
+			</pluginRepositories>
+		</profile>
+	</profiles>
+	<activeProfiles>
+		<activeProfile>it-repo</activeProfile>
+	</activeProfiles>
+</settings>
