@@ -19,6 +19,10 @@ alive: when Wicket or Spring Boot publishes a new major version, there is very l
 re-verify. It also lives inside `wicketstuff-core` and is released with it, so the version you need
 is simply the one matching your Wicket version, and there is no second release cycle to wait for.
 
+The goal is also to make Apache Wicket selectable on [start.spring.io](https://start.spring.io), the
+way Vaadin already is, so that a new Wicket project is one click away. See
+[Road to start.spring.io](#road-to-startspringio) for the plan.
+
 ### Is this the right starter for you?
 
 There is an established alternative, [`MarcGiffing/wicket-spring-boot`][giffing]
@@ -371,6 +375,21 @@ filter is never initialised.
 ---
 
 ## Spring Initializr Metadata Registration
+
+### Road to start.spring.io
+
+Listing the starter on start.spring.io is planned once it has been released, in three steps:
+
+1. The starter is merged into `wicketstuff-core`.
+2. It ships with the next wicketstuff release and is published to Maven Central. The Initializr can
+   only reference released versions, never snapshots.
+3. The listing is requested from the Spring Initializr team with the entry below, and kept up to
+   date for every new Spring Boot line afterwards.
+
+Until then, add the dependency to a generated Spring Boot project by hand, as shown in
+[Dependency Configuration](#dependency-configuration).
+
+### The Initializr entry
 
 To list the starter on `start.spring.io` (or in an internal Initializr instance), the dependency is
 added to the Initializr's `application.yml`. Spring Boot's BOM does not manage `org.wicketstuff`
