@@ -6,6 +6,7 @@ import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingFilterBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication.Type;
@@ -75,13 +76,18 @@ public class WicketAutoConfiguration {
 
     /**
      * Creates and configures the {@link FilterRegistrationBean} for the {@link WicketFilter}.
+     * <p>
+     * Backs off when the application already registers a {@link WicketFilter}, either wrapped in its
+     * own {@link FilterRegistrationBean} or declared as a plain filter bean, so that Wicket is never
+     * mapped twice.
+     * </p>
      *
      * @param webApplication the auto-discovered Wicket WebApplication subclass bean
      * @param properties     the externalized Wicket properties
      * @return the configured FilterRegistrationBean for WicketFilter
      */
     @Bean
-    @ConditionalOnMissingBean
+    @ConditionalOnMissingFilterBean(WicketFilter.class)
     public FilterRegistrationBean<WicketFilter> wicketFilterRegistration(
             WebApplication webApplication,
             WicketProperties properties) {

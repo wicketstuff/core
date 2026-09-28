@@ -1,5 +1,6 @@
 package org.wicketstuff.springboot.starter;
 
+import jakarta.servlet.Filter;
 import org.apache.wicket.Page;
 import org.apache.wicket.RuntimeConfigurationType;
 import org.apache.wicket.protocol.http.WebApplication;
@@ -75,6 +76,21 @@ class WicketAutoConfigurationTest {
 	}
 
 	@Test
+	void backsOffWhenAPlainWicketFilterBeanIsPresent() {
+		servletContextRunner.withUserConfiguration(PlainWicketFilterConfig.class).run(context -> {
+			assertThat(context).doesNotHaveBean(FilterRegistrationBean.class);
+			assertThat(context).hasSingleBean(WicketFilter.class);
+		});
+	}
+
+	@Test
+	void keepsRegisteringWicketNextToUnrelatedFilterRegistrations() {
+		servletContextRunner.withUserConfiguration(UnrelatedFilterRegistrationConfig.class).run(context ->
+				assertThat(context.getBeansOfType(FilterRegistrationBean.class))
+						.containsOnlyKeys("unrelatedFilterRegistration", "wicketFilterRegistration"));
+	}
+
+	@Test
 	void doesNotActivateWhenDisabledByProperty() {
 		servletContextRunner.withPropertyValues("wicket.enabled=false").run(context -> {
 			assertThat(context).doesNotHaveBean(WebApplication.class);
@@ -109,6 +125,24 @@ class WicketAutoConfigurationTest {
 			registration.addUrlPatterns("/custom/*");
 			registration.setName("custom-wicket-filter");
 			return registration;
+		}
+	}
+
+	@Configuration
+	static class PlainWicketFilterConfig {
+
+		@Bean
+		WicketFilter wicketFilter() {
+			return new WicketFilter(new CustomWebApplication());
+		}
+	}
+
+	@Configuration
+	static class UnrelatedFilterRegistrationConfig {
+
+		@Bean
+		FilterRegistrationBean<Filter> unrelatedFilterRegistration() {
+			return new FilterRegistrationBean<>((request, response, chain) -> chain.doFilter(request, response));
 		}
 	}
 

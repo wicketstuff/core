@@ -220,7 +220,7 @@ as much or as little as you need:
 |---|---|---|
 | `webApplication` | any `WebApplication` bean exists | use your own Wicket application (the usual case — see the Quickstart) |
 | `springComponentInjector` | any `SpringComponentInjector` bean exists | control how Spring injection is wired |
-| `wicketFilterRegistration` | a `FilterRegistrationBean<WicketFilter>` bean exists | control the filter registration, e.g. its order relative to other filters |
+| `wicketFilterRegistration` | a `FilterRegistrationBean<WicketFilter>` or a plain `WicketFilter` bean exists | control the filter registration, e.g. its order relative to other filters |
 
 Overriding the filter registration does **not** cost you Spring injection: the injector is bound to
 the `WebApplication` rather than to the filter, so `@SpringBean` keeps working in your pages either
