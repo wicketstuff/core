@@ -113,7 +113,7 @@ for the latest released version):
 <dependency>
     <groupId>org.wicketstuff</groupId>
     <artifactId>wicketstuff-spring-boot-starter</artifactId>
-    <version>10.12.0-SNAPSHOT</version>
+    <version>10.12.0</version>
 </dependency>
 ```
 
