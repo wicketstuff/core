@@ -100,6 +100,23 @@ for deploying to an external servlet container works unchanged — set `war` pac
 A direct declaration wins over the transitive one, so the embedded container is demoted to
 `provided` and stays out of `WEB-INF/lib` while Wicket and the starter are packaged as normal.
 
+### Using Spring Boot DevTools
+
+The starter works with `spring-boot-devtools` out of the box. It ships a
+`META-INF/spring-devtools.properties` that loads the Wicket and wicketstuff jars in DevTools'
+restart classloader, next to your own classes. Without it, Wicket would restore stored pages
+(e.g. on the back button) against a stale copy of your classes and fail with a
+`ClassCastException` on every `@SpringBean` field.
+
+On a restart your session survives, but by default the pages in it do not: Wicket keeps them in
+the servlet container's temporary directory, and Spring Boot creates a new one for every start of
+the embedded Tomcat. Requesting an old page then simply renders it afresh. To keep page state across
+restarts as well, give Tomcat a fixed base directory in development:
+
+```properties
+server.tomcat.basedir=target/tomcat
+```
+
 ---
 
 ## Dependency Configuration
