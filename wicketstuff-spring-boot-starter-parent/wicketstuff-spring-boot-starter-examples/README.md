@@ -5,8 +5,11 @@ documented behaviour.
 
 ## Running it
 
+From the repository root, install the starter first, then run the example:
+
 ```bash
-mvn -pl wicketstuff-spring-boot-starter-parent/wicketstuff-spring-boot-starter-examples -am spring-boot:run
+mvn -pl wicketstuff-spring-boot-starter-parent/wicketstuff-spring-boot-starter -am install -DskipTests
+mvn -f wicketstuff-spring-boot-starter-parent/wicketstuff-spring-boot-starter-examples spring-boot:run
 ```
 
 Then open <http://localhost:8080>.
@@ -27,6 +30,7 @@ every build rather than drifting out of date as untested sample code:
 |---|---|
 | A custom `WebApplication` and a page using `@SpringBean` | `SpringBeanInjectionQuickstartTest` (with `QuickstartWebApplication`, `QuickstartHomePage`, `GreetingService`) |
 | That `@SpringBean` still works if you supply your own filter registration | `SpringBeanInjectionWithCustomFilterRegistrationTest` |
+| That `@SpringBean` already works inside your application's `init()` | `SpringBeanInjectionDuringInitTest` |
 | REST controllers living alongside Wicket pages | `WicketAndSpringMvcCoexistenceTest` |
 | `wicket.*` properties actually reaching the filter | `WicketPropertiesBindingTest` |
 | That the starter alone is enough to boot a web application | `StarterSelfSufficiencyTest` |
