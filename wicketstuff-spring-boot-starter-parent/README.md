@@ -229,7 +229,7 @@ as much or as little as you need:
 |---|---|---|
 | `webApplication` | any `WebApplication` bean exists | use your own Wicket application (the usual case — see the Quickstart) |
 | `springComponentInjectorRegistrar` | any `SpringComponentInjector` bean exists | control how Spring injection is wired |
-| `wicketFilterRegistration` | a `FilterRegistrationBean<WicketFilter>` or a plain `WicketFilter` bean exists | control the filter registration, e.g. its order relative to other filters |
+| `wicketFilterRegistration` | a `FilterRegistrationBean<WicketFilter>` or a plain `WicketFilter` bean exists | control every detail of the filter registration (for path, name and order, the `wicket.filter-*` properties are enough) |
 
 Overriding the filter registration does **not** cost you Spring injection: the injector is bound to
 the `WebApplication` rather than to the filter, so `@SpringBean` keeps working in your pages either
@@ -263,6 +263,7 @@ The following properties can be configured in your `application.properties` or `
 | `wicket.enabled` | `true` | Set to `false` to switch the auto-configuration off entirely. |
 | `wicket.filter-path` | `/*` | URL mapping pattern for the Wicket filter. |
 | `wicket.filter-name` | `wicket-filter` | The name of the registered Wicket servlet filter. |
+| `wicket.filter-order` | `Ordered.LOWEST_PRECEDENCE` | Position of the Wicket filter in the servlet filter chain; lower values run earlier. |
 | `wicket.configuration` | `DEVELOPMENT` | The configuration type: `DEVELOPMENT` or `DEPLOYMENT`. |
 
 For example:
@@ -271,6 +272,11 @@ wicket.configuration=DEPLOYMENT
 wicket.filter-path=/app/*
 wicket.filter-name=my-custom-wicket-filter
 ```
+
+By default the Wicket filter runs last, after every other filter, including Spring Security's
+filter chain (order `-100`). That is usually what you want, since security decisions are made before
+Wicket renders anything. Set `wicket.filter-order` if another filter of yours has to run after
+Wicket instead.
 
 ---
 

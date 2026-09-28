@@ -15,6 +15,7 @@ package org.wicketstuff.springboot.starter;
 
 import org.apache.wicket.RuntimeConfigurationType;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.core.Ordered;
 
 /**
  * Configuration properties for Apache Wicket integration in Spring Boot.
@@ -52,6 +53,15 @@ public class WicketProperties {
 	 * </p>
 	 */
 	private RuntimeConfigurationType configuration = RuntimeConfigurationType.DEVELOPMENT;
+
+	/**
+	 * Order of the Wicket Filter within the servlet filter chain.
+	 * <p>
+	 * Lower values run earlier. Default is {@link Ordered#LOWEST_PRECEDENCE}, so Wicket runs after
+	 * every other filter, e.g. after Spring Security's filter chain.
+	 * </p>
+	 */
+	private int filterOrder = Ordered.LOWEST_PRECEDENCE;
 
 	/**
 	 * Gets the URL mapping pattern for the Wicket Filter.
@@ -105,5 +115,23 @@ public class WicketProperties {
 	 */
 	public void setConfiguration(RuntimeConfigurationType configuration) {
 		this.configuration = configuration;
+	}
+
+	/**
+	 * Gets the order of the Wicket Filter within the servlet filter chain.
+	 *
+	 * @return the filter order
+	 */
+	public int getFilterOrder() {
+		return filterOrder;
+	}
+
+	/**
+	 * Sets the order of the Wicket Filter within the servlet filter chain.
+	 *
+	 * @param filterOrder the filter order to set; lower values run earlier
+	 */
+	public void setFilterOrder(int filterOrder) {
+		this.filterOrder = filterOrder;
 	}
 }

@@ -107,10 +107,10 @@ public class WicketAutoConfiguration {
 
 	/**
 	 * Configures a {@link FilterRegistrationBean} for a given {@link WicketFilter}.
-	 * Sets up the filter mapping path, filter name, and configuration type for Wicket.
+	 * Sets up the filter mapping path, filter name, filter order and configuration type for Wicket.
 	 *
 	 * @param properties the {@link WicketProperties} containing configuration details such as filter path,
-	 *                   filter name, and runtime configuration type
+	 *                   filter name, filter order and runtime configuration type
 	 * @param filter     the {@link WicketFilter} to be configured and registered
 	 * @return a configured {@link FilterRegistrationBean} instance for the provided {@link WicketFilter}
 	 */
@@ -120,6 +120,7 @@ public class WicketAutoConfiguration {
 		registration.setFilter(filter);
 		registration.addUrlPatterns(properties.getFilterPath());
 		registration.setName(properties.getFilterName());
+		registration.setOrder(properties.getFilterOrder());
 
 		// Specify configuration parameter mapping for Wicket
 		registration.addInitParameter(WicketFilter.FILTER_MAPPING_PARAM, properties.getFilterPath());

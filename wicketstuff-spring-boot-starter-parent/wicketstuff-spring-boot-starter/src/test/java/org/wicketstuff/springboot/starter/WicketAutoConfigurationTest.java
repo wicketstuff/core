@@ -31,6 +31,7 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -53,6 +54,7 @@ class WicketAutoConfigurationTest {
 			assertThat(registration.getFilter()).isInstanceOf(WicketFilter.class);
 			assertThat(registration.getUrlPatterns()).containsExactly("/*");
 			assertThat(registration.getFilterName()).isEqualTo("wicket-filter");
+			assertThat(registration.getOrder()).isEqualTo(Ordered.LOWEST_PRECEDENCE);
 			assertThat(registration.getInitParameters())
 					.containsEntry("configuration", RuntimeConfigurationType.DEVELOPMENT.name());
 		});
@@ -64,11 +66,13 @@ class WicketAutoConfigurationTest {
 				.withPropertyValues(
 						"wicket.filter-path=/app/*",
 						"wicket.filter-name=custom-wicket-filter",
+						"wicket.filter-order=-50",
 						"wicket.configuration=DEPLOYMENT")
 				.run(context -> {
 					FilterRegistrationBean<?> registration = context.getBean(FilterRegistrationBean.class);
 					assertThat(registration.getUrlPatterns()).containsExactly("/app/*");
 					assertThat(registration.getFilterName()).isEqualTo("custom-wicket-filter");
+					assertThat(registration.getOrder()).isEqualTo(-50);
 					assertThat(registration.getInitParameters())
 							.containsEntry("configuration", RuntimeConfigurationType.DEPLOYMENT.name());
 				});
