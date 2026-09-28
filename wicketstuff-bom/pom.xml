@@ -241,6 +241,10 @@
 								</dependencyExclusion>
 								<dependencyExclusion>
 									<groupId>org.wicketstuff</groupId>
+									<artifactId>wicketstuff-spring-boot-starter-examples</artifactId>
+								</dependencyExclusion>
+								<dependencyExclusion>
+									<groupId>org.wicketstuff</groupId>
 									<artifactId>jasperreports-examples</artifactId>
 								</dependencyExclusion>
 								<dependencyExclusion>
