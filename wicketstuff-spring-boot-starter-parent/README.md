@@ -54,12 +54,12 @@ all of the following hold:
 - Wicket's `WebApplication` and `WicketFilter` are on the classpath;
 - `wicket.enabled` is not set to `false`.
 
-When it applies, three beans are contributed:
+When it applies, it contributes:
 
 | Bean | What it does |
 |---|---|
 | `webApplication` | The Wicket `WebApplication`. Falls back to a built-in default (see below) if you have not defined one. |
-| `springComponentInjector` | Registers Wicket's `SpringComponentInjector` against the `WebApplication`, which is what makes `@SpringBean` work inside pages and components. |
+| `springComponentInjectorRegistrar` | Adds Wicket's `SpringComponentInjector` to every `WebApplication` bean as soon as it is created, which is what makes `@SpringBean` work inside pages and components, and already in your application's `init()`. |
 | `wicketFilterRegistration` | Registers `WicketFilter` with the servlet container, mapped at `wicket.filter-path`, passing Wicket's filter-mapping and `configuration` init parameters from your settings. |
 
 ### Living alongside Spring MVC
@@ -228,7 +228,7 @@ as much or as little as you need:
 | Bean | Steps aside when | Define your own to |
 |---|---|---|
 | `webApplication` | any `WebApplication` bean exists | use your own Wicket application (the usual case — see the Quickstart) |
-| `springComponentInjector` | any `SpringComponentInjector` bean exists | control how Spring injection is wired |
+| `springComponentInjectorRegistrar` | any `SpringComponentInjector` bean exists | control how Spring injection is wired |
 | `wicketFilterRegistration` | a `FilterRegistrationBean<WicketFilter>` or a plain `WicketFilter` bean exists | control the filter registration, e.g. its order relative to other filters |
 
 Overriding the filter registration does **not** cost you Spring injection: the injector is bound to
@@ -248,9 +248,9 @@ protected void init() {
 }
 ```
 
-Keeping that line as well as the starter's bean would register two injectors. Either drop it and let
-the starter do it, or, if you want to keep control of the wiring, declare your own
-`SpringComponentInjector` bean so the starter's backs off.
+Keeping that line as well as the starter's registration would register two injectors. Either drop
+it and let the starter do it, or, if you want to keep control of the wiring, declare your own
+`SpringComponentInjector` bean so the starter steps aside.
 
 ---
 

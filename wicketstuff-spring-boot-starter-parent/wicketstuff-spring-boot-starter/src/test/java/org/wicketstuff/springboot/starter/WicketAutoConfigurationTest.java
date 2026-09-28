@@ -1,7 +1,11 @@
 package org.wicketstuff.springboot.starter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.servlet.Filter;
 import org.apache.wicket.Page;
+import org.apache.wicket.application.IComponentInstantiationListener;
 import org.apache.wicket.RuntimeConfigurationType;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.protocol.http.WicketFilter;
@@ -11,6 +15,7 @@ import org.springframework.boot.autoconfigure.AutoConfigurations;
 import org.springframework.boot.test.context.runner.ApplicationContextRunner;
 import org.springframework.boot.test.context.runner.WebApplicationContextRunner;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -91,11 +96,31 @@ class WicketAutoConfigurationTest {
 	}
 
 	@Test
+	void registersSpringInjectionOnTheWebApplicationAsSoonAsItIsCreated() {
+		servletContextRunner.run(context ->
+				assertThat(springComponentInjectors(context.getBean(WebApplication.class))).hasSize(1));
+	}
+
+	@Test
+	void registersSpringInjectionOnACustomWebApplication() {
+		servletContextRunner.withUserConfiguration(CustomWebApplicationConfig.class).run(context ->
+				assertThat(springComponentInjectors(context.getBean(WebApplication.class))).hasSize(1));
+	}
+
+	@Test
+	void leavesSpringInjectionAloneWhenACustomSpringComponentInjectorBeanIsPresent() {
+		servletContextRunner.withUserConfiguration(CustomSpringComponentInjectorConfig.class).run(context -> {
+			assertThat(context).doesNotHaveBean(SpringComponentInjectorRegistrar.class);
+			assertThat(springComponentInjectors(context.getBean(WebApplication.class))).isEmpty();
+		});
+	}
+
+	@Test
 	void doesNotActivateWhenDisabledByProperty() {
 		servletContextRunner.withPropertyValues("wicket.enabled=false").run(context -> {
 			assertThat(context).doesNotHaveBean(WebApplication.class);
 			assertThat(context).doesNotHaveBean(FilterRegistrationBean.class);
-			assertThat(context).doesNotHaveBean(SpringComponentInjector.class);
+			assertThat(context).doesNotHaveBean(SpringComponentInjectorRegistrar.class);
 		});
 	}
 
@@ -104,6 +129,16 @@ class WicketAutoConfigurationTest {
 		new ApplicationContextRunner()
 				.withConfiguration(AutoConfigurations.of(WicketAutoConfiguration.class))
 				.run(context -> assertThat(context).doesNotHaveBean(WebApplication.class));
+	}
+
+	private static List<IComponentInstantiationListener> springComponentInjectors(WebApplication application) {
+		List<IComponentInstantiationListener> injectors = new ArrayList<>();
+		application.getComponentInstantiationListeners().forEach(listener -> {
+			if (listener instanceof SpringComponentInjector) {
+				injectors.add(listener);
+			}
+		});
+		return injectors;
 	}
 
 	@Configuration
@@ -125,6 +160,16 @@ class WicketAutoConfigurationTest {
 			registration.addUrlPatterns("/custom/*");
 			registration.setName("custom-wicket-filter");
 			return registration;
+		}
+	}
+
+	@Configuration
+	static class CustomSpringComponentInjectorConfig {
+
+		@Bean
+		SpringComponentInjector springComponentInjector(WebApplication webApplication, ApplicationContext context) {
+			// Deliberately not added as a listener: the application takes over wiring injection itself
+			return new SpringComponentInjector(webApplication, context);
 		}
 	}
 

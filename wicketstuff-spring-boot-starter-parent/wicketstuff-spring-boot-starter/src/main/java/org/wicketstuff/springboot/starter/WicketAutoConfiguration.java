@@ -12,7 +12,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplicat
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication.Type;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
 /**
@@ -50,28 +49,26 @@ public class WicketAutoConfiguration {
     }
 
     /**
-     * Registers the {@link SpringComponentInjector} against the {@link WebApplication} bean so that
-     * Wicket pages and components can inject Spring beans via
+     * Registers a {@link SpringComponentInjector} on the {@link WebApplication} bean so that Wicket
+     * pages and components can inject Spring beans via
      * {@link org.apache.wicket.spring.injection.annot.SpringBean}.
      * <p>
-     * This is deliberately bound to the {@link WebApplication} rather than to the filter
-     * registration: an application that supplies its own {@link FilterRegistrationBean} still gets
-     * working Spring injection.
+     * The injector is added when the {@link WebApplication} bean is created, not later as a bean of
+     * its own: the servlet container initialises the Wicket filter, and so runs
+     * {@link WebApplication#init()}, before ordinary singletons exist. Being bound to the
+     * {@link WebApplication} rather than to the filter registration also keeps injection working
+     * for an application that supplies its own {@link FilterRegistrationBean}.
+     * </p>
+     * <p>
+     * Backs off when the application defines its own {@link SpringComponentInjector} bean.
      * </p>
      *
-     * @param webApplication     the auto-discovered Wicket WebApplication subclass bean
-     * @param applicationContext the Spring application context
-     * @return the injector registered as a component instantiation listener
+     * @return the post-processor registering the injector on each {@link WebApplication} bean
      */
     @Bean
-    @ConditionalOnMissingBean
-    public SpringComponentInjector springComponentInjector(
-            WebApplication webApplication,
-            ApplicationContext applicationContext) {
-
-        SpringComponentInjector injector = new SpringComponentInjector(webApplication, applicationContext);
-        webApplication.getComponentInstantiationListeners().add(injector);
-        return injector;
+    @ConditionalOnMissingBean(SpringComponentInjector.class)
+    static SpringComponentInjectorRegistrar springComponentInjectorRegistrar() {
+        return new SpringComponentInjectorRegistrar();
     }
 
     /**
