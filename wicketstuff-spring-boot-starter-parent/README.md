@@ -274,6 +274,25 @@ wicket.filter-name=my-custom-wicket-filter
 
 ---
 
+## Going to Production
+
+Like Wicket itself, the starter runs in `DEVELOPMENT` mode unless told otherwise, and says so with a
+banner in the log on every start. That mode is meant for your machine only: it reloads changed
+markup, leaves `wicket:id` attributes in the rendered HTML, enables the Ajax debug window, serves
+unminified JavaScript and renders exception pages with full stack traces.
+
+Switch to `DEPLOYMENT` wherever the application actually runs. A Spring profile keeps the setting
+next to the rest of your production configuration, in `application-prod.properties`:
+
+```properties
+wicket.configuration=DEPLOYMENT
+```
+
+activated with `--spring.profiles.active=prod` (or `SPRING_PROFILES_ACTIVE=prod`). Without a
+profile, setting the environment variable `WICKET_CONFIGURATION=DEPLOYMENT` does the same.
+
+---
+
 ## Testing
 
 Wicket keys its application registry by the filter name, and Spring keeps test contexts cached for
