@@ -73,6 +73,13 @@
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
 		</dependency>
+		<!-- Writes META-INF/spring-autoconfigure-metadata.properties, which lets Spring Boot evaluate
+		     the auto-configuration's class conditions at startup without loading its classes. -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-autoconfigure-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
 
 		<!-- Test dependencies -->
 		<dependency>
