@@ -1,0 +1,218 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.wicketstuff.springboot.starter;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.servlet.Filter;
+import org.apache.wicket.Page;
+import org.apache.wicket.application.IComponentInstantiationListener;
+import org.apache.wicket.RuntimeConfigurationType;
+import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.protocol.http.WicketFilter;
+import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.autoconfigure.AutoConfigurations;
+import org.springframework.boot.test.context.runner.ApplicationContextRunner;
+import org.springframework.boot.test.context.runner.WebApplicationContextRunner;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+/**
+ * @author Daniel Bartl
+ */
+class WicketAutoConfigurationTest {
+
+	private final WebApplicationContextRunner servletContextRunner = new WebApplicationContextRunner()
+			.withConfiguration(AutoConfigurations.of(WicketAutoConfiguration.class));
+
+	@Test
+	void registersDefaultWebApplicationAndFilterWhenNoneProvided() {
+		servletContextRunner.run(context -> {
+			assertThat(context).hasSingleBean(WebApplication.class);
+			assertThat(context.getBean(WebApplication.class)).isInstanceOf(DefaultWebApplication.class);
+
+			assertThat(context).hasSingleBean(FilterRegistrationBean.class);
+			FilterRegistrationBean<?> registration = context.getBean(FilterRegistrationBean.class);
+			assertThat(registration.getFilter()).isInstanceOf(WicketFilter.class);
+			assertThat(registration.getUrlPatterns()).containsExactly("/*");
+			assertThat(registration.getFilterName()).isEqualTo("wicket-filter");
+			assertThat(registration.getOrder()).isEqualTo(Ordered.LOWEST_PRECEDENCE);
+			assertThat(registration.getInitParameters())
+					.containsEntry("configuration", RuntimeConfigurationType.DEVELOPMENT.name());
+		});
+	}
+
+	@Test
+	void bindsCustomWicketPropertiesOntoTheFilterRegistration() {
+		servletContextRunner
+				.withPropertyValues(
+						"wicket.filter-path=/app/*",
+						"wicket.filter-name=custom-wicket-filter",
+						"wicket.filter-order=-50",
+						"wicket.configuration=DEPLOYMENT")
+				.run(context -> {
+					FilterRegistrationBean<?> registration = context.getBean(FilterRegistrationBean.class);
+					assertThat(registration.getUrlPatterns()).containsExactly("/app/*");
+					assertThat(registration.getFilterName()).isEqualTo("custom-wicket-filter");
+					assertThat(registration.getOrder()).isEqualTo(-50);
+					assertThat(registration.getInitParameters())
+							.containsEntry("configuration", RuntimeConfigurationType.DEPLOYMENT.name());
+				});
+	}
+
+	@Test
+	void backsOffWhenACustomWebApplicationBeanIsPresent() {
+		servletContextRunner.withUserConfiguration(CustomWebApplicationConfig.class).run(context -> {
+			assertThat(context).hasSingleBean(WebApplication.class);
+			assertThat(context.getBean(WebApplication.class)).isInstanceOf(CustomWebApplication.class);
+		});
+	}
+
+	@Test
+	void backsOffWhenACustomWicketFilterRegistrationIsPresent() {
+		servletContextRunner.withUserConfiguration(CustomFilterRegistrationConfig.class).run(context -> {
+			assertThat(context).hasSingleBean(FilterRegistrationBean.class);
+
+			FilterRegistrationBean<?> registration = context.getBean(FilterRegistrationBean.class);
+			assertThat(registration.getFilterName()).isEqualTo("custom-wicket-filter");
+			assertThat(registration.getUrlPatterns()).containsExactly("/custom/*");
+		});
+	}
+
+	@Test
+	void backsOffWhenAPlainWicketFilterBeanIsPresent() {
+		servletContextRunner.withUserConfiguration(PlainWicketFilterConfig.class).run(context -> {
+			assertThat(context).doesNotHaveBean(FilterRegistrationBean.class);
+			assertThat(context).hasSingleBean(WicketFilter.class);
+		});
+	}
+
+	@Test
+	void keepsRegisteringWicketNextToUnrelatedFilterRegistrations() {
+		servletContextRunner.withUserConfiguration(UnrelatedFilterRegistrationConfig.class).run(context ->
+				assertThat(context.getBeansOfType(FilterRegistrationBean.class))
+						.containsOnlyKeys("unrelatedFilterRegistration", "wicketFilterRegistration"));
+	}
+
+	@Test
+	void registersSpringInjectionOnTheWebApplicationAsSoonAsItIsCreated() {
+		servletContextRunner.run(context ->
+				assertThat(springComponentInjectors(context.getBean(WebApplication.class))).hasSize(1));
+	}
+
+	@Test
+	void registersSpringInjectionOnACustomWebApplication() {
+		servletContextRunner.withUserConfiguration(CustomWebApplicationConfig.class).run(context ->
+				assertThat(springComponentInjectors(context.getBean(WebApplication.class))).hasSize(1));
+	}
+
+	@Test
+	void leavesSpringInjectionAloneWhenACustomSpringComponentInjectorBeanIsPresent() {
+		servletContextRunner.withUserConfiguration(CustomSpringComponentInjectorConfig.class).run(context -> {
+			assertThat(context).doesNotHaveBean(SpringComponentInjectorRegistrar.class);
+			assertThat(springComponentInjectors(context.getBean(WebApplication.class))).isEmpty();
+		});
+	}
+
+	@Test
+	void doesNotActivateWhenDisabledByProperty() {
+		servletContextRunner.withPropertyValues("wicket.enabled=false").run(context -> {
+			assertThat(context).doesNotHaveBean(WebApplication.class);
+			assertThat(context).doesNotHaveBean(FilterRegistrationBean.class);
+			assertThat(context).doesNotHaveBean(SpringComponentInjectorRegistrar.class);
+		});
+	}
+
+	@Test
+	void doesNotActivateOutsideServletWebApplications() {
+		new ApplicationContextRunner()
+				.withConfiguration(AutoConfigurations.of(WicketAutoConfiguration.class))
+				.run(context -> assertThat(context).doesNotHaveBean(WebApplication.class));
+	}
+
+	private static List<IComponentInstantiationListener> springComponentInjectors(WebApplication application) {
+		List<IComponentInstantiationListener> injectors = new ArrayList<>();
+		application.getComponentInstantiationListeners().forEach(listener -> {
+			if (listener instanceof SpringComponentInjector) {
+				injectors.add(listener);
+			}
+		});
+		return injectors;
+	}
+
+	@Configuration
+	static class CustomWebApplicationConfig {
+
+		@Bean
+		WebApplication webApplication() {
+			return new CustomWebApplication();
+		}
+	}
+
+	@Configuration
+	static class CustomFilterRegistrationConfig {
+
+		@Bean
+		FilterRegistrationBean<WicketFilter> customWicketFilterRegistration() {
+			FilterRegistrationBean<WicketFilter> registration = new FilterRegistrationBean<>();
+			registration.setFilter(new WicketFilter(new CustomWebApplication()));
+			registration.addUrlPatterns("/custom/*");
+			registration.setName("custom-wicket-filter");
+			return registration;
+		}
+	}
+
+	@Configuration
+	static class CustomSpringComponentInjectorConfig {
+
+		@Bean
+		SpringComponentInjector springComponentInjector(WebApplication webApplication, ApplicationContext context) {
+			// Deliberately not added as a listener: the application takes over wiring injection itself
+			return new SpringComponentInjector(webApplication, context);
+		}
+	}
+
+	@Configuration
+	static class PlainWicketFilterConfig {
+
+		@Bean
+		WicketFilter wicketFilter() {
+			return new WicketFilter(new CustomWebApplication());
+		}
+	}
+
+	@Configuration
+	static class UnrelatedFilterRegistrationConfig {
+
+		@Bean
+		FilterRegistrationBean<Filter> unrelatedFilterRegistration() {
+			return new FilterRegistrationBean<>((request, response, chain) -> chain.doFilter(request, response));
+		}
+	}
+
+	static class CustomWebApplication extends WebApplication {
+
+		@Override
+		public Class<? extends Page> getHomePage() {
+			return DefaultHomePage.class;
+		}
+	}
+}

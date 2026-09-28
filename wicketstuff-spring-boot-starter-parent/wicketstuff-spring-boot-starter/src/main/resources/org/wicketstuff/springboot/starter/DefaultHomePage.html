@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<!--
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+<html xmlns:wicket="http://wicket.apache.org">
+	<head>
+		<meta charset="utf-8" />
+		<title>Wicket Spring Boot Starter</title>
+		<wicket:link><link rel="stylesheet" href="style.css" type="text/css" media="screen" title="Stylesheet" /></wicket:link>
+	</head>
+	<body>
+		<div id="hd">
+			<div id="logo">
+				<wicket:link><img src="logo.png" width="50px" height="50px" alt="Wicket Logo" /></wicket:link>
+				<h1>Wicket Spring Boot Starter</h1>
+			</div>
+		</div>
+		<div id="bd">
+			<h2>It works!</h2>
+			<p>
+				This is the default page served by the Wicket Spring Boot Starter, running on
+				Apache Wicket <wicket:container wicket:id="version">10.x</wicket:container>.
+				It's shown because your application hasn't registered its own <code>WebApplication</code>
+				bean yet.
+			</p>
+			<h3>Next steps</h3>
+			<p>
+				Replace this page by registering your own Wicket application as a Spring bean:
+			</p>
+			<ol>
+				<li>Create a <code>WebApplication</code> subclass annotated with <code>@Component</code>.</li>
+				<li>Point its <code>getHomePage()</code> to your own <code>WebPage</code>.</li>
+				<li>Optionally inject Spring beans into your pages with <code>@SpringBean</code>.</li>
+			</ol>
+			<p>
+				See the starter's
+				<a href="https://github.com/wicketstuff/core/tree/master/wicketstuff-spring-boot-starter-parent" target="_blank">README</a>
+				for the full Quickstart, or the
+				<a href="https://wicket.apache.org/" target="_blank">Apache Wicket documentation</a>
+				to learn more about building pages and components.
+			</p>
+		</div>
+		<div id="ft">
+		</div>
+	</body>
+</html>
