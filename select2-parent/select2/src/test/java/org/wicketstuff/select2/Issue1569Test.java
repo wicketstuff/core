@@ -27,7 +27,7 @@ import org.apache.wicket.model.util.CollectionModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class Issue644Test extends AbstarctSelect2Test {
+class Issue1569Test extends AbstarctSelect2Test {
 	private Collection<String> selection;
 
 	@BeforeEach
@@ -38,35 +38,35 @@ class Issue644Test extends AbstarctSelect2Test {
 	@Test
 	void checkInitModelPreFilled() throws Exception {
 		// ARRANGE
-		Issue644Page page = new Issue644Page() {
+		Issue1569Page page = new Issue1569Page() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(Collection<String> selection) {
-				Issue644Test.this.selection = selection;
+			protected void onSubmit(Collection<String> sel) {
+				Issue1569Test.this.selection = sel;
 			}
 
 		};
-		page.setModel(new CollectionModel<>(Issue644Page.KNOWN_USERS));
+		page.setModel(new CollectionModel<>(Issue1569Page.KNOWN_USERS));
 		tester.startPage(page);
 
 		// ACT
 		tester.executeAjaxEvent("frm:sbmt", "click");
 
 		// ASSERT
-		assertThat(selection, containsInAnyOrder("bob", "alice"));
+		assertThat(selection, containsInAnyOrder("bob", "alice", "evil"));
 	}
 
 	@Test
 	void checkInitModelEmpty() throws Exception {
 		// ARRANGE
-		Issue644Page page = new Issue644Page() {
+		Issue1569Page page = new Issue1569Page() {
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			protected void onSubmit(Collection<String> selection) {
-				Issue644Test.this.selection = selection;
+				Issue1569Test.this.selection = selection;
 			}
 
 		};
@@ -75,10 +75,10 @@ class Issue644Test extends AbstarctSelect2Test {
 
 		// ACT
 		tester.getRequest().getPostParameters().addParameterValue("s2mc", "bob");
-		tester.getRequest().getPostParameters().addParameterValue("s2mc", "alice");
+		tester.getRequest().getPostParameters().addParameterValue("s2mc", "evil");
 		tester.executeAjaxEvent("frm:sbmt", "click");
 
 		// ASSERT
-		assertThat(selection, containsInAnyOrder("bob", "alice"));
+		assertThat(selection, containsInAnyOrder("bob", "evil"));
 	}
 }

@@ -31,11 +31,11 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 
-public class Issue644Page extends WebPage implements IGenericComponent<Collection<String>, Issue644Page> {
+public class Issue1569Page extends WebPage implements IGenericComponent<Collection<String>, Issue1569Page> {
 	private static final long serialVersionUID = 1L;
 	FeedbackPanel feedback = new FeedbackPanel("feedback");
 
-	public static final List<String> KNOWN_USERS = Arrays.asList("bob", "alice");
+	public static final List<String> KNOWN_USERS = Arrays.asList("bob", "alice", "evil");
 
 	@Override
 	protected void onInitialize() {
@@ -46,6 +46,11 @@ public class Issue644Page extends WebPage implements IGenericComponent<Collectio
 
 		StringTextChoiceProvider provider = new StringTextChoiceProvider() {
 			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isDisabled(String object) {
+				return object == null || object.endsWith("evil");
+			}
 
 			@Override
 			public void query(String term, int page, Response<String> response) {
@@ -62,7 +67,7 @@ public class Issue644Page extends WebPage implements IGenericComponent<Collectio
 			protected void onSubmit(AjaxRequestTarget target) {
 				feedback.info("INFO:: " + s2mc.getModelObject().size());
 				target.add(feedback);
-				Issue644Page.this.onSubmit(Issue644Page.this.getModelObject());
+				Issue1569Page.this.onSubmit(Issue1569Page.this.getModelObject());
 			}
 		});
 	}

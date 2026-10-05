@@ -405,15 +405,21 @@ public abstract class AbstractSelect2Choice<T, M> extends FormComponent<M> imple
 
 	/**
 	 * Append a single option markup.
-	 *  
+	 *
 	 * @param buffer buffer to append to
 	 * @param choice choice to create option markup for
 	 */
 	protected void appendOptionHtml(final AppendingStringBuffer buffer, T choice)
 	{
 		buffer.append("<option selected=\"selected\" value=\"")
-			.append(Strings.escapeMarkup(getProvider().getIdValue(choice))).append("\">")
-			.append(Strings.escapeMarkup(getProvider().getDisplayValue(choice))).append("</option>");
+			.append(Strings.escapeMarkup(getProvider().getIdValue(choice)))
+			.append("\"");
+		if (getProvider().isDisabled(choice)) {
+			final String dis = getProvider().getDisabledAttribute();
+			buffer.append(" " + dis + "=\"" + dis + "\"");
+		}
+		buffer.append(">");
+		buffer.append(Strings.escapeMarkup(getProvider().getDisplayValue(choice))).append("</option>");
 	}
 
 	/**
@@ -453,7 +459,7 @@ public abstract class AbstractSelect2Choice<T, M> extends FormComponent<M> imple
 
 	/**
 	 * Creates the HTML option(s) markup representing the current value.
-	 * 
+	 *
 	 * @param currentValue
 	 * 			the current value
 	 * @return
