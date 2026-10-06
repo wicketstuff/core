@@ -416,7 +416,7 @@ public abstract class AbstractSelect2Choice<T, M> extends FormComponent<M> imple
 			.append("\"");
 		if (getProvider().isDisabled(choice)) {
 			final String dis = getProvider().getDisabledAttribute();
-			buffer.append(" " + dis + "=\"" + dis + "\"");
+			buffer.append(" ").append(dis).append("=\"").append(dis).append("\"");
 		}
 		buffer.append(">");
 		buffer.append(Strings.escapeMarkup(getProvider().getDisplayValue(choice))).append("</option>");

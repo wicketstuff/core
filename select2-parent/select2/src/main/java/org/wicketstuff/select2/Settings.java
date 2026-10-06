@@ -38,8 +38,24 @@ public final class Settings implements Serializable
 	private static final long serialVersionUID = 1L;
 	public static final String DEFAULT_QUERY_PARAM = "q";
 
-	public static enum DIR {
-		ltr, rtl, auto
+	/**
+	 * Attribute that sets the element's base text direction and directionally
+	 * isolates its contents from surrounding text.
+	 */
+	public static enum DIRECTION {
+		/**
+		 * left-to-right base direction
+		 */
+		ltr,
+		/**
+		 * right-to-left base direction
+		 */
+		rtl,
+		/**
+		 * User agent will determine the base direction from the text,
+		 * generally using the first character with a strong directionality
+		 */
+		auto
 	}
 
 	/**
@@ -55,7 +71,7 @@ public final class Settings implements Serializable
 
 	// language code (e.g. "en", "de", "fr", ...)
 	private String language;
-	private DIR dir = DIR.auto;
+	private DIRECTION dir = DIRECTION.auto;
 
 	private Integer minimumInputLength, minimumResultsForSearch;
 	private Integer maximumSelectionLength;
@@ -126,12 +142,14 @@ public final class Settings implements Serializable
 			Json.writeObject(writer, "selectionCssClass", selectionCssClass);
 			Json.writeObject(writer, "dropdownCssClass", dropdownCssClass);
 			Json.writeObject(writer, "separator", separator);
-			if (tokenSeparators != null) {
+			if (tokenSeparators != null)
+			{
 				Json.writeObject(writer, "tokenSeparators", new JSONArray(tokenSeparators));
 			}
 			Json.writeObject(writer, "selectOnClose", selectOnClose);
 			Json.writeObject(writer, "dropdownAutoWidth", dropdownAutoWidth);
-			if (!Strings.isEmpty(dropdownParent)) {
+			if (!Strings.isEmpty(dropdownParent))
+			{
 				Json.writeFunction(writer, "dropdownParent", String.format("$('#%s')", dropdownParent));
 			}
 			if (ajax != null)
@@ -526,11 +544,17 @@ public final class Settings implements Serializable
 		return this;
 	}
 
-	public DIR getDir() {
+	public DIRECTION getDir() {
 		return dir;
 	}
 
-	public Settings setDir(DIR newDir) {
+	/**
+	 * Sets the dir attribute on the selection and dropdown containers to indicate the direction of the text.
+	 *
+	 * @param newDir - direction of the text
+	 * @return this for chaining
+	 */
+	public Settings setDir(DIRECTION newDir) {
 		this.dir = newDir;
 		return this;
 	}
