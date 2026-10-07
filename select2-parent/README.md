@@ -8,8 +8,8 @@ Installation
 
 ```xml
 <dependency>
-    <groupId>org.wicketstuff</groupId>
-    <artifactId>wicketstuff-select2</artifactId>
+	<groupId>org.wicketstuff</groupId>
+	<artifactId>wicketstuff-select2</artifactId>
 	<version>...</version>
 </dependency>
 ```
@@ -33,10 +33,10 @@ These settings allow the application to customize the behavior of wicketstuff-se
 Example:
 ```java
 public class MyApplication extends WebApplication {
-    public void init() {
+	public void init() {
 		super.init();
 		ApplicationSettings.get().setCssReference(CUSTOM_CSS_REFERENCE);
-    }
+	}
 }
 ```
 Integration
@@ -71,15 +71,15 @@ public abstract class ChoiceProvider<T> implements IDetachable {
 	 */
 	public abstract String getIdValue(T object);
 
-    /**
-     * Queries application for choices that match the search {@code term} and adds them to the {@code response}
-     */
-    public abstract void query(String term, int page, Response<T> response);
+	/**
+	 * Queries application for choices that match the search {@code term} and adds them to the {@code response}
+	 */
+	public abstract void query(String term, int page, Response<T> response);
 
-    /**
-     * Converts a list of choice ids back into application's choice objects. When the choice provider is attached to a
-     */
-    public abstract Collection<T> toChoices(Collection<String> ids);
+	/**
+	 * Converts a list of choice ids back into application's choice objects. When the choice provider is attached to a
+	 */
+	public abstract Collection<T> toChoices(Collection<String> ids);
 }
 ```
 Once you implement a custom subclass your application can communicate with the Select2 components. Then its simply a matter of adding any one of the provided components to your page and configuring various Select2 options through the component. For example a single-select component can be added and configured like this:
@@ -97,9 +97,9 @@ country.getSettings().setMinimumInputLength(1);
 
 Html
 ```html
-   ...
-   <select wicket:id="country"></select>
-   ...
+	...
+	<select wicket:id="country"></select>
+	...
 ```
 
 The two main Select2 components are the `Select2Choice` which provides single-selection and `Select2MultiChoice` which provides multi-selection.
