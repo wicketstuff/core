@@ -209,10 +209,6 @@
 								</dependencyExclusion>
 								<dependencyExclusion>
 									<groupId>org.wicketstuff</groupId>
-									<artifactId>wicket-facebook-examples</artifactId>
-								</dependencyExclusion>
-								<dependencyExclusion>
-									<groupId>org.wicketstuff</groupId>
 									<artifactId>wicketstuff-html5-examples</artifactId>
 								</dependencyExclusion>
 								<dependencyExclusion>
