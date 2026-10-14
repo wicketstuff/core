@@ -93,10 +93,6 @@
 								</dependencyExclusion>
 								<dependencyExclusion>
 									<groupId>org.wicketstuff</groupId>
-									<artifactId>wicketstuff-htmlcompressor-examples</artifactId>
-								</dependencyExclusion>
-								<dependencyExclusion>
-									<groupId>org.wicketstuff</groupId>
 									<artifactId>wicketstuff-inmethod-grid-examples</artifactId>
 								</dependencyExclusion>
 								<dependencyExclusion>
