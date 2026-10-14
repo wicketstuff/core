@@ -131,7 +131,6 @@
 								<artifactId>gae-initializer-example</artifactId>
 								<artifactId>wicket-gchart-examples</artifactId>
 								<artifactId>wicketstuff-gmap3-examples</artifactId>
-								<artifactId>googlecharts-examples</artifactId>
 								<artifactId>wicketstuff-inmethod-grid-examples</artifactId>
 								<artifactId>input-events-examples</artifactId>
 								<artifactId>javaee-inject-examples</artifactId>
@@ -414,7 +413,6 @@
 		<module>gae-initializer-parent</module>
 		<module>gchart-parent</module>
 		<module>gmap3-parent</module>
-		<module>googlecharts-parent</module>
 		<module>inmethod-grid-parent</module>
 		<module>input-events-parent</module>
 		<module>javaee-inject-parent</module>
