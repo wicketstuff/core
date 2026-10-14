@@ -60,12 +60,6 @@
 
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
-			<artifactId>wicketstuff-dashboard-widgets-jqplot</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.wicketstuff</groupId>
 			<artifactId>wicketstuff-dashboard-widgets-justgage</artifactId>
 			<version>${project.version}</version>
 		</dependency>

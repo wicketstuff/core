@@ -57,10 +57,6 @@
 								</dependencyExclusion>
 								<dependencyExclusion>
 									<groupId>org.wicketstuff</groupId>
-									<artifactId>jqplot-examples</artifactId>
-								</dependencyExclusion>
-								<dependencyExclusion>
-									<groupId>org.wicketstuff</groupId>
 									<artifactId>async-task-demo</artifactId>
 								</dependencyExclusion>
 								<dependencyExclusion>
