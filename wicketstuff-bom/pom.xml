@@ -133,10 +133,6 @@
 								</dependencyExclusion>
 								<dependencyExclusion>
 									<groupId>org.wicketstuff</groupId>
-									<artifactId>openlayers-examples</artifactId>
-								</dependencyExclusion>
-								<dependencyExclusion>
-									<groupId>org.wicketstuff</groupId>
 									<artifactId>openlayers3-examples</artifactId>
 								</dependencyExclusion>
 								<dependencyExclusion>
