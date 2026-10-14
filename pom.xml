@@ -167,7 +167,6 @@
 								<artifactId>wicket-shiro-example-spring-jdbc</artifactId>
 								<artifactId>wicket-shiro-example-spring-hibernate</artifactId>
 								<artifactId>wicket-shiro-example-spring-hibernate-native</artifactId>
-								<artifactId>wicket-facebook-examples</artifactId>
 								<artifactId>wicketstuff-html5-examples</artifactId>
 								<artifactId>wicketstuff-servlet3-examples</artifactId>
 								<artifactId>wicketstuff-clipboardjs-examples</artifactId>
@@ -458,7 +457,6 @@
 		<module>serializer-fast2</module>
 		<module>serializer-ui</module>
 		<module>shiro-security</module>
-		<module>wicket-facebook-parent</module>
 		<module>wicket-html5-parent</module>
 		<module>wicket-servlet3-parent</module>
 		<module>wicketstuff-clipboard-js-parent</module>
