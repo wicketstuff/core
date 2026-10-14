@@ -153,7 +153,6 @@
 								<artifactId>wicketstuff-portlet-examples</artifactId>
 								<artifactId>progressbar-example</artifactId>
 								<artifactId>quickview-examples</artifactId>
-								<artifactId>simile-timeline-examples</artifactId>
 								<artifactId>tinymce4-examples</artifactId>
 								<artifactId>tinymce3-examples</artifactId>
 								<artifactId>tinymce6-examples</artifactId>
@@ -443,7 +442,6 @@
 		<module>plugin</module>
 		<module>progressbar-parent</module>
 		<module>quickview-parent</module>
-		<module>simile-timeline-parent</module>
 		<module>tinymce6-parent</module>
 		<module>twitter-parent</module>
 		<module>wicket-bundle-parent</module>

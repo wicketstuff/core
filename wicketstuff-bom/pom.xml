@@ -165,10 +165,6 @@
 								</dependencyExclusion>
 								<dependencyExclusion>
 									<groupId>org.wicketstuff</groupId>
-									<artifactId>wicketstuff-simile-timeline-examples</artifactId>
-								</dependencyExclusion>
-								<dependencyExclusion>
-									<groupId>org.wicketstuff</groupId>
 									<artifactId>tinymce4-examples</artifactId>
 								</dependencyExclusion>
 								<dependencyExclusion>
