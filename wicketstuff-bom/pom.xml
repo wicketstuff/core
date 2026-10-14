@@ -49,10 +49,6 @@
 								</dependencyExclusion>
 								<dependencyExclusion>
 									<groupId>org.wicketstuff</groupId>
-									<artifactId>wicketstuff-nashorn-examples</artifactId>
-								</dependencyExclusion>
-								<dependencyExclusion>
-									<groupId>org.wicketstuff</groupId>
 									<artifactId>lightbox2-examples</artifactId>
 								</dependencyExclusion>
 								<dependencyExclusion>
