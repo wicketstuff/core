@@ -73,10 +73,6 @@
 								</dependencyExclusion>
 								<dependencyExclusion>
 									<groupId>org.wicketstuff</groupId>
-									<artifactId>flot-examples</artifactId>
-								</dependencyExclusion>
-								<dependencyExclusion>
-									<groupId>org.wicketstuff</groupId>
 									<artifactId>gae-initializer-example</artifactId>
 								</dependencyExclusion>
 								<dependencyExclusion>
