@@ -25,9 +25,8 @@
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.wicketstuff</groupId>
-			<artifactId>wicketstuff-ioc-bundle</artifactId>
-			<version>${project.version}</version>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-ioc</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.geronimo.specs</groupId>
@@ -47,43 +46,8 @@
 				<configuration>
 					<instructions>
 						<Bundle-SymbolicName>org.wicketstuff.osgi.test.library.web</Bundle-SymbolicName>
-						<Require-Bundle>org.wicketstuff.ioc-bundle</Require-Bundle>
 						<Web-ContextPath>/library</Web-ContextPath>
 					</instructions>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.ops4j</groupId>
-				<artifactId>maven-pax-plugin</artifactId>
-				<configuration>
-					<noDependencies>true</noDependencies>
-					<deployURLs>
-						mvn:org.wicketstuff/wicket-osgi-test-service/1.5-SNAPSHOT,
-						mvn:org.wicketstuff/wicketstuff-osgi/1.5-SNAPSHOT,
-						mvn:org.wicketstuff/wicketstuff-bundle/1.5-SNAPSHOT,
-						mvn:org.wicketstuff/wicketstuff-ioc-bundle/1.5-SNAPSHOT,
-						mvn:org.apache.aries.blueprint/org.apache.aries.blueprint.core/0.3,
-						mvn:org.apache.aries.blueprint/org.apache.aries.blueprint.api/0.3,
-						mvn:org.apache.aries/org.apache.aries.util/0.3,
-						mvn:org.apache.aries.proxy/org.apache.aries.proxy.api/0.3,
-						mvn:org.apache.aries.proxy/org.apache.aries.proxy.impl/0.3,
-						mvn:org.apache.felix/org.apache.felix.webconsole/3.1.8,
-						mvn:net.sourceforge.cglib/com.springsource.net.sf.cglib/2.2.0,
-						mvn:org.apache.geronimo.specs/geronimo-atinject_1.0_spec/1.0,
-						mvn:org.slf4j/slf4j-api/1.6.1,
-						mvn:org.slf4j/slf4j-simple/1.6.1,
-						mvn:asm/asm-all/3.3,
-					</deployURLs>
-					<provision>
-						<param>--platform=${platform}</param>
-						<param>--profiles=compendium,web,war</param>
-						<param>--log=debug</param>
-
-						<!-- Uncomment the following to enable remote debugging. -->
-						<!-- We use a property to mask the double hyphen within an XML comment... -->
-
-						<!--param>${pax.debug}</param -->
-					</provision>
 				</configuration>
 			</plugin>
 		</plugins>

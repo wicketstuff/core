@@ -438,7 +438,6 @@
 		<module>simile-timeline-parent</module>
 		<module>tinymce6-parent</module>
 		<module>twitter-parent</module>
-		<module>wicket-bundle-parent</module>
 		<module>wicket-osgi-parent</module>
 		<module>wicket-poi-parent</module>
 		<module>wicketstuff-logback-parent</module>
