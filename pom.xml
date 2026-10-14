@@ -128,7 +128,6 @@
 								<artifactId>async-task-demo</artifactId>
 								<artifactId>wicketstuff-autocomplete-tagit-examples</artifactId>
 								<artifactId>datatables-examples</artifactId>
-								<artifactId>gae-initializer-example</artifactId>
 								<artifactId>wicket-gchart-examples</artifactId>
 								<artifactId>wicketstuff-gmap3-examples</artifactId>
 								<artifactId>wicketstuff-inmethod-grid-examples</artifactId>
@@ -410,7 +409,6 @@
 		<module>autocomplete-tagit-parent</module>
 		<module>datastores-parent</module>
 		<module>datatables-parent</module>
-		<module>gae-initializer-parent</module>
 		<module>gchart-parent</module>
 		<module>gmap3-parent</module>
 		<module>inmethod-grid-parent</module>
