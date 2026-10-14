@@ -174,7 +174,6 @@
 								<artifactId>wicketstuff-selectize-examples</artifactId>
 								<artifactId>wicket-foundation-samples</artifactId>
 								<artifactId>wicketstuff-dashboard-examples</artifactId>
-								<artifactId>wicketstuff-datetime-yui-examples</artifactId>
 								<artifactId>wicketstuff-datastore-tests</artifactId>
 								<artifactId>wicket-osgi-test-service</artifactId>
 								<artifactId>wicket-osgi-test-web</artifactId>
@@ -461,7 +460,6 @@
 		<module>dashboard-parent</module>
 		<module>wicketstuff-rest-lambda</module>
 		<module>wicketstuff-lambda-components</module>
-		<module>wicketstuff-datetime-yui-parent</module>
 
 		<module>wicketstuff-jquery-ui-parent</module>
 

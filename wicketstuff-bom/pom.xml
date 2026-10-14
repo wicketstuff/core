@@ -252,10 +252,6 @@
 								</dependencyExclusion>
 								<dependencyExclusion>
 									<groupId>org.wicketstuff</groupId>
-									<artifactId>wicketstuff-datetime-yui-examples</artifactId>
-								</dependencyExclusion>
-								<dependencyExclusion>
-									<groupId>org.wicketstuff</groupId>
 									<artifactId>wicketstuff-datastore-tests</artifactId>
 								</dependencyExclusion>
 								<dependencyExclusion>
