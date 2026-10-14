@@ -253,10 +253,6 @@
 								</dependencyExclusion>
 								<dependencyExclusion>
 									<groupId>org.wicketstuff</groupId>
-									<artifactId>wicket-datetime-examples</artifactId>
-								</dependencyExclusion>
-								<dependencyExclusion>
-									<groupId>org.wicketstuff</groupId>
 									<artifactId>wicketstuff-datetime-yui-examples</artifactId>
 								</dependencyExclusion>
 								<dependencyExclusion>
