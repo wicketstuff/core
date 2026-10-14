@@ -21,10 +21,34 @@ updates:
 
   - package-ecosystem: "maven"
     directory: "/"
+    target-branch: "master"
     schedule:
       interval: "weekly"
       day: "sunday"
     open-pull-requests-limit: 50
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+
+  - package-ecosystem: "maven"
+    directory: "/"
+    target-branch: "wicket-9.x"
+    schedule:
+      interval: "weekly"
+      day: "sunday"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+
+  - package-ecosystem: "maven"
+    directory: "/"
+    target-branch: "wicket-8.x"
+    schedule:
+      interval: "weekly"
+      day: "sunday"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: "github-actions"
     directory: "/"
