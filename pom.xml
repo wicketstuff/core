@@ -465,7 +465,6 @@
 		<module>wicketstuff-springreference-parent</module>
 		<module>wicket-security-parent</module>
 
-		<module>yui-parent</module>
 		<module>jasperreports-parent</module>
 		<module>editable-grid-parent</module>
 
