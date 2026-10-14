@@ -134,7 +134,6 @@
 								<artifactId>wicket-gchart-examples</artifactId>
 								<artifactId>wicketstuff-gmap3-examples</artifactId>
 								<artifactId>googlecharts-examples</artifactId>
-								<artifactId>wicketstuff-htmlcompressor-examples</artifactId>
 								<artifactId>wicketstuff-inmethod-grid-examples</artifactId>
 								<artifactId>input-events-examples</artifactId>
 								<artifactId>javaee-inject-examples</artifactId>
@@ -361,7 +360,6 @@
 		<commons-compress.version>1.28.0</commons-compress.version>
 		<validation-api.version>3.1.1</validation-api.version>
 		<jta.version>2.0.1</jta.version>
-		<htmlcompressor.version>1.5.2</htmlcompressor.version>
 		<closure-compiler.version>v20240317</closure-compiler.version>
 		<ibatis2-sqlmap.version>2.1.7.597</ibatis2-sqlmap.version>
 		<jts.version>1.13</jts.version>
@@ -426,7 +424,6 @@
 		<module>gchart-parent</module>
 		<module>gmap3-parent</module>
 		<module>googlecharts-parent</module>
-		<module>htmlcompressor-parent</module>
 		<module>inmethod-grid-parent</module>
 		<module>input-events-parent</module>
 		<module>javaee-inject-parent</module>
@@ -854,11 +851,6 @@
 				<groupId>de.agilecoders.wicket</groupId>
 				<artifactId>jquery-selectors</artifactId>
 				<version>${jquery-selectors.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.googlecode.htmlcompressor</groupId>
-				<artifactId>htmlcompressor</artifactId>
-				<version>${htmlcompressor.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.google.javascript</groupId>
