@@ -126,7 +126,6 @@
 								<artifactId>wicketstuff-offline-mode-examples</artifactId>
 								<artifactId>wicketstuff-nashorn-examples</artifactId>
 								<artifactId>lightbox2-examples</artifactId>
-								<artifactId>jqplot-examples</artifactId>
 								<artifactId>async-task-demo</artifactId>
 								<artifactId>wicketstuff-autocomplete-tagit-examples</artifactId>
 								<artifactId>datatables-examples</artifactId>
@@ -410,7 +409,6 @@
 		<module>offline-mode-parent</module>
 		<module>nashorn-parent</module>
 		<module>lightbox2-parent</module>
-		<module>jqplot-parent</module>
 		<module>annotation</module>
 		<module>annotationeventdispatcher-parent</module>
 		<module>async-tasks-parent</module>
