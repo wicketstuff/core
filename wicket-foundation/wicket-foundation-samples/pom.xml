@@ -7,7 +7,7 @@
     <parent>
         <artifactId>wicket-foundation-parent</artifactId>
         <groupId>org.wicketstuff.foundation</groupId>
-        <version>10.12.0-SNAPSHOT</version>
+        <version>11.0.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>wicket-foundation-samples</artifactId>
@@ -38,8 +38,8 @@
 			<artifactId>jetty-server</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.eclipse.jetty.ee10</groupId>
-			<artifactId>jetty-ee10-webapp</artifactId>
+			<groupId>org.eclipse.jetty.ee11</groupId>
+			<artifactId>jetty-ee11-webapp</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
@@ -50,8 +50,8 @@
 			<artifactId>wicket-native-websocket-javax</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.eclipse.jetty.ee10.websocket</groupId>
-			<artifactId>jetty-ee10-websocket-jakarta-server</artifactId>
+			<groupId>org.eclipse.jetty.ee11.websocket</groupId>
+			<artifactId>jetty-ee11-websocket-jakarta-server</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>jakarta.servlet</groupId>

@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>editable-grid-parent</artifactId>
-		<version>10.12.0-SNAPSHOT</version>
+		<version>11.0.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>editable-grid-examples</artifactId>
 	<packaging>war</packaging>
@@ -40,8 +40,8 @@
 			<artifactId>jetty-server</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.eclipse.jetty.ee10</groupId>
-			<artifactId>jetty-ee10-webapp</artifactId>
+			<groupId>org.eclipse.jetty.ee11</groupId>
+			<artifactId>jetty-ee11-webapp</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
@@ -52,8 +52,8 @@
 			<artifactId>wicket-native-websocket-javax</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.eclipse.jetty.ee10.websocket</groupId>
-			<artifactId>jetty-ee10-websocket-jakarta-server</artifactId>
+			<groupId>org.eclipse.jetty.ee11.websocket</groupId>
+			<artifactId>jetty-ee11-websocket-jakarta-server</artifactId>
 		</dependency>
 	</dependencies>
 
@@ -92,8 +92,8 @@
 		</testResources>
 		<plugins>
 			<plugin>
-				<groupId>org.eclipse.jetty.ee10</groupId>
-				<artifactId>jetty-ee10-maven-plugin</artifactId>
+				<groupId>org.eclipse.jetty.ee11</groupId>
+				<artifactId>jetty-ee11-maven-plugin</artifactId>
 				<configuration>
 					<systemProperties>
 						<maven.project.build.directory.test-classes>${project.build.directory}/test-classes</maven.project.build.directory.test-classes>

@@ -79,13 +79,12 @@ public class AttributeModel extends LoadableDetachableModel<Object>
 		}
 	}
 
-	public void detach()
+	protected void onDetach()
 	{
 		server.detach();
 	}
 
 	protected void onError(Throwable throwable)
 	{
-
 	}
 }
