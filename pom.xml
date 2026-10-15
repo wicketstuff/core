@@ -357,7 +357,7 @@
 		<wicket-bootstrap-core.version>7.0.15</wicket-bootstrap-core.version>
 		<jasperreports.version>7.0.8</jasperreports.version>
 		<ehcache.version>3.12.0</ehcache.version>
-		<jakartaee-api.version>10.0.0</jakartaee-api.version>
+		<jakartaee-api.version>11.0.0</jakartaee-api.version>
 		<clojure.version>1.12.6</clojure.version>
 		<groovy.version>4.0.7</groovy.version>
 		<asm-util.version>9.11</asm-util.version>
