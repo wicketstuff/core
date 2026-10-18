@@ -317,7 +317,7 @@
 		<deployment.disabled>false</deployment.disabled>
 		<sources.disabled>false</sources.disabled>
 
-		<hibernate.version>7.4.12.Final</hibernate.version>
+		<hibernate.version>7.4.13.Final</hibernate.version>
 		<hibernate-validator.version>9.1.4.Final</hibernate-validator.version>
 		<javassist.version>3.33.0-GA</javassist.version>
 		<jetty.version>12.1.13</jetty.version>
