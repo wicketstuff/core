@@ -355,7 +355,7 @@
 		<ibatis2-sqlmap.version>2.1.7.597</ibatis2-sqlmap.version>
 		<gson.version>2.14.0</gson.version>
 		<wicket-bootstrap-core.version>7.0.15</wicket-bootstrap-core.version>
-		<jasperreports.version>7.0.8</jasperreports.version>
+		<jasperreports.version>7.1.0</jasperreports.version>
 		<ehcache.version>3.12.0</ehcache.version>
 		<jakartaee-api.version>11.0.0</jakartaee-api.version>
 		<clojure.version>1.12.6</clojure.version>
