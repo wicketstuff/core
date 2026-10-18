@@ -13,7 +13,7 @@
 	<description>An implementation of Apache Wicket's IPageStore that uses Apache Cassandra as a backend</description>
 
 	<properties>
-		<cassandra-driver-core.version>4.19.3</cassandra-driver-core.version>
+		<cassandra-driver-core.version>4.19.4</cassandra-driver-core.version>
 	</properties>
 	<dependencies>
 
