@@ -32,6 +32,16 @@ updates:
 
   - package-ecosystem: "maven"
     directory: "/"
+    target-branch: "wicket-10.x"
+    schedule:
+      interval: "weekly"
+      day: "sunday"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+
+  - package-ecosystem: "maven"
+    directory: "/"
     target-branch: "wicket-9.x"
     schedule:
       interval: "weekly"
