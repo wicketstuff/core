@@ -567,7 +567,7 @@
 		<javaee-api.version>7.0</javaee-api.version>
 		<clojure.version>1.12.5</clojure.version>
 		<groovy.version>3.0.25</groovy.version>
-		<asm-util.version>9.10.1</asm-util.version>
+		<asm-util.version>9.11.1</asm-util.version>
 		<hsqldb.version>2.7.4</hsqldb.version>
 		<hazelcast.version>5.3.8</hazelcast.version> <!-- starting 5.4.0 Java17+ is required -->
 		<jython-standalone.version>2.7.4</jython-standalone.version>
