@@ -330,7 +330,7 @@
 		<cglib.version>3.3.0</cglib.version>
 		<objenesis.version>3.6</objenesis.version>
 		<scala.version>2.13.18</scala.version>
-		<jackson.version>3.2.3</jackson.version>
+		<jackson.version>3.2.4</jackson.version>
 		<jackson2.version>2.22.4</jackson2.version>
 		<poi.version>5.5.1</poi.version>
 		<guava.version>33.7.2-jre</guava.version>
@@ -360,7 +360,7 @@
 		<jakartaee-api.version>11.0.0</jakartaee-api.version>
 		<clojure.version>1.12.6</clojure.version>
 		<groovy.version>4.0.7</groovy.version>
-		<asm-util.version>9.11</asm-util.version>
+		<asm-util.version>9.11.1</asm-util.version>
 		<hsqldb.version>2.7.4</hsqldb.version>
 		<hazelcast.version>5.7.0</hazelcast.version>
 		<jython-standalone.version>2.7.4</jython-standalone.version>
