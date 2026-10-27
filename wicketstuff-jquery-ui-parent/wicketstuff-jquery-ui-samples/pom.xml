@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicketstuff-jquery-ui-parent</artifactId>
-		<version>11.0.0-SNAPSHOT</version>
+		<version>10.12.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>wicketstuff-jquery-ui-samples</artifactId>
@@ -19,54 +19,54 @@
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
 			<artifactId>wicketstuff-jquery-ui</artifactId>
-			<version>11.0.0-SNAPSHOT</version>
+			<version>10.12.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
 			<artifactId>wicketstuff-jquery-ui-theme-base</artifactId>
-      <version>11.0.0-SNAPSHOT</version>
+      <version>10.12.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
 			<artifactId>wicketstuff-jquery-ui-calendar</artifactId>
-      <version>11.0.0-SNAPSHOT</version>
+      <version>10.12.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
 			<artifactId>wicketstuff-jquery-ui-plugins</artifactId>
-      <version>11.0.0-SNAPSHOT</version>
+      <version>10.12.0-SNAPSHOT</version>
 		</dependency>
 
 		<!-- KENDO-UI DEPENDENCIES -->
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
 			<artifactId>wicketstuff-kendo-ui</artifactId>
-      <version>11.0.0-SNAPSHOT</version>
+      <version>10.12.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
 			<artifactId>wicketstuff-kendo-ui-culture</artifactId>
-      <version>11.0.0-SNAPSHOT</version>
+      <version>10.12.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
 			<artifactId>wicketstuff-kendo-ui-theme-default</artifactId>
-      <version>11.0.0-SNAPSHOT</version>
+      <version>10.12.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
 			<artifactId>wicketstuff-kendo-ui-theme-bootstrap</artifactId>
-      <version>11.0.0-SNAPSHOT</version>
+      <version>10.12.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
 			<artifactId>wicketstuff-kendo-ui-theme-material</artifactId>
-      <version>11.0.0-SNAPSHOT</version>
+      <version>10.12.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
 			<artifactId>wicketstuff-kendo-ui-theme-meridian</artifactId>
-      <version>11.0.0-SNAPSHOT</version>
+      <version>10.12.0-SNAPSHOT</version>
 		</dependency>
 
 		<!-- WICKET DEPENDENCIES -->
@@ -102,8 +102,8 @@
 			<artifactId>jetty-server</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.eclipse.jetty.ee11</groupId>
-			<artifactId>jetty-ee11-webapp</artifactId>
+			<groupId>org.eclipse.jetty.ee10</groupId>
+			<artifactId>jetty-ee10-webapp</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
@@ -114,8 +114,8 @@
 			<artifactId>wicket-native-websocket-javax</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.eclipse.jetty.ee11.websocket</groupId>
-			<artifactId>jetty-ee11-websocket-jakarta-server</artifactId>
+			<groupId>org.eclipse.jetty.ee10.websocket</groupId>
+			<artifactId>jetty-ee10-websocket-jakarta-server</artifactId>
 		</dependency>
 	</dependencies>
 
@@ -164,8 +164,8 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>org.eclipse.jetty.ee11</groupId>
-				<artifactId>jetty-ee11-maven-plugin</artifactId>
+				<groupId>org.eclipse.jetty.ee10</groupId>
+				<artifactId>jetty-ee10-maven-plugin</artifactId>
 				<configuration>
 					<systemProperties>
 						<maven.project.build.directory.test-classes>${project.build.directory}/test-classes</maven.project.build.directory.test-classes>

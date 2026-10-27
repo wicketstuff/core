@@ -6,7 +6,7 @@
 	<groupId>org.wicketstuff</groupId>
 	<artifactId>wicketstuff-core</artifactId>
 	<packaging>pom</packaging>
-	<version>11.0.0-SNAPSHOT</version>
+	<version>10.12.0-SNAPSHOT</version>
 	<name>WicketStuff Core Parent</name>
 	<description>
 		WicketStuff Core Parent is the parent project for all of the core WicketStuff projects.  It tries
@@ -305,10 +305,10 @@
 	<!-- mocleiri: for distribution in to central repository sections in the main pom are not allowed -->
 
 	<properties>
-		<wicket.version>11.0.0-SNAPSHOT</wicket.version>
+		<wicket.version>10.12.0-SNAPSHOT</wicket.version>
 
-		<maven.compiler.source>21</maven.compiler.source>
-		<maven.compiler.target>21</maven.compiler.target>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -338,7 +338,7 @@
 		<jquery-selectors.version>4.0.15</jquery-selectors.version>
 		<xstream.version>1.4.21</xstream.version>
 		<hamcrest.version>3.0</hamcrest.version>
-		<jakarta.servlet-api.version>6.1.0</jakarta.servlet-api.version> <!-- MUST be aligned with Wicket -->
+		<jakarta.servlet-api.version>6.0.0</jakarta.servlet-api.version> <!-- MUST be aligned with Wicket -->
 		<junit.version>6.1.3</junit.version>
 		<easymock.version>5.7.0</easymock.version>
 		<mockito.version>5.24.0</mockito.version>
@@ -357,7 +357,7 @@
 		<wicket-bootstrap-core.version>7.0.15</wicket-bootstrap-core.version>
 		<jasperreports.version>7.1.0</jasperreports.version>
 		<ehcache.version>3.12.0</ehcache.version>
-		<jakartaee-api.version>11.0.0</jakartaee-api.version>
+		<jakartaee-api.version>10.0.0</jakartaee-api.version>
 		<clojure.version>1.12.6</clojure.version>
 		<groovy.version>4.0.7</groovy.version>
 		<asm-util.version>9.11.1</asm-util.version>
@@ -654,14 +654,14 @@
 				https://jakarta.ee/specifications/servlet/
 			-->
 			<dependency>
-				<groupId>org.eclipse.jetty.ee11</groupId>
-				<artifactId>jetty-ee11-webapp</artifactId>
+				<groupId>org.eclipse.jetty.ee10</groupId>
+				<artifactId>jetty-ee10-webapp</artifactId>
 				<version>${jetty.version}</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>
-				<groupId>org.eclipse.jetty.ee11.websocket</groupId>
-				<artifactId>jetty-ee11-websocket-jakarta-server</artifactId>
+				<groupId>org.eclipse.jetty.ee10.websocket</groupId>
+				<artifactId>jetty-ee10-websocket-jakarta-server</artifactId>
 				<version>${jetty.version}</version>
 				<scope>test</scope>
 			</dependency>
@@ -1360,8 +1360,8 @@
 					</executions>
 				</plugin>
 				<plugin>
-					<groupId>org.eclipse.jetty.ee11</groupId>
-					<artifactId>jetty-ee11-maven-plugin</artifactId>
+					<groupId>org.eclipse.jetty.ee10</groupId>
+					<artifactId>jetty-ee10-maven-plugin</artifactId>
 					<version>${jetty.version}</version>
 				</plugin>
 				<plugin>
