@@ -109,7 +109,7 @@ public class JEEWebResolver implements IComponentResolver
 					throw new MarkupException(
 						"Wrong format of <wicket:jsp file='/foo.jsp'>: attribute 'file' is missing");
 				}
-				return new ServletAndJspFileContainer(file, Type.JSP);
+				return new ServletAndJspFileContainer(wtag.getId(), file, Type.JSP);
 			}
 			else if ("jsf".equalsIgnoreCase(wtag.getName()))
 			{
@@ -119,7 +119,7 @@ public class JEEWebResolver implements IComponentResolver
 					throw new MarkupException(
 						"Wrong format of <wicket:jsf file='/foo.xhtml'>: attribute 'file' is missing");
 				}
-				return new ServletAndJspFileContainer(file, Type.JSF);
+				return new ServletAndJspFileContainer(wtag.getId(), file, Type.JSF);
 			}
 			else if ("servlet".equalsIgnoreCase(wtag.getName()))
 			{
@@ -129,7 +129,7 @@ public class JEEWebResolver implements IComponentResolver
 					throw new MarkupException(
 						"Wrong format of <wicket:servlet path='/Test'>: attribute 'path' is missing");
 				}
-				return new ServletAndJspFileContainer(path, Type.SERVLET);
+				return new ServletAndJspFileContainer(wtag.getId(), path, Type.SERVLET);
 			}
 		}
 		return null;
@@ -147,9 +147,9 @@ public class JEEWebResolver implements IComponentResolver
 
 		private final Type type;
 
-		public ServletAndJspFileContainer(String resource, Type type)
+		public ServletAndJspFileContainer(String id, String resource, Type type)
 		{
-			super(resource);
+			super(id);
 			this.resource = resource;
 			this.type = type;
 		}
