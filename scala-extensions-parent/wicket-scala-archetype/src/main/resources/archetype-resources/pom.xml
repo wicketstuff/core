@@ -137,7 +137,7 @@
 						<jvmArg>-Xmx1024m</jvmArg>
 					</jvmArgs>
 					<args>
-						<arg>-release:17</arg>
+						<arg>-release:21</arg>
 						<arg>-deprecation</arg>
 						<!--arg>-optimise</arg-->
 						<arg>-unchecked</arg>
