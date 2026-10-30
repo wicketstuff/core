@@ -3,6 +3,9 @@ Wicket Stuff Core
 
 ![](https://travis-ci.org/wicketstuff/core.svg?branch=master&style=flat)
 
+> [!WARNING]
+> This branch is no longer maintained. Apache Wicket 8 has reached its end of life, and wicketstuff-core 8.20.0 is the last 8.x release. Upgrade to a supported Wicket version and use the matching Wicket Stuff branch, such as [wicket-10.x](https://github.com/wicketstuff/core/tree/wicket-10.x).
+
 
 Overview:
 ---------
