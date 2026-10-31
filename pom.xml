@@ -75,6 +75,13 @@
 	<profiles>
 		<profile>
 			<id>central-release</id>
+			<activation>
+				<property>
+					<name>performRelease</name>
+					<value>true</value>
+				</property>
+			</activation>
+
 			<!-- This is the profile for deploying release artifacts. -->
 			<distributionManagement>
 				<repository>
@@ -106,6 +113,13 @@
 		</profile>
 		<profile>
 			<id>do-publish</id>
+			<activation>
+				<property>
+					<name>performRelease</name>
+					<value>true</value>
+				</property>
+			</activation>
+
 			<!-- This is the profile to use for releasing both SNAPSHOT and release. -->
 			<build>
 				<plugins>
