@@ -136,6 +136,7 @@
 							<publishingServerId>central-sonatype-repo</publishingServerId>
 							<checksums>required</checksums>
 							<autoPublish>true</autoPublish>
+							<deploymentName>Deployment ${project.version}</deploymentName>
 							<excludeArtifacts>
 								<artifactId>wicketstuff-offline-mode-examples</artifactId>
 								<artifactId>lightbox2-examples</artifactId>
