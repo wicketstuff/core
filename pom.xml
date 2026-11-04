@@ -333,7 +333,7 @@
 		<sources.disabled>false</sources.disabled>
 
 		<hibernate.version>7.4.14.Final</hibernate.version>
-		<hibernate-validator.version>9.1.5.Final</hibernate-validator.version>
+		<hibernate-validator.version>9.1.6.Final</hibernate-validator.version>
 		<javassist.version>3.33.0-GA</javassist.version>
 		<jetty.version>12.1.13</jetty.version>
 		<sf-jung.version>2.1.1</sf-jung.version>
@@ -349,8 +349,8 @@
 		<jackson2.version>2.22.4</jackson2.version>
 		<poi.version>5.5.1</poi.version>
 		<guava.version>33.7.2-jre</guava.version>
-		<wicket-webjars.version>4.0.15</wicket-webjars.version>
-		<jquery-selectors.version>4.0.15</jquery-selectors.version>
+		<wicket-webjars.version>5.0.0</wicket-webjars.version>
+		<jquery-selectors.version>5.0.0</jquery-selectors.version>
 		<xstream.version>1.4.21</xstream.version>
 		<hamcrest.version>3.0</hamcrest.version>
 		<jakarta.servlet-api.version>6.1.0</jakarta.servlet-api.version> <!-- MUST be aligned with Wicket -->
@@ -370,7 +370,7 @@
 		<ibatis2-sqlmap.version>2.1.7.597</ibatis2-sqlmap.version>
 		<gson.version>2.15.0</gson.version>
 		<wicket-bootstrap-core.version>7.0.15</wicket-bootstrap-core.version>
-		<jasperreports.version>7.1.0</jasperreports.version>
+		<jasperreports.version>7.1.1</jasperreports.version>
 		<ehcache.version>3.12.0</ehcache.version>
 		<jakartaee-api.version>11.0.0</jakartaee-api.version>
 		<clojure.version>1.12.6</clojure.version>
