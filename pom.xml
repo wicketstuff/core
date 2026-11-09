@@ -369,7 +369,7 @@
 		<closure-compiler.version>v20240317</closure-compiler.version>
 		<ibatis2-sqlmap.version>2.1.7.597</ibatis2-sqlmap.version>
 		<gson.version>2.15.0</gson.version>
-		<wicket-bootstrap-core.version>7.0.15</wicket-bootstrap-core.version>
+		<wicket-bootstrap-core.version>7.0.16</wicket-bootstrap-core.version>
 		<jasperreports.version>7.1.1</jasperreports.version>
 		<ehcache.version>3.12.0</ehcache.version>
 		<jakartaee-api.version>11.0.0</jakartaee-api.version>
