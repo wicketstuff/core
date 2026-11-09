@@ -348,7 +348,7 @@
 		<jackson.version>3.2.4</jackson.version>
 		<jackson2.version>2.22.4</jackson2.version>
 		<poi.version>5.5.1</poi.version>
-		<guava.version>33.7.2-jre</guava.version>
+		<guava.version>33.8.0-jre</guava.version>
 		<wicket-webjars.version>5.0.0</wicket-webjars.version>
 		<jquery-selectors.version>5.0.0</jquery-selectors.version>
 		<xstream.version>1.4.21</xstream.version>
