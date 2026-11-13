@@ -503,6 +503,16 @@
 			</dependency>
 			<dependency>
 				<groupId>org.apache.wicket</groupId>
+				<artifactId>wicket-util</artifactId>
+				<version>${wicket.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.wicket</groupId>
+				<artifactId>wicket-request</artifactId>
+				<version>${wicket.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.wicket</groupId>
 				<artifactId>wicket-extensions</artifactId>
 				<version>${wicket.version}</version>
 			</dependency>
@@ -544,6 +554,21 @@
 			<dependency>
 				<groupId>org.apache.wicket</groupId>
 				<artifactId>wicket-native-websocket-javax</artifactId>
+				<version>${wicket.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.wicket</groupId>
+				<artifactId>wicket-native-websocket-core</artifactId>
+				<version>${wicket.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.wicket</groupId>
+				<artifactId>wicket-cdi</artifactId>
+				<version>${wicket.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.wicket</groupId>
+				<artifactId>wicket-bean-validation</artifactId>
 				<version>${wicket.version}</version>
 			</dependency>
 			<dependency>
@@ -1118,6 +1143,17 @@
 								<requireMavenVersion>
 									<version>3.5.0</version>
 								</requireMavenVersion>
+								<!-- Every Wicket artifact on any classpath must be ${wicket.version}, also
+									when a third-party library brings its own (older) Wicket. Manage the
+									artifact in dependencyManagement when this rule fails. -->
+								<bannedDependencies>
+									<excludes>
+										<exclude>org.apache.wicket:*</exclude>
+									</excludes>
+									<includes>
+										<include>org.apache.wicket:*:${wicket.version}</include>
+									</includes>
+								</bannedDependencies>
 							</rules>
 						</configuration>
 					</execution>
