@@ -42,9 +42,9 @@ Unlike `TinyMceBehavior`, a single `HugeRteBehavior` instance can be attached to
 |---|---|
 | `setMenuBar(boolean)` | `withMenubar(boolean)` |
 | `setStatusBar(boolean)` | `withStatusbar(boolean)` |
-| `setReadOnly(boolean)` | `withReadonly(boolean)` |
+| `setReadOnly(boolean)` | `withReadonly(boolean)`, or disable the component |
 | `setContentCss(String)` | `withContentCss(String)` |
-| `setInLine(Boolean)` | `with("inline", boolean)` |
+| `setInLine(Boolean)` | Not supported: `HugeRteBehavior` edits textareas only |
 | `setConvertUrls(boolean)` | `with("convert_urls", boolean)` |
 | `setRelativeUrls(Boolean)` | `with("relative_urls", boolean)` |
 | `setRemoveScriptHost(Boolean)` | `with("remove_script_host", boolean)` |
@@ -98,7 +98,7 @@ form.add(new AjaxButton("save") { /* ... */ });
 
 ## 4. Simplify Ajax submits and component toggling
 
-Remove `TinyMceAjaxButton`, `TinyMceAjaxSubmitLink`, and `TinyMceAjaxSubmitModifier`, and use standard `AjaxButton` and `AjaxSubmitLink`. `hugerte-wicket.js` triggers `hugerte.triggerSave()` before every Wicket Ajax call and removes editors automatically when Wicket Ajax replaces or hides their components. See [Save editor content with Ajax](ajax.md).
+Remove `TinyMceAjaxButton`, `TinyMceAjaxSubmitLink`, and `TinyMceAjaxSubmitModifier`, and use standard `AjaxButton` and `AjaxSubmitLink`. `hugerte-wicket.js` copies the editors' content to their textareas before every Wicket Ajax call and removes editors automatically when Wicket Ajax replaces or hides their components. See [Save editor content with Ajax](ajax.md).
 
 ## 5. Migrate language packs
 

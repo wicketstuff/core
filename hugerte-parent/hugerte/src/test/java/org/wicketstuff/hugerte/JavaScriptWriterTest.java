@@ -63,6 +63,29 @@ class JavaScriptWriterTest
 	}
 
 	@Test
+	void resolvesUrlsLikeABrowser()
+	{
+		String root = "/ctx/app/";
+		String page = "admin/articles/edit?0";
+		assertEquals("/ctx/app/wicket/resource/a.css",
+			JavaScriptWriter.resolve(root, page, "../../wicket/resource/a.css"));
+		assertEquals("/ctx/css/editor.css?v=1#main",
+			JavaScriptWriter.resolve(root, page, "../../../css/editor.css?v=1#main"));
+		assertEquals("/ctx/app/admin/articles/edit?action=upload",
+			JavaScriptWriter.resolve(root, page, "?action=upload"));
+		assertEquals("/ctx/app/admin/articles/edit?0#top",
+			JavaScriptWriter.resolve(root, page, "#top"));
+		assertEquals("/ctx/app/simple/a.css", JavaScriptWriter.resolve(root, "//simple/x", "a.css"));
+		assertEquals("/static/a.css", JavaScriptWriter.resolve(root, page, "/static/a.css"));
+		assertEquals("https://cdn.example.com/a.css",
+			JavaScriptWriter.resolve(root, page, "https://cdn.example.com/a.css"));
+		assertEquals("//cdn.example.com/a.css",
+			JavaScriptWriter.resolve(root, page, "//cdn.example.com/a.css"));
+		// URI rejects a space in the fragment, which Wicket leaves unencoded
+		assertEquals("css/a.css#a b", JavaScriptWriter.resolve(root, page, "css/a.css#a b"));
+	}
+
+	@Test
 	void rejectsUnsupportedTypes()
 	{
 		assertThrows(IllegalArgumentException.class, () -> JavaScriptWriter.write(new Object()));

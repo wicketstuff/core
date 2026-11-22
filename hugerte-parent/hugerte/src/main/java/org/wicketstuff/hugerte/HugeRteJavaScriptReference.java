@@ -22,29 +22,56 @@ import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 
+import de.agilecoders.wicket.webjars.WicketWebjars;
 import de.agilecoders.wicket.webjars.request.resource.WebjarsJavaScriptResourceReference;
 
 /**
  * The Wicket glue script ({@code hugerte-wicket.js}). It depends on the HugeRTE webjar and on
  * Wicket's Ajax script.
+ * <p>
+ * The webjar references are created on first use, so {@link #get()} can be called from
+ * {@code WebApplication.init()}. {@link #editor()} needs wicket-webjars to be installed: during
+ * {@code init()}, call {@code WicketWebjars.install(this)} first.
  */
 public final class HugeRteJavaScriptReference extends JavaScriptResourceReference
 {
 	private static final long serialVersionUID = 1L;
 
-	/** The HugeRTE editor itself. */
-	public static final ResourceReference HUGERTE = new WebjarsJavaScriptResourceReference(
-		"hugerte/current/hugerte.js");
-
-	/** The minified HugeRTE editor. */
-	public static final ResourceReference HUGERTE_MIN = new WebjarsJavaScriptResourceReference(
-		"hugerte/current/hugerte.min.js");
-
 	private static final HugeRteJavaScriptReference INSTANCE = new HugeRteJavaScriptReference();
+
+	private static volatile ResourceReference editor;
+
+	private static volatile ResourceReference editorMin;
 
 	public static HugeRteJavaScriptReference get()
 	{
 		return INSTANCE;
+	}
+
+	/**
+	 * @return the HugeRTE editor script: the full version in development mode, the minified one
+	 *         otherwise
+	 */
+	public static ResourceReference editor()
+	{
+		if (Application.get().getConfigurationType() == RuntimeConfigurationType.DEVELOPMENT)
+		{
+			if (editor == null)
+			{
+				editor = new WebjarsJavaScriptResourceReference(path("hugerte.js"));
+			}
+			return editor;
+		}
+		if (editorMin == null)
+		{
+			editorMin = new WebjarsJavaScriptResourceReference(path("hugerte.min.js"));
+		}
+		return editorMin;
+	}
+
+	private static String path(String file)
+	{
+		return "hugerte/" + WicketWebjars.settings().recentVersionPlaceHolder() + "/" + file;
 	}
 
 	private HugeRteJavaScriptReference()
@@ -55,12 +82,9 @@ public final class HugeRteJavaScriptReference extends JavaScriptResourceReferenc
 	@Override
 	public List<HeaderItem> getDependencies()
 	{
-		var application = Application.get();
-		var editor = application.getConfigurationType() == RuntimeConfigurationType.DEVELOPMENT
-			? HUGERTE : HUGERTE_MIN;
 		return List.of(
 			JavaScriptHeaderItem.forReference(
-				application.getJavaScriptLibrarySettings().getWicketAjaxReference()),
-			JavaScriptHeaderItem.forReference(editor));
+				Application.get().getJavaScriptLibrarySettings().getWicketAjaxReference()),
+			JavaScriptHeaderItem.forReference(editor()));
 	}
 }

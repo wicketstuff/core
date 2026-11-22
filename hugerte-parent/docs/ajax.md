@@ -2,7 +2,7 @@
 title: Save editor content with Ajax
 ---
 
-Submit a HugeRTE editor with Wicket's standard Ajax form components. Before every Wicket Ajax call, `hugerte-wicket.js` listens to Wicket's `/ajax/call/before` event and calls `hugerte.triggerSave()`, copying each editor's HTML back into its `<textarea>` before Wicket serializes the form.
+Submit a HugeRTE editor with Wicket's standard Ajax form components. Before every Wicket Ajax call, `hugerte-wicket.js` listens to Wicket's `/ajax/call/before` event and copies each editor's HTML back into its `<textarea>` with `editor.save({ set_dirty: false })`, before Wicket serializes the form. Don't call `hugerte.triggerSave()` yourself for this: it also marks every editor as saved.
 
 ## Submit with AjaxButton or AjaxSubmitLink
 
@@ -66,7 +66,38 @@ editor.add(new AjaxFormComponentUpdatingBehavior("change")
 });
 ```
 
-Use `"blur"` instead of `"change"` to send the content only when the editor loses focus. The forwarding is installed in addition to any `setup` callback you configure.
+HugeRTE fires `change` when it records an undo level, for example after formatting, pressing Enter or leaving the editor, so the update doesn't run on every keystroke. Undo and redo are forwarded as `change` as well. `OnChangeAjaxBehavior` therefore also works, at the same granularity. Use `"blur"` instead of `"change"` to send the content only when the editor loses focus. The forwarding is installed in addition to any `setup` callback you configure.
+
+Copying the content to the textarea doesn't mark the editor as saved: `editor.isDirty()` stays `true`, so the autosave and save plugins keep working.
+
+## Mark the editor as saved
+
+After you have stored the content, tell the editor, so `isDirty()` becomes `false`, the autosave plugin discards its draft and stops warning when the user leaves the page:
+
+```java
+@Override
+protected void onSubmit(AjaxRequestTarget target)
+{
+    service.save(text.getObject());
+    HugeRteBehavior.markSaved(target, editor);
+}
+```
+
+Call `markSaved` in the request that sent the editor: `onSubmit` of an `AjaxButton` or `AjaxSubmitLink`, or `onUpdate` of an `AjaxFormComponentUpdatingBehavior`. It acknowledges the content that request sent. If the user kept typing while the request was underway, the editor no longer holds that content and stays dirty. In a request that didn't send the editor, such as an `AjaxLink`, it does nothing, because the content may never have reached the model, for example after failed validation; the editor stays dirty and keeps warning. When requests that sent the editor overlap, which only happens with custom Ajax channels, it does nothing until a request sends the editor on its own. `markSaved` runs before Wicket replaces components, so it also works when the same response re-renders the editor.
+
+An `AjaxButton` or `AjaxSubmitLink` that returns `true` from `shouldTriggerJavaScriptSubmitEvent()` fires the form's `submit` event, and HugeRTE marks the editor as saved on that event, before the server has answered.
+
+## Focus the editor from the server
+
+`AjaxRequestTarget.focusComponent(textArea)` focuses the hidden textarea, which does nothing. Use `HugeRteBehavior.focus` instead; it focuses the editor, waiting until it is initialized if needed:
+
+```java
+HugeRteBehavior.focus(target, editor);
+```
+
+## Limitations
+
+HugeRTE shows its menus and dialogs in a container at the end of the page. Wicket's `ModalDialog` with `trapFocus()` moves the focus back into the dialog whenever it leaves, so an editor inside such a dialog can't use its own dialogs, such as the link dialog. Don't combine `trapFocus()` with an editor.
 
 ## Re-render and hide editors
 
@@ -78,7 +109,7 @@ To re-render an editor or its enclosing form, add it to the `AjaxRequestTarget`:
 target.add(form);
 ```
 
-Wicket removes the old editor before replacing the markup, and the Ajax response runs `Wicket.HugeRte.init(...)` to create a fresh editor for the new `<textarea>`.
+Wicket removes the old editor before replacing the markup, and the Ajax response runs `Wicket.HugeRte.init(...)` to create a fresh editor for the new `<textarea>`. Re-rendering is also how you change the content from the server: update the model and add the component to the target. The new editor shows the model value, so edits the user hasn't submitted are lost, along with the undo history.
 
 To hide and show an editor with Ajax, enable a placeholder tag on the toggled component or container:
 
