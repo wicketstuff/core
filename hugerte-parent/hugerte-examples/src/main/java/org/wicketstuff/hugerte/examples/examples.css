@@ -1,0 +1,3 @@
+body { font-family: system-ui, sans-serif; max-width: 60rem; margin: 2rem auto; padding: 0 1rem; }
+nav a { margin-right: 1rem; }
+.saved { border: 1px solid #ccc; padding: .5rem; white-space: pre-wrap; font-family: monospace; }
