@@ -14,8 +14,8 @@
 package org.wicketstuff.hugerte;
 
 import java.math.BigDecimal;
-import java.net.URI;
 import java.math.BigInteger;
+import java.net.URI;
 import java.util.List;
 import java.util.Map;
 
@@ -75,18 +75,46 @@ final class JavaScriptWriter
 				"Writing a ResourceReference as a URL needs an active request cycle: " + reference);
 		}
 		var renderer = cycle.getUrlRenderer();
-		// Wicket renders the URL as the browser should request it from the current page...
-		URI rendered = URI.create(renderer.renderUrl(cycle.mapUrlFor(reference, null)));
-		if (rendered.isAbsolute() || rendered.getRawPath().startsWith("/"))
-		{
-			return rendered.toASCIIString();
-		}
-		// ...so resolving it against the page's path, as the browser would, gives the absolute
-		// path, also for URLs outside Wicket's filter path
 		var request = cycle.getRequest();
-		String page = request.getContextPath() + request.getFilterPath() + "/" +
-			renderer.getBaseUrl().toString();
-		return URI.create(page).resolve(rendered).toASCIIString();
+		// Wicket renders the URL as the browser should request it from the current page, so
+		// resolving it against the page's path, as the browser would, gives the absolute path, also
+		// for URLs outside Wicket's filter path
+		String root = "/" + request.getContextPath() + "/" + request.getFilterPath() + "/";
+		return resolve(root.replaceAll("/+", "/"), renderer.getBaseUrl().toString(),
+			renderer.renderUrl(cycle.mapUrlFor(reference, null)));
+	}
+
+	/**
+	 * Resolves a URL the way a browser does on the page {@code root + page}.
+	 *
+	 * @param root
+	 *            the absolute path of Wicket's filter, ending with a slash
+	 * @param page
+	 *            the page URL relative to {@code root}
+	 * @param url
+	 *            the URL to resolve
+	 * @return {@code url} unchanged when it is absolute or starts with a slash, otherwise the
+	 *         absolute path it resolves to, with query and fragment
+	 */
+	static String resolve(String root, String page, String url)
+	{
+		URI target = URI.create(url);
+		if (target.isAbsolute() || target.getRawAuthority() != null ||
+			target.getRawPath().startsWith("/"))
+		{
+			return url;
+		}
+		URI base = URI.create(root + page.replaceFirst("^/+", ""));
+		if (target.getRawPath().isEmpty())
+		{
+			// java.net.URI drops the last path segment for a query-only reference; a browser
+			// keeps the page path, and also its query for a fragment-only reference
+			String query = target.getRawQuery() != null ? target.getRawQuery()
+				: base.getRawQuery();
+			return base.getRawPath() + (query == null ? "" : "?" + query) +
+				(target.getRawFragment() == null ? "" : "#" + target.getRawFragment());
+		}
+		return base.resolve(target).toASCIIString();
 	}
 
 	private static void writeList(StringBuilder out, List<?> list)

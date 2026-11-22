@@ -38,6 +38,7 @@ import org.apache.wicket.request.resource.ByteArrayResource;
 import org.apache.wicket.request.resource.CssResourceReference;
 import org.apache.wicket.request.resource.IResource;
 import org.apache.wicket.request.Url;
+import org.apache.wicket.request.http.WebRequest;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.request.resource.UrlResourceReference;
 import org.apache.wicket.util.resource.IResourceStream;
@@ -48,6 +49,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import de.agilecoders.wicket.webjars.WicketWebjars;
+import jakarta.servlet.http.HttpServletRequest;
 import de.agilecoders.wicket.webjars.settings.WebjarsSettings;
 
 class HugeRteBehaviorTest
@@ -147,16 +149,30 @@ class HugeRteBehaviorTest
 	@Test
 	void resolvesContextRelativeUrlsOutsideTheFilterPath()
 	{
-		tester.getApplication().mountPage("admin/articles/edit", ContextRelativeCssPage.class);
-		tester.startPage(ContextRelativeCssPage.class);
+		// WicketFilter passes the filter prefix with a trailing slash; the mock request doesn't
+		var filtered = new WicketTester(new MockApplication()
+		{
+			@Override
+			public WebRequest newWebRequest(HttpServletRequest request, String filterPath)
+			{
+				return super.newWebRequest(request,
+					filterPath.endsWith("/") ? filterPath : filterPath + "/");
+			}
+		});
+		try
+		{
+			filtered.getApplication().mountPage("admin/articles/edit",
+				ContextRelativeCssPage.class);
+			filtered.startPage(ContextRelativeCssPage.class);
 
-		// Wicket renders the URL relative to the page; it must be written as the absolute path the
-		// browser would resolve it to, not resolved again inside the filter path. (WicketTester's
-		// mock request leaves the filter segment out of the prefix to the context path, so the
-		// exact path differs from a servlet container.)
-		var html = tester.getLastResponseAsString();
-		assertTrue(html.matches("(?s).*\"content_css\":\"/context/[^\"]*css/editor\\.css\".*"), html);
-		assertTrue(!html.contains("\"content_css\":\"/context/servlet/admin/"), html);
+			var html = filtered.getLastResponseAsString();
+			assertTrue(html.contains("\"content_css\":\"/context/css/editor.css?v=1#main\""),
+				html);
+		}
+		finally
+		{
+			filtered.destroy();
+		}
 	}
 
 	@Test
@@ -331,7 +347,8 @@ class HugeRteBehaviorTest
 		public ContextRelativeCssPage()
 		{
 			super(HugeRteConfig.defaults().withContentCss(
-				new UrlResourceReference(Url.parse("css/editor.css")).setContextRelative(true)));
+				new UrlResourceReference(Url.parse("css/editor.css?v=1#main"))
+					.setContextRelative(true)));
 		}
 	}
 

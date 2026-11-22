@@ -21,8 +21,19 @@
 	// Editors to focus as soon as they are initialized.
 	const pendingFocus = new WeakSet();
 
-	// The content of each editor when the last Wicket Ajax call was sent.
+	// The content each editor had when the last Wicket Ajax call that submitted it was sent.
 	const submitted = new WeakMap();
+
+	// Whether the Ajax call sends the element: as part of its form, or as the component itself.
+	function submits(attrs, element) {
+		if (attrs.f) {
+			const form = document.getElementById(attrs.f);
+			if (form && form.contains(element)) {
+				return true;
+			}
+		}
+		return attrs.c === element.id;
+	}
 
 	// Copies the content to the textarea without marking the editor as saved, so isDirty() keeps
 	// meaning "changed since load" for the autosave and save plugins and for application code.
@@ -67,7 +78,7 @@
 	}
 
 	// Installs the integration, then calls the setup callback of the configuration, if any.
-	function wrapSetup(id, element, setup) {
+	function wrapSetup(element, setup) {
 		return function (editor) {
 			suspendRequired(editor, element);
 			forwardEvents(editor, element);
@@ -108,12 +119,12 @@
 			}
 			const options = Object.assign({}, config);
 			options.target = element;
-			options.setup = wrapSetup(id, element, config.setup);
+			options.setup = wrapSetup(element, config.setup);
 			// On phones and tablets HugeRTE applies the mobile options over the others, so they
 			// need the same setup, and must not make a disabled component editable.
 			if (options.mobile) {
 				options.mobile = Object.assign({}, options.mobile);
-				options.mobile.setup = wrapSetup(id, element, options.mobile.setup || config.setup);
+				options.mobile.setup = wrapSetup(element, options.mobile.setup || config.setup);
 				if (options.readonly === true) {
 					options.mobile.readonly = true;
 				}
@@ -141,14 +152,13 @@
 		/**
 		 * Marks the editor with the given id as saved: it is no longer dirty, and a draft kept by
 		 * the autosave plugin is discarded. Runs in the response to the Ajax call that submitted
-		 * the content; when the editor changed since that call was sent, it stays unsaved.
+		 * the content. The editor stays unsaved when it changed since that call was sent, or
+		 * when no submitted content is known for it.
 		 */
 		markSaved: function (id) {
 			const editor = hugerte.get(id);
-			if (!editor || !editor.initialized) {
-				return;
-			}
-			if (submitted.has(editor) && submitted.get(editor) !== editor.getContent()) {
+			if (!editor || !editor.initialized || !submitted.has(editor) ||
+				submitted.get(editor) !== editor.getContent()) {
 				return;
 			}
 			editor.setDirty(false);
@@ -161,10 +171,15 @@
 	};
 
 	// Wicket serializes form fields after this event, so the textareas must be up to date.
-	Wicket.Event.subscribe(Wicket.Event.Topic.AJAX_CALL_BEFORE, function () {
+	// Only calls that send the editor take a snapshot, so a timer or a call on another channel
+	// can't make markSaved accept content the server never received.
+	Wicket.Event.subscribe(Wicket.Event.Topic.AJAX_CALL_BEFORE, function (jqEvent, attrs) {
 		hugerte.get().forEach(function (editor) {
-			if (editor.initialized) {
-				sync(editor);
+			if (!editor.initialized) {
+				return;
+			}
+			sync(editor);
+			if (submits(attrs, editor.getElement())) {
 				submitted.set(editor, editor.getContent());
 			}
 		});
