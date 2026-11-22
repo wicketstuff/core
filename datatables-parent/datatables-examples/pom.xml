@@ -35,6 +35,99 @@
 			<version>${project.version}</version>
 		</dependency>
 
+		<!-- stylesheets for the styles that are not included in wicketstuff-datatables, and of their
+		     styling frameworks, for the style switcher of the infinite scroll demo -->
+		<dependency>
+			<groupId>org.webjars.npm</groupId>
+			<artifactId>foundation-sites</artifactId>
+			<version>6.9.0</version>
+			<exclusions>
+				<!-- only the stylesheet is needed -->
+				<exclusion>
+					<groupId>*</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars.npm</groupId>
+			<artifactId>jquery-ui</artifactId>
+			<version>1.14.1</version>
+			<exclusions>
+				<!-- only the stylesheet is needed -->
+				<exclusion>
+					<groupId>*</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars.npm</groupId>
+			<artifactId>datatables.net-zf</artifactId>
+			<version>3.1.5</version>
+			<exclusions>
+				<exclusion>
+					<groupId>*</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars.npm</groupId>
+			<artifactId>datatables.net-select-zf</artifactId>
+			<version>4.1.1</version>
+			<exclusions>
+				<exclusion>
+					<groupId>*</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars.npm</groupId>
+			<artifactId>datatables.net-scroller-zf</artifactId>
+			<version>3.1.1</version>
+			<exclusions>
+				<exclusion>
+					<groupId>*</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars.npm</groupId>
+			<artifactId>datatables.net-jqui</artifactId>
+			<version>3.1.5</version>
+			<exclusions>
+				<exclusion>
+					<groupId>*</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars.npm</groupId>
+			<artifactId>datatables.net-select-jqui</artifactId>
+			<version>4.1.1</version>
+			<exclusions>
+				<exclusion>
+					<groupId>*</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars.npm</groupId>
+			<artifactId>datatables.net-scroller-jqui</artifactId>
+			<version>3.1.1</version>
+			<exclusions>
+				<exclusion>
+					<groupId>*</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
