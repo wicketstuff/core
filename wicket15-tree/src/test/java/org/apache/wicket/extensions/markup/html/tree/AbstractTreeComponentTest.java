@@ -37,6 +37,7 @@ import javax.swing.tree.TreeModel;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.list.AbstractItem;
+import org.apache.wicket.mock.MockApplication;
 import org.apache.wicket.util.tester.WicketTester;
 import org.apache.wicket.util.visit.IVisit;
 import org.junit.jupiter.api.AfterEach;
@@ -80,7 +81,17 @@ public abstract class AbstractTreeComponentTest
 	@BeforeEach
 	public void setUp()
 	{
-		tester = new WicketTester();
+		tester = new WicketTester(new MockApplication()
+		{
+			@Override
+			protected void init()
+			{
+				super.init();
+				// MockApplication disables the CSP; test with the strict CSP Wicket applications
+				// get by default
+				getCspSettings().blocking().strict();
+			}
+		});
 		family = new FamilyTree();
 		tree = newTree("tree", family.model);
 		tester.startPage(new TreeTestPage(tree));
@@ -164,6 +175,71 @@ public abstract class AbstractTreeComponentTest
 		assertFalse(tree.getTreeState().isNodeSelected(family.janneke));
 		assertThat(cssClassesOf(item(family.janneke), tester.getLastResponseAsString()),
 			not(hasItem(selectedCssClass())));
+	}
+
+	@Test
+	public void rendersWithoutInlineStylesOrEventHandlers()
+	{
+		assertCspCompliant(tester.getLastResponseAsString());
+
+		clickJunction(family.opa);
+		assertCspCompliant(tester.getLastResponseAsString());
+
+		clickJunction(family.janneke);
+		assertCspCompliant(tester.getLastResponseAsString());
+
+		if (selectLinkPath() != null)
+		{
+			clickSelect(family.janneke);
+			assertCspCompliant(tester.getLastResponseAsString());
+		}
+
+		clickJunction(family.opa);
+		assertCspCompliant(tester.getLastResponseAsString());
+	}
+
+	@Test
+	public void rendersHiddenRootOfRootlessTreeWithoutInlineStyle()
+	{
+		AbstractTree rootless = newTree("tree", new FamilyTree().model);
+		rootless.setRootLess(true);
+		rootless.getTreeState().expandNode(rootless.getModelObject().getRoot());
+		tester.startPage(new TreeTestPage(rootless));
+
+		String document = tester.getLastResponseAsString();
+		assertThat(document, not(containsString("Opa Puk")));
+		assertThat(document, containsString("Pietje Puk"));
+		assertTrue(
+			Pattern.compile("<\\w+ hidden id=\"" + Pattern.quote(rootless.getMarkupId()) + "_\\d+\">")
+				.matcher(document)
+				.find(), "no hidden placeholder for the root in " + document);
+		assertCspCompliant(document);
+	}
+
+	/**
+	 * Asserts that the markup has no inline style attributes and no inline event handlers, which
+	 * Wicket's Content Security Policy blocks, and that every generated style class has its rule
+	 * in a {@code <style>} element with the CSP nonce in the same response.
+	 */
+	private static void assertCspCompliant(String markup)
+	{
+		Matcher inlineStyle = Pattern.compile("<[^>]*\\sstyle=\"[^>]*>").matcher(markup);
+		assertFalse(inlineStyle.find(), () -> "inline style attribute: " + inlineStyle.group());
+
+		Matcher eventHandler = Pattern.compile("<[^>]*\\son[a-z]+=\"[^>]*>").matcher(markup);
+		assertFalse(eventHandler.find(), () -> "inline event handler: " + eventHandler.group());
+
+		Matcher styleClass = Pattern.compile("wicket15-tree-(?:icon|column)-[0-9a-f]{16}")
+			.matcher(markup);
+		while (styleClass.find())
+		{
+			String cssClass = styleClass.group();
+			Matcher styleTag = Pattern.compile("<style[^>]*\\sid=\"" + cssClass + "\"[^>]*>")
+				.matcher(markup);
+			assertTrue(styleTag.find(), "no <style> element for " + cssClass + " in " + markup);
+			assertThat(styleTag.group(), containsString(" nonce=\""));
+			assertThat(markup, containsString("." + cssClass + "." + cssClass + "{"));
+		}
 	}
 
 	private void clickJunction(FamilyTreeNode node)
