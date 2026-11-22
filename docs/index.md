@@ -7,6 +7,7 @@ Wicket Stuff is a collection of open source projects for the [Apache Wicket](htt
 * [Contributing a new project](contributing.md)
 * [Building Wicket Stuff](building.md)
 * [Git workflow](git-workflow.md)
+* [Release lines](release-lines.md)
 * [Code formatting and test naming](code-style.md)
 * [Licensing](licensing.md)
 * [Gaining commit access](commit-access.md)
