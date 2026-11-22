@@ -108,4 +108,4 @@ add(new AjaxLink<Void>("toggle")
 
 When `toggled` becomes invisible, Wicket replaces it with a placeholder tag and `/dom/node/removing` removes the editor cleanly. When it becomes visible again, `HugeRteBehavior` initializes a new editor.
 
-See [`AjaxPage.java`](https://github.com/wicketstuff/core/tree/master/hugerte-parent/hugerte-examples/src/main/java/org/wicketstuff/hugerte/examples/AjaxPage.java) for a full example.
+See [`AjaxPage.java`](https://github.com/wicketstuff/core/tree/wicket-11.x/hugerte-parent/hugerte-examples/src/main/java/org/wicketstuff/hugerte/examples/AjaxPage.java) for a full example.

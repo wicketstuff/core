@@ -50,4 +50,4 @@ All other directives in Wicket's strict policy (`default-src`, `connect-src`, `f
 
 If your editor loads style sheets (`content_css`) or images from another origin, add that origin to `style-src` or `img-src` in your application's CSP configuration.
 
-See [`ExampleApplication.java`](https://github.com/wicketstuff/core/tree/master/hugerte-parent/hugerte-examples/src/main/java/org/wicketstuff/hugerte/examples/ExampleApplication.java) for a working setup.
+See [`ExampleApplication.java`](https://github.com/wicketstuff/core/tree/wicket-11.x/hugerte-parent/hugerte-examples/src/main/java/org/wicketstuff/hugerte/examples/ExampleApplication.java) for a working setup.
