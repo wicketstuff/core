@@ -51,15 +51,42 @@
 
 	// A hidden textarea with the required attribute makes the browser refuse a normal form submit
 	// without showing why. Wicket validates required components on the server, so the attribute
-	// is removed while the editor is active and restored when the editor is removed.
+	// is removed while the editor is active. It is restored on detach, which HugeRTE fires after
+	// putting back the attributes it saved when the editor was created.
 	function suspendRequired(editor, element) {
 		if (!element.hasAttribute('required')) {
 			return;
 		}
 		element.removeAttribute('required');
-		editor.on('remove', function () {
+		editor.on('detach', function () {
 			element.setAttribute('required', 'required');
 		});
+	}
+
+	// Installs the integration, then calls the setup callback of the configuration, if any.
+	function wrapSetup(id, element, setup) {
+		return function (editor) {
+			suspendRequired(editor, element);
+			forwardEvents(editor, element);
+			editor.on('init', function () {
+				// The element may have been replaced by Ajax while the editor was loading. HugeRTE
+				// continues its own initialization after this event, so remove the editor later.
+				if (!element.isConnected) {
+					setTimeout(function () {
+						if (!editor.removed) {
+							editor.remove();
+						}
+					}, 0);
+					return;
+				}
+				if (pendingFocus.delete(id)) {
+					editor.focus();
+				}
+			});
+			if (setup) {
+				setup.call(this, editor);
+			}
+		};
 	}
 
 	Wicket.HugeRte = {
@@ -77,25 +104,17 @@
 				previous.remove();
 			}
 			const options = Object.assign({}, config);
-			const setup = options.setup;
 			options.target = element;
-			options.setup = function (editor) {
-				suspendRequired(editor, element);
-				forwardEvents(editor, element);
-				editor.on('init', function () {
-					// The element may have been replaced by Ajax while the editor was loading.
-					if (!element.isConnected) {
-						editor.remove();
-						return;
-					}
-					if (pendingFocus.delete(id)) {
-						editor.focus();
-					}
-				});
-				if (setup) {
-					setup.call(this, editor);
+			options.setup = wrapSetup(id, element, config.setup);
+			// On phones and tablets HugeRTE applies the mobile options over the others, so they
+			// need the same setup, and must not make a disabled component editable.
+			if (options.mobile) {
+				options.mobile = Object.assign({}, options.mobile);
+				options.mobile.setup = wrapSetup(id, element, options.mobile.setup || config.setup);
+				if (options.readonly === true) {
+					options.mobile.readonly = true;
 				}
-			};
+			}
 			hugerte.init(options);
 		},
 
@@ -103,11 +122,28 @@
 		 * Focuses the editor with the given id, or does so once it has been initialized.
 		 */
 		focus: function (id) {
+			// Stop Wicket from moving the focus back to the element that triggered the Ajax call.
+			Wicket.Focus.setFocusOnId(null);
 			const editor = hugerte.get(id);
 			if (editor && editor.initialized) {
 				editor.focus();
 			} else {
 				pendingFocus.add(id);
+			}
+		},
+
+		/**
+		 * Marks the editor with the given id as saved: it is no longer dirty, and a draft kept by
+		 * the autosave plugin is discarded.
+		 */
+		markSaved: function (id) {
+			const editor = hugerte.get(id);
+			if (!editor) {
+				return;
+			}
+			editor.setDirty(false);
+			if (editor.plugins.autosave) {
+				editor.plugins.autosave.removeDraft(false);
 			}
 		}
 	};

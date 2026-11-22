@@ -14,17 +14,21 @@
 package org.wicketstuff.hugerte;
 
 import java.math.BigDecimal;
+import java.net.URI;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.wicket.request.Url;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.resource.ResourceReference;
 
 /**
  * Writes configuration values as a JavaScript object literal. Strings are escaped so that the
  * output is safe inside an HTML {@code <script>} element; {@link RawJavaScript} is written as is, and a
- * {@link ResourceReference} as the string of its URL for the current request.
+ * {@link ResourceReference} as the string of its URL: an absolute path including the context path,
+ * because HugeRTE resolves some options, such as {@code external_plugins}, against its own script
+ * directory rather than the page.
  */
 final class JavaScriptWriter
 {
@@ -55,13 +59,31 @@ final class JavaScriptWriter
 			case Double d -> out.append(d);
 			case Float f -> out.append(f);
 			case RawJavaScript raw -> out.append(raw.code());
-			case ResourceReference reference -> writeString(out,
-				RequestCycle.get().urlFor(reference, null).toString());
+			case ResourceReference reference -> writeString(out, url(reference));
 			case List<?> list -> writeList(out, list);
 			case Map<?, ?> map -> writeMap(out, map);
 			default -> throw new IllegalArgumentException(
 				"Unsupported configuration value of type " + value.getClass().getName());
 		}
+	}
+
+	private static String url(ResourceReference reference)
+	{
+		var cycle = RequestCycle.get();
+		if (cycle == null)
+		{
+			throw new IllegalStateException(
+				"Writing a ResourceReference as a URL needs an active request cycle: " + reference);
+		}
+		Url url = cycle.mapUrlFor(reference, null);
+		String full = cycle.getUrlRenderer().renderFullUrl(url);
+		if (url.isFull())
+		{
+			return full;
+		}
+		URI uri = URI.create(full);
+		return uri.getRawQuery() == null ? uri.getRawPath()
+			: uri.getRawPath() + "?" + uri.getRawQuery();
 	}
 
 	private static void writeList(StringBuilder out, List<?> list)

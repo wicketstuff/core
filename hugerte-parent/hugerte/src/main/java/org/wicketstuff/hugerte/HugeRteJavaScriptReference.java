@@ -29,8 +29,9 @@ import de.agilecoders.wicket.webjars.request.resource.WebjarsJavaScriptResourceR
  * The Wicket glue script ({@code hugerte-wicket.js}). It depends on the HugeRTE webjar and on
  * Wicket's Ajax script.
  * <p>
- * The webjar references are created on first use, when the application has installed
- * wicket-webjars, so this class can be referenced from {@code WebApplication.init()}.
+ * The webjar references are created on first use, so {@link #get()} can be called from
+ * {@code WebApplication.init()}. {@link #editor()} needs wicket-webjars to be installed: during
+ * {@code init()}, call {@code WicketWebjars.install(this)} first.
  */
 public final class HugeRteJavaScriptReference extends JavaScriptResourceReference
 {

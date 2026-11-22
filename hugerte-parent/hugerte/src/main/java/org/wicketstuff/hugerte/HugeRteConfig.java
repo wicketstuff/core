@@ -59,8 +59,12 @@ import org.apache.wicket.request.resource.ResourceReference;
 public record HugeRteConfig(Set<HugeRtePlugin> plugins, List<String> toolbar,
 	boolean toolbarHidden, Map<String, Object> options) implements Serializable
 {
-	/** Options that this class or {@link HugeRteBehavior} manage. */
-	private static final Set<String> RESERVED = Set.of("selector", "target", "plugins", "toolbar");
+	/**
+	 * Options that this class or {@link HugeRteBehavior} manage, and {@code inline}, which
+	 * HugeRTE does not allow on the textarea the behavior is attached to.
+	 */
+	private static final Set<String> RESERVED = Set.of("selector", "target", "plugins", "toolbar",
+		"inline");
 
 	private static final HugeRteConfig DEFAULTS = new HugeRteConfig(Set.of(), List.of(), false, Map.of());
 
@@ -121,7 +125,7 @@ public record HugeRteConfig(Set<HugeRtePlugin> plugins, List<String> toolbar,
 	 * @return a copy with the option set to the value, replacing an earlier value
 	 * @throws IllegalArgumentException
 	 *             for a reserved option ({@code selector}, {@code target}, {@code plugins},
-	 *             {@code toolbar}) or an unsupported value type
+	 *             {@code toolbar}, {@code inline}) or an unsupported value type
 	 */
 	public HugeRteConfig with(String option, Object value)
 	{
@@ -212,7 +216,7 @@ public record HugeRteConfig(Set<HugeRtePlugin> plugins, List<String> toolbar,
 		if (RESERVED.contains(name))
 		{
 			throw new IllegalArgumentException("Option '" + name +
-				"' is managed by HugeRteConfig or HugeRteBehavior and cannot be set directly");
+				"' cannot be set: use withPlugins or withToolbar; the behavior sets the target, and inline mode is not supported");
 		}
 		return name;
 	}

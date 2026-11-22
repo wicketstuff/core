@@ -52,6 +52,7 @@ HugeRTE has no nonce support, so a few features add `<style>` or `<script>` elem
 - In Firefox and on iOS Safari, HugeRTE adds a few default content rules in a `<style>` element. The editor works without them, but expect violation reports.
 - The `PREVIEW` plugin puts an inline script in its preview frame, which is blocked. The preview still shows the content.
 - With `WebjarsSettings.useCdnResources(true)`, the skin style sheets come from the CDN; add its origin to `style-src`.
+- HugeRTE does not support Trusted Types. With `requireTrustedTypes()` (`require-trusted-types-for 'script'`) the editor fails to load.
 
 ## External resources
 

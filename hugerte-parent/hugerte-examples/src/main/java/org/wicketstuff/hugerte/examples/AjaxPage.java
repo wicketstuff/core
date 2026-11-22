@@ -52,7 +52,7 @@ public class AjaxPage extends BasePage
 		editor.setRequired(true);
 		editor.setLabel(Model.of("Text"));
 		editor.add(new HugeRteBehavior(HugeRteConfig.defaults()
-			.withPlugins(HugeRtePlugin.LISTS, HugeRtePlugin.LINK)
+			.withPlugins(HugeRtePlugin.LISTS, HugeRtePlugin.LINK, HugeRtePlugin.AUTOSAVE)
 			.withToolbar("undo redo | bold italic | bullist numlist | link")
 			.withMenubar(false)
 			.with("height", 250)));
@@ -70,6 +70,7 @@ public class AjaxPage extends BasePage
 			protected void onSubmit(AjaxRequestTarget target)
 			{
 				saved.setObject(text.getObject());
+				HugeRteBehavior.markSaved(target, editor);
 				target.add(output, feedback);
 			}
 

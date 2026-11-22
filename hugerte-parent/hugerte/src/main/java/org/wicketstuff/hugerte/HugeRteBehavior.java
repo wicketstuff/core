@@ -107,6 +107,17 @@ public class HugeRteBehavior extends Behavior
 	}
 
 	/**
+	 * Marks the component's editor as saved: {@code isDirty()} becomes {@code false} and a draft
+	 * kept by the autosave plugin is discarded. Call it after the content has been stored, so the
+	 * editor stops warning about unsaved changes.
+	 */
+	public static void markSaved(AjaxRequestTarget target, Component component)
+	{
+		target.appendJavaScript(
+			"Wicket.HugeRte.markSaved(" + JavaScriptWriter.write(component.getMarkupId()) + ");");
+	}
+
+	/**
 	 * Moves the keyboard focus into the component's editor once it is ready. Use it instead of
 	 * {@link AjaxRequestTarget#focusComponent(Component)}, which focuses the hidden textarea.
 	 */

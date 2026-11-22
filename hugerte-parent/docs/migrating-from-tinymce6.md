@@ -98,7 +98,7 @@ form.add(new AjaxButton("save") { /* ... */ });
 
 ## 4. Simplify Ajax submits and component toggling
 
-Remove `TinyMceAjaxButton`, `TinyMceAjaxSubmitLink`, and `TinyMceAjaxSubmitModifier`, and use standard `AjaxButton` and `AjaxSubmitLink`. `hugerte-wicket.js` triggers `hugerte.triggerSave()` before every Wicket Ajax call and removes editors automatically when Wicket Ajax replaces or hides their components. See [Save editor content with Ajax](ajax.md).
+Remove `TinyMceAjaxButton`, `TinyMceAjaxSubmitLink`, and `TinyMceAjaxSubmitModifier`, and use standard `AjaxButton` and `AjaxSubmitLink`. `hugerte-wicket.js` copies the editors' content to their textareas before every Wicket Ajax call and removes editors automatically when Wicket Ajax replaces or hides their components. See [Save editor content with Ajax](ajax.md).
 
 ## 5. Migrate language packs
 

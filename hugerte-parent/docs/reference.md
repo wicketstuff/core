@@ -36,6 +36,7 @@ Immutable editor configuration. The canonical constructor copies and normalizes 
 | `HugeRteConfig withStatusbar(boolean statusbar)` | Shorthand for `with("statusbar", statusbar)`. |
 | `HugeRteConfig withReadonly(boolean readonly)` | Shorthand for `with("readonly", readonly)`. |
 | `HugeRteConfig withContentCss(String contentCss)` | Shorthand for `with("content_css", contentCss)`. Built-in styles in the webjar: `default`, `dark`, `document`, `writer`, `hugerte-5`, `hugerte-5-dark`, or pass a style sheet URL. For several style sheets or `false`, use `with("content_css", ...)`. |
+| `HugeRteConfig withContentCss(ResourceReference contentCss)` | Shorthand for `with("content_css", contentCss)` with a style sheet served by Wicket, such as a `CssResourceReference`. |
 | `String toJavaScript()` | Serializes the configuration as a JavaScript object literal without `target` or `selector`. Emits `plugins` as an array of plugin ids when non-empty (in enum declaration order), `toolbar` as `false` when hidden, a string for one row or an array of strings for multiple rows, then `options` in insertion order. |
 
 ### Supported option value types
@@ -49,7 +50,7 @@ Immutable editor configuration. The canonical constructor copies and normalizes 
 | `Integer`, `Long`, `Short`, `Byte`, `BigInteger`, `BigDecimal` | Kept as is | Unquoted numeric literal |
 | `Double`, `Float` | Must satisfy `isFinite(...)` | Unquoted numeric literal |
 | `RawJavaScript` | Kept as is | `code()` written verbatim, unescaped |
-| `ResourceReference` | Kept as is | The reference's URL for the current request (`RequestCycle.urlFor`), as an escaped string |
+| `ResourceReference` | Kept as is | The reference's URL as an absolute path including the context path (or a full URL when it maps to another host), as an escaped string. Needs an active request cycle; without one `toJavaScript()` throws `IllegalStateException`. |
 | `Collection<?>` | Recursively normalized into an unmodifiable `List` | JavaScript array `[...]` |
 | `Map<?, ?>` | Keys must be `String`; values recursively normalized into an unmodifiable `LinkedHashMap` | JavaScript object `{...}` with escaped string keys |
 
@@ -57,19 +58,20 @@ String escaping converts `"` to `\"`, `\` to `\\`, and `\n`, `\r`, `\t`, `\b`, `
 
 ### Reserved options and validation errors
 
-Four option names are reserved and cannot be passed to `with(String, Object)` or placed in `options`:
+Five option names are reserved and cannot be passed to `with(String, Object)` or placed in `options`:
 
 - `selector` (`HugeRteBehavior` attaches the editor through `target` instead)
 - `target` (set by `Wicket.HugeRte.init`)
 - `plugins` (use `withPlugins(...)`)
-- `toolbar` (use `withToolbar(...)`)
+- `toolbar` (use `withToolbar(...)` or `withoutToolbar()`)
+- `inline` (inline mode is not supported; HugeRTE doesn't allow it on a textarea)
 
 Errors thrown by `HugeRteConfig` construction and `with(...)`:
 
 | Condition | Exception |
 |---|---|
 | `option` name is `null` | `NullPointerException` |
-| `option` is `selector`, `target`, `plugins`, or `toolbar` | `IllegalArgumentException` |
+| `option` is `selector`, `target`, `plugins`, `toolbar`, or `inline` | `IllegalArgumentException` |
 | Value (top-level or nested inside a `Collection` or `Map`) is `null` | `IllegalArgumentException` |
 | `Double` or `Float` is `NaN`, `+Infinity`, or `-Infinity` | `IllegalArgumentException` |
 | `Map` contains a key that is not a `String` | `IllegalArgumentException` |
@@ -114,6 +116,7 @@ Errors thrown by `HugeRteConfig` construction and `with(...)`:
 | `protected HugeRteConfig getConfig(Component component)` | Returns `getConfig()`, with `withReadonly(true)` applied when `component.isEnabledInHierarchy()` is `false`. Override it to vary the configuration per component. |
 | `public HugeRteConfig getConfig()` | Returns `config.getObject()`. Throws `NullPointerException` if the model returns `null`. |
 | `public void detach(Component component)` | Calls `config.detach()` and `super.detach(component)`. |
+| `public static void markSaved(AjaxRequestTarget target, Component component)` | Appends `Wicket.HugeRte.markSaved("<markupId>");`: the editor is no longer dirty and the autosave plugin's draft is discarded. Call it after storing the content. |
 | `public static void focus(AjaxRequestTarget target, Component component)` | Appends `Wicket.HugeRte.focus("<markupId>");`, which focuses the editor once it is initialized. Use it instead of `target.focusComponent(...)`, which focuses the hidden textarea. |
 
 ## RawJavaScript
@@ -142,7 +145,7 @@ Adds the following directives to `csp` and returns `csp` for chaining:
 
 ## HugeRteJavaScriptReference
 
-`public final class HugeRteJavaScriptReference extends JavaScriptResourceReference` references the package resource `hugerte-wicket.js`. It can be referenced from `WebApplication.init()`: the webjar references are only created on first use.
+`public final class HugeRteJavaScriptReference extends JavaScriptResourceReference` references the package resource `hugerte-wicket.js`. `get()` can be called from `WebApplication.init()`: the webjar references are only created on first use. `editor()` needs wicket-webjars to be installed; during `init()`, call `WicketWebjars.install(this)` before using it.
 
 | Member | Description |
 |---|---|
@@ -156,13 +159,14 @@ Adds the following directives to `csp` and returns `csp` for chaining:
 
 ## Client-side JavaScript (`hugerte-wicket.js`)
 
-[`hugerte-wicket.js`](https://github.com/wicketstuff/core/tree/master/hugerte-parent/hugerte/src/main/java/org/wicketstuff/hugerte/hugerte-wicket.js) initializes once (a second load exits immediately if `Wicket.HugeRte` is already defined) and exposes two functions plus two Wicket event subscriptions:
+[`hugerte-wicket.js`](https://github.com/wicketstuff/core/tree/master/hugerte-parent/hugerte/src/main/java/org/wicketstuff/hugerte/hugerte-wicket.js) initializes once (a second load exits immediately if `Wicket.HugeRte` is already defined) and exposes three functions plus two Wicket event subscriptions:
 
-- `Wicket.HugeRte.init(id, config)` — looks up `document.getElementById(id)` (returns if not found), removes any existing editor returned by `hugerte.get(id)`, and calls `hugerte.init` with a copy of `config` whose `target` is the element and whose `setup` first installs the integration and then calls your own `setup`. The integration:
-  - removes the textarea's `required` attribute while the editor is active (a hidden required field blocks the browser's form submit; Wicket validates on the server) and restores it when the editor is removed;
+- `Wicket.HugeRte.init(id, config)` — looks up `document.getElementById(id)` (returns if not found), removes any existing editor returned by `hugerte.get(id)`, and calls `hugerte.init` with a copy of `config` whose `target` is the element and whose `setup` first installs the integration and then calls your own `setup`. When the configuration has `mobile` options, which HugeRTE applies over the others on phones and tablets, their `setup` is wrapped the same way, and a read-only editor stays read-only there. The integration:
+  - removes the textarea's `required` attribute while the editor is active (a hidden required field blocks the browser's form submit; Wicket validates on the server) and restores it on the editor's `detach` event, after HugeRTE has restored the textarea's other attributes;
   - forwards the editor's `change`, `undo` and `redo` events as `change`, and `blur` as `blur`, to the textarea after copying the content to it;
-  - removes the editor when it finishes initializing after its textarea was already removed;
+  - removes the editor, just after it finishes initializing, when its textarea was already removed;
   - focuses the editor if `Wicket.HugeRte.focus` was called before it was ready.
-- `Wicket.HugeRte.focus(id)` — focuses the editor, or does so once it is initialized.
+- `Wicket.HugeRte.focus(id)` — focuses the editor, or does so once it is initialized, and stops Wicket from moving the focus back to the element that triggered the Ajax call.
+- `Wicket.HugeRte.markSaved(id)` — calls `editor.setDirty(false)` and, when the autosave plugin is loaded, discards its draft.
 - `Wicket.Event.Topic.AJAX_CALL_BEFORE` (`'/ajax/call/before'`) — copies every editor's content to its textarea with `editor.save({ set_dirty: false })`, so Wicket serializes current values and `editor.isDirty()` is left unchanged.
 - `Wicket.Event.Topic.DOM_NODE_REMOVING` (`'/dom/node/removing'`) — iterates over `hugerte.get()` and calls `editor.remove()` for every editor whose target element is `node` or a descendant of `node`.

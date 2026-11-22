@@ -104,7 +104,20 @@ class HugeRteBehaviorTest
 		tester.startPage(new EditorPage(HugeRteConfig.defaults().withContentCss(css)));
 
 		var html = tester.getLastResponseAsString();
-		assertTrue(html.matches("(?s).*\"content_css\":\"[^\"]*org\\.wicketstuff\\.hugerte\\.HugeRteBehaviorTest/content(-ver-[0-9]+)?\\.css\".*"), html);
+		assertTrue(html.matches("(?s).*\"content_css\":\"/[^\"]*org\\.wicketstuff\\.hugerte\\.HugeRteBehaviorTest/content(-ver-[0-9]+)?\\.css\".*"), html);
+		assertTrue(!html.contains("\"content_css\":\"./"), html);
+	}
+
+	@Test
+	void marksTheEditorSavedFromAjax()
+	{
+		var page = new EditorPage(HugeRteConfig.defaults());
+		tester.startPage(page);
+
+		tester.clickLink("saved");
+
+		assertTrue(tester.getLastResponseAsString()
+			.contains("Wicket.HugeRte.markSaved(\"" + page.text.getMarkupId() + "\");"));
 	}
 
 	@Test
@@ -245,6 +258,16 @@ class HugeRteBehaviorTest
 			text = new TextArea<>("text", Model.of("<p>hello</p>"));
 			text.add(behavior);
 			form.add(text);
+			add(new AjaxLink<Void>("saved")
+			{
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void onClick(AjaxRequestTarget target)
+				{
+					HugeRteBehavior.markSaved(target, text);
+				}
+			});
 			add(new AjaxLink<Void>("focus")
 			{
 				private static final long serialVersionUID = 1L;
@@ -276,6 +299,7 @@ class HugeRteBehaviorTest
 				<form wicket:id="form"><textarea wicket:id="text"></textarea></form>
 				<a wicket:id="refresh">refresh</a>
 				<a wicket:id="focus">focus</a>
+				<a wicket:id="saved">saved</a>
 				</body></html>""");
 		}
 	}

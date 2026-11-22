@@ -63,7 +63,7 @@ For right-to-left locales, also set `directionality` to `"rtl"` (and optionally 
 
 ```java
 config.with("language", "ar")
-    .with("language_url", NL_LANG)
+    .with("language_url", AR_LANG)
     .with("directionality", "rtl");
 ```
 

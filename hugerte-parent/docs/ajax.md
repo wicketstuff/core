@@ -2,7 +2,7 @@
 title: Save editor content with Ajax
 ---
 
-Submit a HugeRTE editor with Wicket's standard Ajax form components. Before every Wicket Ajax call, `hugerte-wicket.js` listens to Wicket's `/ajax/call/before` event and calls `hugerte.triggerSave()`, copying each editor's HTML back into its `<textarea>` before Wicket serializes the form.
+Submit a HugeRTE editor with Wicket's standard Ajax form components. Before every Wicket Ajax call, `hugerte-wicket.js` listens to Wicket's `/ajax/call/before` event and copies each editor's HTML back into its `<textarea>` with `editor.save({ set_dirty: false })`, before Wicket serializes the form. Don't call `hugerte.triggerSave()` yourself for this: it also marks every editor as saved.
 
 ## Submit with AjaxButton or AjaxSubmitLink
 
@@ -68,7 +68,22 @@ editor.add(new AjaxFormComponentUpdatingBehavior("change")
 
 HugeRTE fires `change` when it records an undo level, for example after formatting, pressing Enter or leaving the editor, so the update doesn't run on every keystroke. Undo and redo are forwarded as `change` as well. `OnChangeAjaxBehavior` therefore also works, at the same granularity. Use `"blur"` instead of `"change"` to send the content only when the editor loses focus. The forwarding is installed in addition to any `setup` callback you configure.
 
-Copying the content to the textarea doesn't mark the editor as saved: `editor.isDirty()` stays `true` until the page is reloaded, so the autosave and save plugins keep working.
+Copying the content to the textarea doesn't mark the editor as saved: `editor.isDirty()` stays `true`, so the autosave and save plugins keep working.
+
+## Mark the editor as saved
+
+After you have stored the content, tell the editor, so `isDirty()` becomes `false`, the autosave plugin discards its draft and stops warning when the user leaves the page:
+
+```java
+@Override
+protected void onSubmit(AjaxRequestTarget target)
+{
+    service.save(text.getObject());
+    HugeRteBehavior.markSaved(target, editor);
+}
+```
+
+Re-rendering the editor with Ajax also starts it as not dirty.
 
 ## Focus the editor from the server
 
@@ -77,6 +92,10 @@ Copying the content to the textarea doesn't mark the editor as saved: `editor.is
 ```java
 HugeRteBehavior.focus(target, editor);
 ```
+
+## Limitations
+
+HugeRTE shows its menus and dialogs in a container at the end of the page. Wicket's `ModalDialog` with `trapFocus()` moves the focus back into the dialog whenever it leaves, so an editor inside such a dialog can't use its own dialogs, such as the link dialog. Don't combine `trapFocus()` with an editor.
 
 ## Re-render and hide editors
 
