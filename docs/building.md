@@ -11,8 +11,6 @@ The `wicket-10.x` branch builds with Java 17, while `master` and `wicket-11.x` u
 
 The build uses the JDK that runs Maven (the one in `JAVA_HOME`); no Maven toolchains or `toolchains.xml` are needed.
 
-On JDK 25 and newer `AnnotationsShiroAuthorizationStrategyTest` in `wicketstuff-shiro` fails: Shiro 3 uses ScopedValues there and rejects the `SubjectThreadState` the test sets up. Run the full build with a JDK older than 25, or skip that test by listing `**/AnnotationsShiroAuthorizationStrategyTest.java` in a file and passing its absolute path as `-Dsurefire.excludesFile=/path/to/file`. Don't use `-Dtest` for this: it replaces the test includes and excludes of the poms, so other modules run classes that are not tests.
-
 ## Building
 
 ```text
