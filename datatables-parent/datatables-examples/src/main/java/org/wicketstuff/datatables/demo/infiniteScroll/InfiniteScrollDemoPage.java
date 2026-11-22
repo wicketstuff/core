@@ -5,10 +5,15 @@ import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
+import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
+import org.apache.wicket.markup.html.list.ListItem;
+import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.Request;
@@ -26,16 +31,44 @@ import org.wicketstuff.datatables.options.ScrollerOptions;
 import org.wicketstuff.datatables.options.SelectOptions;
 import org.wicketstuff.datatables.themes.BootstrapTheme;
 
+import de.agilecoders.wicket.webjars.request.resource.WebjarsCssResourceReference;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
  */
 public class InfiniteScrollDemoPage extends WebPage {
 
+    /**
+     * The styles the demo can switch between.
+     */
+    private static final List<Options.Style> STYLES = List.of(Options.Style.dataTables,
+        Options.Style.bootstrap5, Options.Style.foundation, Options.Style.jqueryui,
+        Options.Style.none);
+
+    /**
+     * The stylesheets of the styling frameworks themselves; Bootstrap 5 is added by
+     * {@link BootstrapTheme}.
+     */
+    private static final Map<Options.Style, String> FRAMEWORK_CSS = Map.of(
+        Options.Style.foundation, "foundation-sites/current/dist/css/foundation.min.css",
+        Options.Style.jqueryui, "jquery-ui/current/dist/themes/base/jquery-ui.min.css");
+
     public InfiniteScrollDemoPage(PageParameters parameters) {
         super(parameters);
+
+        add(new ListView<>("styles", STYLES) {
+            @Override
+            protected void populateItem(ListItem<Options.Style> item) {
+                PageParameters styleParameters = new PageParameters().add("style", item.getModelObject().name());
+                BookmarkablePageLink<Void> link = new BookmarkablePageLink<>("link", InfiniteScrollDemoPage.class, styleParameters);
+                link.setBody(Model.of(item.getModelObject().name()));
+                item.add(link);
+            }
+        });
 
         List<IColumn<Person, String>> columns = new ArrayList<>();
         columns.add(new SpanColumn<Person, String>(Model.of("First"), "firstName"));
@@ -110,7 +143,21 @@ public class InfiniteScrollDemoPage extends WebPage {
 
 
         Options options = table.getOptions();
-        table.add(new BootstrapTheme(options));
+        Options.Style style = parameters.get("style").toEnum(Options.Style.bootstrap5);
+        if (!STYLES.contains(style) || style == Options.Style.bootstrap5) {
+            table.add(new BootstrapTheme(options));
+        } else {
+            options.style(style);
+            String frameworkCss = FRAMEWORK_CSS.get(style);
+            if (frameworkCss != null) {
+                add(new Behavior() {
+                    @Override
+                    public void renderHead(Component component, IHeaderResponse response) {
+                        response.render(CssHeaderItem.forReference(new WebjarsCssResourceReference(frameworkCss)));
+                    }
+                });
+            }
+        }
         options
             .columns(jsColumns)
             .select(selectOptions)
