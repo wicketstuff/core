@@ -147,7 +147,7 @@ Adds the following directives to `csp` and returns `csp` for chaining:
 
 ## Client-side JavaScript (`hugerte-wicket.js`)
 
-[`hugerte-wicket.js`](https://github.com/wicketstuff/core/tree/master/hugerte-parent/hugerte/src/main/java/org/wicketstuff/hugerte/hugerte-wicket.js) initializes once (a second load exits immediately if `Wicket.HugeRte` is already defined) and exposes one function plus two Wicket event subscriptions:
+[`hugerte-wicket.js`](https://github.com/wicketstuff/core/tree/wicket-10.x/hugerte-parent/hugerte/src/main/java/org/wicketstuff/hugerte/hugerte-wicket.js) initializes once (a second load exits immediately if `Wicket.HugeRte` is already defined) and exposes one function plus two Wicket event subscriptions:
 
 - `Wicket.HugeRte.init(id, config)` — looks up `document.getElementById(id)` (returns if not found), removes any existing editor returned by `hugerte.get(id)`, assigns `config.target = element`, and calls `hugerte.init(config)`.
 - `Wicket.Event.Topic.AJAX_CALL_BEFORE` (`'/ajax/call/before'`) — calls `hugerte.triggerSave()` so all active editors write their HTML back to their textareas before Wicket serializes form fields.
