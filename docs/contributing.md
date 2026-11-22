@@ -42,3 +42,5 @@ The build compiles with `javac --release` for that version, using the JDK that r
 Make the first line of a commit message informative: name the module it affects and give a brief note about the change. Readers can look up the full commit message for the details.
 
 GitHub generates the release notes from the merged pull requests and groups them by label (configured in `.github/release.yml` on `master`): `breaking-change`, `improvement`, `bug` and `dependencies`. Pull requests labeled `ignore-for-release` are left out. Give your pull request the label that fits.
+
+New issues start from the Bug report or Feature request form (in `.github/ISSUE_TEMPLATE/` on `master`), which set the `bug` or `improvement` label; questions go to [Discussions](https://github.com/wicketstuff/core/discussions/categories/q-a) and security vulnerabilities to [private reporting](https://github.com/wicketstuff/core/security/advisories/new).
