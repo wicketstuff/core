@@ -1,13 +1,14 @@
 package org.wicketstuff.scala.model
 
-import org.scalatest.{MustMatchers, WordSpec}
+import org.scalatest.matchers.must.Matchers
+import org.scalatest.wordspec.AnyWordSpec
 
 /**
  * @author Antony Stubbs
  */
 class FodelSpec
-  extends WordSpec
-  with MustMatchers {
+  extends AnyWordSpec
+  with Matchers {
 
   val tony = "Tony"
   val karyn = "Karyn"
