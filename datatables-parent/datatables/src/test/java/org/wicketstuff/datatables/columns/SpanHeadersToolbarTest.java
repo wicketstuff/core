@@ -25,6 +25,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.wicket.MarkupContainer;
+import org.apache.wicket.core.util.lang.WicketObjects;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
@@ -146,6 +147,43 @@ class SpanHeadersToolbarTest
 
 		List<String> first = renderHeaderRows(page);
 		assertEquals(first, renderHeaderRows(page));
+	}
+
+	@Test
+	void headerIsTheSameAfterPageIsSerialized()
+	{
+		TablePage page = new TablePage();
+		page.table.addTopToolbar(new SpanHeadersToolbar<>(page.table, page.names, page.age));
+		page.table.addTopToolbar(new SpanHeadersToolbar<>(page.table));
+		List<String> before = renderHeaderRows(page);
+
+		// columns are matched by identity, which serialization must keep between the
+		// toolbars and the table
+		TablePage copy = WicketObjects.cloneObject(page);
+
+		assertEquals(before, renderHeaderRows(copy));
+	}
+
+	@Test
+	void colspanOfOneRendersNoAttribute()
+	{
+		TablePage page = new TablePage();
+		SpanColumn<String, String> single = new SpanColumn<>(Model.of("Single"), null)
+		{
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public int getColspan()
+			{
+				return 1;
+			}
+		};
+		page.table.addTopToolbar(new SpanHeadersToolbar<>(page.table, single, page.age));
+		page.table.addTopToolbar(new SpanHeadersToolbar<>(page.table));
+
+		assertEquals(List.of(
+			"<th>Single</th><th rowspan=\"2\">Age</th>",
+			"<th>First</th><th>Last</th>"), renderHeaderRows(page));
 	}
 
 	@Test
