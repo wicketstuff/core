@@ -19,7 +19,7 @@ WYSIWYG rich-text editing with TinyMCE. Licensed under the LGPL.
 
 ## TinyMCE version
 
-This module uses TinyMCE 6.8.6, the last MIT-licensed TinyMCE release, and will not be upgraded. TinyMCE 7 and later are licensed GPL-2.0-or-later (or commercially) and require a license key; the build refuses a TinyMCE 7+ webjar. TinyMCE 6 no longer receives fixes from Tiny.
+This module uses TinyMCE 6.8.6, the last MIT-licensed TinyMCE release, and will not be upgraded. TinyMCE 7 and later are licensed GPL-2.0-or-later (or commercially) and require a license key; the build refuses a TinyMCE 7+ webjar. TinyMCE 6 no longer receives fixes from Tiny. For a maintained, MIT-licensed editor with the same API, use [`wicketstuff-hugerte`](https://github.com/wicketstuff/core/tree/master/hugerte-parent).
 
 Import `org.wicketstuff:wicketstuff-bom` in your `dependencyManagement` section to manage the version.
 

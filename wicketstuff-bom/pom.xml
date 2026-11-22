@@ -152,6 +152,10 @@
 								</dependencyExclusion>
 								<dependencyExclusion>
 									<groupId>org.wicketstuff</groupId>
+									<artifactId>hugerte-examples</artifactId>
+								</dependencyExclusion>
+								<dependencyExclusion>
+									<groupId>org.wicketstuff</groupId>
 									<artifactId>wicketstuff-twitter-examples</artifactId>
 								</dependencyExclusion>
 								<dependencyExclusion>
