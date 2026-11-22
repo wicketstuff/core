@@ -164,6 +164,7 @@
 								<artifactId>tinymce4-examples</artifactId>
 								<artifactId>tinymce3-examples</artifactId>
 								<artifactId>tinymce6-examples</artifactId>
+								<artifactId>hugerte-examples</artifactId>
 								<artifactId>wicketstuff-twitter-examples</artifactId>
 								<artifactId>wicket-poi-examples</artifactId>
 								<artifactId>wicketstuff-logback-examples</artifactId>
@@ -411,6 +412,7 @@
 		<module>datatables-parent</module>
 		<module>gchart-parent</module>
 		<module>gmap3-parent</module>
+		<module>hugerte-parent</module>
 		<module>inmethod-grid-parent</module>
 		<module>input-events-parent</module>
 		<module>javaee-inject-parent</module>
