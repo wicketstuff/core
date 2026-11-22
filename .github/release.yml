@@ -1,0 +1,22 @@
+# Categories for the automatically generated release notes, see
+# https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes
+changelog:
+  exclude:
+    labels:
+      - ignore-for-release
+  categories:
+    - title: Upgrade notes
+      labels:
+        - breaking-change
+    - title: New features and improvements
+      labels:
+        - improvement
+    - title: Bug fixes
+      labels:
+        - bug
+    - title: Dependency updates
+      labels:
+        - dependencies
+    - title: Other changes
+      labels:
+        - "*"
