@@ -49,8 +49,17 @@ class StyleTest
 		tester.destroy();
 	}
 
+	/**
+	 * The webjars of the Foundation, jQuery UI and Bootstrap 3 styles are only test dependencies;
+	 * applications using those styles add them themselves.
+	 */
 	@ParameterizedTest
-	@CsvSource({ "bootstrap5, dataTables", "bootstrap5, scroller", "bootstrap5, select" })
+	@CsvSource({
+		"dataTables, scroller", "dataTables, select",
+		"bootstrap, dataTables", "bootstrap, scroller", "bootstrap, select",
+		"bootstrap5, dataTables", "bootstrap5, scroller", "bootstrap5, select",
+		"foundation, dataTables", "foundation, scroller", "foundation, select",
+		"jqueryui, dataTables", "jqueryui, scroller", "jqueryui, select" })
 	void renderedStylesheetExists(Options.Style style, String plugin)
 	{
 		List<HeaderItem> items = render(style, plugin);
@@ -65,30 +74,6 @@ class StyleTest
 		// a webjar file that cannot be found is served as an empty response by the tester
 		assertEquals(200, tester.getLastResponse().getStatus(), url);
 		assertTrue(tester.getLastResponse().getBinaryContent().length > 0, url);
-	}
-
-	/**
-	 * The stylesheets of these styles are not included and have to be added by the application,
-	 * so only the webjar and file names are checked. The version in the path is resolved when the
-	 * reference is created, so it is not known here.
-	 */
-	@ParameterizedTest
-	@CsvSource({
-		"dataTables, scroller, datatables.net-scroller-dt, scroller.dataTables.min.css",
-		"dataTables, select, datatables.net-select-dt, select.dataTables.min.css",
-		"foundation, dataTables, datatables.net-zf, dataTables.foundation.min.css",
-		"jqueryui, select, datatables.net-select-jqui, select.jqueryui.min.css",
-		"bootstrap, scroller, datatables.net-scroller-bs, scroller.bootstrap.min.css" })
-	void rendersStylesheetOfStyleWebjar(Options.Style style, String plugin, String webjar,
-		String file)
-	{
-		List<HeaderItem> items = render(style, plugin);
-		assertEquals(1, items.size());
-
-		ResourceReference reference = ((CssReferenceHeaderItem)items.get(0)).getReference();
-		String name = reference.getName();
-		assertTrue(name.startsWith("/webjars/" + webjar + "/"), name);
-		assertTrue(name.endsWith("/css/" + file), name);
 	}
 
 	@ParameterizedTest

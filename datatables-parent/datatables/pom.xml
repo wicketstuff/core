@@ -78,6 +78,18 @@
 		</dependency>
 		<dependency>
 			<groupId>org.webjars.npm</groupId>
+			<artifactId>datatables.net-select-dt</artifactId>
+			<version>${datatables-select.version}</version>
+			<exclusions>
+				<!-- only the stylesheet is needed -->
+				<exclusion>
+					<groupId>*</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars.npm</groupId>
 			<artifactId>datatables.net-select-bs5</artifactId>
 			<version>${datatables-select.version}</version>
 			<exclusions>
@@ -102,8 +114,139 @@
 		</dependency>
 		<dependency>
 			<groupId>org.webjars.npm</groupId>
+			<artifactId>datatables.net-scroller-dt</artifactId>
+			<version>${datatables-scroller.version}</version>
+			<exclusions>
+				<!-- only the stylesheet is needed -->
+				<exclusion>
+					<groupId>*</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars.npm</groupId>
 			<artifactId>datatables.net-scroller-bs5</artifactId>
 			<version>${datatables-scroller.version}</version>
+			<exclusions>
+				<!-- only the stylesheet is needed -->
+				<exclusion>
+					<groupId>*</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!-- the stylesheets of the other styles are added by the application; they are only
+		     needed to check that the rendered stylesheet references resolve -->
+		<dependency>
+			<groupId>org.webjars.npm</groupId>
+			<artifactId>datatables.net-zf</artifactId>
+			<version>${datatables.version}</version>
+			<scope>test</scope>
+			<exclusions>
+				<!-- only the stylesheet is needed -->
+				<exclusion>
+					<groupId>*</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars.npm</groupId>
+			<artifactId>datatables.net-select-zf</artifactId>
+			<version>${datatables-select.version}</version>
+			<scope>test</scope>
+			<exclusions>
+				<!-- only the stylesheet is needed -->
+				<exclusion>
+					<groupId>*</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars.npm</groupId>
+			<artifactId>datatables.net-scroller-zf</artifactId>
+			<version>${datatables-scroller.version}</version>
+			<scope>test</scope>
+			<exclusions>
+				<!-- only the stylesheet is needed -->
+				<exclusion>
+					<groupId>*</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars.npm</groupId>
+			<artifactId>datatables.net-jqui</artifactId>
+			<version>${datatables.version}</version>
+			<scope>test</scope>
+			<exclusions>
+				<!-- only the stylesheet is needed -->
+				<exclusion>
+					<groupId>*</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars.npm</groupId>
+			<artifactId>datatables.net-select-jqui</artifactId>
+			<version>${datatables-select.version}</version>
+			<scope>test</scope>
+			<exclusions>
+				<!-- only the stylesheet is needed -->
+				<exclusion>
+					<groupId>*</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars.npm</groupId>
+			<artifactId>datatables.net-scroller-jqui</artifactId>
+			<version>${datatables-scroller.version}</version>
+			<scope>test</scope>
+			<exclusions>
+				<!-- only the stylesheet is needed -->
+				<exclusion>
+					<groupId>*</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars.npm</groupId>
+			<artifactId>datatables.net-bs</artifactId>
+			<version>${datatables.version}</version>
+			<scope>test</scope>
+			<exclusions>
+				<!-- only the stylesheet is needed -->
+				<exclusion>
+					<groupId>*</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars.npm</groupId>
+			<artifactId>datatables.net-select-bs</artifactId>
+			<version>${datatables-select.version}</version>
+			<scope>test</scope>
+			<exclusions>
+				<!-- only the stylesheet is needed -->
+				<exclusion>
+					<groupId>*</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars.npm</groupId>
+			<artifactId>datatables.net-scroller-bs</artifactId>
+			<version>${datatables-scroller.version}</version>
+			<scope>test</scope>
 			<exclusions>
 				<!-- only the stylesheet is needed -->
 				<exclusion>
