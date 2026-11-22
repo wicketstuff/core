@@ -46,7 +46,7 @@
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.webjars</groupId>
+			<groupId>org.webjars.npm</groupId>
 			<artifactId>bootstrap</artifactId>
 		</dependency>
 		<!--  JETTY DEPENDENCIES FOR TESTING  -->

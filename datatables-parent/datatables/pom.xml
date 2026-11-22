@@ -83,7 +83,7 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>org.webjars</groupId>
+			<groupId>org.webjars.npm</groupId>
 			<artifactId>bootstrap</artifactId>
 			<optional>true</optional>
 		</dependency>

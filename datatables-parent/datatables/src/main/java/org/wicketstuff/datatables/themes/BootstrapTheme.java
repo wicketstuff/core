@@ -31,7 +31,7 @@ public class BootstrapTheme extends Behavior {
     public void renderHead(Component component, IHeaderResponse response) {
         super.renderHead(component, response);
 
-        response.render(CssHeaderItem.forReference(new WebjarsCssResourceReference("/bootstrap/current/css/bootstrap.css")));
+        response.render(CssHeaderItem.forReference(new WebjarsCssResourceReference("/bootstrap/current/dist/css/bootstrap.css")));
         response.render(CssHeaderItem.forReference(new DataTablesBootstrapCssReference()));
         response.render(JavaScriptHeaderItem.forReference(new DataTablesBootstrapJsReference()));
     }
