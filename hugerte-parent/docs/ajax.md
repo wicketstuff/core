@@ -10,6 +10,9 @@ Add a plain `AjaxButton` or `AjaxSubmitLink` to the form; no HugeRTE-specific Aj
 
 ```java
 IModel<String> text = Model.of("<p>Edit this text.</p>");
+FeedbackPanel feedback = new FeedbackPanel("feedback");
+feedback.setOutputMarkupId(true);
+add(feedback);
 
 Form<Void> form = new Form<>("form");
 add(form);

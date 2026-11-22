@@ -89,4 +89,4 @@ HugeRteConfig config = HugeRteConfig.defaults()
     .with("images_upload_handler", new RawJavaScript("window.myApp.uploadImage"));
 ```
 
-Keeping callback logic in a static `.js` file avoids embedding JavaScript inside Java strings and works with Wicket's strict Content Security Policy.
+Keeping callback logic in a static `.js` file avoids embedding JavaScript inside Java strings. Both forms work under Wicket's strict Content Security Policy: inline `RawJavaScript` ends up in the nonced initialization script.

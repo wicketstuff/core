@@ -53,7 +53,6 @@ Unlike `TinyMceBehavior`, a single `HugeRteBehavior` instance can be attached to
 | `setTypeaheadUrls(boolean)` | `with("typeahead_urls", boolean)` |
 | `setResizing(Boolean)` | `with("resize", boolean)` |
 | `setBlockFormats(String)` | `with("block_formats", String)` |
-| `setLicenseKey(String)` / `GPL_LICENSE_KEY` | Remove — HugeRTE is MIT-licensed and has no `license_key` option |
 
 Check two default differences when migrating:
 
@@ -62,7 +61,7 @@ Check two default differences when migrating:
 
 ## 3. Convert plugins, toolbars, and custom settings
 
-Update `TinyMCE6Plugin` constants to uppercase `HugeRtePlugin` constants (`HugeRtePlugin` includes all plugins from `TinyMCE6Plugin` plus `TEMPLATE`). Replace `Toolbar` objects with toolbar strings passed to `withToolbar(String...)`. Replace raw `addCustomSetting` strings with typed Java values (`String`, `Boolean`, numbers, `List`, `Map`), or `RawJavaScript` for JavaScript callbacks.
+Update `TinyMCE6Plugin` constants to uppercase `HugeRtePlugin` constants (both enums list the same 30 plugins). Replace `Toolbar` objects with toolbar strings passed to `withToolbar(String...)`. Replace raw `addCustomSetting` strings with typed Java values (`String`, `Boolean`, numbers, `List`, `Map`), or `RawJavaScript` for JavaScript callbacks.
 
 Before (`wicketstuff-tinymce6`):
 
