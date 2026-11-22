@@ -23,7 +23,9 @@ import java.util.Locale;
 import javax.swing.tree.TreeNode;
 
 import org.apache.wicket.Component;
+import org.apache.wicket.extensions.markup.html.tree.StyleRule;
 import org.apache.wicket.markup.IMarkupFragment;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.request.Response;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.response.NullResponse;
@@ -152,6 +154,32 @@ final class MiddleColumnsView extends AbstractColumnsView
 		return result;
 	}
 
+	@Override
+	public void renderHead(final IHeaderResponse response)
+	{
+		super.renderHead(response);
+		for (double width : computeColumnWidths())
+		{
+			widthStyle(width).renderHead(response);
+		}
+	}
+
+	/**
+	 * Returns the percentage width of a column as a style rule. A style rule instead of an inline
+	 * style attribute, because the CSP blocks inline style attributes.
+	 * 
+	 * @param width
+	 *            The percentage width
+	 * @return The style rule
+	 */
+	private static StyleRule widthStyle(final double width)
+	{
+		NumberFormat nf = NumberFormat.getNumberInstance(Locale.ENGLISH);
+		nf.setMaximumFractionDigits(0);
+		nf.setMaximumIntegerDigits(3);
+		return new StyleRule("wicket15-tree-column", "width:" + nf.format(width) + "%");
+	}
+
 	/**
 	 * @see org.apache.wicket.MarkupContainer#onRender()
 	 */
@@ -161,10 +189,6 @@ final class MiddleColumnsView extends AbstractColumnsView
 		Response response = RequestCycle.get().getResponse();
 		double widths[] = computeColumnWidths();
 
-		NumberFormat nf = NumberFormat.getNumberInstance(Locale.ENGLISH);
-		nf.setMaximumFractionDigits(0);
-		nf.setMaximumIntegerDigits(3);
-
 		for (int i = 0; i < columns.size(); ++i)
 		{
 			Component component = components.get(i);
@@ -172,7 +196,7 @@ final class MiddleColumnsView extends AbstractColumnsView
 			IColumn column = columns.get(i);
 
 			// write the wrapping column markup
-			response.write("<span class=\"b_\" style=\"width:" + nf.format(widths[i]) + "%\">");
+			response.write("<span class=\"b_ " + widthStyle(widths[i]).getCssClass() + "\">");
 
 			// determine whether we should render the left border
 			if (!treeHasLeftColumn && (i == 0))
