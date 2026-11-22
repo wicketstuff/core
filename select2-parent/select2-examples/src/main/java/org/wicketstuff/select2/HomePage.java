@@ -74,6 +74,7 @@ public class HomePage extends WebPage
 		super.onInitialize();
 
 		add(new BookmarkablePageLink<>("homeBootstrapPageLink", HomeBootstrapPage.class));
+		add(new BookmarkablePageLink<>("homeBootstrap5PageLink", HomeBootstrap5Page.class));
 
 		// single-select no minimum example
 		add(new Label("country0", new PropertyModel<>(this, "country0")));
