@@ -19,7 +19,7 @@ public class FullFeaturedTinyMCEPage extends TinyMCEBasePage
 	{
 		TinyMCESettings settings = new TinyMCESettings();
 
-		settings.addPlugins(TinyMCE6Plugin.advlist, TinyMCE6Plugin.accordion,
+		settings.addPlugins(TinyMCE6Plugin.advlist, TinyMCE6Plugin.lists, TinyMCE6Plugin.accordion,
 			TinyMCE6Plugin.autolink);
 
 
