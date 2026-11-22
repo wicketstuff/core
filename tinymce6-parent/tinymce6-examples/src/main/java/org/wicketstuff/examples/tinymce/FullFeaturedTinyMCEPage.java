@@ -28,7 +28,7 @@ public class FullFeaturedTinyMCEPage extends TinyMCEBasePage
 		settings.addToolbar(new Toolbar("toolbar2",
 			"cut copy paste | searchreplace | bullist numlist | outdent indent blockquote | undo redo | link unlink anchor image media code | inserttime preview | forecolor backcolor"));
 		settings.addToolbar(new Toolbar("toolbar3",
-			"table | hr removeformat | subscript superscript | charmap emoticons | print fullscreen | ltr rtl | spellchecker | visualchars visualblocks nonbreaking pagebreak restoredraft"));
+			"table | hr removeformat | subscript superscript | charmap emoticons | print fullscreen | ltr rtl | spellchecker | visualchars visualblocks nonbreaking template pagebreak restoredraft"));
 
 		// custom settings
 		String styleFormats = "style_formats : [" + "{title : 'Bold text', inline : 'b'},"

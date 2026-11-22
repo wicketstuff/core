@@ -29,6 +29,9 @@ updates:
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"]
+      # TinyMCE 7+ is GPL-2.0-or-later; stay on 6.8.6, the last MIT release
+      - dependency-name: "org.webjars.npm:tinymce"
+        versions: [">= 7"]
 
   - package-ecosystem: "maven"
     directory: "/"
@@ -39,6 +42,9 @@ updates:
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"]
+      # TinyMCE 7+ is GPL-2.0-or-later; stay on 6.8.6, the last MIT release
+      - dependency-name: "org.webjars.npm:tinymce"
+        versions: [">= 7"]
 
   - package-ecosystem: "maven"
     directory: "/"
@@ -49,6 +55,9 @@ updates:
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"]
+      # TinyMCE 7+ is GPL-2.0-or-later; stay on 6.8.6, the last MIT release
+      - dependency-name: "org.webjars.npm:tinymce"
+        versions: [">= 7"]
 
   - package-ecosystem: "github-actions"
     directory: "/"

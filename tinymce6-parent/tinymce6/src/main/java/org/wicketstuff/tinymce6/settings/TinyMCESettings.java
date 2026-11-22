@@ -54,13 +54,7 @@ public class TinyMCESettings implements Serializable
 	public static final ResourceReference TINYMCE_JS_REF = new WebjarsJavaScriptResourceReference("tinymce/current/tinymce.js");
 	public static final ResourceReference TINYMCE_JS_REF_MIN = new WebjarsJavaScriptResourceReference("tinymce/current/tinymce.min.js");
 
-	/**
-	 * License key for the open-source TinyMCE build, distributed under the GPL v2 or later.
-	 */
-	public static final String GPL_LICENSE_KEY = "gpl";
-
 	private final Language language;
-	private String licenseKey = GPL_LICENSE_KEY;
 	private boolean resizing = false;
 	private boolean readOnly = false;
 	private boolean menuBar = true;
@@ -102,29 +96,6 @@ public class TinyMCESettings implements Serializable
 	public Language getLanguage()
 	{
 		return language;
-	}
-
-	public String getLicenseKey()
-	{
-		return licenseKey;
-	}
-
-	/**
-	 * Sets the TinyMCE {@code license_key}. TinyMCE 7 and later require a license key; without one
-	 * the editor warns or refuses to work. Defaults to {@value #GPL_LICENSE_KEY}, which declares
-	 * use of the open-source TinyMCE build under the GPL v2 or later. Applications that cannot
-	 * comply with the GPL need a commercial license from Tiny and must set that key here.
-	 * <p>
-	 * Setting {@code null} omits the option from the generated configuration.
-	 *
-	 * @param licenseKey
-	 *            the license key, {@value #GPL_LICENSE_KEY} or a commercial key
-	 * @return this
-	 */
-	public TinyMCESettings setLicenseKey(String licenseKey)
-	{
-		this.licenseKey = licenseKey;
-		return this;
 	}
 
 	public String getDocumentBaseUrl()
@@ -300,11 +271,6 @@ public class TinyMCESettings implements Serializable
 	public String toJavaScript()
 	{
 		final var builder = new StringBuilder();
-
-		if (licenseKey != null)
-		{
-			appendSingleConfigElement(builder, "license_key", licenseKey, true);
-		}
 
 		// Always hide the Promotion Button in the menubar
 		appendSingleConfigElement(builder, "promotion", String.valueOf(false));

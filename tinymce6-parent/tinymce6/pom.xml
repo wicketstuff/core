@@ -33,10 +33,15 @@
 			<groupId>de.agilecoders.wicket.webjars</groupId>
 			<artifactId>wicket-webjars</artifactId>
 		</dependency>
+		<!--
+			TinyMCE 6.8.6 is the last MIT-licensed release. TinyMCE 7 and later are
+			GPL-2.0-or-later and need a license key; do not upgrade. The enforcer rule
+			below fails the build when a TinyMCE 7+ webjar ends up on the classpath.
+		-->
 		<dependency>
 			<groupId>org.webjars.npm</groupId>
 			<artifactId>tinymce</artifactId>
-			<version>8.8.2</version>
+			<version>6.8.6</version>
 		</dependency>
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
@@ -59,4 +64,31 @@
 			<artifactId>jakarta.servlet-api</artifactId>
 		</dependency>
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-enforcer-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>ban-gpl-tinymce</id>
+						<goals>
+							<goal>enforce</goal>
+						</goals>
+						<configuration>
+							<rules>
+								<bannedDependencies>
+									<excludes>
+										<exclude>org.webjars.npm:tinymce:[7,)</exclude>
+									</excludes>
+									<message>TinyMCE 7 and later are GPL-2.0-or-later licensed. wicketstuff-tinymce6 stays on TinyMCE 6.8.6, the last MIT-licensed release.</message>
+								</bannedDependencies>
+							</rules>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 </project>
