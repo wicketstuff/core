@@ -40,6 +40,14 @@
 				<groupId>org.webjars.npm</groupId>
 				<artifactId>ol</artifactId>
 				<version>${openlayers.version}</version>
+				<exclusions>
+					<!-- only the bundled dist/ol.js and ol.css are used; the npm
+					     dependencies are not needed and some are not published -->
+					<exclusion>
+						<groupId>*</groupId>
+						<artifactId>*</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
