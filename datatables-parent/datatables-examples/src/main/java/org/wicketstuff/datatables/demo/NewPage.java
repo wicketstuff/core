@@ -33,12 +33,13 @@ public class NewPage extends WebPage {
         List<IColumn<Person, String>> columns = new ArrayList<>();
         columns.add(new PropertyColumn<>(Model.of("First"), "firstName", "firstName"));
         columns.add(new PropertyColumn<>(Model.of("Last"), "lastName", "lastName"));
-        columns.add(new SpanPropertyColumn<Person, String>(Model.of("Age"), "age", "age") {
+        SpanPropertyColumn<Person, String> ageColumn = new SpanPropertyColumn<Person, String>(Model.of("Age"), "age", "age") {
             @Override
             public int getRowspan() {
                 return 2;
             }
-        });
+        };
+        columns.add(ageColumn);
 
         PeopleDataProvider dataProvider = new PeopleDataProvider(null);
 
@@ -59,7 +60,8 @@ public class NewPage extends WebPage {
                 return 2;
             }
         };
-        table.addTopToolbar(new SpanHeadersToolbar<>(table, namesColumn));
+        // Age spans both header rows, so it is rendered in the first row and left out of the second
+        table.addTopToolbar(new SpanHeadersToolbar<>(table, namesColumn, ageColumn));
         table.addTopToolbar(new SpanHeadersToolbar<>(table));
 //        table.addTopToolbar(new HeadersToolbar<String>(table, dataProvider));
 
