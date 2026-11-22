@@ -25,6 +25,8 @@ The website, [wicketstuff.org](https://wicketstuff.org), builds its main documen
 
 Features and dependency upgrades go to `master` only. They reach users with the next major. The exception is Dependabot, which also opens minor and patch updates against the live branches (configured in `.github/dependabot.yml` on `master`).
 
+A new module can also go to the live branches when it replaces a module that users of those lines can no longer keep up to date, for example because the library it integrates changed its license. Users of the LTS line then get a way forward without waiting for the next major. Like a fix, it goes to `master` first and is then backported. [#1740](https://github.com/wicketstuff/core/pull/1740) added `wicketstuff-hugerte` for the MIT-licensed HugeRTE editor after TinyMCE moved to the GPL, and [#1747](https://github.com/wicketstuff/core/pull/1747) and [#1748](https://github.com/wicketstuff/core/pull/1748) backported it to `wicket-11.x` and `wicket-10.x`.
+
 Fixes go to `master` first, and are then backported to the live quarterly branch, and to the LTS branch when they apply there. A fix for code that only exists on a release branch goes to that branch directly.
 
 ## Backporting a fix
