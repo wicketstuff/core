@@ -4,6 +4,6 @@ import de.agilecoders.wicket.webjars.request.resource.WebjarsCssResourceReferenc
 
 public class DataTablesCssReference extends WebjarsCssResourceReference {
     public DataTablesCssReference() {
-        super("datatables/current/css/dataTables.dataTables.min.css");
+        super("datatables.net-dt/current/css/dataTables.dataTables.min.css");
     }
 }

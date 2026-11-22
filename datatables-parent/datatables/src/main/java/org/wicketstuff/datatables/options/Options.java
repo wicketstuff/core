@@ -45,22 +45,42 @@ public class Options extends AbstractConfig {
         full_numbers
     }
 
+    /**
+     * The styling framework. DataTables publishes the stylesheets of the core library and of
+     * each plugin per style as separate npm packages, e.g. {@code datatables.net-bs5} and
+     * {@code datatables.net-select-bs5}. The webjars for {@link #dataTables} (core only) and
+     * {@link #bootstrap5} (core, Select and Scroller) are included; for the other styles, and for
+     * the Select and Scroller stylesheets of {@link #dataTables}, the application has to add the
+     * webjars matching the DataTables version itself.
+     */
     public enum Style {
-        dataTables,
-        bootstrap,
-        bootstrap5,
-        foundation,
-        jqueryui,
-        none;
+        dataTables("dt"),
+        bootstrap("bs"),
+        bootstrap5("bs5"),
+        foundation("zf"),
+        jqueryui("jqui"),
+        none(null);
+
+        /**
+         * The suffix of the npm package name of the styling packages, e.g. 'bs5' in
+         * 'datatables.net-bs5' and 'datatables.net-scroller-bs5'.
+         */
+        private final String packageSuffix;
+
+        Style(String packageSuffix) {
+            this.packageSuffix = packageSuffix;
+        }
 
         public void renderHead(IHeaderResponse response, String pluginName) {
-            if (none != this) {
-                if (!(dataTables == this && "dataTables".equals(pluginName))) {
-                    String name = "datatables/current/css/" + pluginName + "." + name() + ".min.css";
-                    CssResourceReference cssReference = new WebjarsCssResourceReference(name);
-                    response.render(CssHeaderItem.forReference(cssReference));
-                }
+            if (none == this || (dataTables == this && "dataTables".equals(pluginName))) {
+                return;
             }
+            String webjar = "dataTables".equals(pluginName)
+                    ? "datatables.net-" + packageSuffix
+                    : "datatables.net-" + pluginName + "-" + packageSuffix;
+            String name = webjar + "/current/css/" + pluginName + "." + name() + ".min.css";
+            CssResourceReference cssReference = new WebjarsCssResourceReference(name);
+            response.render(CssHeaderItem.forReference(cssReference));
         }
     }
 
