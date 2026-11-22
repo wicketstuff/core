@@ -460,6 +460,7 @@
 		<module>editable-grid-parent</module>
 
 		<module>wicketstuff-lazymodel</module>
+		<module>wicket15-tree</module>
 		<module>sitemap-xml-parent</module>
 		<module>urlfragment-parent</module>
 		<module>wicketstuff-rest-utils</module>

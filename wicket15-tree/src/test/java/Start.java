@@ -2,6 +2,7 @@ import java.lang.management.ManagementFactory;
 
 import javax.management.MBeanServer;
 
+import org.eclipse.jetty.ee11.webapp.WebAppContext;
 import org.eclipse.jetty.jmx.MBeanContainer;
 import org.eclipse.jetty.server.HttpConfiguration;
 import org.eclipse.jetty.server.HttpConnectionFactory;
@@ -10,8 +11,8 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.server.SslConnectionFactory;
 import org.eclipse.jetty.util.resource.Resource;
+import org.eclipse.jetty.util.resource.ResourceFactory;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
-import org.eclipse.jetty.webapp.WebAppContext;
 
 /**
  * Separate startup class for people that want to run the examples directly. Use parameter
@@ -41,7 +42,7 @@ public class Start
 
 		server.addConnector(http);
 
-		Resource keystore = Resource.newClassPathResource("/keystore");
+		Resource keystore = ResourceFactory.of(server).newClassLoaderResource("keystore");
 		if (keystore != null && keystore.exists())
 		{
 			// if a keystore for a SSL certificate is available, start a SSL
@@ -51,7 +52,7 @@ public class Start
 			// use this certificate anywhere important as the passwords are
 			// available in the source.
 
-			SslContextFactory sslContextFactory = new SslContextFactory();
+			SslContextFactory.Server sslContextFactory = new SslContextFactory.Server();
 			sslContextFactory.setKeyStoreResource(keystore);
 			sslContextFactory.setKeyStorePassword("wicket");
 			sslContextFactory.setKeyManagerPassword("wicket");
