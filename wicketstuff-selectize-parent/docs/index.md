@@ -19,6 +19,6 @@ Tag-style and searchable selections with selectize.js.
 
 Import `org.wicketstuff:wicketstuff-bom` in your `dependencyManagement` section to manage the version.
 
-The [`wicketstuff-selectize-examples`](https://github.com/wicketstuff/core/tree/master/wicketstuff-selectize-parent/wicketstuff-selectize-examples) module contains a runnable example application.
+The [`wicketstuff-selectize-examples`](https://github.com/wicketstuff/core/tree/wicket-10.x/wicketstuff-selectize-parent/wicketstuff-selectize-examples) module contains a runnable example application.
 
-Source: [`wicketstuff-selectize-parent`](https://github.com/wicketstuff/core/tree/master/wicketstuff-selectize-parent)
+Source: [`wicketstuff-selectize-parent`](https://github.com/wicketstuff/core/tree/wicket-10.x/wicketstuff-selectize-parent)

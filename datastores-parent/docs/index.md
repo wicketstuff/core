@@ -104,4 +104,4 @@ Apache 2.0.
 
 [Martin Grigorov](https://github.com/martin-g)
 
-Source: [`datastores-parent`](https://github.com/wicketstuff/core/tree/master/datastores-parent)
+Source: [`datastores-parent`](https://github.com/wicketstuff/core/tree/wicket-10.x/datastores-parent)

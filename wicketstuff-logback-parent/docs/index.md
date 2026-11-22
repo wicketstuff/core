@@ -117,6 +117,6 @@ Wicketstuff-logback depends on [Wicket](https://wicket.apache.org) and [logback-
 ## Further reading
 For more info see the javadoc of the classes. For a complete example see the examples web application.
 
-The [`wicketstuff-logback-examples`](https://github.com/wicketstuff/core/tree/master/wicketstuff-logback-parent/wicketstuff-logback-examples) module contains a runnable example application.
+The [`wicketstuff-logback-examples`](https://github.com/wicketstuff/core/tree/wicket-10.x/wicketstuff-logback-parent/wicketstuff-logback-examples) module contains a runnable example application.
 
-Source: [`wicketstuff-logback-parent`](https://github.com/wicketstuff/core/tree/master/wicketstuff-logback-parent)
+Source: [`wicketstuff-logback-parent`](https://github.com/wicketstuff/core/tree/wicket-10.x/wicketstuff-logback-parent)

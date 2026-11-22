@@ -19,6 +19,6 @@ WYSIWYG rich-text editing with TinyMCE. Licensed under the LGPL.
 
 Import `org.wicketstuff:wicketstuff-bom` in your `dependencyManagement` section to manage the version.
 
-The [`tinymce6-examples`](https://github.com/wicketstuff/core/tree/master/tinymce6-parent/tinymce6-examples) module contains a runnable example application.
+The [`tinymce6-examples`](https://github.com/wicketstuff/core/tree/wicket-10.x/tinymce6-parent/tinymce6-examples) module contains a runnable example application.
 
-Source: [`tinymce6-parent`](https://github.com/wicketstuff/core/tree/master/tinymce6-parent)
+Source: [`tinymce6-parent`](https://github.com/wicketstuff/core/tree/wicket-10.x/tinymce6-parent)

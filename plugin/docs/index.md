@@ -19,4 +19,4 @@ Register plugins with your Wicket application.
 
 Import `org.wicketstuff:wicketstuff-bom` in your `dependencyManagement` section to manage the version.
 
-Source: [`plugin`](https://github.com/wicketstuff/core/tree/master/plugin)
+Source: [`plugin`](https://github.com/wicketstuff/core/tree/wicket-10.x/plugin)

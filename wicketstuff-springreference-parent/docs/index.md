@@ -124,6 +124,6 @@ Wicketstuff-springreference depends on [Wicket](https://wicket.apache.org) and [
 ## Further reading
 For more info see the javadoc of the `SpringReference`, `AbstractSpringDependencies` and `SpringReferenceSupporter` classes. For a complete `@SpringBean` - `SpringReference` - `AbstractSpringDependencies` example see the examples web application.
 
-The [`wicketstuff-springreference-examples`](https://github.com/wicketstuff/core/tree/master/wicketstuff-springreference-parent/wicketstuff-springreference-examples) module contains a runnable example application.
+The [`wicketstuff-springreference-examples`](https://github.com/wicketstuff/core/tree/wicket-10.x/wicketstuff-springreference-parent/wicketstuff-springreference-examples) module contains a runnable example application.
 
-Source: [`wicketstuff-springreference-parent`](https://github.com/wicketstuff/core/tree/master/wicketstuff-springreference-parent)
+Source: [`wicketstuff-springreference-parent`](https://github.com/wicketstuff/core/tree/wicket-10.x/wicketstuff-springreference-parent)

@@ -7,4 +7,4 @@ tags: example demo sample
 
 A complete CRUD example application with Spring and Hibernate. Not published as a dependency: build it from source.
 
-Source: [`phonebook`](https://github.com/wicketstuff/core/tree/master/phonebook)
+Source: [`phonebook`](https://github.com/wicketstuff/core/tree/wicket-10.x/phonebook)

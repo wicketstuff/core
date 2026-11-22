@@ -66,6 +66,6 @@ add(new Link<Void>("exportToXLS")
 
 Pedro Santos - pedrosans@gmail.com
 
-The [`wicket-poi-examples`](https://github.com/wicketstuff/core/tree/master/wicket-poi-parent/wicket-poi-examples) module contains a runnable example application.
+The [`wicket-poi-examples`](https://github.com/wicketstuff/core/tree/wicket-10.x/wicket-poi-parent/wicket-poi-examples) module contains a runnable example application.
 
-Source: [`wicket-poi-parent`](https://github.com/wicketstuff/core/tree/master/wicket-poi-parent)
+Source: [`wicket-poi-parent`](https://github.com/wicketstuff/core/tree/wicket-10.x/wicket-poi-parent)

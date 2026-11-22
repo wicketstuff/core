@@ -51,6 +51,6 @@ Emond Papegaaij, Martijn Dashorst
 
 Bugs can be filed at the [Wicket Stuff issue tracker](https://github.com/wicketstuff/core/issues).
 
-The [module README](https://github.com/wicketstuff/core/blob/master/wicket-security-parent/README.md) has more details.
+The [module README](https://github.com/wicketstuff/core/blob/wicket-10.x/wicket-security-parent/README.md) has more details.
 
-Source: [`wicket-security-parent`](https://github.com/wicketstuff/core/tree/master/wicket-security-parent)
+Source: [`wicket-security-parent`](https://github.com/wicketstuff/core/tree/wicket-10.x/wicket-security-parent)

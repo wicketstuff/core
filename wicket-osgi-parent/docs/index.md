@@ -50,4 +50,4 @@ To use `wicketstuff-osgi` in your own projects, have a look at `web.xml` and `Li
 
 [Harald Wellmann](http://hwellmann.blogspot.com)
 
-Source: [`wicket-osgi-parent`](https://github.com/wicketstuff/core/tree/master/wicket-osgi-parent)
+Source: [`wicket-osgi-parent`](https://github.com/wicketstuff/core/tree/wicket-10.x/wicket-osgi-parent)

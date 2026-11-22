@@ -82,6 +82,6 @@ On the markup side, just use a div element for the progress bar:
 ...
 ```
 
-The [`progressbar-example`](https://github.com/wicketstuff/core/tree/master/progressbar-parent/progressbar-example) module contains a runnable example application.
+The [`progressbar-example`](https://github.com/wicketstuff/core/tree/wicket-10.x/progressbar-parent/progressbar-example) module contains a runnable example application.
 
-Source: [`progressbar-parent`](https://github.com/wicketstuff/core/tree/master/progressbar-parent)
+Source: [`progressbar-parent`](https://github.com/wicketstuff/core/tree/wicket-10.x/progressbar-parent)

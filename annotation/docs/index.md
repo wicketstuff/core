@@ -95,4 +95,4 @@ Just like Wicket itself, the annotation library is licensed under Apache 2.0.
 
 Doug Donohoe of Donohoe Digital LLC is the author of annotation. He can be reached at doug (at) donohoe (dot) info.
 
-Source: [`annotation`](https://github.com/wicketstuff/core/tree/master/annotation)
+Source: [`annotation`](https://github.com/wicketstuff/core/tree/wicket-10.x/annotation)

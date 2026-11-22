@@ -19,8 +19,8 @@ Copy-to-clipboard buttons, powered by clipboard.js.
 
 Import `org.wicketstuff:wicketstuff-bom` in your `dependencyManagement` section to manage the version.
 
-The [`wicketstuff-clipboardjs-examples`](https://github.com/wicketstuff/core/tree/master/wicketstuff-clipboard-js-parent/wicketstuff-clipboardjs-examples) module contains a runnable example application.
+The [`wicketstuff-clipboardjs-examples`](https://github.com/wicketstuff/core/tree/wicket-10.x/wicketstuff-clipboard-js-parent/wicketstuff-clipboardjs-examples) module contains a runnable example application.
 
-The [module README](https://github.com/wicketstuff/core/blob/master/wicketstuff-clipboard-js-parent/README.md) has more details.
+The [module README](https://github.com/wicketstuff/core/blob/wicket-10.x/wicketstuff-clipboard-js-parent/README.md) has more details.
 
-Source: [`wicketstuff-clipboard-js-parent`](https://github.com/wicketstuff/core/tree/master/wicketstuff-clipboard-js-parent)
+Source: [`wicketstuff-clipboard-js-parent`](https://github.com/wicketstuff/core/tree/wicket-10.x/wicketstuff-clipboard-js-parent)

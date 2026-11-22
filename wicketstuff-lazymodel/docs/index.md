@@ -111,4 +111,4 @@ Note that these unsupported cases will fail with a `NullPointerException`!
 
 Import `org.wicketstuff:wicketstuff-bom` in your `dependencyManagement` section to manage the version.
 
-Source: [`wicketstuff-lazymodel`](https://github.com/wicketstuff/core/tree/master/wicketstuff-lazymodel)
+Source: [`wicketstuff-lazymodel`](https://github.com/wicketstuff/core/tree/wicket-10.x/wicketstuff-lazymodel)

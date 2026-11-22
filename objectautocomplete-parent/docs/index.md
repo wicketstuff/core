@@ -19,6 +19,6 @@ Select entities through an autocompleting text field.
 
 Import `org.wicketstuff:wicketstuff-bom` in your `dependencyManagement` section to manage the version.
 
-The [`objectautocomplete-examples`](https://github.com/wicketstuff/core/tree/master/objectautocomplete-parent/objectautocomplete-examples) module contains a runnable example application.
+The [`objectautocomplete-examples`](https://github.com/wicketstuff/core/tree/wicket-10.x/objectautocomplete-parent/objectautocomplete-examples) module contains a runnable example application.
 
-Source: [`objectautocomplete-parent`](https://github.com/wicketstuff/core/tree/master/objectautocomplete-parent)
+Source: [`objectautocomplete-parent`](https://github.com/wicketstuff/core/tree/wicket-10.x/objectautocomplete-parent)

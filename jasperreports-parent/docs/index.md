@@ -19,6 +19,6 @@ Serve JasperReports as PDF, HTML, Excel and other formats.
 
 Import `org.wicketstuff:wicketstuff-bom` in your `dependencyManagement` section to manage the version.
 
-The [`jasperreports-examples`](https://github.com/wicketstuff/core/tree/master/jasperreports-parent/jasperreports-examples) module contains a runnable example application.
+The [`jasperreports-examples`](https://github.com/wicketstuff/core/tree/wicket-10.x/jasperreports-parent/jasperreports-examples) module contains a runnable example application.
 
-Source: [`jasperreports-parent`](https://github.com/wicketstuff/core/tree/master/jasperreports-parent)
+Source: [`jasperreports-parent`](https://github.com/wicketstuff/core/tree/wicket-10.x/jasperreports-parent)

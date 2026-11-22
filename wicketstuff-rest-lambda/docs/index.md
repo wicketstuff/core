@@ -19,6 +19,6 @@ Define REST endpoints with Java lambdas.
 
 Import `org.wicketstuff:wicketstuff-bom` in your `dependencyManagement` section to manage the version.
 
-The [module README](https://github.com/wicketstuff/core/blob/master/wicketstuff-rest-lambda/README.md) has more details.
+The [module README](https://github.com/wicketstuff/core/blob/wicket-10.x/wicketstuff-rest-lambda/README.md) has more details.
 
-Source: [`wicketstuff-rest-lambda`](https://github.com/wicketstuff/core/tree/master/wicketstuff-rest-lambda)
+Source: [`wicketstuff-rest-lambda`](https://github.com/wicketstuff/core/tree/wicket-10.x/wicketstuff-rest-lambda)

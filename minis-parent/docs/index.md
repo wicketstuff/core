@@ -72,6 +72,6 @@ Wicket Stuff Minis depends only on [Wicket](https://wicket.apache.org/).
 
 The above lists of behaviors and components are not complete. For more info see the javadoc of the classes.
 
-The [`minis-examples`](https://github.com/wicketstuff/core/tree/master/minis-parent/minis-examples) module contains a runnable example application.
+The [`minis-examples`](https://github.com/wicketstuff/core/tree/wicket-10.x/minis-parent/minis-examples) module contains a runnable example application.
 
-Source: [`minis-parent`](https://github.com/wicketstuff/core/tree/master/minis-parent)
+Source: [`minis-parent`](https://github.com/wicketstuff/core/tree/wicket-10.x/minis-parent)

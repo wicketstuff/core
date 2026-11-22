@@ -82,6 +82,6 @@ private List<AbstractEditablePropertyColumn<Person, String>> getColumns() {
 
 InMethod Grid is really awesome++, however it does not allow us to add a row; moreover editable components are not configurable, it is always a text field. What if I want a drop down, or a textarea?
 
-The [`editable-grid-examples`](https://github.com/wicketstuff/core/tree/master/editable-grid-parent/editable-grid-examples) module contains a runnable example application.
+The [`editable-grid-examples`](https://github.com/wicketstuff/core/tree/wicket-10.x/editable-grid-parent/editable-grid-examples) module contains a runnable example application.
 
-Source: [`editable-grid-parent`](https://github.com/wicketstuff/core/tree/master/editable-grid-parent)
+Source: [`editable-grid-parent`](https://github.com/wicketstuff/core/tree/wicket-10.x/editable-grid-parent)

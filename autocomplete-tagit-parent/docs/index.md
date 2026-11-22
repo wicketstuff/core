@@ -39,6 +39,6 @@ To modify the default Tag-it configuration, override `org.wicketstuff.tagit.TagI
 
 Import `org.wicketstuff:wicketstuff-bom` in your `dependencyManagement` section to manage the version.
 
-The [`autocomplete-tagit-examples`](https://github.com/wicketstuff/core/tree/master/autocomplete-tagit-parent/autocomplete-tagit-examples) module contains a runnable example application.
+The [`autocomplete-tagit-examples`](https://github.com/wicketstuff/core/tree/wicket-10.x/autocomplete-tagit-parent/autocomplete-tagit-examples) module contains a runnable example application.
 
-Source: [`autocomplete-tagit-parent`](https://github.com/wicketstuff/core/tree/master/autocomplete-tagit-parent)
+Source: [`autocomplete-tagit-parent`](https://github.com/wicketstuff/core/tree/wicket-10.x/autocomplete-tagit-parent)

@@ -10,7 +10,7 @@ This small project improves the syntax of Wicket models when using the Scala pro
 
 - [The blog post with the original idea](http://technically.us/code/x/the-escape-hatch)
 - [The original announcement with more information](http://www.mail-archive.com/users@wicket.apache.org/msg40899.html)
-- [Samples](https://github.com/wicketstuff/core/blob/master/scala-extensions-parent/wicket-scala-sample/src/main/scala/org/wicketstuff/scala/sample/HelloWicketWorld.scala)
+- [Samples](https://github.com/wicketstuff/core/blob/wicket-10.x/scala-extensions-parent/wicket-scala-sample/src/main/scala/org/wicketstuff/scala/sample/HelloWicketWorld.scala)
 
 You can set up a new Scala and Wicket project including this library with the following archetype (replace `<version>` with the current Wicket Stuff release):
 
@@ -33,6 +33,6 @@ This project also offers a Scala DSL for Wicket, originally from the Gamboa Proj
 
 Import `org.wicketstuff:wicketstuff-bom` in your `dependencyManagement` section to manage the version.
 
-The [`wicket-scala-sample`](https://github.com/wicketstuff/core/tree/master/scala-extensions-parent/wicket-scala-sample) module contains a runnable example application.
+The [`wicket-scala-sample`](https://github.com/wicketstuff/core/tree/wicket-10.x/scala-extensions-parent/wicket-scala-sample) module contains a runnable example application.
 
-Source: [`scala-extensions-parent`](https://github.com/wicketstuff/core/tree/master/scala-extensions-parent)
+Source: [`scala-extensions-parent`](https://github.com/wicketstuff/core/tree/wicket-10.x/scala-extensions-parent)

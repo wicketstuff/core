@@ -83,6 +83,6 @@ The output look and feel is exactly the same as on [datatables.net](https://data
 
 Import `org.wicketstuff:wicketstuff-bom` in your `dependencyManagement` section to manage the version.
 
-The [`datatables-examples`](https://github.com/wicketstuff/core/tree/master/datatables-parent/datatables-examples) module contains a runnable example application.
+The [`datatables-examples`](https://github.com/wicketstuff/core/tree/wicket-10.x/datatables-parent/datatables-examples) module contains a runnable example application.
 
-Source: [`datatables-parent`](https://github.com/wicketstuff/core/tree/master/datatables-parent)
+Source: [`datatables-parent`](https://github.com/wicketstuff/core/tree/wicket-10.x/datatables-parent)

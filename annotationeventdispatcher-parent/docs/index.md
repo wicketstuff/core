@@ -19,6 +19,6 @@ Deliver Wicket events to annotated methods.
 
 Import `org.wicketstuff:wicketstuff-bom` in your `dependencyManagement` section to manage the version.
 
-The [module README](https://github.com/wicketstuff/core/blob/master/annotationeventdispatcher-parent/README.md) has more details.
+The [module README](https://github.com/wicketstuff/core/blob/wicket-10.x/annotationeventdispatcher-parent/README.md) has more details.
 
-Source: [`annotationeventdispatcher-parent`](https://github.com/wicketstuff/core/tree/master/annotationeventdispatcher-parent)
+Source: [`annotationeventdispatcher-parent`](https://github.com/wicketstuff/core/tree/wicket-10.x/annotationeventdispatcher-parent)

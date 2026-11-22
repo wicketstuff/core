@@ -19,6 +19,6 @@ Cache pages and resources with a service worker so your application keeps workin
 
 Import `org.wicketstuff:wicketstuff-bom` in your `dependencyManagement` section to manage the version.
 
-The [`offline-mode-examples`](https://github.com/wicketstuff/core/tree/master/offline-mode-parent/offline-mode-examples) module contains a runnable example application.
+The [`offline-mode-examples`](https://github.com/wicketstuff/core/tree/wicket-10.x/offline-mode-parent/offline-mode-examples) module contains a runnable example application.
 
-Source: [`offline-mode-parent`](https://github.com/wicketstuff/core/tree/master/offline-mode-parent)
+Source: [`offline-mode-parent`](https://github.com/wicketstuff/core/tree/wicket-10.x/offline-mode-parent)

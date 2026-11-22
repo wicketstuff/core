@@ -171,6 +171,6 @@ Forms (GET / POST given as String to the EL function):
 * <https://cwiki.apache.org/confluence/display/WICKET/Including+JSP+files+in+HTML+templates>
 * <http://apache-wicket.1842946.n4.nabble.com/Wicket-1-5-and-JSP-servlet-wrapping-td4407174.html>
 
-The [`jee-web-examples`](https://github.com/wicketstuff/core/tree/master/jee-web-parent/jee-web-examples) module contains a runnable example application.
+The [`jee-web-examples`](https://github.com/wicketstuff/core/tree/wicket-10.x/jee-web-parent/jee-web-examples) module contains a runnable example application.
 
-Source: [`jee-web-parent`](https://github.com/wicketstuff/core/tree/master/jee-web-parent)
+Source: [`jee-web-parent`](https://github.com/wicketstuff/core/tree/wicket-10.x/jee-web-parent)

@@ -19,6 +19,6 @@ Bind key presses and other input events to components, for keyboard shortcuts.
 
 Import `org.wicketstuff:wicketstuff-bom` in your `dependencyManagement` section to manage the version.
 
-The [`input-events-examples`](https://github.com/wicketstuff/core/tree/master/input-events-parent/input-events-examples) module contains a runnable example application.
+The [`input-events-examples`](https://github.com/wicketstuff/core/tree/wicket-10.x/input-events-parent/input-events-examples) module contains a runnable example application.
 
-Source: [`input-events-parent`](https://github.com/wicketstuff/core/tree/master/input-events-parent)
+Source: [`input-events-parent`](https://github.com/wicketstuff/core/tree/wicket-10.x/input-events-parent)

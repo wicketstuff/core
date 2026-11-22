@@ -69,6 +69,6 @@ testForm.show(target);
 
 Chris Colman
 
-The [`modalx-examples`](https://github.com/wicketstuff/core/tree/master/modalx-parent/modalx-examples) module contains a runnable example application.
+The [`modalx-examples`](https://github.com/wicketstuff/core/tree/wicket-10.x/modalx-parent/modalx-examples) module contains a runnable example application.
 
-Source: [`modalx-parent`](https://github.com/wicketstuff/core/tree/master/modalx-parent)
+Source: [`modalx-parent`](https://github.com/wicketstuff/core/tree/wicket-10.x/modalx-parent)

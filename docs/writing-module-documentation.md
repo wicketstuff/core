@@ -81,4 +81,4 @@ Import `org.wicketstuff:wicketstuff-bom` in your `dependencyManagement` section 
 
 * Put further pages in the same `docs/` folder. They only need `title` in their front matter. Link to them by file name, for example `[Getting started](gettingstarted.md)`.
 * Put images in the same `docs/` folder and reference them relatively: `![Screenshot](screenshot.png)`.
-* Link to anything outside `docs/` (source code, the examples module, a README) with an absolute GitHub URL, such as `https://github.com/wicketstuff/core/tree/wicket-11.x/select2-parent/select2-examples`. Relative links out of `docs/` work on GitHub but not on the website.
+* Link to anything outside `docs/` (source code, the examples module, a README) with an absolute GitHub URL, such as `https://github.com/wicketstuff/core/tree/wicket-10.x/select2-parent/select2-examples`. Relative links out of `docs/` work on GitHub but not on the website.

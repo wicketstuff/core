@@ -309,6 +309,6 @@ HTML:
 Further information:
 * <http://www.html5rocks.com/en/tutorials/canvas/integrating/>
 
-The [`wicket-html5-examples`](https://github.com/wicketstuff/core/tree/master/wicket-html5-parent/wicket-html5-examples) module contains a runnable example application.
+The [`wicket-html5-examples`](https://github.com/wicketstuff/core/tree/wicket-10.x/wicket-html5-parent/wicket-html5-examples) module contains a runnable example application.
 
-Source: [`wicket-html5-parent`](https://github.com/wicketstuff/core/tree/master/wicket-html5-parent)
+Source: [`wicket-html5-parent`](https://github.com/wicketstuff/core/tree/wicket-10.x/wicket-html5-parent)

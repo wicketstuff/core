@@ -37,6 +37,6 @@ The examples are in the `javaee-inject-examples` module. This example project is
 * Maris Orbidans
 * [Peter Major](http://kir-dev.sch.bme.hu)
 
-The [`javaee-inject-examples`](https://github.com/wicketstuff/core/tree/master/javaee-inject-parent/javaee-inject-examples) module contains a runnable example application.
+The [`javaee-inject-examples`](https://github.com/wicketstuff/core/tree/wicket-10.x/javaee-inject-parent/javaee-inject-examples) module contains a runnable example application.
 
-Source: [`javaee-inject-parent`](https://github.com/wicketstuff/core/tree/master/javaee-inject-parent)
+Source: [`javaee-inject-parent`](https://github.com/wicketstuff/core/tree/wicket-10.x/javaee-inject-parent)

@@ -44,6 +44,6 @@ The Kryo serializer is not heavily tested so it may have need for more custom se
 
 Import `org.wicketstuff:wicketstuff-bom` in your `dependencyManagement` section to manage the version.
 
-The [module README](https://github.com/wicketstuff/core/blob/master/serializer-kryo2/README.md) has more details.
+The [module README](https://github.com/wicketstuff/core/blob/wicket-10.x/serializer-kryo2/README.md) has more details.
 
-Source: [`serializer-kryo2`](https://github.com/wicketstuff/core/tree/master/serializer-kryo2)
+Source: [`serializer-kryo2`](https://github.com/wicketstuff/core/tree/wicket-10.x/serializer-kryo2)

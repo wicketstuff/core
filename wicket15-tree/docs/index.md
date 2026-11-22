@@ -58,6 +58,6 @@ add(new TreeTable("tree", treeModel, columns));
 
 ## Tests and example application
 
-The [tests](https://github.com/wicketstuff/core/tree/master/wicket15-tree/src/test/java/org/apache/wicket/extensions/markup/html/tree) render `Tree`, `LabelTree`, `LinkTree` and `TreeTable`, and expand, collapse and select nodes using Ajax. Run [`Start`](https://github.com/wicketstuff/core/blob/master/wicket15-tree/src/test/java/Start.java) from `src/test/java` to try the `TreeTable` example on <http://localhost:8080/>.
+The [tests](https://github.com/wicketstuff/core/tree/wicket-10.x/wicket15-tree/src/test/java/org/apache/wicket/extensions/markup/html/tree) render `Tree`, `LabelTree`, `LinkTree` and `TreeTable`, and expand, collapse and select nodes using Ajax. Run [`Start`](https://github.com/wicketstuff/core/blob/wicket-10.x/wicket15-tree/src/test/java/Start.java) from `src/test/java` to try the `TreeTable` example on <http://localhost:8080/>.
 
-Source: [`wicket15-tree`](https://github.com/wicketstuff/core/tree/master/wicket15-tree)
+Source: [`wicket15-tree`](https://github.com/wicketstuff/core/tree/wicket-10.x/wicket15-tree)

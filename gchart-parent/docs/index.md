@@ -77,6 +77,6 @@ Result:
 
 Dieter Tremel
 
-The [`gchart-examples`](https://github.com/wicketstuff/core/tree/master/gchart-parent/gchart-examples) module contains a runnable example application.
+The [`gchart-examples`](https://github.com/wicketstuff/core/tree/wicket-10.x/gchart-parent/gchart-examples) module contains a runnable example application.
 
-Source: [`gchart-parent`](https://github.com/wicketstuff/core/tree/master/gchart-parent)
+Source: [`gchart-parent`](https://github.com/wicketstuff/core/tree/wicket-10.x/gchart-parent)

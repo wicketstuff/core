@@ -39,6 +39,6 @@ add(new MBeansPanel("example"));
 
 Pedro Santos, pedrosans@gmail.com
 
-The [`mbeanview-examples`](https://github.com/wicketstuff/core/tree/master/mbeanview-parent/mbeanview-examples) module contains a runnable example application.
+The [`mbeanview-examples`](https://github.com/wicketstuff/core/tree/wicket-10.x/mbeanview-parent/mbeanview-examples) module contains a runnable example application.
 
-Source: [`mbeanview-parent`](https://github.com/wicketstuff/core/tree/master/mbeanview-parent)
+Source: [`mbeanview-parent`](https://github.com/wicketstuff/core/tree/wicket-10.x/mbeanview-parent)

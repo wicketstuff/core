@@ -19,4 +19,4 @@ Minify JavaScript resources with Google Closure Compiler.
 
 Import `org.wicketstuff:wicketstuff-bom` in your `dependencyManagement` section to manage the version.
 
-Source: [`closure-compiler`](https://github.com/wicketstuff/core/tree/master/closure-compiler)
+Source: [`closure-compiler`](https://github.com/wicketstuff/core/tree/wicket-10.x/closure-compiler)

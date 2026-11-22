@@ -188,6 +188,6 @@ There is nothing new to explain: just create a QuickView and pass it on to the n
 
 The idea/inspiration to write QuickView came from Igor Vaynberg's article [Repainting only newly-created repeater items via Ajax](http://wicketinaction.com/2008/10/repainting-only-newly-created-repeater-items-via-ajax/).
 
-The [`quickview-examples`](https://github.com/wicketstuff/core/tree/master/quickview-parent/quickview-examples) module contains a runnable example application.
+The [`quickview-examples`](https://github.com/wicketstuff/core/tree/wicket-10.x/quickview-parent/quickview-examples) module contains a runnable example application.
 
-Source: [`quickview-parent`](https://github.com/wicketstuff/core/tree/master/quickview-parent)
+Source: [`quickview-parent`](https://github.com/wicketstuff/core/tree/wicket-10.x/quickview-parent)

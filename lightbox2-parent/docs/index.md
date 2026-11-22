@@ -51,6 +51,6 @@ HTML:
 
 Import `org.wicketstuff:wicketstuff-bom` in your `dependencyManagement` section to manage the version.
 
-The [`lightbox2-examples`](https://github.com/wicketstuff/core/tree/master/lightbox2-parent/lightbox2-examples) module contains a runnable example application.
+The [`lightbox2-examples`](https://github.com/wicketstuff/core/tree/wicket-10.x/lightbox2-parent/lightbox2-examples) module contains a runnable example application.
 
-Source: [`lightbox2-parent`](https://github.com/wicketstuff/core/tree/master/lightbox2-parent)
+Source: [`lightbox2-parent`](https://github.com/wicketstuff/core/tree/wicket-10.x/lightbox2-parent)

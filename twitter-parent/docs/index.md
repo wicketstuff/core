@@ -137,6 +137,6 @@ Apache 2.0.
 
 [Till Freier](https://github.com/tfreier)
 
-The [`twitter-examples`](https://github.com/wicketstuff/core/tree/master/twitter-parent/twitter-examples) module contains a runnable example application.
+The [`twitter-examples`](https://github.com/wicketstuff/core/tree/wicket-10.x/twitter-parent/twitter-examples) module contains a runnable example application.
 
-Source: [`twitter-parent`](https://github.com/wicketstuff/core/tree/master/twitter-parent)
+Source: [`twitter-parent`](https://github.com/wicketstuff/core/tree/wicket-10.x/twitter-parent)

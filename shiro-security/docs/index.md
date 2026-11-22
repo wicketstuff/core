@@ -19,6 +19,6 @@ Authentication and authorization for Wicket with Apache Shiro.
 
 Import `org.wicketstuff:wicketstuff-bom` in your `dependencyManagement` section to manage the version.
 
-The [`wicket-shiro-examples`](https://github.com/wicketstuff/core/tree/master/shiro-security/wicket-shiro-examples) module contains a runnable example application.
+The [`wicket-shiro-examples`](https://github.com/wicketstuff/core/tree/wicket-10.x/shiro-security/wicket-shiro-examples) module contains a runnable example application.
 
-Source: [`shiro-security`](https://github.com/wicketstuff/core/tree/master/shiro-security)
+Source: [`shiro-security`](https://github.com/wicketstuff/core/tree/wicket-10.x/shiro-security)

@@ -19,8 +19,8 @@ A simple web dashboard built from pluggable widgets.
 
 Import `org.wicketstuff:wicketstuff-bom` in your `dependencyManagement` section to manage the version.
 
-The [`dashboard-examples`](https://github.com/wicketstuff/core/tree/master/dashboard-parent/dashboard-examples) module contains a runnable example application.
+The [`dashboard-examples`](https://github.com/wicketstuff/core/tree/wicket-10.x/dashboard-parent/dashboard-examples) module contains a runnable example application.
 
-The [module README](https://github.com/wicketstuff/core/blob/master/dashboard-parent/README.md) has more details.
+The [module README](https://github.com/wicketstuff/core/blob/wicket-10.x/dashboard-parent/README.md) has more details.
 
-Source: [`dashboard-parent`](https://github.com/wicketstuff/core/tree/master/dashboard-parent)
+Source: [`dashboard-parent`](https://github.com/wicketstuff/core/tree/wicket-10.x/dashboard-parent)

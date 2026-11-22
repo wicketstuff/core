@@ -28,6 +28,6 @@ Fast 2 is a complete rewrite of Fast based on JDK 7.
 
 Import `org.wicketstuff:wicketstuff-bom` in your `dependencyManagement` section to manage the version.
 
-The [module README](https://github.com/wicketstuff/core/blob/master/serializer-fast2/README.md) has more details.
+The [module README](https://github.com/wicketstuff/core/blob/wicket-10.x/serializer-fast2/README.md) has more details.
 
-Source: [`serializer-fast2`](https://github.com/wicketstuff/core/tree/master/serializer-fast2)
+Source: [`serializer-fast2`](https://github.com/wicketstuff/core/tree/wicket-10.x/serializer-fast2)

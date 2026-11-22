@@ -19,8 +19,8 @@ Interactive maps with OpenLayers: OpenStreetMap, Bing, WMS and other tile source
 
 Import `org.wicketstuff:wicketstuff-bom` in your `dependencyManagement` section to manage the version.
 
-The [`openlayers3-examples`](https://github.com/wicketstuff/core/tree/master/openlayers3-parent/openlayers3-examples) module contains a runnable example application.
+The [`openlayers3-examples`](https://github.com/wicketstuff/core/tree/wicket-10.x/openlayers3-parent/openlayers3-examples) module contains a runnable example application.
 
-The [module README](https://github.com/wicketstuff/core/blob/master/openlayers3-parent/README.md) has more details.
+The [module README](https://github.com/wicketstuff/core/blob/wicket-10.x/openlayers3-parent/README.md) has more details.
 
-Source: [`openlayers3-parent`](https://github.com/wicketstuff/core/tree/master/openlayers3-parent)
+Source: [`openlayers3-parent`](https://github.com/wicketstuff/core/tree/wicket-10.x/openlayers3-parent)

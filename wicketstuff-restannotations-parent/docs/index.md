@@ -19,6 +19,6 @@ This project provides support to implement REST API/services in much the same wa
 
 Import `org.wicketstuff:wicketstuff-bom` in your `dependencyManagement` section to manage the version.
 
-The [`restannotations-examples`](https://github.com/wicketstuff/core/tree/master/wicketstuff-restannotations-parent/restannotations-examples) module contains a runnable example application.
+The [`restannotations-examples`](https://github.com/wicketstuff/core/tree/wicket-10.x/wicketstuff-restannotations-parent/restannotations-examples) module contains a runnable example application.
 
-Source: [`wicketstuff-restannotations-parent`](https://github.com/wicketstuff/core/tree/master/wicketstuff-restannotations-parent)
+Source: [`wicketstuff-restannotations-parent`](https://github.com/wicketstuff/core/tree/wicket-10.x/wicketstuff-restannotations-parent)

@@ -199,6 +199,6 @@ Copyright (c) 2010 "Cowboy" Ben Alman
 Dual licensed under the MIT and GPL licenses.
 http://benalman.com/about/license/
 
-The [`urlfragment-example`](https://github.com/wicketstuff/core/tree/master/urlfragment-parent/urlfragment-example) module contains a runnable example application.
+The [`urlfragment-example`](https://github.com/wicketstuff/core/tree/wicket-10.x/urlfragment-parent/urlfragment-example) module contains a runnable example application.
 
-Source: [`urlfragment-parent`](https://github.com/wicketstuff/core/tree/master/urlfragment-parent)
+Source: [`urlfragment-parent`](https://github.com/wicketstuff/core/tree/wicket-10.x/urlfragment-parent)

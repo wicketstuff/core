@@ -66,6 +66,6 @@ public class DemoPage extends WebPage implements IRunnableFactory {
 
 Furthermore, it is possible to register specific models with each components that load a specified appearance to each component, depending of the state. This makes it easy to integrate with for example Twitter Bootstrap. An example application is provided that demonstrates such functionality (`async-task-demo`). The components are included in `async-task-impl`.
 
-The [`async-tasks-demo`](https://github.com/wicketstuff/core/tree/master/async-tasks-parent/async-tasks-demo) module contains a runnable example application.
+The [`async-tasks-demo`](https://github.com/wicketstuff/core/tree/wicket-10.x/async-tasks-parent/async-tasks-demo) module contains a runnable example application.
 
-Source: [`async-tasks-parent`](https://github.com/wicketstuff/core/tree/master/async-tasks-parent)
+Source: [`async-tasks-parent`](https://github.com/wicketstuff/core/tree/wicket-10.x/async-tasks-parent)

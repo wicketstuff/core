@@ -19,6 +19,6 @@ Generate sitemap.xml files for search engines.
 
 Import `org.wicketstuff:wicketstuff-bom` in your `dependencyManagement` section to manage the version.
 
-The [`sitemap-xml-examples`](https://github.com/wicketstuff/core/tree/master/sitemap-xml-parent/sitemap-xml-examples) module contains a runnable example application.
+The [`sitemap-xml-examples`](https://github.com/wicketstuff/core/tree/wicket-10.x/sitemap-xml-parent/sitemap-xml-examples) module contains a runnable example application.
 
-Source: [`sitemap-xml-parent`](https://github.com/wicketstuff/core/tree/master/sitemap-xml-parent)
+Source: [`sitemap-xml-parent`](https://github.com/wicketstuff/core/tree/wicket-10.x/sitemap-xml-parent)

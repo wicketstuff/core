@@ -19,4 +19,4 @@ Create components and behaviors from Java lambdas.
 
 Import `org.wicketstuff:wicketstuff-bom` in your `dependencyManagement` section to manage the version.
 
-Source: [`wicketstuff-lambda-components`](https://github.com/wicketstuff/core/tree/master/wicketstuff-lambda-components)
+Source: [`wicketstuff-lambda-components`](https://github.com/wicketstuff/core/tree/wicket-10.x/wicketstuff-lambda-components)

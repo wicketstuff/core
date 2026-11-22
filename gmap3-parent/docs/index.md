@@ -105,6 +105,6 @@ For more examples see the examples project. It covers nearly all methods provide
 
 Just like Wicket itself, GMap3 is licensed under Apache 2.0.
 
-The [`gmap3-examples`](https://github.com/wicketstuff/core/tree/master/gmap3-parent/gmap3-examples) module contains a runnable example application.
+The [`gmap3-examples`](https://github.com/wicketstuff/core/tree/wicket-10.x/gmap3-parent/gmap3-examples) module contains a runnable example application.
 
-Source: [`gmap3-parent`](https://github.com/wicketstuff/core/tree/master/gmap3-parent)
+Source: [`gmap3-parent`](https://github.com/wicketstuff/core/tree/wicket-10.x/gmap3-parent)

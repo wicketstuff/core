@@ -19,6 +19,6 @@ An annotation processor that generates your page mounts at compile time.
 
 Import `org.wicketstuff:wicketstuff-bom` in your `dependencyManagement` section to manage the version.
 
-The [`wicket-mount-example`](https://github.com/wicketstuff/core/tree/master/wicket-mount-parent/wicket-mount-example) module contains a runnable example application.
+The [`wicket-mount-example`](https://github.com/wicketstuff/core/tree/wicket-10.x/wicket-mount-parent/wicket-mount-example) module contains a runnable example application.
 
-Source: [`wicket-mount-parent`](https://github.com/wicketstuff/core/tree/master/wicket-mount-parent)
+Source: [`wicket-mount-parent`](https://github.com/wicketstuff/core/tree/wicket-10.x/wicket-mount-parent)
