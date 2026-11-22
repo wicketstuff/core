@@ -5,5 +5,5 @@ package org.wicketstuff.tinymce6.settings;
  */
 public enum TinyMCE6Plugin
 {
-	accordion, advlist, anchor, autolink, autoresize, autosave, charmap, code, codesample, directionality, emoticons, fullscreen, help, image, importcss, insertdatetime, link, lists, media, nonbreaking, pagebreak, preview, quickbars, save, searchreplace, table, template, visualblocks, visualchars, wordcount;
+	accordion, advlist, anchor, autolink, autoresize, autosave, charmap, code, codesample, directionality, emoticons, fullscreen, help, image, importcss, insertdatetime, link, lists, media, nonbreaking, pagebreak, preview, quickbars, save, searchreplace, table, visualblocks, visualchars, wordcount;
 }
