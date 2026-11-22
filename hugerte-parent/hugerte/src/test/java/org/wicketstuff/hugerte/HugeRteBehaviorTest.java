@@ -23,6 +23,7 @@ import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.RuntimeConfigurationType;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
+import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.core.util.lang.WicketObjects;
 import org.apache.wicket.markup.IMarkupResourceStreamProvider;
 import org.apache.wicket.markup.MarkupException;
@@ -36,7 +37,9 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.request.resource.ByteArrayResource;
 import org.apache.wicket.request.resource.CssResourceReference;
 import org.apache.wicket.request.resource.IResource;
+import org.apache.wicket.request.Url;
 import org.apache.wicket.request.resource.ResourceReference;
+import org.apache.wicket.request.resource.UrlResourceReference;
 import org.apache.wicket.util.resource.IResourceStream;
 import org.apache.wicket.util.resource.StringResourceStream;
 import org.apache.wicket.util.tester.WicketTester;
@@ -142,11 +145,37 @@ class HugeRteBehaviorTest
 	}
 
 	@Test
-	void hashesContentLikeTheScript()
+	void resolvesContextRelativeUrlsOutsideTheFilterPath()
 	{
-		// String.hashCode, ignoring carriage returns, as contentHash in hugerte-wicket.js
-		assertEquals("<p>a</p>\n<p>b</p>".hashCode(),
-			HugeRteBehavior.contentHash("<p>a</p>\r\n<p>b</p>"));
+		tester.getApplication().mountPage("admin/articles/edit", ContextRelativeCssPage.class);
+		tester.startPage(ContextRelativeCssPage.class);
+
+		// Wicket renders the URL relative to the page; it must be written as the absolute path the
+		// browser would resolve it to, not resolved again inside the filter path. (WicketTester's
+		// mock request leaves the filter segment out of the prefix to the context path, so the
+		// exact path differs from a servlet container.)
+		var html = tester.getLastResponseAsString();
+		assertTrue(html.matches("(?s).*\"content_css\":\"/context/[^\"]*css/editor\\.css\".*"), html);
+		assertTrue(!html.contains("\"content_css\":\"/context/servlet/admin/"), html);
+	}
+
+	@Test
+	void marksTheEditorSavedBeforeReplacingComponents()
+	{
+		var page = new EditorPage(HugeRteConfig.defaults());
+		tester.startPage(page);
+		tester.newFormTester("form").setValue("text", "<p>saved</p>");
+
+		tester.executeAjaxEvent("form:save", "click");
+
+		// Wicket's client runs <priority-evaluate> before it replaces any <component>
+		var ajax = tester.getLastResponseAsString();
+		int priority = ajax.indexOf("<priority-evaluate>");
+		assertTrue(priority >= 0, ajax);
+		String priorityScripts = ajax.substring(priority, ajax.indexOf("</priority-evaluate>", priority));
+		assertTrue(priorityScripts.contains(
+			"Wicket.HugeRte.markSaved(\"" + page.text.getMarkupId() + "\");"), ajax);
+		assertTrue(ajax.contains("<component id=\"" + page.text.getMarkupId() + "\""), ajax);
 	}
 
 	@Test
@@ -295,6 +324,17 @@ class HugeRteBehaviorTest
 		}
 	}
 
+	public static class ContextRelativeCssPage extends EditorPage
+	{
+		private static final long serialVersionUID = 1L;
+
+		public ContextRelativeCssPage()
+		{
+			super(HugeRteConfig.defaults().withContentCss(
+				new UrlResourceReference(Url.parse("css/editor.css")).setContextRelative(true)));
+		}
+	}
+
 	public static class DivPage extends WebPage implements IMarkupResourceStreamProvider
 	{
 		private static final long serialVersionUID = 1L;
@@ -332,6 +372,17 @@ class HugeRteBehaviorTest
 			text = new TextArea<>("text", Model.of("<p>hello</p>"));
 			text.add(behavior);
 			form.add(text);
+			form.add(new AjaxButton("save")
+			{
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				protected void onSubmit(AjaxRequestTarget target)
+				{
+					HugeRteBehavior.markSaved(target, text);
+					target.add(text);
+				}
+			});
 			add(new AjaxLink<Void>("saved")
 			{
 				private static final long serialVersionUID = 1L;
@@ -370,7 +421,7 @@ class HugeRteBehaviorTest
 		{
 			return new StringResourceStream("""
 				<html><head></head><body>
-				<form wicket:id="form"><textarea wicket:id="text"></textarea></form>
+				<form wicket:id="form"><textarea wicket:id="text"></textarea><button wicket:id="save">save</button></form>
 				<a wicket:id="refresh">refresh</a>
 				<a wicket:id="focus">focus</a>
 				<a wicket:id="saved">saved</a>

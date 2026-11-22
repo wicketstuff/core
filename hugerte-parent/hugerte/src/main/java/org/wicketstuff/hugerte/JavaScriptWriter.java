@@ -19,7 +19,6 @@ import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.wicket.request.Url;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.resource.ResourceReference;
 
@@ -75,19 +74,19 @@ final class JavaScriptWriter
 			throw new IllegalStateException(
 				"Writing a ResourceReference as a URL needs an active request cycle: " + reference);
 		}
-		Url url = cycle.mapUrlFor(reference, null);
 		var renderer = cycle.getUrlRenderer();
-		if (url.isFull())
+		// Wicket renders the URL as the browser should request it from the current page...
+		URI rendered = URI.create(renderer.renderUrl(cycle.mapUrlFor(reference, null)));
+		if (rendered.isAbsolute() || rendered.getRawPath().startsWith("/"))
 		{
-			return renderer.renderFullUrl(url);
+			return rendered.toASCIIString();
 		}
-		// renderUrl makes the URL relative to the current page; renderFullUrl resolves such a
-		// URL against the page, which gives the absolute address
-		String relative = renderer.renderUrl(url);
-		URI uri = URI.create(renderer.renderFullUrl(Url.parse(relative, url.getCharset())))
-			.normalize();
-		return uri.getRawQuery() == null ? uri.getRawPath()
-			: uri.getRawPath() + "?" + uri.getRawQuery();
+		// ...so resolving it against the page's path, as the browser would, gives the absolute
+		// path, also for URLs outside Wicket's filter path
+		var request = cycle.getRequest();
+		String page = request.getContextPath() + request.getFilterPath() + "/" +
+			renderer.getBaseUrl().toString();
+		return URI.create(page).resolve(rendered).toASCIIString();
 	}
 
 	private static void writeList(StringBuilder out, List<?> list)

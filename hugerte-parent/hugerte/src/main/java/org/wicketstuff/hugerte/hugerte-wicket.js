@@ -18,23 +18,16 @@
 		return;
 	}
 
-	// Ids of editors to focus as soon as they are initialized.
-	const pendingFocus = new Set();
+	// Editors to focus as soon as they are initialized.
+	const pendingFocus = new WeakSet();
+
+	// The content of each editor when the last Wicket Ajax call was sent.
+	const submitted = new WeakMap();
 
 	// Copies the content to the textarea without marking the editor as saved, so isDirty() keeps
 	// meaning "changed since load" for the autosave and save plugins and for application code.
 	function sync(editor) {
 		editor.save({ set_dirty: false });
-	}
-
-	// Java's String.hashCode, ignoring carriage returns; must match HugeRteBehavior.contentHash.
-	function contentHash(content) {
-		const text = content.replace(/\r/g, '');
-		let hash = 0;
-		for (let i = 0; i < text.length; i++) {
-			hash = (Math.imul(31, hash) + text.charCodeAt(i)) | 0;
-		}
-		return hash;
 	}
 
 	function removeEditorsWithin(node) {
@@ -89,7 +82,7 @@
 					}, 0);
 					return;
 				}
-				if (pendingFocus.delete(id)) {
+				if (pendingFocus.delete(editor)) {
 					editor.focus();
 				}
 			});
@@ -141,21 +134,21 @@
 			if (editor.initialized) {
 				editor.focus();
 			} else {
-				pendingFocus.add(id);
+				pendingFocus.add(editor);
 			}
 		},
 
 		/**
 		 * Marks the editor with the given id as saved: it is no longer dirty, and a draft kept by
-		 * the autosave plugin is discarded. With a content hash, only when the editor still holds
-		 * the content that was submitted.
+		 * the autosave plugin is discarded. Runs in the response to the Ajax call that submitted
+		 * the content; when the editor changed since that call was sent, it stays unsaved.
 		 */
-		markSaved: function (id, submittedHash) {
+		markSaved: function (id) {
 			const editor = hugerte.get(id);
 			if (!editor || !editor.initialized) {
 				return;
 			}
-			if (submittedHash !== undefined && contentHash(editor.getContent()) !== submittedHash) {
+			if (submitted.has(editor) && submitted.get(editor) !== editor.getContent()) {
 				return;
 			}
 			editor.setDirty(false);
@@ -169,7 +162,12 @@
 
 	// Wicket serializes form fields after this event, so the textareas must be up to date.
 	Wicket.Event.subscribe(Wicket.Event.Topic.AJAX_CALL_BEFORE, function () {
-		hugerte.get().forEach(sync);
+		hugerte.get().forEach(function (editor) {
+			if (editor.initialized) {
+				sync(editor);
+				submitted.set(editor, editor.getContent());
+			}
+		});
 	});
 
 	// The editor UI lives next to its textarea, so removing the textarea alone leaves it behind.
