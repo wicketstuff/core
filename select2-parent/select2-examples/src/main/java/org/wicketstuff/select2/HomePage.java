@@ -265,7 +265,7 @@ public class HomePage extends WebPage
 	@Override
 	public void renderHead(IHeaderResponse response) {
 		super.renderHead(response);
-		response.render(CssHeaderItem.forReference(new WebjarsCssResourceReference("/bootstrap/current/css/bootstrap.css")));
+		response.render(CssHeaderItem.forReference(new WebjarsCssResourceReference("/bootstrap/current/dist/css/bootstrap.css")));
 		response.render(JavaScriptHeaderItem.forReference(new JavaScriptResourceReference(getClass(), "select2-disabled-support.js"), "select2-disabled-support"));
 	}
 

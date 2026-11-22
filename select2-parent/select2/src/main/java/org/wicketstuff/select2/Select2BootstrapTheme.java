@@ -51,7 +51,7 @@ public class Select2BootstrapTheme implements  ISelect2Theme
 	{
 		if (useBootstrapWebJar)
 		{
-			response.render(CssHeaderItem.forReference(new WebjarsCssResourceReference("/bootstrap/current/css/bootstrap.css")));
+			response.render(CssHeaderItem.forReference(new WebjarsCssResourceReference("/bootstrap/current/dist/css/bootstrap.css")));
 		}
 		response.render(CssHeaderItem.forReference(CSS));
 	}
