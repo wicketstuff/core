@@ -27,16 +27,15 @@ Example and test-only modules are not deployed to Maven Central. List them in th
 
 ## Java version
 
-The Java version is set by the `maven.compiler.source` and `maven.compiler.target` properties in the root `pom.xml`. If your project needs a different version, override these properties in your project's pom, for example:
+The Java version is set by the `maven.compiler.release` property in the root `pom.xml`. If your project needs a different version, override this property in your project's pom, for example:
 
 ```xml
 <properties>
-    <maven.compiler.source>21</maven.compiler.source>
-    <maven.compiler.target>21</maven.compiler.target>
+    <maven.compiler.release>17</maven.compiler.release>
 </properties>
 ```
 
-The build picks the JDK for that version from your Maven toolchains, see [Building Wicket Stuff](building.md).
+The build compiles with `javac --release` for that version, using the JDK that runs Maven, see [Building Wicket Stuff](building.md).
 
 ## Commit messages and pull requests
 
