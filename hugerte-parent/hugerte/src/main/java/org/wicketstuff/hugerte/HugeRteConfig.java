@@ -27,6 +27,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import org.apache.wicket.request.resource.ResourceReference;
+
 /**
  * Immutable configuration of a HugeRTE editor.
  * <p>
@@ -42,31 +44,46 @@ import java.util.Set;
  * 	.with("height", 300);
  * }</pre>
  *
- * Option values may be strings, booleans, numbers, {@link RawJavaScript}, and lists or maps (with
- * string keys) of those. The editor's target element is set by {@link HugeRteBehavior}.
+ * Option values may be strings, booleans, numbers, {@link RawJavaScript}, {@link ResourceReference}
+ * (written as its URL when the editor renders), and lists or maps (with string keys) of those. The editor's target element is set by {@link HugeRteBehavior}.
  *
  * @param plugins
  *            the plugins to load
  * @param toolbar
- *            toolbar rows; empty means the HugeRTE default toolbar
+ *            toolbar rows; empty means the HugeRTE default toolbar, unless {@code toolbarHidden}
+ * @param toolbarHidden
+ *            {@code true} to show no toolbar at all; {@code toolbar} must then be empty
  * @param options
  *            all other options, in insertion order
  */
 public record HugeRteConfig(Set<HugeRtePlugin> plugins, List<String> toolbar,
-	Map<String, Object> options) implements Serializable
+	boolean toolbarHidden, Map<String, Object> options) implements Serializable
 {
-	/** Options that this class or {@link HugeRteBehavior} manage. */
-	private static final Set<String> RESERVED = Set.of("selector", "target", "plugins", "toolbar");
+	/**
+	 * Options that this class or {@link HugeRteBehavior} manage, and {@code inline}, which
+	 * HugeRTE does not allow on the textarea the behavior is attached to.
+	 */
+	private static final Set<String> RESERVED = Set.of("selector", "target", "plugins", "toolbar",
+		"inline");
 
-	private static final HugeRteConfig DEFAULTS = new HugeRteConfig(Set.of(), List.of(), Map.of());
+	private static final HugeRteConfig DEFAULTS = new HugeRteConfig(Set.of(), List.of(), false, Map.of());
 
 	public HugeRteConfig
 	{
 		plugins = plugins.isEmpty() ? Set.of()
 			: Collections.unmodifiableSet(EnumSet.copyOf(plugins));
 		toolbar = List.copyOf(toolbar);
+		if (toolbarHidden && !toolbar.isEmpty())
+		{
+			throw new IllegalArgumentException("A hidden toolbar cannot have rows");
+		}
 		var copy = new LinkedHashMap<String, Object>();
 		options.forEach((name, value) -> copy.put(checkOption(name), normalize(name, value)));
+		if (copy.get("mobile") instanceof Map<?, ?> mobile && mobile.containsKey("inline"))
+		{
+			throw new IllegalArgumentException(
+				"Option 'mobile' cannot set 'inline': inline mode is not supported");
+		}
 		options = Collections.unmodifiableMap(copy);
 	}
 
@@ -87,31 +104,39 @@ public record HugeRteConfig(Set<HugeRtePlugin> plugins, List<String> toolbar,
 		var all = EnumSet.noneOf(HugeRtePlugin.class);
 		all.addAll(this.plugins);
 		all.addAll(Arrays.asList(plugins));
-		return new HugeRteConfig(all, toolbar, options);
+		return new HugeRteConfig(all, toolbar, toolbarHidden, options);
 	}
 
 	/**
 	 * @param rows
 	 *            one string per toolbar row, with button names separated by spaces and groups
 	 *            separated by {@code |}
-	 * @return a copy with the toolbar replaced
+	 * @return a copy with the toolbar replaced; without rows, HugeRTE shows its default toolbar
 	 */
 	public HugeRteConfig withToolbar(String... rows)
 	{
-		return new HugeRteConfig(plugins, List.of(rows), options);
+		return new HugeRteConfig(plugins, List.of(rows), false, options);
+	}
+
+	/**
+	 * @return a copy that shows no toolbar ({@code toolbar: false})
+	 */
+	public HugeRteConfig withoutToolbar()
+	{
+		return new HugeRteConfig(plugins, List.of(), true, options);
 	}
 
 	/**
 	 * @return a copy with the option set to the value, replacing an earlier value
 	 * @throws IllegalArgumentException
 	 *             for a reserved option ({@code selector}, {@code target}, {@code plugins},
-	 *             {@code toolbar}) or an unsupported value type
+	 *             {@code toolbar}, {@code inline}) or an unsupported value type
 	 */
 	public HugeRteConfig with(String option, Object value)
 	{
 		var copy = new LinkedHashMap<>(options);
 		copy.put(option, value);
-		return new HugeRteConfig(plugins, toolbar, copy);
+		return new HugeRteConfig(plugins, toolbar, toolbarHidden, copy);
 	}
 
 	/**
@@ -121,7 +146,7 @@ public record HugeRteConfig(Set<HugeRtePlugin> plugins, List<String> toolbar,
 	{
 		var copy = new LinkedHashMap<>(options);
 		copy.remove(option);
-		return new HugeRteConfig(plugins, toolbar, copy);
+		return new HugeRteConfig(plugins, toolbar, toolbarHidden, copy);
 	}
 
 	/** Shows or hides the menu bar. */
@@ -145,7 +170,9 @@ public record HugeRteConfig(Set<HugeRtePlugin> plugins, List<String> toolbar,
 	/**
 	 * @param contentCss
 	 *            a built-in content style ({@code default}, {@code dark}, {@code document},
-	 *            {@code writer}) or the URL of a style sheet
+	 *            {@code writer}, {@code hugerte-5}, {@code hugerte-5-dark}) or the URL of a style
+	 *            sheet. For several style sheets or {@code false}, use
+	 *            {@code with("content_css", ...)}.
 	 */
 	public HugeRteConfig withContentCss(String contentCss)
 	{
@@ -153,7 +180,17 @@ public record HugeRteConfig(Set<HugeRtePlugin> plugins, List<String> toolbar,
 	}
 
 	/**
-	 * @return the configuration as a JavaScript object literal, without a target element
+	 * @param contentCss
+	 *            a style sheet served by Wicket, for example a {@code CssResourceReference}
+	 */
+	public HugeRteConfig withContentCss(ResourceReference contentCss)
+	{
+		return with("content_css", contentCss);
+	}
+
+	/**
+	 * @return the configuration as a JavaScript object literal, without a target element.
+	 *         {@link ResourceReference} values need an active request cycle.
 	 */
 	public String toJavaScript()
 	{
@@ -162,7 +199,11 @@ public record HugeRteConfig(Set<HugeRtePlugin> plugins, List<String> toolbar,
 		{
 			all.put("plugins", plugins.stream().map(HugeRtePlugin::id).toList());
 		}
-		if (toolbar.size() == 1)
+		if (toolbarHidden)
+		{
+			all.put("toolbar", false);
+		}
+		else if (toolbar.size() == 1)
 		{
 			all.put("toolbar", toolbar.get(0));
 		}
@@ -180,7 +221,7 @@ public record HugeRteConfig(Set<HugeRtePlugin> plugins, List<String> toolbar,
 		if (RESERVED.contains(name))
 		{
 			throw new IllegalArgumentException("Option '" + name +
-				"' is managed by HugeRteConfig or HugeRteBehavior and cannot be set directly");
+				"' cannot be set: use withPlugins or withToolbar; the behavior sets the target, and inline mode is not supported");
 		}
 		return name;
 	}
@@ -205,6 +246,7 @@ public record HugeRteConfig(Set<HugeRtePlugin> plugins, List<String> toolbar,
 			case Double d when Double.isFinite(d) -> d;
 			case Float f when Float.isFinite(f) -> f;
 			case RawJavaScript raw -> raw;
+			case ResourceReference reference -> reference;
 			case Collection<?> collection -> {
 				var list = new ArrayList<Object>(collection.size());
 				collection.forEach(item -> list.add(normalize(name, item)));
