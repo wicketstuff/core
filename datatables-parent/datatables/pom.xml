@@ -59,6 +59,30 @@
 			</exclusions>
 		</dependency>
 		<dependency>
+			<groupId>org.webjars.npm</groupId>
+			<artifactId>datatables.net-scroller-dt</artifactId>
+			<version>2.4.3</version>
+			<exclusions>
+				<!-- only the stylesheet is needed -->
+				<exclusion>
+					<groupId>*</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars.npm</groupId>
+			<artifactId>datatables.net-scroller-bs5</artifactId>
+			<version>2.4.3</version>
+			<exclusions>
+				<!-- only the stylesheet is needed -->
+				<exclusion>
+					<groupId>*</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>bootstrap</artifactId>
 			<optional>true</optional>
@@ -66,6 +90,28 @@
 		<dependency>
 			<groupId>de.agilecoders.wicket</groupId>
 			<artifactId>jquery-selectors</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-tester</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>jakarta.servlet</groupId>
+			<artifactId>jakarta.servlet-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-params</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 </project>
