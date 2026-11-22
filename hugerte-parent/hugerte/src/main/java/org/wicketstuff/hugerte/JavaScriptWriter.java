@@ -15,12 +15,19 @@ package org.wicketstuff.hugerte;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.net.URI;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.request.resource.ResourceReference;
+
 /**
  * Writes configuration values as a JavaScript object literal. Strings are escaped so that the
- * output is safe inside an HTML {@code <script>} element; {@link RawJavaScript} is written as is.
+ * output is safe inside an HTML {@code <script>} element; {@link RawJavaScript} is written as is, and a
+ * {@link ResourceReference} as the string of its URL: an absolute path including the context path,
+ * because HugeRTE resolves some options, such as {@code external_plugins}, against its own script
+ * directory rather than the page.
  */
 final class JavaScriptWriter
 {
@@ -51,11 +58,80 @@ final class JavaScriptWriter
 			case Double d -> out.append(d);
 			case Float f -> out.append(f);
 			case RawJavaScript raw -> out.append(raw.code());
+			case ResourceReference reference -> writeString(out, url(reference));
 			case List<?> list -> writeList(out, list);
 			case Map<?, ?> map -> writeMap(out, map);
 			default -> throw new IllegalArgumentException(
 				"Unsupported configuration value of type " + value.getClass().getName());
 		}
+	}
+
+	private static String url(ResourceReference reference)
+	{
+		var cycle = RequestCycle.get();
+		if (cycle == null)
+		{
+			throw new IllegalStateException(
+				"Writing a ResourceReference as a URL needs an active request cycle: " + reference);
+		}
+		var renderer = cycle.getUrlRenderer();
+		var request = cycle.getRequest();
+		// Wicket renders the URL as the browser should request it from the current page, so
+		// resolving it against the page's path, as the browser would, gives the absolute path, also
+		// for URLs outside Wicket's filter path
+		String root = "/" + request.getContextPath() + "/" + request.getFilterPath() + "/";
+		return resolve(root.replaceAll("/+", "/"), renderer.getBaseUrl().toString(),
+			renderer.renderUrl(cycle.mapUrlFor(reference, null)));
+	}
+
+	/**
+	 * Resolves a URL the way a browser does on the page {@code root + page}.
+	 *
+	 * @param root
+	 *            the absolute path of Wicket's filter, ending with a slash
+	 * @param page
+	 *            the page URL relative to {@code root}
+	 * @param url
+	 *            the URL to resolve
+	 * @return {@code url} unchanged when it is absolute or starts with a slash, otherwise the
+	 *         absolute path it resolves to, with query and fragment
+	 */
+	static String resolve(String root, String page, String url)
+	{
+		URI target;
+		try
+		{
+			target = URI.create(url);
+		}
+		catch (IllegalArgumentException e)
+		{
+			// for example a space in a fragment, which Wicket leaves unencoded
+			return url;
+		}
+		if (target.isAbsolute() || target.getRawAuthority() != null ||
+			target.getRawPath().startsWith("/"))
+		{
+			return url;
+		}
+		URI base;
+		try
+		{
+			base = URI.create(root + page.replaceFirst("^/+", ""));
+		}
+		catch (IllegalArgumentException e)
+		{
+			return url;
+		}
+		if (target.getRawPath().isEmpty())
+		{
+			// java.net.URI drops the last path segment for a query-only reference; a browser
+			// keeps the page path, and also its query for a fragment-only reference
+			String query = target.getRawQuery() != null ? target.getRawQuery()
+				: base.getRawQuery();
+			return base.getRawPath() + (query == null ? "" : "?" + query) +
+				(target.getRawFragment() == null ? "" : "#" + target.getRawFragment());
+		}
+		return base.resolve(target).toASCIIString();
 	}
 
 	private static void writeList(StringBuilder out, List<?> list)

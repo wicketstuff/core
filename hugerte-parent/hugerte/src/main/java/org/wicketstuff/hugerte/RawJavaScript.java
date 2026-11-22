@@ -30,5 +30,9 @@ public record RawJavaScript(String code) implements Serializable
 	public RawJavaScript
 	{
 		Objects.requireNonNull(code, "code");
+		if (code.isBlank())
+		{
+			throw new IllegalArgumentException("code is blank");
+		}
 	}
 }

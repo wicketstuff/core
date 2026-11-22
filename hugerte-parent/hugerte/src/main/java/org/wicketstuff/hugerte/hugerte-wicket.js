@@ -18,6 +18,69 @@
 		return;
 	}
 
+	// Editors to focus as soon as they are initialized.
+	const pendingFocus = new WeakSet();
+
+	// The content each editor had when the Ajax call that sent it went out, until that call
+	// completes.
+	const submitted = new WeakMap();
+
+	// The number of Ajax calls that sent each editor and haven't completed yet.
+	const inFlight = new WeakMap();
+
+	// The editors each Ajax call sent, keyed by the call's attributes.
+	const sentBy = new WeakMap();
+
+	// Whether the element is in what the Ajax call serializes, following Wicket.Ajax.Call.doAjax:
+	// the form (attrs.f), otherwise the component (attrs.c), recursively when attrs.sr is set.
+	function targets(attrs, element) {
+		if (attrs.f) {
+			let form = document.getElementById(attrs.f);
+			if (!form) {
+				return false;
+			}
+			if (form.tagName.toLowerCase() === 'form') {
+				return element.form === form;
+			}
+			// a nested Wicket form renders as a div; Wicket serializes the enclosing form
+			while (form.parentNode && form.tagName.toLowerCase() !== 'form' &&
+				form.tagName.toLowerCase() !== 'body') {
+				form = form.parentNode;
+			}
+			return form.contains(element);
+		}
+		if (attrs.c) {
+			const component = document.getElementById(attrs.c);
+			return !!component &&
+				(component === element || (!!attrs.sr && component.contains(element)));
+		}
+		return false;
+	}
+
+	// Whether the request data, as jQuery is about to send it, contains the parameter: FormData
+	// for a multipart call, the body for a POST, the URL's query for a GET.
+	function sends(settings, name) {
+		if (!name) {
+			return false;
+		}
+		const data = settings.data;
+		if (data instanceof FormData) {
+			return data.has(name);
+		}
+		if (typeof data === 'string') {
+			return new URLSearchParams(data).has(name);
+		}
+		const url = (settings.url || '').split('#')[0];
+		const query = url.indexOf('?');
+		return query >= 0 && new URLSearchParams(url.slice(query + 1)).has(name);
+	}
+
+	// Copies the content to the textarea without marking the editor as saved, so isDirty() keeps
+	// meaning "changed since load" for the autosave and save plugins and for application code.
+	function sync(editor) {
+		editor.save({ set_dirty: false });
+	}
+
 	function removeEditorsWithin(node) {
 		hugerte.get().forEach(function (editor) {
 			const element = editor.getElement();
@@ -25,6 +88,59 @@
 				editor.remove();
 			}
 		});
+	}
+
+	// The textarea is hidden while the editor is active, so it never fires change or blur itself.
+	// Forwarding them lets behaviors such as AjaxFormComponentUpdatingBehavior work unchanged.
+	function forwardEvents(editor, element) {
+		editor.on('change undo redo', function () {
+			sync(editor);
+			element.dispatchEvent(new Event('change', { bubbles: true }));
+		});
+		editor.on('blur', function () {
+			sync(editor);
+			element.dispatchEvent(new Event('blur'));
+		});
+	}
+
+	// A hidden textarea with the required attribute makes the browser refuse a normal form submit
+	// without showing why. Wicket validates required components on the server, so the attribute
+	// is removed while the editor is active. It is restored on detach, which HugeRTE fires after
+	// putting back the attributes it saved when the editor was created.
+	function suspendRequired(editor, element) {
+		if (!element.hasAttribute('required')) {
+			return;
+		}
+		element.removeAttribute('required');
+		editor.on('detach', function () {
+			element.setAttribute('required', 'required');
+		});
+	}
+
+	// Installs the integration, then calls the setup callback of the configuration, if any.
+	function wrapSetup(element, setup) {
+		return function (editor) {
+			suspendRequired(editor, element);
+			forwardEvents(editor, element);
+			editor.on('init', function () {
+				// The element may have been replaced by Ajax while the editor was loading. HugeRTE
+				// continues its own initialization after this event, so remove the editor later.
+				if (!element.isConnected) {
+					setTimeout(function () {
+						if (!editor.removed) {
+							editor.remove();
+						}
+					}, 0);
+					return;
+				}
+				if (pendingFocus.delete(editor)) {
+					editor.focus();
+				}
+			});
+			if (setup) {
+				setup.call(this, editor);
+			}
+		};
 	}
 
 	Wicket.HugeRte = {
@@ -41,14 +157,95 @@
 			if (previous) {
 				previous.remove();
 			}
-			config.target = element;
-			hugerte.init(config);
+			const options = Object.assign({}, config);
+			options.target = element;
+			options.setup = wrapSetup(element, config.setup);
+			// On phones and tablets HugeRTE applies the mobile options over the others, so they
+			// need the same setup, and must not make a disabled component editable.
+			if (options.mobile) {
+				options.mobile = Object.assign({}, options.mobile);
+				options.mobile.setup = wrapSetup(element, options.mobile.setup || config.setup);
+				if (options.readonly === true) {
+					options.mobile.readonly = true;
+				}
+			}
+			hugerte.init(options);
+		},
+
+		/**
+		 * Focuses the editor with the given id, or does so once it has been initialized.
+		 */
+		focus: function (id) {
+			const editor = hugerte.get(id);
+			if (!editor) {
+				return;
+			}
+			// Stop Wicket from moving the focus back to the element that triggered the Ajax call.
+			Wicket.Focus.setFocusOnId(null);
+			if (editor.initialized) {
+				editor.focus();
+			} else {
+				pendingFocus.add(editor);
+			}
+		},
+
+		/**
+		 * Marks the editor with the given id as saved: it is no longer dirty, and a draft kept by
+		 * the autosave plugin is discarded. Only acts in the response to the Ajax call that sent
+		 * the editor, and only when no other call that sent it is underway and the editor still
+		 * holds the content that call sent.
+		 */
+		markSaved: function (id) {
+			const editor = hugerte.get(id);
+			if (!editor || !editor.initialized || inFlight.get(editor) !== 1 ||
+				submitted.get(editor) !== editor.getContent()) {
+				return;
+			}
+			editor.setDirty(false);
+			if (editor.plugins.autosave) {
+				editor.plugins.autosave.removeDraft();
+			}
+			// Lets the save and restore buttons update their state.
+			editor.nodeChanged();
 		}
 	};
 
 	// Wicket serializes form fields after this event, so the textareas must be up to date.
 	Wicket.Event.subscribe(Wicket.Event.Topic.AJAX_CALL_BEFORE, function () {
-		hugerte.triggerSave();
+		hugerte.get().forEach(function (editor) {
+			if (editor.initialized) {
+				sync(editor);
+			}
+		});
+	});
+
+	// Only calls that actually send an editor take a snapshot of it, so a timer, a call stopped
+	// by a precondition or a call that serializes something else can't make markSaved accept
+	// content the server never received. Runs after preconditions and serialization.
+	Wicket.Event.subscribe(Wicket.Event.Topic.AJAX_CALL_BEFORE_SEND,
+		function (jqEvent, attrs, jqXHR, settings) {
+			const sent = hugerte.get().filter(function (editor) {
+				const element = editor.getElement();
+				return editor.initialized && element && targets(attrs, element) &&
+					sends(settings, element.name);
+			});
+			sent.forEach(function (editor) {
+				submitted.set(editor, editor.getContent());
+				inFlight.set(editor, (inFlight.get(editor) || 0) + 1);
+			});
+			if (sent.length > 0) {
+				sentBy.set(attrs, sent);
+			}
+		});
+
+	Wicket.Event.subscribe(Wicket.Event.Topic.AJAX_CALL_COMPLETE, function (jqEvent, attrs) {
+		// A completed call can't vouch for what a later call stores, for example after it failed
+		// validation, so its snapshot expires.
+		(sentBy.get(attrs) || []).forEach(function (editor) {
+			inFlight.set(editor, Math.max(0, (inFlight.get(editor) || 0) - 1));
+			submitted.delete(editor);
+		});
+		sentBy.delete(attrs);
 	});
 
 	// The editor UI lives next to its textarea, so removing the textarea alone leaves it behind.

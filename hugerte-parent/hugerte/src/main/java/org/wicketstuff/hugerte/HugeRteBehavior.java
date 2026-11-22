@@ -16,7 +16,10 @@ package org.wicketstuff.hugerte;
 import java.util.Objects;
 
 import org.apache.wicket.Component;
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.Behavior;
+import org.apache.wicket.markup.ComponentTag;
+import org.apache.wicket.markup.MarkupException;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
@@ -24,8 +27,8 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
 /**
- * Turns a {@code <textarea>} (or, with the {@code inline} option, another element) into a HugeRTE
- * editor.
+ * Turns a {@code <textarea>} into a HugeRTE editor. The textarea stays the form component: Wicket
+ * reads the submitted HTML from it as usual.
  *
  * <pre>{@code
  * TextArea<String> text = new TextArea<>("text", model);
@@ -38,6 +41,8 @@ import org.apache.wicket.model.Model;
  * Ajax submits see the edited text.</li>
  * <li>When Wicket Ajax replaces or removes the component, its editor is removed, and a re-rendered
  * component gets a fresh editor.</li>
+ * <li>A component that is disabled in the hierarchy gets a read-only editor, and a {@code required}
+ * component keeps its server-side validation without blocking the browser's form submit.</li>
  * </ul>
  * One behavior instance can be added to several components.
  */
@@ -90,7 +95,57 @@ public class HugeRteBehavior extends Behavior
 	protected String getInitScript(Component component)
 	{
 		return "Wicket.HugeRte.init(" + JavaScriptWriter.write(component.getMarkupId()) + "," +
-			getConfig().toJavaScript() + ");";
+			getConfig(component).toJavaScript() + ");";
+	}
+
+	/**
+	 * @return the configuration for the component: the configured one, made read-only when the
+	 *         component is disabled in its hierarchy
+	 */
+	protected HugeRteConfig getConfig(Component component)
+	{
+		var config = getConfig();
+		return component.isEnabledInHierarchy() ? config : config.withReadonly(true);
+	}
+
+	/**
+	 * Marks the component's editor as saved: {@code isDirty()} becomes {@code false} and a draft
+	 * kept by the autosave plugin is discarded. Call it after the content has been stored, so the
+	 * editor stops warning about unsaved changes.
+	 * <p>
+	 * Call it in the Ajax request that sent the editor, such as {@code onSubmit} of an
+	 * {@code AjaxButton} or {@code onUpdate} of an {@code AjaxFormComponentUpdatingBehavior}. The
+	 * editor is only marked as saved if it still holds the content that request sent; edits made
+	 * while the request was underway stay unsaved, and in a request that didn't send the editor
+	 * nothing happens. The script runs before Wicket replaces components, so it also works when
+	 * the response re-renders the editor.
+	 */
+	public static void markSaved(AjaxRequestTarget target, Component component)
+	{
+		// the glue script is missing when no editor has been rendered on the page yet
+		target.prependJavaScript("if (Wicket.HugeRte) { Wicket.HugeRte.markSaved(" +
+			JavaScriptWriter.write(component.getMarkupId()) + "); }");
+	}
+
+	@Override
+	public void onComponentTag(Component component, ComponentTag tag)
+	{
+		super.onComponentTag(component, tag);
+		if (!"textarea".equalsIgnoreCase(tag.getName()))
+		{
+			throw new MarkupException("HugeRteBehavior only supports <textarea>, but component '" +
+				component.getId() + "' is attached to <" + tag.getName() + ">");
+		}
+	}
+
+	/**
+	 * Moves the keyboard focus into the component's editor once it is ready. Use it instead of
+	 * {@link AjaxRequestTarget#focusComponent(Component)}, which focuses the hidden textarea.
+	 */
+	public static void focus(AjaxRequestTarget target, Component component)
+	{
+		target.appendJavaScript("if (Wicket.HugeRte) { Wicket.HugeRte.focus(" +
+			JavaScriptWriter.write(component.getMarkupId()) + "); }");
 	}
 
 	/**
