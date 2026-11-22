@@ -9,9 +9,10 @@ import static org.easymock.EasyMock.reset;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.lang.reflect.Method;
+
 import org.apache.shiro.subject.Subject;
-import org.apache.shiro.subject.support.SubjectThreadState;
-import org.apache.shiro.util.ThreadState;
+import org.apache.shiro.subject.support.SubjectCallable;
 import org.apache.wicket.Page;
 import org.apache.wicket.authorization.Action;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -23,6 +24,10 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.jupiter.api.extension.InvocationInterceptor;
+import org.junit.jupiter.api.extension.ReflectiveInvocationContext;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.wicketstuff.shiro.ShiroAction;
 import org.wicketstuff.shiro.ShiroConstraint;
 
@@ -38,8 +43,6 @@ public class AnnotationsShiroAuthorizationStrategyTest{
     private static final Action RENDER = new Action(Action.RENDER);
     private static final Action ENABLE = new Action(Action.ENABLE);
 
-    private ThreadState threadSubject;
-
     private Subject subject;
 
     private Boolean isLoggedIn;
@@ -51,6 +54,31 @@ public class AnnotationsShiroAuthorizationStrategyTest{
     private AnnotationsShiroAuthorizationStrategy underTest;
 
     private static WicketTester tester;
+
+    /**
+     * Runs each test method with the mock subject bound, the way Shiro's filter binds the subject
+     * of a request. {@link SubjectCallable} binds it with a {@code ScopedValue} on JDK 25 and later,
+     * where {@code SubjectThreadState} is no longer supported, and with the {@code ThreadContext}
+     * on older JDKs.
+     */
+    @RegisterExtension
+    final InvocationInterceptor runAsSubject = new InvocationInterceptor() {
+        @Override
+        public void interceptTestMethod(Invocation<Void> invocation,
+                ReflectiveInvocationContext<Method> invocationContext,
+                ExtensionContext extensionContext) throws Throwable {
+            new SubjectCallable<Void>(subject, () -> {
+                try {
+                    invocation.proceed();
+                } catch (Exception | Error e) {
+                    throw e;
+                } catch (Throwable t) {
+                    throw new RuntimeException(t);
+                }
+                return null;
+            }).call();
+        }
+    };
 
     @BeforeAll
     public static void beforeClass() {
@@ -76,19 +104,13 @@ public class AnnotationsShiroAuthorizationStrategyTest{
 
         underTest = new AnnotationsShiroAuthorizationStrategy();
 
-        // create and bind subject to ThreadLocal
-        threadSubject = new SubjectThreadState(subject = createMockSubject());
-        threadSubject.bind();
+        // the subject is bound to the test method by runAsSubject
+        subject = createMockSubject();
     }
 
     @AfterEach
-    public void clearThreadSubject() {
+    public void resetSubject() {
         reset(subject);
-        // remove subject after test is finished
-        if (threadSubject != null) {
-            threadSubject.clear();
-            threadSubject = null;
-        }
     }
 
     // ======================= Tests for instantiation
