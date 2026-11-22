@@ -6,7 +6,8 @@ import org.apache.wicket.markup.html.WebPage
 import org.apache.wicket.markup.html.basic.Label
 import org.apache.wicket.markup.html.list.ListItem
 import org.apache.wicket.util.tester.WicketTester
-import org.scalatest.{MustMatchers, WordSpec}
+import org.scalatest.matchers.must.Matchers
+import org.scalatest.wordspec.AnyWordSpec
 import org.wicketstuff.scala.markup.html.basic.ScalaLabel
 import org.wicketstuff.scala.markup.html.form.{ScalaForm, ScalaTextField}
 import org.wicketstuff.scala.markup.html.link.ScalaLink
@@ -19,8 +20,8 @@ import org.wicketstuff.scala.model.Fodel
  * @author Antony Stubbs
  */
 class ComponentSpec
-  extends WordSpec
-  with MustMatchers {
+  extends AnyWordSpec
+  with Matchers {
 
   val tony = "Tony"
   val karyn = "Karyn"
