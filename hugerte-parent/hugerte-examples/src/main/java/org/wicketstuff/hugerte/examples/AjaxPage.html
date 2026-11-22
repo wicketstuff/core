@@ -5,17 +5,25 @@
 	<h2>Ajax</h2>
 	<p><em>Save</em> is a plain <code>AjaxButton</code>: the integration writes the editor content
 		back to the textarea before every Wicket Ajax call.</p>
+	<p>The editor is required: empty it and save to see Wicket's validation message.
+		<em>Submit</em> posts the form without Ajax.</p>
 	<form wicket:id="form">
+		<div wicket:id="feedback"></div>
 		<textarea wicket:id="text"></textarea>
-		<p><button wicket:id="save">Save</button></p>
+		<p><button wicket:id="save">Save</button> <button wicket:id="submit">Submit</button></p>
 	</form>
-	<p><a wicket:id="rerender">Re-render the form with Ajax</a></p>
+	<p><a wicket:id="rerender">Re-render the form with Ajax</a> ·
+		<a wicket:id="focus">Focus the editor</a> ·
+		<a wicket:id="enable">Disable or enable the editor</a></p>
 	<h3>Saved HTML</h3>
 	<div class="saved" wicket:id="saved"></div>
-	<h3>Show and hide</h3>
-	<p><a wicket:id="toggle">Show or hide a second editor</a></p>
+	<h3>Update on change, show and hide</h3>
+	<p>The second editor has no toolbar and an <code>AjaxFormComponentUpdatingBehavior("change")</code>
+		that updates the HTML below it.</p>
+	<p><a wicket:id="toggle">Show or hide the second editor</a></p>
 	<div wicket:id="toggled">
 		<textarea wicket:id="second"></textarea>
+		<div class="saved" wicket:id="live"></div>
 	</div>
 </wicket:extend>
 </body>

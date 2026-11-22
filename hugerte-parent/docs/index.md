@@ -19,39 +19,9 @@ WYSIWYG rich-text editing with [HugeRTE](https://hugerte.org), the MIT-licensed 
 
 Import `org.wicketstuff:wicketstuff-bom` in your `dependencyManagement` section to manage the version.
 
-## Usage
+## Application setup
 
-Add a `HugeRteBehavior` to a `TextArea`:
-
-```java
-TextArea<String> text = new TextArea<>("text", model);
-text.add(new HugeRteBehavior(HugeRteConfig.defaults()
-    .withPlugins(HugeRtePlugin.LISTS, HugeRtePlugin.LINK, HugeRtePlugin.TABLE)
-    .withToolbar("undo redo | bold italic | bullist numlist | link table")
-    .withMenubar(false)
-    .with("height", 400)));
-```
-
-`HugeRteConfig` is an immutable record. Plugins and toolbar rows have their own methods; every other [HugeRTE option](https://hugerte.org) is set with `with(name, value)`. Values can be strings, booleans, numbers, lists and maps of those, and `RawJavaScript` for options that take a function:
-
-```java
-config.with("setup", new RawJavaScript("function (editor) { editor.on('init', () => console.log('ready')); }"));
-```
-
-Strings are escaped; `RawJavaScript` is written as is, so never build it from user input. To change the configuration per request, pass an `IModel<HugeRteConfig>` to the behavior.
-
-HugeRTE shows a "Powered by HugeRTE" link in the status bar. Its MIT licence doesn't require the link; hide it with `with("branding", false)`.
-
-## Ajax
-
-No special buttons or links are needed:
-
-- Before every Wicket Ajax call the editors write their content back to their textareas, so an ordinary `AjaxButton` or `AjaxFormComponentUpdatingBehavior` submits the edited text.
-- When Wicket Ajax replaces or removes a component, its editor is removed; a re-rendered component gets a new editor.
-
-## Content Security Policy
-
-HugeRTE's scripts load under Wicket's strict Content Security Policy, but its style sheets and style attributes do not. Add what it needs with:
+Add HugeRTE's Content Security Policy rules in your `WebApplication.init()` method:
 
 ```java
 @Override
@@ -62,23 +32,51 @@ protected void init()
 }
 ```
 
-This adds `style-src 'self'` (the skin style sheets), `style-src-attr 'unsafe-inline'` (style attributes in the editor and its content) and `img-src data: blob:` (pasted images). Script sources are not changed.
+The module installs `wicket-webjars`, which serves the HugeRTE scripts, after your `init()` when the application hasn't installed it itself. Call `WicketWebjars.install(this, settings)` in `init()` if you need your own webjars settings.
 
-## Migrating from wicketstuff-tinymce6
+## Usage
 
-This is a new integration, not a renamed copy of `wicketstuff-tinymce6`:
+Add a `HugeRteBehavior` to a `TextArea`. The textarea stays the form component: Wicket reads, converts and validates the submitted HTML as for any other `TextArea`.
 
-| wicketstuff-tinymce6 | wicketstuff-hugerte |
-|---|---|
-| `TinyMceBehavior` | `HugeRteBehavior` |
-| `TinyMCESettings` with setters | `HugeRteConfig` record with `with...` methods |
-| `TinyMCE6Plugin.lists` | `HugeRtePlugin.LISTS` |
-| `Toolbar` and the `Button` enum | `withToolbar("bold italic | ...")` |
-| `addCustomSetting("name: value")` | `with("name", value)` |
-| `TinyMceAjaxButton`, `TinyMceAjaxSubmitLink` | a plain `AjaxButton` or `AjaxSubmitLink` |
-| `TinyMCESettings.Language` | `with("language", "nl").with("language_url", url)` |
+```java
+TextArea<String> text = new TextArea<>("text", model);
+text.add(new HugeRteBehavior(HugeRteConfig.defaults()
+    .withPlugins(HugeRtePlugin.LISTS, HugeRtePlugin.LINK, HugeRtePlugin.TABLE)
+    .withToolbar("undo redo | bold italic | bullist numlist | link table")
+    .withMenubar(false)
+    .with("height", 400)));
+```
 
-HugeRTE renamed the JavaScript global from `tinymce` to `hugerte`, so your own JavaScript must use `hugerte.*`. HugeRTE also includes the TinyMCE 7.0 core changes: `sandbox_iframes`, `convert_unsafe_embeds` and `highlight_on_focus` default to `true`.
+`HugeRteConfig` is an immutable record. Plugins and toolbar rows have typed methods; every other [HugeRTE option](https://hugerte.org) is set with `with(name, value)`.
+
+HugeRTE shows a "Powered by HugeRTE" link in the status bar by default. Its MIT licence does not require the link; hide it with `with("branding", false)`.
+
+## What the integration does
+
+- **The textarea stays the form component.** Wicket reads, converts and validates the submitted HTML as for any other `TextArea`. Only `<textarea>` is supported: other tags fail with a `MarkupException`, and HugeRTE's inline mode isn't available.
+- **The editor follows component state.** A component that is disabled in its hierarchy gets a read-only editor, also on phones and tablets. `setRequired(true)` is validated by Wicket on the server; the browser's own `required` check is suspended while the editor is active, because on the hidden textarea it would block the submit without telling the user why.
+- **Ajax works with ordinary components.** Before every Wicket Ajax call the editors copy their content to their textareas, so a plain `AjaxButton` or `AjaxSubmitLink` submits the edited text. The editor's `change`, `undo`, `redo` and `blur` reach the textarea, so `AjaxFormComponentUpdatingBehavior` and `OnChangeAjaxBehavior` work. See [Save editor content with Ajax](ajax.md).
+- **Re-rendering and hiding clean up.** When Wicket Ajax replaces or removes a component, its editor is removed; a re-rendered component gets a new editor with the model value.
+- **Unsaved changes are tracked.** Copying content to the textarea doesn't mark the editor as saved, so `isDirty()` and the autosave and save plugins keep working. `HugeRteBehavior.markSaved` marks it as saved, but only for the content the current request sent: edits made while the request was underway, or content that never reached the model, stay unsaved.
+- **The server can focus the editor.** `HugeRteBehavior.focus` puts the cursor in the editor; `AjaxRequestTarget.focusComponent` would focus the hidden textarea.
+- **Wicket resources work as options.** A `ResourceReference`, such as a style sheet, a language pack, an upload endpoint or a plugin, is written as an absolute URL that includes the context path. See [Use a language pack](language-packs.md) and [Use JavaScript callbacks with RawJavaScript](javascript-callbacks.md).
+- **The configuration is safe to render.** `HugeRteConfig` is an immutable, serializable record. Values are validated and escaped, so they can't break out of the page's script element; callbacks go through `RawJavaScript`.
+- **It works under Wicket's strict Content Security Policy.** `HugeRteCsp.allow` adds only what HugeRTE's styles need and leaves `script-src` alone. See [Allow HugeRTE under Wicket's Content Security Policy](csp.md).
+- **No extra setup.** The HugeRTE scripts are served by wicket-webjars, which the module installs when the application hasn't.
+
+## Sanitize the submitted HTML
+
+The editor submits HTML. HugeRTE cleans pasted content in the browser, but anyone can post arbitrary HTML to your form, so treat the model value as untrusted. Before you render it with `setEscapeModelStrings(false)` or store it for display elsewhere, clean it on the server with an allowlist sanitizer such as the OWASP Java HTML Sanitizer or jsoup's `Safelist`.
+
+## Guides and reference
+
+- [Allow HugeRTE under Wicket's Content Security Policy](csp.md)
+- [Save editor content with Ajax](ajax.md)
+- [Use JavaScript callbacks with RawJavaScript](javascript-callbacks.md)
+- [Change the configuration per request](dynamic-config.md)
+- [Use a language pack](language-packs.md)
+- [Migrate from wicketstuff-tinymce6](migrating-from-tinymce6.md)
+- [Reference](reference.md)
 
 ## Examples
 

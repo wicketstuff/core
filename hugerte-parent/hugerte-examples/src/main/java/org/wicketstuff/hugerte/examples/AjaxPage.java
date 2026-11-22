@@ -14,12 +14,15 @@
 package org.wicketstuff.hugerte.examples;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextArea;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
 import org.wicketstuff.hugerte.HugeRteBehavior;
 import org.wicketstuff.hugerte.HugeRteConfig;
@@ -41,9 +44,15 @@ public class AjaxPage extends BasePage
 		form.setOutputMarkupId(true);
 		add(form);
 
+		var feedback = new FeedbackPanel("feedback");
+		feedback.setOutputMarkupId(true);
+		form.add(feedback);
+
 		var editor = new TextArea<>("text", text);
+		editor.setRequired(true);
+		editor.setLabel(Model.of("Text"));
 		editor.add(new HugeRteBehavior(HugeRteConfig.defaults()
-			.withPlugins(HugeRtePlugin.LISTS, HugeRtePlugin.LINK)
+			.withPlugins(HugeRtePlugin.LISTS, HugeRtePlugin.LINK, HugeRtePlugin.AUTOSAVE)
 			.withToolbar("undo redo | bold italic | bullist numlist | link")
 			.withMenubar(false)
 			.with("height", 250)));
@@ -61,7 +70,48 @@ public class AjaxPage extends BasePage
 			protected void onSubmit(AjaxRequestTarget target)
 			{
 				saved.setObject(text.getObject());
-				target.add(output);
+				HugeRteBehavior.markSaved(target, editor);
+				target.add(output, feedback);
+			}
+
+			@Override
+			protected void onError(AjaxRequestTarget target)
+			{
+				target.add(feedback);
+			}
+		});
+
+		form.add(new Button("submit")
+		{
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void onSubmit()
+			{
+				saved.setObject(text.getObject());
+			}
+		});
+
+		add(new AjaxLink<Void>("focus")
+		{
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void onClick(AjaxRequestTarget target)
+			{
+				HugeRteBehavior.focus(target, editor);
+			}
+		});
+
+		add(new AjaxLink<Void>("enable")
+		{
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void onClick(AjaxRequestTarget target)
+			{
+				editor.setEnabled(!editor.isEnabled());
+				target.add(form);
 			}
 		});
 
@@ -76,10 +126,29 @@ public class AjaxPage extends BasePage
 			}
 		});
 
+		var second = Model.of("<p>A second editor. Change it and leave it.</p>");
+		var live = new Label("live", second);
+		live.setOutputMarkupId(true);
+
 		var toggled = new WebMarkupContainer("toggled");
 		toggled.setOutputMarkupPlaceholderTag(true);
-		toggled.add(new TextArea<>("second", Model.of("<p>A second editor.</p>"))
-			.add(new HugeRteBehavior(HugeRteConfig.defaults().withMenubar(false))));
+		var secondEditor = new TextArea<>("second", second);
+		secondEditor.add(new HugeRteBehavior(HugeRteConfig.defaults()
+			.withMenubar(false)
+			.withoutToolbar()
+			.with("height", 200)));
+		secondEditor.add(new AjaxFormComponentUpdatingBehavior("change")
+		{
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void onUpdate(AjaxRequestTarget target)
+			{
+				target.add(live);
+			}
+		});
+		toggled.add(secondEditor);
+		toggled.add(live);
 		add(toggled);
 
 		add(new AjaxLink<Void>("toggle")
