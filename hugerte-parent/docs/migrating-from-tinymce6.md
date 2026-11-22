@@ -15,7 +15,7 @@ Replace `wicketstuff-tinymce6` with `wicketstuff-hugerte` in your `pom.xml`:
 </dependency>
 ```
 
-Keep `WicketWebjars.install(this)` in your `WebApplication.init()` method; both modules load the editor from a webjar. Update imports from `org.wicketstuff.tinymce6` (and its `.ajax` and `.settings` subpackages) to `org.wicketstuff.hugerte`.
+Both modules load the editor from a webjar. `wicketstuff-hugerte` installs `wicket-webjars` itself when your application doesn't, so `WicketWebjars.install(this)` in `init()` is optional. Update imports from `org.wicketstuff.tinymce6` (and its `.ajax` and `.settings` subpackages) to `org.wicketstuff.hugerte`.
 
 `wicketstuff-hugerte` has no `TinyMceInitializer` or `TinyMceRequestMapper`; all editor assets are served through `wicket-webjars`.
 

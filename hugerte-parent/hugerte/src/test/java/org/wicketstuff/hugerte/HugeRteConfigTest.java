@@ -55,6 +55,18 @@ class HugeRteConfigTest
 	}
 
 	@Test
+	void hidesTheToolbar()
+	{
+		var hidden = HugeRteConfig.defaults().withToolbar("bold").withoutToolbar();
+
+		assertEquals("{\"toolbar\":false}", hidden.toJavaScript());
+		assertEquals("{\"toolbar\":\"italic\"}", hidden.withToolbar("italic").toJavaScript());
+		assertEquals("{}", hidden.withToolbar().toJavaScript());
+		assertThrows(IllegalArgumentException.class,
+			() -> new HugeRteConfig(Set.of(), List.of("bold"), true, Map.of()));
+	}
+
+	@Test
 	void withersReturnCopies()
 	{
 		var base = HugeRteConfig.defaults().with("height", 300);

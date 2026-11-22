@@ -27,6 +27,19 @@
 		});
 	}
 
+	// The textarea is hidden while the editor is active, so it never fires change or blur itself.
+	// Forwarding them lets behaviors such as AjaxFormComponentUpdatingBehavior work unchanged.
+	function forwardEvents(editor, element) {
+		editor.on('change', function () {
+			editor.save();
+			element.dispatchEvent(new Event('change', { bubbles: true }));
+		});
+		editor.on('blur', function () {
+			editor.save();
+			element.dispatchEvent(new Event('blur'));
+		});
+	}
+
 	Wicket.HugeRte = {
 		/**
 		 * Creates the editor for the element with the given id, replacing an editor that a
@@ -42,6 +55,13 @@
 				previous.remove();
 			}
 			config.target = element;
+			const setup = config.setup;
+			config.setup = function (editor) {
+				forwardEvents(editor, element);
+				if (setup) {
+					setup.call(this, editor);
+				}
+			};
 			hugerte.init(config);
 		}
 	};

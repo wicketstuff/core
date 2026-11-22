@@ -5,7 +5,6 @@ title: Allow HugeRTE under Wicket's Content Security Policy
 Call `HugeRteCsp.allow` in your application's `init()` method to keep Wicket's strict Content Security Policy enabled while allowing HugeRTE to render its UI and handle pasted images.
 
 ```java
-import de.agilecoders.wicket.webjars.WicketWebjars;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.wicketstuff.hugerte.HugeRteCsp;
 
@@ -15,7 +14,6 @@ public class MyApplication extends WebApplication
     protected void init()
     {
         super.init();
-        WicketWebjars.install(this);
         HugeRteCsp.allow(getCspSettings().blocking());
     }
 }

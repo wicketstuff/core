@@ -14,6 +14,7 @@
 package org.wicketstuff.hugerte.examples;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -76,10 +77,29 @@ public class AjaxPage extends BasePage
 			}
 		});
 
+		var second = Model.of("<p>A second editor. Change it and leave it.</p>");
+		var live = new Label("live", second);
+		live.setOutputMarkupId(true);
+
 		var toggled = new WebMarkupContainer("toggled");
 		toggled.setOutputMarkupPlaceholderTag(true);
-		toggled.add(new TextArea<>("second", Model.of("<p>A second editor.</p>"))
-			.add(new HugeRteBehavior(HugeRteConfig.defaults().withMenubar(false))));
+		var secondEditor = new TextArea<>("second", second);
+		secondEditor.add(new HugeRteBehavior(HugeRteConfig.defaults()
+			.withMenubar(false)
+			.withoutToolbar()
+			.with("height", 200)));
+		secondEditor.add(new AjaxFormComponentUpdatingBehavior("change")
+		{
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void onUpdate(AjaxRequestTarget target)
+			{
+				target.add(live);
+			}
+		});
+		toggled.add(secondEditor);
+		toggled.add(live);
 		add(toggled);
 
 		add(new AjaxLink<Void>("toggle")
