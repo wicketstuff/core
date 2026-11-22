@@ -217,45 +217,6 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>org.webjars.npm</groupId>
-			<artifactId>datatables.net-bs</artifactId>
-			<version>${datatables.version}</version>
-			<scope>test</scope>
-			<exclusions>
-				<!-- only the stylesheet is needed -->
-				<exclusion>
-					<groupId>*</groupId>
-					<artifactId>*</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.webjars.npm</groupId>
-			<artifactId>datatables.net-select-bs</artifactId>
-			<version>${datatables-select.version}</version>
-			<scope>test</scope>
-			<exclusions>
-				<!-- only the stylesheet is needed -->
-				<exclusion>
-					<groupId>*</groupId>
-					<artifactId>*</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.webjars.npm</groupId>
-			<artifactId>datatables.net-scroller-bs</artifactId>
-			<version>${datatables-scroller.version}</version>
-			<scope>test</scope>
-			<exclusions>
-				<!-- only the stylesheet is needed -->
-				<exclusion>
-					<groupId>*</groupId>
-					<artifactId>*</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>bootstrap</artifactId>
 			<optional>true</optional>

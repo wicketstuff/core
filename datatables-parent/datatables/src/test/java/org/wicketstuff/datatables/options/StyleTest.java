@@ -50,13 +50,12 @@ class StyleTest
 	}
 
 	/**
-	 * The webjars of the Foundation, jQuery UI and Bootstrap 3 styles are only test dependencies;
+	 * The webjars of the Foundation and jQuery UI styles are only test dependencies;
 	 * applications using those styles add them themselves.
 	 */
 	@ParameterizedTest
 	@CsvSource({
 		"dataTables, scroller", "dataTables, select",
-		"bootstrap, dataTables", "bootstrap, scroller", "bootstrap, select",
 		"bootstrap5, dataTables", "bootstrap5, scroller", "bootstrap5, select",
 		"foundation, dataTables", "foundation, scroller", "foundation, select",
 		"jqueryui, dataTables", "jqueryui, scroller", "jqueryui, select" })

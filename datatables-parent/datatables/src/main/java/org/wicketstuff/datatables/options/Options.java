@@ -50,15 +50,13 @@ public class Options extends AbstractConfig {
      * each plugin per style as separate npm packages, e.g. {@code datatables.net-bs5} and
      * {@code datatables.net-select-bs5}. The webjars for {@link #dataTables} and
      * {@link #bootstrap5} are included, with the stylesheets of the core library, Select and
-     * Scroller. For {@link #foundation}, {@link #jqueryui} and {@link #bootstrap} (Bootstrap 3)
-     * the application has to add {@code datatables.net-<suffix>},
-     * {@code datatables.net-select-<suffix>} and {@code datatables.net-scroller-<suffix>} itself,
-     * in versions matching DataTables 3.1, where the suffix is {@code zf}, {@code jqui} or
-     * {@code bs}.
+     * Scroller. For {@link #foundation} and {@link #jqueryui} the application has to add
+     * {@code datatables.net-<suffix>}, {@code datatables.net-select-<suffix>} and
+     * {@code datatables.net-scroller-<suffix>} itself, in versions matching DataTables 3.1, where
+     * the suffix is {@code zf} or {@code jqui}.
      */
     public enum Style {
         dataTables("dt"),
-        bootstrap("bs"),
         bootstrap5("bs5"),
         foundation("zf"),
         jqueryui("jqui"),
