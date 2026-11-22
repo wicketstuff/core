@@ -30,6 +30,7 @@ public class WicketApplication extends WebApplication
 		WicketWebjars.install(this);
 
 		mountPage("bootstrap", HomeBootstrapPage.class);
+		mountPage("bootstrap5", HomeBootstrap5Page.class);
 
 		// mount a countries resource
 		mountResource(COUNTRIES_MOUNT_PATH, new JsonResourceReference<Country>("countries")

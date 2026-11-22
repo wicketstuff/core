@@ -45,6 +45,17 @@
 			<artifactId>select2</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.webjars.npm</groupId>
+			<artifactId>select2-bootstrap-5-theme</artifactId>
+			<exclusions>
+				<!-- applications using the Bootstrap 5 theme provide Bootstrap themselves -->
+				<exclusion>
+					<groupId>org.webjars.npm</groupId>
+					<artifactId>bootstrap</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
 			<groupId>jakarta.servlet</groupId>
 			<artifactId>jakarta.servlet-api</artifactId>
 			<scope>provided</scope>

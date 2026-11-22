@@ -372,6 +372,7 @@
 		<moment-js.version>2.31.0</moment-js.version>
 		<fullcalendar.version>7.1.0</fullcalendar.version>
 		<select2.version>4.1.0</select2.version>
+		<select2-bootstrap-5-theme.version>1.3.0</select2-bootstrap-5-theme.version>
 		<owasp-sanitizer.version>20261011.1</owasp-sanitizer.version>
 		<!-- plugins -->
 		<maven-surefire-plugin.version>3.6.1</maven-surefire-plugin.version>
@@ -1073,6 +1074,11 @@
 				<groupId>org.webjars.npm</groupId>
 				<artifactId>select2</artifactId>
 				<version>${select2.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.webjars.npm</groupId>
+				<artifactId>select2-bootstrap-5-theme</artifactId>
+				<version>${select2-bootstrap-5-theme.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.googlecode.owasp-java-html-sanitizer</groupId>
