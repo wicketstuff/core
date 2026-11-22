@@ -54,6 +54,13 @@ public class Options extends AbstractConfig {
      */
     public enum Style {
         dataTables("dt"),
+        /**
+         * Bootstrap 3, using the {@code datatables.net-bs} styling packages.
+         *
+         * @deprecated Bootstrap 3 is end-of-life since July 2019. Use {@link #bootstrap5}
+         *             instead. This value will be removed in Wicket Stuff 12.0.
+         */
+        @Deprecated(since = "11.1.0", forRemoval = true)
         bootstrap("bs"),
         bootstrap5("bs5"),
         foundation("zf"),
