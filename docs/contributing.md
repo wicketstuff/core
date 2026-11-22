@@ -43,4 +43,4 @@ Make the first line of a commit message informative: name the module it affects 
 
 GitHub generates the release notes from the merged pull requests and groups them by label (configured in `.github/release.yml` on `master`): `breaking-change`, `improvement`, `bug` and `dependencies`. Pull requests labeled `ignore-for-release` are left out. Give your pull request the label that fits.
 
-New issues start from the Bug report or Feature request form (in `.github/ISSUE_TEMPLATE/` on `master`), which set the `bug` or `improvement` label; questions go to [Discussions](https://github.com/wicketstuff/core/discussions/categories/q-a) and security vulnerabilities to [private reporting](https://github.com/wicketstuff/core/security/advisories/new).
+Bugs go to the issue tracker, where the Bug report form (in `.github/ISSUE_TEMPLATE/` on `master`) asks for the module, the versions and a way to reproduce, and sets the `bug` label. Questions and proposals for features or new modules go to [Discussions](https://github.com/wicketstuff/core/discussions), and security vulnerabilities to [private reporting](https://github.com/wicketstuff/core/security/advisories/new).
