@@ -16,7 +16,7 @@
 package org.wicketstuff.servlet3.secure.example;
 
 import org.apache.wicket.Page;
-import org.apache.wicket.authroles.authentication.pages.SignInPage;
+import org.apache.wicket.authroles.authentication.pages.UsernamePasswordPage;
 import org.apache.wicket.markup.html.WebPage;
 import org.wicketstuff.servlet3.secure.example.ui.HomePage;
 import org.wicketstuff.wicket.servlet3.auth.ServletContainerAuthenticatedWebApplication;
@@ -43,7 +43,7 @@ public class ContainerManagedSecurityApp extends ServletContainerAuthenticatedWe
 	@Override
 	protected Class<? extends WebPage> getSignInPageClass()
 	{
-		return SignInPage.class;
+		return UsernamePasswordPage.class;
 	}
 
 }

@@ -741,9 +741,7 @@ public class LazyModel<T> implements IObjectClassAwareModel<T>,
 		}
 
 		@Override
-		public void detach() {
-			super.detach();
-
+		protected void onDetach() {
 			type = null;
 
 			LazyModel.this.detach();

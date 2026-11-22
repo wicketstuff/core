@@ -44,6 +44,7 @@ import com.github.openjson.JSONStringer;
 public abstract class ChoiceProvider<T> implements IDetachable
 {
 	private static final long serialVersionUID = 1L;
+	public static final String DEFAULT_DISABLED_ATTR = "disabled";
 
 	/**
 	 * Get the value for displaying to an end user.
@@ -67,6 +68,29 @@ public abstract class ChoiceProvider<T> implements IDetachable
 	 * @return String
 	 */
 	public abstract String getIdValue(T object);
+
+	/**
+	 * Form components with the 'disabled' attribute are not being submitted.
+	 * Subclass can change this attribute to bypass this.
+	 *
+	 * @return the name of HTML attribute for disabled items
+	 */
+	public String getDisabledAttribute() {
+		return DEFAULT_DISABLED_ATTR;
+	}
+
+	/**
+	 * This method is called to get the disabled state of an object
+	 * selecting/removing for disabled option will be disabled.
+	 * <p>
+	 *
+	 * @param object
+	 *            The object for which disabled state should be determined
+	 * @return boolean
+	 */
+	public boolean isDisabled(T object) {
+		return false; // default implementation for backward compatibility
+	}
 
 	/**
 	 * Queries application for choices that match the search {@code term} and adds them to the
@@ -110,6 +134,9 @@ public abstract class ChoiceProvider<T> implements IDetachable
 	 */
 	protected void toJson(T choice, JSONStringer stringer) throws JSONException {
 		stringer.key("id").value(getIdValue(choice)).key("text").value(getDisplayValue(choice));
+		if (isDisabled(choice)) {
+			stringer.key("disabled").value(true);
+		}
 	}
 
 	/**

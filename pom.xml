@@ -6,7 +6,7 @@
 	<groupId>org.wicketstuff</groupId>
 	<artifactId>wicketstuff-core</artifactId>
 	<packaging>pom</packaging>
-	<version>10.12.0-SNAPSHOT</version>
+	<version>12.0.0-SNAPSHOT</version>
 	<name>WicketStuff Core Parent</name>
 	<description>
 		WicketStuff Core Parent is the parent project for all of the core WicketStuff projects.  It tries
@@ -75,6 +75,13 @@
 	<profiles>
 		<profile>
 			<id>central-release</id>
+			<activation>
+				<property>
+					<name>performRelease</name>
+					<value>true</value>
+				</property>
+			</activation>
+
 			<!-- This is the profile for deploying release artifacts. -->
 			<distributionManagement>
 				<repository>
@@ -106,6 +113,13 @@
 		</profile>
 		<profile>
 			<id>do-publish</id>
+			<activation>
+				<property>
+					<name>performRelease</name>
+					<value>true</value>
+				</property>
+			</activation>
+
 			<!-- This is the profile to use for releasing both SNAPSHOT and release. -->
 			<build>
 				<plugins>
@@ -116,26 +130,21 @@
 					<plugin>
 						<groupId>org.sonatype.central</groupId>
 						<artifactId>central-publishing-maven-plugin</artifactId>
-						<version>0.11.0</version>
+						<version>0.12.0</version>
 						<extensions>true</extensions>
 						<configuration>
 							<publishingServerId>central-sonatype-repo</publishingServerId>
 							<checksums>required</checksums>
 							<autoPublish>true</autoPublish>
+							<deploymentName>Deployment ${project.version}</deploymentName>
 							<excludeArtifacts>
 								<artifactId>wicketstuff-offline-mode-examples</artifactId>
-								<artifactId>wicketstuff-nashorn-examples</artifactId>
 								<artifactId>lightbox2-examples</artifactId>
-								<artifactId>jqplot-examples</artifactId>
 								<artifactId>async-task-demo</artifactId>
 								<artifactId>wicketstuff-autocomplete-tagit-examples</artifactId>
 								<artifactId>datatables-examples</artifactId>
-								<artifactId>flot-examples</artifactId>
-								<artifactId>gae-initializer-example</artifactId>
 								<artifactId>wicket-gchart-examples</artifactId>
 								<artifactId>wicketstuff-gmap3-examples</artifactId>
-								<artifactId>googlecharts-examples</artifactId>
-								<artifactId>wicketstuff-htmlcompressor-examples</artifactId>
 								<artifactId>wicketstuff-inmethod-grid-examples</artifactId>
 								<artifactId>input-events-examples</artifactId>
 								<artifactId>javaee-inject-examples</artifactId>
@@ -147,13 +156,11 @@
 								<artifactId>wicketstuff-minis-examples</artifactId>
 								<artifactId>modalx-examples</artifactId>
 								<artifactId>wicketstuff-objectautocomplete-examples</artifactId>
-								<artifactId>openlayers-examples</artifactId>
 								<artifactId>openlayers3-examples</artifactId>
 								<artifactId>wicketstuff-phonebook</artifactId>
 								<artifactId>wicketstuff-portlet-examples</artifactId>
 								<artifactId>progressbar-example</artifactId>
 								<artifactId>quickview-examples</artifactId>
-								<artifactId>simile-timeline-examples</artifactId>
 								<artifactId>tinymce4-examples</artifactId>
 								<artifactId>tinymce3-examples</artifactId>
 								<artifactId>tinymce6-examples</artifactId>
@@ -167,7 +174,6 @@
 								<artifactId>wicket-shiro-example-spring-jdbc</artifactId>
 								<artifactId>wicket-shiro-example-spring-hibernate</artifactId>
 								<artifactId>wicket-shiro-example-spring-hibernate-native</artifactId>
-								<artifactId>wicket-facebook-examples</artifactId>
 								<artifactId>wicketstuff-html5-examples</artifactId>
 								<artifactId>wicketstuff-servlet3-examples</artifactId>
 								<artifactId>wicketstuff-clipboardjs-examples</artifactId>
@@ -182,8 +188,6 @@
 								<artifactId>wicketstuff-selectize-examples</artifactId>
 								<artifactId>wicket-foundation-samples</artifactId>
 								<artifactId>wicketstuff-dashboard-examples</artifactId>
-								<artifactId>wicket-datetime-examples</artifactId>
-								<artifactId>wicketstuff-datetime-yui-examples</artifactId>
 								<artifactId>wicketstuff-datastore-tests</artifactId>
 								<artifactId>wicket-osgi-test-service</artifactId>
 								<artifactId>wicket-osgi-test-web</artifactId>
@@ -258,19 +262,6 @@
 									<pluginExecutions>
 										<pluginExecution>
 											<pluginExecutionFilter>
-												<groupId>org.apache.maven.plugins</groupId>
-												<artifactId>maven-toolchains-plugin</artifactId>
-												<versionRange>[1.0,)</versionRange>
-												<goals>
-													<goal>toolchain</goal>
-												</goals>
-											</pluginExecutionFilter>
-											<action>
-												<ignore>true</ignore>
-											</action>
-										</pluginExecution>
-										<pluginExecution>
-											<pluginExecutionFilter>
 												<groupId>net.alchim31.maven</groupId>
 												<artifactId>scala-maven-plugin</artifactId>
 												<versionRange>[3.2.2,)</versionRange>
@@ -287,7 +278,7 @@
 								</lifecycleMappingMetadata>
 							</configuration>
 						</plugin>
-							</plugins>
+					</plugins>
 				</pluginManagement>
 			</build>
 		</profile>
@@ -316,10 +307,9 @@
 	<!-- mocleiri: for distribution in to central repository sections in the main pom are not allowed -->
 
 	<properties>
-		<wicket.version>10.12.0-SNAPSHOT</wicket.version>
+		<wicket.version>12.0.0-SNAPSHOT</wicket.version>
 
-		<maven.compiler.source>17</maven.compiler.source>
-		<maven.compiler.target>17</maven.compiler.target>
+		<maven.compiler.release>21</maven.compiler.release>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -328,107 +318,98 @@
 		<deployment.disabled>false</deployment.disabled>
 		<sources.disabled>false</sources.disabled>
 
-		<hibernate.version>7.4.7.Final</hibernate.version>
-		<hibernate-validator.version>9.1.3.Final</hibernate-validator.version>
+		<hibernate.version>7.4.15.Final</hibernate.version>
+		<hibernate-validator.version>9.1.6.Final</hibernate-validator.version>
 		<javassist.version>3.33.0-GA</javassist.version>
 		<jetty.version>12.1.13</jetty.version>
 		<sf-jung.version>2.1.1</sf-jung.version>
-		<shiro.version>3.0.1</shiro.version>
-		<slf4j.version>2.0.19</slf4j.version>
-		<logback.version>1.6.3</logback.version>
+		<shiro.version>3.0.2</shiro.version>
+		<slf4j.version>2.0.20</slf4j.version>
+		<logback.version>1.6.6</logback.version>
 		<log4j.version>2.26.1</log4j.version>
-		<spring.version>7.0.9</spring.version>
+		<spring.version>7.0.10</spring.version>
 		<cglib.version>3.3.0</cglib.version>
 		<objenesis.version>3.6</objenesis.version>
 		<scala.version>2.13.18</scala.version>
-		<jackson.version>3.2.2</jackson.version>
-		<jackson2.version>2.22.2</jackson2.version>
+		<jackson.version>3.3.0</jackson.version>
+		<jackson2.version>2.23.0</jackson2.version>
 		<poi.version>5.5.1</poi.version>
-		<guava.version>33.7.1-jre</guava.version>
-		<wicket-webjars.version>4.0.15</wicket-webjars.version>
-		<jquery-selectors.version>4.0.15</jquery-selectors.version>
+		<guava.version>33.8.0-jre</guava.version>
+		<wicket-webjars.version>5.0.0</wicket-webjars.version>
+		<jquery-selectors.version>5.0.0</jquery-selectors.version>
 		<xstream.version>1.4.21</xstream.version>
 		<hamcrest.version>3.0</hamcrest.version>
-		<jakarta.servlet-api.version>6.0.0</jakarta.servlet-api.version> <!-- MUST be aligned with Wicket -->
+		<jakarta.servlet-api.version>6.1.0</jakarta.servlet-api.version> <!-- MUST be aligned with Wicket -->
 		<junit.version>6.1.3</junit.version>
 		<easymock.version>5.7.0</easymock.version>
-		<mockito.version>5.23.0</mockito.version>
+		<mockito.version>5.24.0</mockito.version>
 		<commons-io.version>2.22.0</commons-io.version>
 		<commons-beanutils.version>1.11.0</commons-beanutils.version>
 		<commons-digester3.version>3.2</commons-digester3.version>
-		<commons-lang3.version>3.20.0</commons-lang3.version>
+		<commons-lang3.version>3.22.0</commons-lang3.version>
 		<commons-logging.version>1.4.0</commons-logging.version>
 		<commons-dbcp2.version>2.14.0</commons-dbcp2.version>
 		<commons-compress.version>1.28.0</commons-compress.version>
 		<validation-api.version>3.1.1</validation-api.version>
 		<jta.version>2.0.1</jta.version>
-		<htmlcompressor.version>1.5.2</htmlcompressor.version>
 		<closure-compiler.version>v20240317</closure-compiler.version>
 		<ibatis2-sqlmap.version>2.1.7.597</ibatis2-sqlmap.version>
-		<jts.version>1.13</jts.version>
-		<gson.version>2.14.0</gson.version>
-		<wicket-bootstrap-core.version>7.0.15</wicket-bootstrap-core.version>
-		<jasperreports.version>7.0.8</jasperreports.version>
-		<joda-time.version>2.14.3</joda-time.version>
+		<gson.version>2.15.0</gson.version>
+		<wicket-bootstrap-core.version>7.0.16</wicket-bootstrap-core.version>
+		<jasperreports.version>7.1.1</jasperreports.version>
 		<ehcache.version>3.12.0</ehcache.version>
-		<jakartaee-api.version>10.0.0</jakartaee-api.version>
+		<jakartaee-api.version>11.0.0</jakartaee-api.version>
 		<clojure.version>1.12.6</clojure.version>
 		<groovy.version>4.0.7</groovy.version>
-		<asm-util.version>9.10.1</asm-util.version>
+		<asm-util.version>9.11.1</asm-util.version>
 		<hsqldb.version>2.7.4</hsqldb.version>
 		<hazelcast.version>5.7.0</hazelcast.version>
 		<jython-standalone.version>2.7.4</jython-standalone.version>
-		<protobuf.version>4.36.1</protobuf.version>
+		<protobuf.version>4.36.2</protobuf.version>
 		<bootstrap.version>5.3.8</bootstrap.version>
 		<fst.version>3.0.4-jdk17</fst.version>
 		<jquery-ui.version>1.14.2</jquery-ui.version>
-		<moment-js.version>2.30.1</moment-js.version>
+		<moment-js.version>2.31.0</moment-js.version>
 		<fullcalendar.version>7.1.0</fullcalendar.version>
 		<select2.version>4.1.0</select2.version>
-		<owasp-sanitizer.version>20260313.1</owasp-sanitizer.version>
+		<owasp-sanitizer.version>20261011.1</owasp-sanitizer.version>
 		<!-- plugins -->
-		<maven-surefire-plugin.version>3.6.0</maven-surefire-plugin.version>
+		<maven-surefire-plugin.version>3.6.1</maven-surefire-plugin.version>
 		<maven-javadoc-plugin.version>3.12.0</maven-javadoc-plugin.version>
 		<maven-source-plugin.version>3.4.0</maven-source-plugin.version>
-		<maven-bundle-plugin.version>6.1.2</maven-bundle-plugin.version>
+		<maven-bundle-plugin.version>6.2.0</maven-bundle-plugin.version>
 		<maven-assembly-plugin.version>3.8.0</maven-assembly-plugin.version>
 		<maven-compiler-plugin.version>3.16.0</maven-compiler-plugin.version>
 		<maven-eclipse-plugin.version>2.10</maven-eclipse-plugin.version>
 		<maven-help-plugin.version>3.5.2</maven-help-plugin.version>
 		<maven-jar-plugin.version>3.5.1</maven-jar-plugin.version>
 		<maven-resources-plugin.version>3.5.0</maven-resources-plugin.version>
-		<animal-sniffer-maven-plugin.version>1.27</animal-sniffer-maven-plugin.version>
+		<animal-sniffer-maven-plugin.version>1.29.1</animal-sniffer-maven-plugin.version>
 		<maven-pax-plugin.version>1.6.0</maven-pax-plugin.version>
-		<scala-maven-plugin.version>4.9.10</scala-maven-plugin.version>
+		<scala-maven-plugin.version>4.10.0</scala-maven-plugin.version>
 		<maven-clean-plugin.version>3.5.0</maven-clean-plugin.version>
-		<maven-deploy-plugin.version>3.1.4</maven-deploy-plugin.version>
-		<maven-install-plugin.version>3.1.4</maven-install-plugin.version>
+		<maven-deploy-plugin.version>3.2.0</maven-deploy-plugin.version>
+		<maven-install-plugin.version>3.2.0</maven-install-plugin.version>
 		<maven-site-plugin.version>4.0.0-M16</maven-site-plugin.version>
 		<maven-war-plugin.version>3.5.1</maven-war-plugin.version>
 		<maven-release-plugin.version>3.3.1</maven-release-plugin.version>
 		<maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
 		<maven-pmd-plugin.version>3.28.0</maven-pmd-plugin.version>
-		<maven-enforcer-plugin.version>3.6.3</maven-enforcer-plugin.version>
+		<maven-enforcer-plugin.version>3.7.0</maven-enforcer-plugin.version>
 		<bom-builder3.version>1.3.4</bom-builder3.version>
 	</properties>
 
 	<modules>
 		<module>offline-mode-parent</module>
-		<module>nashorn-parent</module>
 		<module>lightbox2-parent</module>
-		<module>jqplot-parent</module>
 		<module>annotation</module>
 		<module>annotationeventdispatcher-parent</module>
 		<module>async-tasks-parent</module>
 		<module>autocomplete-tagit-parent</module>
 		<module>datastores-parent</module>
 		<module>datatables-parent</module>
-		<module>flot-parent</module>
-		<module>gae-initializer-parent</module>
 		<module>gchart-parent</module>
 		<module>gmap3-parent</module>
-		<module>googlecharts-parent</module>
-		<module>htmlcompressor-parent</module>
 		<module>inmethod-grid-parent</module>
 		<module>input-events-parent</module>
 		<module>javaee-inject-parent</module>
@@ -437,16 +418,13 @@
 		<module>minis-parent</module>
 		<module>modalx-parent</module>
 		<module>objectautocomplete-parent</module>
-		<module>openlayers-parent</module>
 		<module>openlayers3-parent</module>
 		<module>phonebook</module>
 		<module>plugin</module>
 		<module>progressbar-parent</module>
 		<module>quickview-parent</module>
-		<module>simile-timeline-parent</module>
 		<module>tinymce6-parent</module>
 		<module>twitter-parent</module>
-		<module>wicket-bundle-parent</module>
 		<module>wicket-osgi-parent</module>
 		<module>wicket-poi-parent</module>
 		<module>wicketstuff-logback-parent</module>
@@ -458,18 +436,17 @@
 		<module>serializer-fast2</module>
 		<module>serializer-ui</module>
 		<module>shiro-security</module>
-		<module>wicket-facebook-parent</module>
 		<module>wicket-html5-parent</module>
 		<module>wicket-servlet3-parent</module>
 		<module>wicketstuff-clipboard-js-parent</module>
 		<module>wicketstuff-springreference-parent</module>
 		<module>wicket-security-parent</module>
 
-		<module>yui-parent</module>
 		<module>jasperreports-parent</module>
 		<module>editable-grid-parent</module>
 
 		<module>wicketstuff-lazymodel</module>
+		<module>wicket15-tree</module>
 		<module>sitemap-xml-parent</module>
 		<module>urlfragment-parent</module>
 		<module>wicketstuff-rest-utils</module>
@@ -478,13 +455,10 @@
 		<module>wicket-mount-parent</module>
 		<module>select2-parent</module>
 		<module>wicketstuff-selectize-parent</module>
-		<module>wicketstuff-glassfish4-integration</module>
 		<module>wicket-foundation</module>
 		<module>dashboard-parent</module>
 		<module>wicketstuff-rest-lambda</module>
 		<module>wicketstuff-lambda-components</module>
-		<module>wicket-datetime-parent</module>
-		<module>wicketstuff-datetime-yui-parent</module>
 
 		<module>wicketstuff-jquery-ui-parent</module>
 
@@ -513,11 +487,6 @@
 				<groupId>org.apache.wicket</groupId>
 				<artifactId>wicket-core</artifactId>
 				<version>${wicket.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.wicketstuff</groupId>
-				<artifactId>wicket-datetime</artifactId>
-				<version>${project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.wicket</groupId>
@@ -687,14 +656,14 @@
 				https://jakarta.ee/specifications/servlet/
 			-->
 			<dependency>
-				<groupId>org.eclipse.jetty.ee10</groupId>
-				<artifactId>jetty-ee10-webapp</artifactId>
+				<groupId>org.eclipse.jetty.ee11</groupId>
+				<artifactId>jetty-ee11-webapp</artifactId>
 				<version>${jetty.version}</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>
-				<groupId>org.eclipse.jetty.ee10.websocket</groupId>
-				<artifactId>jetty-ee10-websocket-jakarta-server</artifactId>
+				<groupId>org.eclipse.jetty.ee11.websocket</groupId>
+				<artifactId>jetty-ee11-websocket-jakarta-server</artifactId>
 				<version>${jetty.version}</version>
 				<scope>test</scope>
 			</dependency>
@@ -859,11 +828,6 @@
 				<version>${jquery-selectors.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>com.googlecode.htmlcompressor</groupId>
-				<artifactId>htmlcompressor</artifactId>
-				<version>${htmlcompressor.version}</version>
-			</dependency>
-			<dependency>
 				<groupId>com.google.javascript</groupId>
 				<artifactId>closure-compiler</artifactId>
 				<version>${closure-compiler.version}</version>
@@ -878,11 +842,6 @@
 				<groupId>com.ibatis</groupId>
 				<artifactId>ibatis2-sqlmap</artifactId>
 				<version>${ibatis2-sqlmap.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.vividsolutions</groupId>
-				<artifactId>jts</artifactId>
-				<version>${jts.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.google.code.gson</groupId>
@@ -925,11 +884,6 @@
 				<groupId>net.sf.jasperreports</groupId>
 				<artifactId>jasperreports-excel-poi</artifactId>
 				<version>${jasperreports.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>joda-time</groupId>
-				<artifactId>joda-time</artifactId>
-				<version>${joda-time.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.ehcache</groupId>
@@ -1151,6 +1105,10 @@
 								<requireMavenVersion>
 									<version>3.5.0</version>
 								</requireMavenVersion>
+								<requireJavaVersion>
+									<version>[${maven.compiler.release},)</version>
+									<message>Wicket Stuff needs JDK ${maven.compiler.release} or newer to build; set JAVA_HOME to such a JDK.</message>
+								</requireJavaVersion>
 							</rules>
 						</configuration>
 					</execution>
@@ -1180,25 +1138,6 @@
 				</executions>
 			</plugin>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-toolchains-plugin</artifactId>
-				<version>3.3.0</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>toolchain</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<toolchains>
-						<jdk>
-							<version>${maven.compiler.source}</version>
-						</jdk>
-					</toolchains>
-				</configuration>
-			</plugin>
-			<plugin>
 				<groupId>org.apache.felix</groupId>
 				<artifactId>maven-bundle-plugin</artifactId>
 				<inherited>true</inherited>
@@ -1219,7 +1158,7 @@
 						<quiet>true</quiet>
 						<doclint>none</doclint>
 						<!-- Plugin passes the javadoc no-fonts flag by default (since 3.11.3), but that
-						     flag only exists in JDK 24+ javadoc; disable it so the JDK 17 toolchain works. -->
+						     flag only exists in JDK 24+ javadoc; disable it so a JDK older than 24 works. -->
 						<disableNoFonts>true</disableNoFonts>
 						<links>
 							<link>https://docs.oracle.com/en/java/javase/17/docs/api/</link>
@@ -1323,7 +1262,6 @@
 					<version>${maven-compiler-plugin.version}</version>
 					<inherited>true</inherited>
 					<configuration>
-						<release>${maven.compiler.source}</release>
 						<debug>true</debug>
 						<showDeprecation>true</showDeprecation>
 						<showWarnings>true</showWarnings>
@@ -1408,8 +1346,8 @@
 					</executions>
 				</plugin>
 				<plugin>
-					<groupId>org.eclipse.jetty.ee10</groupId>
-					<artifactId>jetty-ee10-maven-plugin</artifactId>
+					<groupId>org.eclipse.jetty.ee11</groupId>
+					<artifactId>jetty-ee11-maven-plugin</artifactId>
 					<version>${jetty.version}</version>
 				</plugin>
 				<plugin>
@@ -1597,7 +1535,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>taglist-maven-plugin</artifactId>
-				<version>3.2.2</version>
+				<version>3.3.0</version>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

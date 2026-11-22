@@ -22,6 +22,7 @@ import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.ajax.form.AjaxFormSubmitBehavior;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.DropDownChoice;
@@ -31,7 +32,9 @@ import org.apache.wicket.markup.html.form.ListMultipleChoice;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.util.ListModel;
-import org.apache.wicket.request.resource.CssResourceReference;
+import org.apache.wicket.request.resource.JavaScriptResourceReference;
+
+import de.agilecoders.wicket.webjars.request.resource.WebjarsCssResourceReference;
 
 /**
  * Example page.
@@ -50,7 +53,11 @@ public class HomePage extends WebPage
 	@SuppressWarnings("unused")
 	private Country countryDropDownChoice = Country.US;
 	@SuppressWarnings("unused")
+	private Country country1 = Country.MRS;
+	@SuppressWarnings("unused")
 	private List<Country> countries = new ArrayList<>(List.of(Country.US, Country.CA));
+	@SuppressWarnings("unused")
+	private List<Country> countries2 = new ArrayList<>(List.of(Country.US, Country.VNS));
 	@SuppressWarnings("unused")
 	private List<Country> ajaxcountries = new ArrayList<>(List.of(Country.US, Country.CA));
 	@SuppressWarnings("unused")
@@ -103,6 +110,16 @@ public class HomePage extends WebPage
 				.setAllowClear(true);
 		countryDropDownChoice.add(countryDropDownChoiceSelect2Behavior);
 		add(new Form<Void>("singleDropDownChoice").add(countryDropDownChoice));
+
+		// single-select disabled preselected
+		add(new Label("country1", new PropertyModel<>(this, "country1")));
+
+		Select2Choice<Country> country1 = new Select2Choice<>("country1", new PropertyModel<Country>(
+			this, "country1"), new CountriesProvider());
+		defaultSelect2Settings(country1.getSettings())
+				.setPlaceholder("Please select country")
+				.setAllowClear(true);
+		add(new Form<Void>("single1").add(country1));
 
 		// multi-select example
 		add(new Label("countries", new PropertyModel<>(this, "countries")));
@@ -178,6 +195,23 @@ public class HomePage extends WebPage
 		countriesListMultipleChoice.add(countriesListMultipleChoiceSelect2Behavior);
 		add(new Form<Void>("listMultipleChoice").add(countriesListMultipleChoice));
 
+		// multi-select example with disabled preselected and not removable
+		add(new Label("countries2", new PropertyModel<>(this, "countries2")));
+
+		Select2MultiChoice<Country> countries2 = new Select2MultiChoice<>("countries2",
+			new PropertyModel<Collection<Country>>(this, "countries2"), new CountriesProvider() {
+				@Override
+				public String getDisabledAttribute() {
+					return "data-disabled";
+				}
+			});
+		defaultSelect2Settings(countries2.getSettings())
+				.setMinimumInputLength(1)
+				.setTemplateSelection("templateSelectionWithDisabled")
+				.setTemplateResult("templateResultWithDisabled")
+				.setDataAdapter("Select2WithDisabledAdapter");
+		add(new Form<Void>("multi2").add(countries2));
+
 		// tags example
 		add(new Label("tagsLabel", new PropertyModel<>(this, "tags")));
 		Select2MultiChoice<String> tags = new Select2MultiChoice<>("tagsSelect",
@@ -231,7 +265,8 @@ public class HomePage extends WebPage
 	@Override
 	public void renderHead(IHeaderResponse response) {
 		super.renderHead(response);
-		response.render(CssHeaderItem.forReference(new CssResourceReference(HomePage.class, "bootstrap/css/bootstrap.css")));
+		response.render(CssHeaderItem.forReference(new WebjarsCssResourceReference("/bootstrap/current/css/bootstrap.css")));
+		response.render(JavaScriptHeaderItem.forReference(new JavaScriptResourceReference(getClass(), "select2-disabled-support.js"), "select2-disabled-support"));
 	}
 
 
@@ -300,6 +335,11 @@ public class HomePage extends WebPage
 		public String getIdValue(Country choice)
 		{
 			return choice.name();
+		}
+
+		@Override
+		public boolean isDisabled(Country object) {
+			return Country.MRS == object || Country.VNS == object;
 		}
 
 		@Override

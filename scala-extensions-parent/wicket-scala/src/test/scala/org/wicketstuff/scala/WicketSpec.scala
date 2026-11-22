@@ -3,15 +3,17 @@ package org.wicketstuff.scala
 import org.apache.wicket.mock.MockApplication
 import org.apache.wicket.protocol.http.WebApplication
 import org.apache.wicket.util.tester.WicketTester
-import org.scalatest.{MustMatchers, BeforeAndAfterAll, FunSuite}
+import org.scalatest.BeforeAndAfterAll
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.must.Matchers
 
 /**
  *
  */
 trait WicketSpec
-  extends FunSuite
+  extends AnyFunSuite
   with BeforeAndAfterAll
-  with MustMatchers {
+  with Matchers {
 
   protected var tester: WicketTester = _
 

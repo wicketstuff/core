@@ -19,11 +19,8 @@ import org.apache.wicket.Page;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.wicketstuff.dashboard.Dashboard;
 import org.wicketstuff.dashboard.DefaultDashboard;
-import org.wicketstuff.dashboard.examples.jqplot.DemoChartFactory;
 import org.wicketstuff.dashboard.examples.justgage.DemoJustGageFactory;
 import org.wicketstuff.dashboard.web.DashboardContext;
-import org.wicketstuff.dashboard.widgets.jqplot.JqPlotWidget;
-import org.wicketstuff.dashboard.widgets.jqplot.JqPlotWidgetDescriptor;
 import org.wicketstuff.dashboard.widgets.justgage.JustGageWidget;
 import org.wicketstuff.dashboard.widgets.justgage.JustGageWidgetDescriptor;
 import org.wicketstuff.dashboard.widgets.loremipsum.LoremIpsumWidgetDescriptor;
@@ -62,14 +59,12 @@ public class WicketApplication extends WebApplication {
 		dashboardContext.setDashboardPersister(new ExampleDashboardPersister());
 		dashboardContext.getWidgetRegistry()
 			.registerWidget(new LoremIpsumWidgetDescriptor())
-			.registerWidget(new JqPlotWidgetDescriptor())
 			.registerWidget(new JustGageWidgetDescriptor());
 
 		// add a custom action for all widgets
 		dashboardContext.setWidgetActionsFactory(new DemoWidgetActionsFactory());
 
 		// set some (data) factory
-		JqPlotWidget.setChartFactory(new DemoChartFactory());
 		JustGageWidget.setJustGageFactory(new DemoJustGageFactory());
 
 		// <<< end dashboard settings

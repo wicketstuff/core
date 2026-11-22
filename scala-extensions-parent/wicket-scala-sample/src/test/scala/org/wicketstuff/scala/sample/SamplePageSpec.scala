@@ -1,11 +1,12 @@
 package org.wicketstuff.scala.sample
 
 import org.apache.wicket.util.tester.WicketTester
-import org.scalatest.{MustMatchers, WordSpec}
+import org.scalatest.matchers.must.Matchers
+import org.scalatest.wordspec.AnyWordSpec
 
 class SamplePageSpec
-  extends WordSpec
-  with MustMatchers {
+  extends AnyWordSpec
+  with Matchers {
 
   "HomePage" should {
     "construct without error" in {
