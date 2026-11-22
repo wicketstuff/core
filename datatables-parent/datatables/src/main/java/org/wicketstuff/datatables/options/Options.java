@@ -45,22 +45,43 @@ public class Options extends AbstractConfig {
         full_numbers
     }
 
+    /**
+     * The styling framework. The stylesheets of the core library and of the Select plugin for
+     * every style are included. The Scroller plugin publishes a separate webjar per style; the
+     * ones for {@link #dataTables} ({@code datatables.net-scroller-dt}) and {@link #bootstrap5}
+     * ({@code datatables.net-scroller-bs5}) are included, the others have to be added by the
+     * application.
+     */
     public enum Style {
-        dataTables,
-        bootstrap,
-        bootstrap5,
-        foundation,
-        jqueryui,
-        none;
+        dataTables("dt"),
+        bootstrap("bs"),
+        bootstrap5("bs5"),
+        foundation("zf"),
+        jqueryui("jqui"),
+        none(null);
+
+        /**
+         * The suffix of the npm package name of the styling packages, e.g. 'bs5' in
+         * 'datatables.net-scroller-bs5'.
+         */
+        private final String packageSuffix;
+
+        Style(String packageSuffix) {
+            this.packageSuffix = packageSuffix;
+        }
 
         public void renderHead(IHeaderResponse response, String pluginName) {
-            if (none != this) {
-                if (!(dataTables == this && "dataTables".equals(pluginName))) {
-                    String name = "datatables/current/css/" + pluginName + "." + name() + ".min.css";
-                    CssResourceReference cssReference = new WebjarsCssResourceReference(name);
-                    response.render(CssHeaderItem.forReference(cssReference));
-                }
+            if (none == this || (dataTables == this && "dataTables".equals(pluginName))) {
+                return;
             }
+            String file = "/current/css/" + pluginName + "." + name() + ".min.css";
+            String name = switch (pluginName) {
+                case "scroller" -> "datatables.net-scroller-" + packageSuffix + file;
+                case "select" -> "datatables-select" + file;
+                default -> "datatables" + file;
+            };
+            CssResourceReference cssReference = new WebjarsCssResourceReference(name);
+            response.render(CssHeaderItem.forReference(cssReference));
         }
     }
 
