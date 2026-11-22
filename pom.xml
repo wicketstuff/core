@@ -367,7 +367,7 @@
 		<hazelcast.version>5.7.0</hazelcast.version>
 		<jython-standalone.version>2.7.4</jython-standalone.version>
 		<protobuf.version>4.36.2</protobuf.version>
-		<bootstrap.version>5.3.8</bootstrap.version>
+		<bootstrap.version>5.3.9</bootstrap.version>
 		<fst.version>3.0.4-jdk17</fst.version>
 		<jquery-ui.version>1.14.2</jquery-ui.version>
 		<moment-js.version>2.31.0</moment-js.version>
