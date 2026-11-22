@@ -8,7 +8,7 @@ If there hasn't been a wicket release we will release a point release on the cur
 
 Sometimes there is a divergence in the API between the current wicket snapshot and the stable release.  In this case we will try to revert commits to allow the build to work but if that doesn't work we will just wait until the next upstream release.
 
-# Steps to create New Version
+## Steps to create New Version
 
 Preliminaries:
 
@@ -29,34 +29,34 @@ Make sure that your ~/.m2/settings.xml contains your credentials to deploy to ht
 
 ***
 
-## First we set the start point on the current 10.x branch:
+### First we set the start point on the current 10.x branch:
 
 `git checkout master`
 
-## Second we create a local branch to stage the stable release into.
+### Second we create a local branch to stage the stable release into.
 
 `git checkout -b core-11.1.0 master`
 
-## Third we edit the `pom.xml` and change **<wicket.version>** in the properties section to be **11.1.0**.
+### Third we edit the `pom.xml` and change **<wicket.version>** in the properties section to be **11.1.0**.
 
 ```xml
 <wicket.version>11.1.0</wicket.version>
 ```
 
-## Fourth we change the **scm** section url to point at the tag that will be created for this release.  e.g.
+### Fourth we change the **scm** section url to point at the tag that will be created for this release.  e.g.
 
 ```xml
 <scm>
 <url>https://github.com/wicketstuff/core/tree/wicketstuff-core-11.1.0</url>
 ```
 
-## Fifth we change all of the pom versions to be **11.1.0**:
+### Fifth we change all of the pom versions to be **11.1.0**:
 
 ```text
 mvn versions:set -DgenerateBackupPoms=false -DnewVersion=11.1.0
 ```
 
-## Sixth we check if there are any snapshot dependencies:
+### Sixth we check if there are any snapshot dependencies:
 
 ```text
 find . -name pom.xml | while read POM; do grep -H SNAPSHOT $POM; done;
@@ -64,7 +64,7 @@ find . -name pom.xml | while read POM; do grep -H SNAPSHOT $POM; done;
 
 There will be some matches because there are projects that are currently disabled.  We are interested in modules that are reachable with SNAPSHOT artifacts present (they need to either be fixed if possible or commented out).
 
-## Seventh we build the release artifacts and stage them through `central.sonatype.org`:
+### Seventh we build the release artifacts and stage them through `central.sonatype.org`:
 
 A) Build the core artifacts
 
@@ -72,7 +72,7 @@ A) Build the core artifacts
 MAVEN_OPTS=-Xmx512m mvn -DperformRelease=true [-Dgpg.passphrase=yourGpgPassPhrase] clean deploy
 ```
 
-## Eight we commit any changes to the local **core-11.1.0** stable branch and tag the release:
+### Eight we commit any changes to the local **core-11.1.0** stable branch and tag the release:
 
 ```text
 git commit -a -m "wicketstuff-core-11.1.0 build was successful"
@@ -80,12 +80,12 @@ git tag -s wicketstuff-core-11.1.0 -m "wicketstuff-core-11.1.0 release tag"
 ```
 Enter your GPG phass phrase to sign the tag using the same key used for the release
 
-## Ninth we push the release tag into github
+### Ninth we push the release tag into github
 
 ```text
 git push origin wicketstuff-core-11.1.0
 ```
-### Creating the release message.
+#### Creating the release message.
 
 We let **git shortlog** do the heavy lifting of what changed between the **new-release-tag** and the **old-release-tag**.
 
@@ -132,7 +132,7 @@ seb (5):
       minis: code cleanu
 ```
 
-### Getting the list of new modules
+#### Getting the list of new modules
 
 ```
 git log --name-status --diff-filter=A wicketstuff-core-11.0.0..wicketstuff-core-11.1.0
