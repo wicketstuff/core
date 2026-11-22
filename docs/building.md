@@ -7,6 +7,8 @@ title: Building Wicket Stuff
 * Maven 3.5.0 or newer (enforced by the build).
 * A JDK for the Java version in the `maven.compiler.source` property of the root `pom.xml` (currently 21), registered in your Maven toolchains.
 
+The `wicket-10.x` branch builds with Java 17, while `master` and `wicket-11.x` use Java 21.
+
 ## Toolchains
 
 The build uses [Maven toolchains](https://maven.apache.org/guides/mini/guide-using-toolchains.html) to pick the JDK: the `maven-toolchains-plugin` asks for a JDK whose version matches `maven.compiler.source`. You need a `toolchains.xml` in your `~/.m2` directory that provides that version, for example:
