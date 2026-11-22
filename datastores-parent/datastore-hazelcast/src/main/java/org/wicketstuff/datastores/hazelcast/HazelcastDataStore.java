@@ -183,13 +183,13 @@ public class HazelcastDataStore extends AbstractPersistentPageStore implements I
 		@Override
 		public void write(ObjectDataOutput out, SerializedPage page) throws IOException {
 			out.writeInt(page.getPageId());
-			out.writeUTF(page.getPageType());
+			out.writeString(page.getPageType());
 			out.writeByteArray(page.getData());
 		}
 
 		@Override
 		public SerializedPage read(ObjectDataInput in) throws IOException {
-			return new SerializedPage(in.readInt(), in.readUTF(), in.readByteArray());
+			return new SerializedPage(in.readInt(), in.readString(), in.readByteArray());
 		}
 
 		@Override

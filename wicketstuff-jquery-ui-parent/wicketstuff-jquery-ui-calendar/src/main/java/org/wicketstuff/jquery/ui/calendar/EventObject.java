@@ -30,6 +30,7 @@ import org.wicketstuff.jquery.core.Options;
  *
  * @author Sebastien Briquet - sebfz1
  */
+@Deprecated(since = "10.0.0", forRemoval = true)
 public class EventObject extends Label implements IJQueryWidget
 {
 	private static final long serialVersionUID = 1L;

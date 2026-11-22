@@ -24,6 +24,7 @@ package org.wicketstuff.jquery.ui.calendar;
  * @author Sebastien Briquet - sebfz1
  *
  */
+@Deprecated(since = "10.0.0", forRemoval = true)
 public interface ICalendarVisitor
 {
 	/**

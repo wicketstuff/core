@@ -29,7 +29,7 @@ jobs:
     strategy:
       matrix:
         java:
-        - '17'
+        - '21'
     env:
       MAVEN_OPTS: '-Xmx2g'
       MVN_COMMAND: 'verify'
@@ -46,7 +46,7 @@ jobs:
             ${{ runner.os }}-maven-
 
       - name: Setup Java
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@v6.2.0
         with:
           distribution: 'temurin'
           java-version: ${{ matrix.java }}
@@ -58,5 +58,4 @@ jobs:
         run: |
           echo "Event name: ${EVENT_NAME}"
           if [ $EVENT_NAME == "push" ]; then export MVN_COMMAND="deploy"; fi
-          cp ./config/toolchains.xml $HOME/.m2/
           mvn -s sonatype-settings.xml $MVN_COMMAND -Pdo-publish -Djavadoc.disabled=true -B -V

@@ -25,6 +25,7 @@ import org.wicketstuff.jquery.core.Options;
  * @author Sebastien Briquet - sebfz1
  * @see <a href="http://fullcalendar.io/docs/event_data/Event_Source_Object/">http://fullcalendar.io/docs/event_data/Event_Source_Object/</a>
  */
+@Deprecated(since = "10.0.0", forRemoval = true)
 public class EventSource implements IClusterable
 {
 	private static final long serialVersionUID = 1L;
@@ -55,7 +56,7 @@ public class EventSource implements IClusterable
 
 	/**
 	 * Gets Event Object's color for this source.
-	 * 
+	 *
 	 * @return any of the CSS color formats such #f00, #ff0000, rgb(255,0,0), or red.
 	 */
 	public String getColor()
@@ -65,20 +66,20 @@ public class EventSource implements IClusterable
 
 	/**
 	 * Sets every Event Object's color for this source.
-	 * 
+	 *
 	 * @param color any of the CSS color formats such #f00, #ff0000, rgb(255,0,0), or red.
 	 * @return this, for chaining
 	 */
 	public EventSource setColor(String color)
 	{
 		this.color = color;
-		
+
 		return this;
 	}
 
 	/**
 	 * Gets Event Object's backgroundColor for this source.
-	 * 
+	 *
 	 * @return any of the CSS color formats such #f00, #ff0000, rgb(255,0,0), or red.
 	 */
 	public String getBackgroundColor()
@@ -88,20 +89,20 @@ public class EventSource implements IClusterable
 
 	/**
 	 * Sets every Event Object's backgroundColor for this source.
-	 * 
+	 *
 	 * @param color any of the CSS color formats such #f00, #ff0000, rgb(255,0,0), or red.
 	 * @return this, for chaining
 	 */
 	public EventSource setBackgroundColor(String color)
 	{
 		this.backgroundColor = color;
-		
+
 		return this;
 	}
 
 	/**
 	 * Gets Event Object's borderColor for this source.
-	 * 
+	 *
 	 * @return any of the CSS color formats such #f00, #ff0000, rgb(255,0,0), or red.
 	 */
 	public String getBorderColor()
@@ -111,20 +112,20 @@ public class EventSource implements IClusterable
 
 	/**
 	 * Sets every Event Object's borderColor for this source.
-	 * 
+	 *
 	 * @param color any of the CSS color formats such #f00, #ff0000, rgb(255,0,0), or red.
 	 * @return this, for chaining
 	 */
 	public EventSource setBorderColor(String color)
 	{
 		this.borderColor = color;
-		
+
 		return this;
 	}
 
 	/**
 	 * Gets Event Object's textColor for this source.
-	 * 
+	 *
 	 * @return any of the CSS color formats such #f00, #ff0000, rgb(255,0,0), or red.
 	 */
 	public String getTextColor()
@@ -134,20 +135,20 @@ public class EventSource implements IClusterable
 
 	/**
 	 * Sets every Event Object's textColor for this source.
-	 * 
+	 *
 	 * @param color any of the CSS color formats such #f00, #ff0000, rgb(255,0,0), or red.
 	 * @return this, for chaining
 	 */
 	public EventSource setTextColor(String color)
 	{
 		this.textColor = color;
-		
+
 		return this;
 	}
 
 	/**
 	 * Gets Event Object's className for this source.
-	 * 
+	 *
 	 * @return the CSS class name, can be an array.
 	 */
 	public String getClassName()
@@ -157,20 +158,20 @@ public class EventSource implements IClusterable
 
 	/**
 	 * Sets every Event Object's className for this source.
-	 * 
+	 *
 	 * @param name the CSS class name, can be an array.
 	 * @return this, for chaining
 	 */
 	public EventSource setClassName(String name)
 	{
 		this.className = name;
-		
+
 		return this;
 	}
 
 	/**
 	 * Gets Event Object's editable for this source.
-	 * 
+	 *
 	 * @return true or false
 	 */
 	public Boolean getEditable()
@@ -180,20 +181,20 @@ public class EventSource implements IClusterable
 
 	/**
 	 * Sets every Event Object's editable for this source.
-	 * 
+	 *
 	 * @param editable true or false
 	 * @return this, for chaining
 	 */
 	public EventSource setEditable(Boolean editable)
 	{
 		this.editable = editable;
-		
+
 		return this;
 	}
 
 	/**
 	 * Gets every Event Object's startEditable for this source.
-	 * 
+	 *
 	 * @return true or false
 	 */
 	public Boolean getStartEditable()
@@ -203,20 +204,20 @@ public class EventSource implements IClusterable
 
 	/**
 	 * Sets every Event Object's startEditable for this source.
-	 * 
+	 *
 	 * @param editable true or false
 	 * @return this, for chaining
 	 */
 	public EventSource setStartEditable(Boolean editable)
 	{
 		this.startEditable = editable;
-		
+
 		return this;
 	}
 
 	/**
 	 * Gets every Event Object's durationEditable for this source.
-	 * 
+	 *
 	 * @return true or false
 	 */
 	public Boolean getDurationEditable()
@@ -226,20 +227,20 @@ public class EventSource implements IClusterable
 
 	/**
 	 * Sets every Event Object's durationEditable for this source.
-	 * 
+	 *
 	 * @param editable true or false
 	 * @return this, for chaining
 	 */
 	public EventSource setDurationEditable(Boolean editable)
 	{
 		this.durationEditable = editable;
-		
+
 		return this;
 	}
 
 	/**
 	 * Gets Event Object's rendering for this source.
-	 * 
+	 *
 	 * @return empty, "background", or "inverse-background"
 	 */
 	public String getRendering()
@@ -249,20 +250,20 @@ public class EventSource implements IClusterable
 
 	/**
 	 * Sets every Event Object's rendering for this source.
-	 * 
+	 *
 	 * @param rendering empty, "background", or "inverse-background"
 	 * @return this, for chaining
 	 */
 	public EventSource setRendering(String rendering)
 	{
 		this.rendering = rendering;
-		
+
 		return this;
 	}
 
 	/**
 	 * Gets Event Object's overlap for this source.
-	 * 
+	 *
 	 * @return true or false
 	 */
 	public Boolean getOverlap()
@@ -272,20 +273,20 @@ public class EventSource implements IClusterable
 
 	/**
 	 * Sets every Event Object's overlap for this source.
-	 * 
+	 *
 	 * @param overlap true or false
 	 * @return this, for chaining
 	 */
 	public EventSource setOverlap(Boolean overlap)
 	{
 		this.overlap = overlap;
-		
+
 		return this;
 	}
 
 	/**
 	 * Gets Event Object's constraint for this source.
-	 * 
+	 *
 	 * @return an event ID, "businessHours", object.
 	 */
 	public String getConstraint()
@@ -295,20 +296,20 @@ public class EventSource implements IClusterable
 
 	/**
 	 * Sets every Event Object's constraint for this source.
-	 * 
+	 *
 	 * @param constraint an event ID, "businessHours", object.
 	 * @return this, for chaining
 	 */
 	public EventSource setConstraint(String constraint)
 	{
 		this.constraint = constraint;
-		
+
 		return this;
 	}
 
 	/**
 	 * Gets the allDayDefault option, but only for this source.
-	 * 
+	 *
 	 * @return true or false
 	 */
 	public Boolean getAllDayDefault()
@@ -318,20 +319,20 @@ public class EventSource implements IClusterable
 
 	/**
 	 * Sets the allDayDefault option, but only for this source.
-	 * 
+	 *
 	 * @param allDay true or false
 	 * @return this, for chaining
 	 */
 	public EventSource setAllDayDefault(Boolean allDay)
 	{
 		this.allDayDefault = allDay;
-		
+
 		return this;
 	}
 
 	/**
 	 * Gets the eventDataTransform callback, but only for this source.
-	 * 
+	 *
 	 * @return a function that must return a new object in the Event Object format.
 	 */
 	public String getEventDataTransform()
@@ -341,14 +342,14 @@ public class EventSource implements IClusterable
 
 	/**
 	 * Sets the eventDataTransform callback, but only for this source.
-	 * 
+	 *
 	 * @param function a function that must return a new object in the Event Object format.
 	 * @return this, for chaining
 	 */
 	public EventSource setEventDataTransform(String function)
 	{
 		this.eventDataTransform = function;
-		
+
 		return this;
 	}
 
@@ -448,7 +449,7 @@ public class EventSource implements IClusterable
 
 		/**
 		 * Constructor
-		 * 
+		 *
 		 * @param calendarId the calendar id
 		 */
 		public GoogleCalendar(String calendarId)
@@ -458,7 +459,7 @@ public class EventSource implements IClusterable
 
 		/**
 		 * Constructor
-		 * 
+		 *
 		 * @param calendarId the calendar id
 		 * @param apiKey the calendar api key
 		 */
@@ -473,7 +474,7 @@ public class EventSource implements IClusterable
 
 		/**
 		 * Gets the calendar id
-		 * 
+		 *
 		 * @return the calendar id
 		 */
 		public String getGoogleCalendarId()
@@ -481,10 +482,10 @@ public class EventSource implements IClusterable
 			return this.googleCalendarId;
 		}
 
-		
+
 		/**
 		 * Gets the calendar api key
-		 * 
+		 *
 		 * @return the calendar api key
 		 */
 		public String getGoogleCalendarApiKey()
@@ -493,20 +494,20 @@ public class EventSource implements IClusterable
 		}
 		/**
 		 * Sets the calendar api key
-		 * 
+		 *
 		 * @param apiKey the calendar api key
 		 * @return this, for chaining
 		 */
 		public GoogleCalendar setGoogleCalendarApiKey(String apiKey)
 		{
 			this.googleCalendarApiKey = apiKey;
-			
+
 			return this;
 		}
 
 		/**
 		 * Gets the error callback
-		 * 
+		 *
 		 * @return the callback
 		 */
 		public String getGoogleCalendarError()
@@ -516,14 +517,14 @@ public class EventSource implements IClusterable
 
 		/**
 		 * Sets the error callback
-		 * 
+		 *
 		 * @param callback the callback, in case of error
 		 * @return this, for chaining
 		 */
 		public GoogleCalendar setGoogleCalendarError(String callback)
 		{
 			this.googleCalendarError = callback;
-			
+
 			return this;
 		}
 

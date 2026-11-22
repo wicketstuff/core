@@ -22,14 +22,13 @@ import java.time.LocalDateTime;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.util.io.IClusterable;
 
-import com.github.openjson.JSONObject;
-
 /**
  * Event listener shared by the {@link Calendar} widget and the {@link CalendarBehavior}
  *
  * @author Sebastien Briquet - sebfz1
  *
  */
+@Deprecated(since = "10.11.0", forRemoval = true)
 public interface ICalendarListener extends IClusterable
 {
 	/**

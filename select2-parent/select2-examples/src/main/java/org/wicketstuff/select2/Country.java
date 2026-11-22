@@ -62,7 +62,7 @@ public enum Country {
 		"United States"), UM("United States Minor Outlying Islands"), UY("Uruguay"), UZ(
 		"Uzbekistan"), VU("Vanuatu"), VA("Vatican"), VE("Venezuela"), VN("Vietnam"), WF(
 		"Wallis And Futuna"), EH("Western Sahara"), YE("Yemen"), ZM("Zambia"), ZW("Zimbabwe"), AX(
-		"Åland Islands");
+		"Åland Islands"), MRS("Mars"), VNS("Venus");
 
 	private final String displayName;
 

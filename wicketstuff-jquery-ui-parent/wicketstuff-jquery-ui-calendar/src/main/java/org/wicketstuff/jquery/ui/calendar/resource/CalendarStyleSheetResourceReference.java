@@ -24,6 +24,7 @@ import org.apache.wicket.request.resource.CssResourceReference;
  * @author Sebastien Briquet - sebfz1
  *
  */
+@Deprecated(since = "10.0.0", forRemoval = true)
 public class CalendarStyleSheetResourceReference extends CssResourceReference
 {
 	private static final long serialVersionUID = 1L;

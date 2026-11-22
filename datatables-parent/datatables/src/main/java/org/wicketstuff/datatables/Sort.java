@@ -1,12 +1,12 @@
 package org.wicketstuff.datatables;
 
-import java.io.IOException;
 import java.io.Serializable;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.JsonGenerator;
+import tools.jackson.databind.SerializationContext;
+import tools.jackson.databind.ValueSerializer;
+import tools.jackson.databind.annotation.JsonSerialize;
 
 /**
  *
@@ -27,12 +27,10 @@ public class Sort implements Serializable {
         this.direction = direction;
     }
 
-    public static class SortSerializer extends JsonSerializer<Sort> {
+    public static class SortSerializer extends ValueSerializer<Sort> {
 
         @Override
-        public void serialize(Sort sort, JsonGenerator jsonGenerator, SerializerProvider serializerProvider)
-            throws IOException {
-
+        public void serialize(Sort sort, JsonGenerator jsonGenerator, SerializationContext ctx) throws JacksonException {
             jsonGenerator.writeStartArray();
             jsonGenerator.writeNumber(sort.column);
             jsonGenerator.writeString(sort.direction.name().toLowerCase());

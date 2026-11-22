@@ -36,6 +36,7 @@ import org.wicketstuff.jquery.ui.calendar.EventSource.GoogleCalendar;
  * @author Martin Grigorov - martin-g
  *
  */
+@Deprecated(since = "10.0.0", forRemoval = true)
 public class Calendar extends JQueryContainer implements ICalendarListener
 {
 	private static final long serialVersionUID = 1L;

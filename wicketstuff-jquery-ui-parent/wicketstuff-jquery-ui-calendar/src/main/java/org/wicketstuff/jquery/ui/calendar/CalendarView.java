@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Sebastien Briquet - sebfz1
  */
+@Deprecated(since = "10.0.0", forRemoval = true)
 public enum CalendarView
 {
     month,
@@ -54,7 +55,7 @@ public enum CalendarView
 	        return CalendarView.valueOf(viewName);
 	    }
 	    catch (IllegalArgumentException e)
-		{ 
+		{
 	    	if (LOG.isDebugEnabled())
 	    	{
 	    		LOG.debug(e.getMessage(), e);

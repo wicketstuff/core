@@ -27,6 +27,7 @@ import org.wicketstuff.jquery.core.Options;
  * @author Sebastien Briquet - sebfz1
  *
  */
+@Deprecated(since = "10.0.0", forRemoval = true)
 public class CalendarEvent implements Serializable
 {
 	private static final long serialVersionUID = 1L;
@@ -144,7 +145,7 @@ public class CalendarEvent implements Serializable
 
 	/**
 	 * Overrides the master editable option for this single event.
-	 * 
+	 *
 	 * @return true or false
 	 */
 	public Boolean isEditable()
@@ -300,7 +301,7 @@ public class CalendarEvent implements Serializable
 
 	/**
 	 * Visitor accept method
-	 * 
+	 *
 	 * @param visitor the {@link ICalendarVisitor}
 	 */
 	public final void accept(ICalendarVisitor visitor)

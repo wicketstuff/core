@@ -5,14 +5,15 @@ import java.util.{ArrayList => JArrayList, List => JList}
 import org.apache.wicket.markup.html.basic.Label
 import org.apache.wicket.model.{IModel, Model}
 import org.apache.wicket.util.tester.WicketTester
-import org.scalatest.{MustMatchers, WordSpec}
+import org.scalatest.matchers.must.Matchers
+import org.scalatest.wordspec.AnyWordSpec
 
 /**
  * @author Antony Stubbs
  */
 class ScalaPackageSpec
-  extends WordSpec
-  with MustMatchers {
+  extends AnyWordSpec
+  with Matchers {
 
   "Fodel converters" should {
     "convert anonymous functions to Fodels" in {

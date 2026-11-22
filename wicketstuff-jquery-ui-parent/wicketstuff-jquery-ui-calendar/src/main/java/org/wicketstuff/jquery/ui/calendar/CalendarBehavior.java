@@ -41,6 +41,7 @@ import org.wicketstuff.jquery.ui.calendar.settings.CalendarLibrarySettings;
  * @author Sebastien Briquet - sebfz1
  *
  */
+@Deprecated(since = "10.0.0", forRemoval = true)
 public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 {
 	private static final long serialVersionUID = 1L;

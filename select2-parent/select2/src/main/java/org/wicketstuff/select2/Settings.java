@@ -39,6 +39,26 @@ public final class Settings implements Serializable
 	public static final String DEFAULT_QUERY_PARAM = "q";
 
 	/**
+	 * Attribute that sets the element's base text direction and directionally
+	 * isolates its contents from surrounding text.
+	 */
+	public static enum DIRECTION {
+		/**
+		 * left-to-right base direction
+		 */
+		ltr,
+		/**
+		 * right-to-left base direction
+		 */
+		rtl,
+		/**
+		 * User agent will determine the base direction from the text,
+		 * generally using the first character with a strong directionality
+		 */
+		auto
+	}
+
+	/**
 	 * Some predefined width option values
 	 */
 	public static class Widths
@@ -51,6 +71,7 @@ public final class Settings implements Serializable
 
 	// language code (e.g. "en", "de", "fr", ...)
 	private String language;
+	private DIRECTION dir = DIRECTION.auto;
 
 	private Integer minimumInputLength, minimumResultsForSearch;
 	private Integer maximumSelectionLength;
@@ -61,11 +82,10 @@ public final class Settings implements Serializable
 	private String id, matcher, tokenizer;
 	private String sorter;
 	private String templateSelection, templateResult, escapeMarkup;
-	private String initSelection;  //TODO Deprecated in Select2 4.0, will be removed in 4.1
-	private String query; //TODO Deprecated in Select2 4.0, will be removed in 4.1
 	private String width;
-	private String containerCss, dropdownCss, selectionCssClass, dropdownCssClass; //TODO deprecated
+	private String selectionCssClass, dropdownCssClass;
 	private String dropdownParent;
+	private String dataAdapter;
 
 	private AjaxSettings ajax;
 	private String data;
@@ -116,21 +136,20 @@ public final class Settings implements Serializable
 			Json.writeFunction(writer, "templateSelection", templateSelection);
 			Json.writeFunction(writer, "templateResult", templateResult);
 			Json.writeFunction(writer, "escapeMarkup", escapeMarkup);
-			Json.writeFunction(writer, "initSelection", initSelection);
-			Json.writeFunction(writer, "query", query);
+			Json.writeFunction(writer, "dataAdapter", dataAdapter);
 			Json.writeObject(writer, "width", width);
 			Json.writeObject(writer, "theme", theme != null ? theme.name() : null);
-			Json.writeFunction(writer, "containerCss", containerCss);
 			Json.writeObject(writer, "selectionCssClass", selectionCssClass);
-			Json.writeFunction(writer, "dropdownCss", dropdownCss);
 			Json.writeObject(writer, "dropdownCssClass", dropdownCssClass);
 			Json.writeObject(writer, "separator", separator);
-			if (tokenSeparators != null) {
+			if (tokenSeparators != null)
+			{
 				Json.writeObject(writer, "tokenSeparators", new JSONArray(tokenSeparators));
 			}
 			Json.writeObject(writer, "selectOnClose", selectOnClose);
 			Json.writeObject(writer, "dropdownAutoWidth", dropdownAutoWidth);
-			if (!Strings.isEmpty(dropdownParent)) {
+			if (!Strings.isEmpty(dropdownParent))
+			{
 				Json.writeFunction(writer, "dropdownParent", String.format("$('#%s')", dropdownParent));
 			}
 			if (ajax != null)
@@ -144,6 +163,7 @@ public final class Settings implements Serializable
 
 			// Set language
 			writer.key("language").value(getLanguage());
+			writer.key("dir").value(dir.name());
 
 			writer.endObject();
 			return writer.toString();
@@ -253,28 +273,6 @@ public final class Settings implements Serializable
 	public Settings setTemplateResult(String templateResult)
 	{
 		this.templateResult = templateResult;
-		return this;
-	}
-
-	public String getInitSelection()
-	{
-		return initSelection;
-	}
-
-	public Settings setInitSelection(String initSelection)
-	{
-		this.initSelection = initSelection;
-		return this;
-	}
-
-	public String getQuery()
-	{
-		return query;
-	}
-
-	public Settings setQuery(String query)
-	{
-		this.query = query;
 		return this;
 	}
 
@@ -429,41 +427,6 @@ public final class Settings implements Serializable
 		return this;
 	}
 
-	public String getContainerCss()
-	{
-		return containerCss;
-	}
-
-	public Settings setContainerCss(String containerCss)
-	{
-		this.containerCss = containerCss;
-		return this;
-	}
-
-	public String getDropdownCss()
-	{
-		return dropdownCss;
-	}
-
-	public Settings setDropdownCss(String dropdownCss)
-	{
-		this.dropdownCss = dropdownCss;
-		return this;
-	}
-
-	@Deprecated(forRemoval = true, since = "10.9")
-	public String getContainerCssClass()
-	{
-		return selectionCssClass;
-	}
-
-	@Deprecated(forRemoval = true, since = "10.9")
-	public Settings setContainerCssClass(String selectionCssClass)
-	{
-		this.selectionCssClass = selectionCssClass;
-		return this;
-	}
-
 	public String getSelectionCssClass()
 	{
 		return selectionCssClass;
@@ -578,6 +541,30 @@ public final class Settings implements Serializable
 
 	public Settings setLanguage(String language) {
 		this.language = language;
+		return this;
+	}
+
+	public DIRECTION getDir() {
+		return dir;
+	}
+
+	/**
+	 * Sets the dir attribute on the selection and dropdown containers to indicate the direction of the text.
+	 *
+	 * @param newDir - direction of the text
+	 * @return this for chaining
+	 */
+	public Settings setDir(DIRECTION newDir) {
+		this.dir = newDir;
+		return this;
+	}
+
+	public String getDataAdapter() {
+		return dataAdapter;
+	}
+
+	public Settings setDataAdapter(String dataAdapter) {
+		this.dataAdapter = dataAdapter;
 		return this;
 	}
 }

@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicketstuff-core</artifactId>
-		<version>10.10.0-SNAPSHOT</version>
+		<version>12.0.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>wicketstuff-bom</artifactId>
@@ -49,15 +49,7 @@
 								</dependencyExclusion>
 								<dependencyExclusion>
 									<groupId>org.wicketstuff</groupId>
-									<artifactId>wicketstuff-nashorn-examples</artifactId>
-								</dependencyExclusion>
-								<dependencyExclusion>
-									<groupId>org.wicketstuff</groupId>
 									<artifactId>lightbox2-examples</artifactId>
-								</dependencyExclusion>
-								<dependencyExclusion>
-									<groupId>org.wicketstuff</groupId>
-									<artifactId>jqplot-examples</artifactId>
 								</dependencyExclusion>
 								<dependencyExclusion>
 									<groupId>org.wicketstuff</groupId>
@@ -73,14 +65,6 @@
 								</dependencyExclusion>
 								<dependencyExclusion>
 									<groupId>org.wicketstuff</groupId>
-									<artifactId>flot-examples</artifactId>
-								</dependencyExclusion>
-								<dependencyExclusion>
-									<groupId>org.wicketstuff</groupId>
-									<artifactId>gae-initializer-example</artifactId>
-								</dependencyExclusion>
-								<dependencyExclusion>
-									<groupId>org.wicketstuff</groupId>
 									<artifactId>wicket-gchart-examples</artifactId>
 								</dependencyExclusion>
 								<dependencyExclusion>
@@ -89,11 +73,6 @@
 								</dependencyExclusion>
 								<dependencyExclusion>
 									<groupId>org.wicketstuff</groupId>
-									<artifactId>googlecharts-examples</artifactId>
-								</dependencyExclusion>
-								<dependencyExclusion>
-									<groupId>org.wicketstuff</groupId>
-									<artifactId>wicketstuff-htmlcompressor-examples</artifactId>
 								</dependencyExclusion>
 								<dependencyExclusion>
 									<groupId>org.wicketstuff</groupId>
@@ -141,10 +120,6 @@
 								</dependencyExclusion>
 								<dependencyExclusion>
 									<groupId>org.wicketstuff</groupId>
-									<artifactId>openlayers-examples</artifactId>
-								</dependencyExclusion>
-								<dependencyExclusion>
-									<groupId>org.wicketstuff</groupId>
 									<artifactId>openlayers3-examples</artifactId>
 								</dependencyExclusion>
 								<dependencyExclusion>
@@ -162,10 +137,6 @@
 								<dependencyExclusion>
 									<groupId>org.wicketstuff</groupId>
 									<artifactId>quickview-examples</artifactId>
-								</dependencyExclusion>
-								<dependencyExclusion>
-									<groupId>org.wicketstuff</groupId>
-									<artifactId>wicketstuff-simile-timeline-examples</artifactId>
 								</dependencyExclusion>
 								<dependencyExclusion>
 									<groupId>org.wicketstuff</groupId>
@@ -218,10 +189,6 @@
 								<dependencyExclusion>
 									<groupId>org.wicketstuff</groupId>
 									<artifactId>wicket-shiro-example-spring-hibernate-native</artifactId>
-								</dependencyExclusion>
-								<dependencyExclusion>
-									<groupId>org.wicketstuff</groupId>
-									<artifactId>wicket-facebook-examples</artifactId>
 								</dependencyExclusion>
 								<dependencyExclusion>
 									<groupId>org.wicketstuff</groupId>
@@ -278,18 +245,6 @@
 								<dependencyExclusion>
 									<groupId>org.wicketstuff</groupId>
 									<artifactId>wicketstuff-dashboard-examples</artifactId>
-								</dependencyExclusion>
-								<dependencyExclusion>
-									<groupId>org.wicketstuff</groupId>
-									<artifactId>wicketstuff-jamon-examples</artifactId>
-								</dependencyExclusion>
-								<dependencyExclusion>
-									<groupId>org.wicketstuff</groupId>
-									<artifactId>wicket-datetime-examples</artifactId>
-								</dependencyExclusion>
-								<dependencyExclusion>
-									<groupId>org.wicketstuff</groupId>
-									<artifactId>wicketstuff-datetime-yui-examples</artifactId>
 								</dependencyExclusion>
 								<dependencyExclusion>
 									<groupId>org.wicketstuff</groupId>

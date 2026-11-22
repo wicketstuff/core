@@ -73,8 +73,8 @@
 			<artifactId>jetty-server</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-webapp</artifactId>
+			<groupId>org.eclipse.jetty.ee11</groupId>
+			<artifactId>jetty-ee11-webapp</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
@@ -85,8 +85,8 @@
 			<artifactId>wicket-native-websocket-javax</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.eclipse.jetty.websocket</groupId>
-			<artifactId>websocket-jakarta-server</artifactId>
+			<groupId>org.eclipse.jetty.ee11.websocket</groupId>
+			<artifactId>jetty-ee11-websocket-jakarta-server</artifactId>
 		</dependency>
 	</dependencies>
 
@@ -137,7 +137,7 @@
 						<jvmArg>-Xmx1024m</jvmArg>
 					</jvmArgs>
 					<args>
-						<arg>-release:17</arg>
+						<arg>-release:21</arg>
 						<arg>-deprecation</arg>
 						<!--arg>-optimise</arg-->
 						<arg>-unchecked</arg>

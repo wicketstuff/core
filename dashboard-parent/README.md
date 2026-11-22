@@ -38,7 +38,6 @@ Artifacts
 -------------------
 - Wicket Dashboard Core `wicketstuff-dashboard-core` (jar)
 - Wicket Dashboard (Standard) Widgets
-    - jqplot `wicketstuff-dashboard-widgets-jqplot`          (jar)
     - justgage `wicketstuff-dashboard-widgets-justgage`      (jar)
     - loremipsum `wicketstuff-dashboard-widgets-loremispum`  (jar)
 - Wicket Dashboard Demo `wicketstuff-dashboard-examples` (war)
@@ -53,13 +52,6 @@ In your pom.xml you must define the dependencies to wicket dashboard artifacts w
 <dependency>
     <groupId>org.wicketstuff</groupId>
     <artifactId>wicketstuff-dashboard-core</artifactId>
-    <version>${wicketstuff.version}</version>
-</dependency>
-
-<!-- OPTIONAL -->
-<dependency>
-    <groupId>org.wicketstuff</groupId>
-    <artifactId>wicketstuff-dashboard-widgets-jqplot</artifactId>
     <version>${wicketstuff.version}</version>
 </dependency>
 
@@ -98,14 +90,12 @@ public void init() {
     DashboardContext dashboardContext = getDashboardContext();
     dashboardContext.getWidgetRegistry()
         .registerWidget(new LoremIpsumWidgetDescriptor())
-        .registerWidget(new JqPlotWidgetDescriptor())
         .registerWidget(new JustGageWidgetDescriptor())
 
     // add a custom action for all widgets
     dashboardContext.setWidgetActionsFactory(new DemoWidgetActionsFactory());
 
     // set some (data) factory
-    JqPlotWidget.setChartFactory(new DemoChartFactory());
     JustGageWidget.setJustGageFactory(new DemoJustGageFactory());
 
     // init dashboard from context
@@ -166,8 +156,8 @@ If you want support for another languages please create and send a pull request 
 
 Demo
 -------------------
-I have a tiny demo application. In this demo I have implemented four widgets types:
-a chart widget using [jqPlot](http://www.jqplot.com), a handy widget for generating and animating nice & clean gauges using [JustGage](http://justgage.com) and a LoremIpsum widget (display a Lorem Ipsum).
+I have a tiny demo application. In this demo I have implemented two widget types:
+a handy widget for generating and animating nice & clean gauges using [JustGage](http://justgage.com) and a LoremIpsum widget (display a Lorem Ipsum).
 
 The demo application is in demo package.
 To run the demo application use:

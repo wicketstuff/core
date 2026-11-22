@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>datatables-parent</artifactId>
-		<version>10.10.0-SNAPSHOT</version>
+		<version>12.0.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>wicketstuff-datatables</artifactId>
@@ -13,6 +13,12 @@
 
 	<name>DataTables jQuery Plugin Integration</name>
 	<description>DataTables jQuery integration for Wicket</description>
+
+	<properties>
+		<datatables.version>3.1.5</datatables.version>
+		<datatables-select.version>4.1.1</datatables-select.version>
+		<datatables-scroller.version>3.1.1</datatables-scroller.version>
+	</properties>
 
 	<dependencies>
 		<dependency>
@@ -27,34 +33,82 @@
 			<groupId>de.agilecoders.wicket.webjars</groupId>
 			<artifactId>wicket-webjars</artifactId>
 		</dependency>
+		<!-- DataTables 3 has no dependencies; the Select and Scroller releases for DataTables 3
+		     require DataTables 3.1, which is only published as npm webjars -->
 		<dependency>
-			<groupId>org.webjars</groupId>
-			<artifactId>datatables</artifactId>
-			<version>2.3.8</version>
+			<groupId>org.webjars.npm</groupId>
+			<artifactId>datatables.net</artifactId>
+			<version>${datatables.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars.npm</groupId>
+			<artifactId>datatables.net-dt</artifactId>
+			<version>${datatables.version}</version>
 			<exclusions>
+				<!-- only the stylesheet is needed -->
 				<exclusion>
-					<groupId>org.webjars</groupId>
-					<artifactId>jquery</artifactId>
+					<groupId>*</groupId>
+					<artifactId>*</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>org.webjars</groupId>
-			<artifactId>datatables-select</artifactId>
-			<version>2.1.0</version>
+			<groupId>org.webjars.npm</groupId>
+			<artifactId>datatables.net-bs5</artifactId>
+			<version>${datatables.version}</version>
+			<exclusions>
+				<!-- only the stylesheet and the styling integration are needed -->
+				<exclusion>
+					<groupId>*</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars.npm</groupId>
+			<artifactId>datatables.net-select</artifactId>
+			<version>${datatables-select.version}</version>
+			<exclusions>
+				<!-- datatables.net is declared above -->
+				<exclusion>
+					<groupId>*</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars.npm</groupId>
+			<artifactId>datatables.net-select-bs5</artifactId>
+			<version>${datatables-select.version}</version>
+			<exclusions>
+				<!-- only the stylesheet is needed -->
+				<exclusion>
+					<groupId>*</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.webjars.npm</groupId>
 			<artifactId>datatables.net-scroller</artifactId>
-			<version>2.4.3</version>
+			<version>${datatables-scroller.version}</version>
 			<exclusions>
+				<!-- datatables.net is declared above -->
 				<exclusion>
-					<groupId>org.webjars.npm</groupId>
-					<artifactId>datatables.net</artifactId>
+					<groupId>*</groupId>
+					<artifactId>*</artifactId>
 				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars.npm</groupId>
+			<artifactId>datatables.net-scroller-bs5</artifactId>
+			<version>${datatables-scroller.version}</version>
+			<exclusions>
+				<!-- only the stylesheet is needed -->
 				<exclusion>
-					<groupId>org.webjars.npm</groupId>
-					<artifactId>jquery</artifactId>
+					<groupId>*</groupId>
+					<artifactId>*</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
@@ -66,6 +120,28 @@
 		<dependency>
 			<groupId>de.agilecoders.wicket</groupId>
 			<artifactId>jquery-selectors</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-tester</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>jakarta.servlet</groupId>
+			<artifactId>jakarta.servlet-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-params</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 </project>

@@ -16,10 +16,14 @@
  */
 package org.wicketstuff.jquery.ui.form.autocomplete;
 
+import java.util.List;
+
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.lang.Args;
+import org.danekja.java.util.function.serializable.SerializableSupplier;
 import org.wicketstuff.jquery.core.JQueryEvent;
 import org.wicketstuff.jquery.core.Options;
 import org.wicketstuff.jquery.core.ajax.IJQueryAjaxAware;
@@ -32,40 +36,45 @@ import org.wicketstuff.jquery.ui.JQueryUIBehavior;
  *
  * @author Sebastien Briquet - sebfz1
  */
-public abstract class AutoCompleteBehavior extends JQueryUIBehavior implements IJQueryAjaxAware
+public abstract class AutoCompleteBehavior<T> extends JQueryUIBehavior implements IJQueryAjaxAware
 {
 	private static final long serialVersionUID = 1L;
 	public static final String METHOD = "autocomplete";
 
 	/** event listener */
-	private final IAutoCompleteListener listener;
+	private final IAutoCompleteListener<T> listener;
+
+    /** the model producing values */
+
+    private final SerializableSupplier<List<T>> supplier;
 
 	private JQueryAjaxBehavior onSelectAjaxBehavior = null;
 
 	/**
 	 * Constructor
 	 *
-	 * @param selector the html selector (ie: "#myId")
+	 * @param selector the HTML selector (ie: "#myId")
 	 * @param listener the {@link IAutoCompleteListener}
 	 */
-	public AutoCompleteBehavior(String selector, IAutoCompleteListener listener)
+	public AutoCompleteBehavior(String selector, IAutoCompleteListener<T> listener, SerializableSupplier<List<T>> supplier)
 	{
-		this(selector, new Options(), listener);
+		this(selector, new Options(), listener, supplier);
 	}
 
 	/**
 	 * Constructor
 	 *
-	 * @param selector the html selector (ie: "#myId")
+	 * @param selector the HTML selector (ie: "#myId")
 	 * @param options the {@link Options}
 	 * @param listener the {@link IAutoCompleteListener}
 	 */
-	public AutoCompleteBehavior(String selector, Options options, IAutoCompleteListener listener)
+	public AutoCompleteBehavior(String selector, Options options, IAutoCompleteListener<T> listener, SerializableSupplier<List<T>> supplier)
 	{
 		super(selector, METHOD, options);
 
 		this.listener = Args.notNull(listener, "listener");
-	}
+        this.supplier = supplier;
+    }
 
 	// Methods //
 
@@ -108,16 +117,16 @@ public abstract class AutoCompleteBehavior extends JQueryUIBehavior implements I
 	@Override
 	public void onAjax(AjaxRequestTarget target, JQueryEvent event)
 	{
-		if (event instanceof SelectEvent)
+		if (event instanceof SelectEvent selectEvent)
 		{
-			this.listener.onSelect(target, ((SelectEvent) event).getIndex());
+			this.listener.onSelect(target, listener.getElementSelectionStrategy().findChoice(supplier.get(), selectEvent.getIdentifier()), selectEvent.getIdentifier());
 		}
 	}
 
 	// Factories //
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'select' event
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'select' eventta
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
 	 * @return a new {@code OnSelectAjaxBehavior} by default
@@ -127,7 +136,7 @@ public abstract class AutoCompleteBehavior extends JQueryUIBehavior implements I
 		return new OnSelectAjaxBehavior(source);
 	}
 
-	// Ajax classes //
+	// Ajax classes //,
 
 	/**
 	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'select' event
@@ -163,16 +172,31 @@ public abstract class AutoCompleteBehavior extends JQueryUIBehavior implements I
 	 */
 	protected static class SelectEvent extends JQueryEvent
 	{
-		private final int index;
+		private final String identifier;
 
 		public SelectEvent()
 		{
-			this.index = RequestCycleUtils.getQueryParameterValue("index").toInt(0);
+			this.identifier = RequestCycleUtils.getQueryParameterValue("index").toString();
 		}
 
-		public int getIndex()
+		/**
+		 * Gets the selected item identifier (JSON {@code id}). For the default index strategy this is the list index.
+		 *
+		 * @return the identifier
+		 */
+		public String getIdentifier()
 		{
-			return this.index;
+			return this.identifier;
 		}
+	}
+
+	/**
+	 * Gets the {@link JQueryAjaxBehavior} wired to the 'select' event
+	 *
+	 * @return the {@code OnSelectAjaxBehavior}, or {@code null} if the behavior has not been bound yet
+	 */
+	public final JQueryAjaxBehavior getOnSelectAjaxBehavior()
+	{
+		return this.onSelectAjaxBehavior;
 	}
 }

@@ -33,6 +33,7 @@ import org.wicketstuff.jquery.core.Options;
  * @author Martin Grigorov - martin-g
  *
  */
+@Deprecated(since = "10.11.0", forRemoval = true)
 public class Calendar extends WebMarkupContainer implements ICalendarListener
 {
 	private static final long serialVersionUID = 1L;

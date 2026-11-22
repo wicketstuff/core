@@ -26,7 +26,7 @@ public class CassandraDataStoreTest extends BaseDataStoreTest {
 	@Override
 	protected IPageStore createDataStore() throws Exception {
 		ICassandraSettings settings = new CassandraSettings();
-		settings.getContactPoints().add("127.0.0.1");
+		settings.addContactPoint("127.0.0.1");
 		return new CassandraDataStore("test", settings);
 	}
 }

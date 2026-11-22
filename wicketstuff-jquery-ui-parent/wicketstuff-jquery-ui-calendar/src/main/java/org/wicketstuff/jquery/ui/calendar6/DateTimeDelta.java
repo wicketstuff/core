@@ -16,5 +16,6 @@
  */
 package org.wicketstuff.jquery.ui.calendar6;
 
+@Deprecated(since = "10.11.0", forRemoval = true)
 public record DateTimeDelta(int years,int months, int days, int millis) {
 }

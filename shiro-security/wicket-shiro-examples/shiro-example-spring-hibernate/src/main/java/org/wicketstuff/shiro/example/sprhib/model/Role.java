@@ -27,6 +27,7 @@ import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Index;
@@ -42,7 +43,6 @@ import jakarta.persistence.Table;
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Role
 {
-
 	private Long id;
 
 	private String name;
@@ -97,7 +97,7 @@ public class Role
 		this.description = description;
 	}
 
-	@ElementCollection
+	@ElementCollection(fetch = FetchType.EAGER)
 	@JoinTable(name = "roles_permissions")
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	public Set<String> getPermissions()
@@ -109,5 +109,4 @@ public class Role
 	{
 		this.permissions = permissions;
 	}
-
 }

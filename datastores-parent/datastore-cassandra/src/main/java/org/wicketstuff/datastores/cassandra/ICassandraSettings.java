@@ -2,6 +2,8 @@ package org.wicketstuff.datastores.cassandra;
 
 import java.util.List;
 
+import com.datastax.oss.driver.api.core.metadata.EndPoint;
+
 import java.time.Duration;
 
 /**
@@ -49,7 +51,22 @@ public interface ICassandraSettings
 	Duration getRecordTtl();
 
 	/**
+	 * @deprecated please use {@link #getContactEndPoints()}/{@link #addContactPoint(String)}
 	 * @return A list of contact points (hostname:port) to contact to.
 	 */
+	@Deprecated(since = "10.11.0", forRemoval = true)
 	List<String> getContactPoints();
+
+	/**
+	 * Parses passed string and creates EndPoint
+	 * @param point - endpoint in format hostname:port
+	 * @return this instance for chaining
+	 */
+	ICassandraSettings addContactPoint(String point);
+
+	/**
+	 *
+	 * @return A list of contact end points to contact to.
+	 */
+	List<EndPoint> getContactEndPoints();
 }

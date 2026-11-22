@@ -1,9 +1,12 @@
 package org.wicketstuff.datastores.cassandra;
 
+import static com.datastax.oss.driver.api.querybuilder.QueryBuilder.literal;
+
 import java.nio.ByteBuffer;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.wicket.WicketRuntimeException;
@@ -17,18 +20,16 @@ import org.apache.wicket.util.lang.Bytes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.datastax.driver.core.Cluster;
-import com.datastax.driver.core.Host;
-import com.datastax.driver.core.KeyspaceMetadata;
-import com.datastax.driver.core.Metadata;
-import com.datastax.driver.core.ResultSet;
-import com.datastax.driver.core.Row;
-import com.datastax.driver.core.Session;
-import com.datastax.driver.core.TableMetadata;
-import com.datastax.driver.core.querybuilder.Delete;
-import com.datastax.driver.core.querybuilder.Insert;
-import com.datastax.driver.core.querybuilder.QueryBuilder;
-import com.datastax.driver.core.querybuilder.Select;
+import com.datastax.oss.driver.api.core.CqlSession;
+import com.datastax.oss.driver.api.core.cql.ResultSet;
+import com.datastax.oss.driver.api.core.cql.Row;
+import com.datastax.oss.driver.api.core.metadata.Metadata;
+import com.datastax.oss.driver.api.core.metadata.Node;
+import com.datastax.oss.driver.api.core.metadata.schema.KeyspaceMetadata;
+import com.datastax.oss.driver.api.core.metadata.schema.TableMetadata;
+import com.datastax.oss.driver.api.core.type.codec.TypeCodecs;
+import com.datastax.oss.driver.api.querybuilder.QueryBuilder;
+import com.datastax.oss.driver.api.querybuilder.select.Selector;
 
 /**
  * A store that saves serialiazed pages in Apache Cassandra.
@@ -51,26 +52,21 @@ public class CassandraDataStore extends AbstractPersistentPageStore implements I
 	 * The name of the column where the pages' type will be stored
 	 */
 	private static final String COLUMN_PAGE_TYPE = "type";
-	
+
 	/**
 	 * The name of the column where the pages' size will be stored
 	 */
 	private static final String COLUMN_PAGE_SIZE = "size";
-	
+
 	/**
 	 * The name of the column where the pages' bytes will be stored
 	 */
 	private static final String COLUMN_DATA = "data";
 
 	/**
-	 * The Cassandra cluster
-	 */
-	private final Cluster cluster;
-
-	/**
 	 * The connection to the cluster
 	 */
-	private final Session session;
+	private final CqlSession session;
 
 	/**
 	 * The various settings
@@ -80,66 +76,36 @@ public class CassandraDataStore extends AbstractPersistentPageStore implements I
 	/**
 	 * Constructor.
 	 *
-	 * Creates a Cluster based on the contact points provided
-	 * by the passed settings
+	 * Initializes the connection to the Cassandra cluster and creates
+	 * the keyspace and/or table if necessary.
 	 *
+	 * @param applicationName  The name of the application
 	 * @param settings The various settings
 	 */
 	public CassandraDataStore(String applicationName, ICassandraSettings settings)
 	{
-		this(applicationName, createCluster(settings), settings);
-	}
-
-	private static Cluster createCluster(ICassandraSettings settings)
-	{
-		Args.notNull(settings, "settings");
-
-		List<String> contactPoints = settings.getContactPoints();
-		if (contactPoints == null || contactPoints.size() == 0)
-		{
-			throw new IllegalArgumentException("At least one contact point must be provided" +
-					"to be able to connect to Cassandra. See ICassandraSettings#getContactPoints.");
-		}
-
-		String[] contactPointsAsArray = contactPoints.toArray(new String[contactPoints.size()]);
-
-		Cluster cluster = Cluster.builder()
-				.addContactPoints(contactPointsAsArray).build();
-
-		return cluster;
-	}
-
-	/**
-	 * Constructor.
-	 *
-	 * Initializes the connection to the Cassandra cluster and creates
-	 * the keyspace and/or table if necessary.
-	 *
-	 * @param cluster  The Cassandra cluster
-	 * @param settings The various settings
-	 */
-	public CassandraDataStore(String applicationName, Cluster cluster, ICassandraSettings settings)
-	{
 		super(applicationName);
-		
-		this.cluster = Args.notNull(cluster, "cluster");
+
 		this.settings = Args.notNull(settings, "settings");
 
-		Metadata metadata = cluster.getMetadata();
+		if (settings.getContactEndPoints().isEmpty()) {
+			throw new IllegalArgumentException("At least one contact point must be provided to be able to connect to Cassandra. See ICassandraSettings#getContactEndPoints.");
+		}
+		session = CqlSession.builder()
+				.addContactEndPoints(settings.getContactEndPoints())
+				.withKeyspace(settings.getKeyspaceName())
+				.build();
 
-		if (LOGGER.isInfoEnabled())
-		{
+		Metadata metadata = session.getMetadata();
+
+		if (LOGGER.isInfoEnabled()) {
 			LOGGER.info("Connected to cluster: {}", metadata.getClusterName());
 
-			for (Host host : metadata.getAllHosts())
-			{
+			for (Node node : metadata.getNodes().values()) {
 				LOGGER.info("Datatacenter: {}; Host: {}; Rack: {}",
-						new Object[]{host.getDatacenter(), host.getAddress(), host.getRack()});
+						new Object[]{node.getDatacenter(), node.getEndPoint().resolve(), node.getRack()});
 			}
 		}
-
-		session = cluster.connect();
-
 		String keyspaceName = settings.getKeyspaceName();
 		KeyspaceMetadata keyspaceMetadata = createKeyspaceIfNecessary(keyspaceName, metadata);
 
@@ -150,86 +116,73 @@ public class CassandraDataStore extends AbstractPersistentPageStore implements I
 
 	@Override
 	protected IManageablePage getPersistedPage(String sessionIdentifier, int pageId) {
-		Select.Where dataSelect = QueryBuilder
-			.select(COLUMN_PAGE_TYPE, COLUMN_DATA)
-			.from(settings.getKeyspaceName(), settings.getTableName())
-			.where(QueryBuilder.eq(COLUMN_SESSION_ID, sessionIdentifier))
-			.and(QueryBuilder.eq(COLUMN_PAGE_ID, pageId));
-		
-		ResultSet rows = session.execute(dataSelect);
+		ResultSet rows = session.execute(QueryBuilder
+				.selectFrom(settings.getKeyspaceName(), settings.getTableName())
+				.columns(COLUMN_PAGE_TYPE, COLUMN_DATA)
+				.whereColumn(COLUMN_SESSION_ID).isEqualTo(literal(sessionIdentifier))
+				.whereColumn(COLUMN_PAGE_ID).isEqualTo(literal(pageId))
+				.build());
 		Row row = rows.one();
-		if (row != null)
-		{
+		if (row != null) {
 			String pageType = row.getString(COLUMN_PAGE_TYPE);
-			
-			ByteBuffer data = row.getBytes(COLUMN_DATA);
+
+			ByteBuffer data = row.getBytesUnsafe(COLUMN_DATA);
 			byte[] bytes = new byte[data.remaining()];
 			data.get(bytes);
-			
+
 			LOGGER.debug("Got data for session '{}' and page id '{}'", sessionIdentifier, pageId);
 
 			return new SerializedPage(pageId, pageType, bytes);
 		}
-		
+
 		return null;
 	}
 
 	@Override
 	protected void removePersistedPage(String identifier, IManageablePage page) {
-		Delete.Where delete = QueryBuilder
-				.delete()
-				.all()
-				.from(settings.getKeyspaceName(), settings.getTableName())
-				.where(QueryBuilder.eq(COLUMN_SESSION_ID, identifier))
-				.and(QueryBuilder.eq(COLUMN_PAGE_ID, page.getPageId()));
-		session.execute(delete);
+		session.execute(QueryBuilder.deleteFrom(settings.getKeyspaceName(), settings.getTableName())
+				.whereColumn(COLUMN_SESSION_ID).isEqualTo(literal(identifier))
+				.whereColumn(COLUMN_PAGE_ID).isEqualTo(literal(page.getPageId()))
+				.build());
 
 		LOGGER.debug("Deleted data for session '{}' and page with id '{}'", identifier, page.getPageId());
 	}
 
 	@Override
 	protected void removeAllPersistedPages(String identifier) {
-		Delete.Where delete = QueryBuilder
-				.delete()
-				.all()
-				.from(settings.getKeyspaceName(), settings.getTableName())
-				.where(QueryBuilder.eq(COLUMN_SESSION_ID, identifier));
-		session.execute(delete);
+		session.execute(QueryBuilder.deleteFrom(settings.getKeyspaceName(), settings.getTableName())
+				.whereColumn(COLUMN_SESSION_ID).isEqualTo(literal(identifier))
+				.build());
 
 		LOGGER.debug("Deleted data for session '{}'", identifier);
 	}
 
 	@Override
 	protected void addPersistedPage(String identifier, IManageablePage page) {
-		if (page instanceof SerializedPage == false)
-		{
+		if (page instanceof SerializedPage == false) {
 			throw new WicketRuntimeException("CassandraDataStore works with serialized pages only");
 		}
 		SerializedPage serializedPage = (SerializedPage)page;
-		
-		Insert insert = QueryBuilder
+
+		session.execute(QueryBuilder
 				.insertInto(settings.getKeyspaceName(), settings.getTableName())
-				.using(QueryBuilder.ttl((int) settings.getRecordTtl().toSeconds()))
-				.values(new String[]{COLUMN_SESSION_ID, COLUMN_PAGE_ID, COLUMN_PAGE_SIZE, COLUMN_PAGE_TYPE, COLUMN_DATA},
-						new Object[]{identifier, serializedPage.getPageId(), serializedPage.getData().length, serializedPage.getPageType(), ByteBuffer.wrap(serializedPage.getData())});
-		session.execute(insert);
+				.value(COLUMN_SESSION_ID, literal(identifier))
+				.value(COLUMN_PAGE_ID, literal(serializedPage.getPageId()))
+				.value(COLUMN_PAGE_SIZE, literal(serializedPage.getData().length))
+				.value(COLUMN_PAGE_TYPE, literal(serializedPage.getPageType()))
+				.value(COLUMN_DATA, literal(ByteBuffer.wrap(serializedPage.getData()), TypeCodecs.BLOB))
+				.usingTtl((int) settings.getRecordTtl().toSeconds())
+				.build()
+			);
 
 		LOGGER.debug("Inserted data for session '{}' and page id '{}'", identifier, page.getPageId());
 	}
 
 	@Override
-	public void destroy()
-	{
-		if (session != null)
-		{
+	public void destroy() {
+		if (session != null) {
 			session.close();
 		}
-		
-		if (cluster != null)
-		{
-			cluster.close();
-		}
-		
 		super.destroy();
 	}
 
@@ -249,12 +202,10 @@ public class CassandraDataStore extends AbstractPersistentPageStore implements I
 	 * @param keyspaceMetadata The keyspace metadata. May be {@code null} if this is the first usage
 	 *                         of this store with these settings
 	 */
-	protected void createTableIfNecessary(String keyspaceName, KeyspaceMetadata keyspaceMetadata)
-	{
+	protected void createTableIfNecessary(String keyspaceName, KeyspaceMetadata keyspaceMetadata) {
 		String tableName = settings.getTableName();
-		TableMetadata tableMetadata = keyspaceMetadata != null ? keyspaceMetadata.getTable(tableName) : null;
-		if (tableMetadata == null)
-		{
+		Optional<TableMetadata> tableMetadata = keyspaceMetadata == null ? null : keyspaceMetadata.getTable(tableName);
+		if (tableMetadata.isEmpty()) {
 			session.execute(
 				String.format(
 					"CREATE TABLE %s.%s (" +
@@ -278,60 +229,50 @@ public class CassandraDataStore extends AbstractPersistentPageStore implements I
 	 */
 	protected KeyspaceMetadata createKeyspaceIfNecessary(String keyspaceName, Metadata metadata)
 	{
-		KeyspaceMetadata keyspaceMetadata = metadata.getKeyspace(keyspaceName);
-		if (keyspaceMetadata == null)
-		{
+		Optional<KeyspaceMetadata> keyspaceMetadata = metadata.getKeyspace(keyspaceName);
+		if (keyspaceMetadata.isEmpty()) {
 			session.execute(
 					String.format("CREATE KEYSPACE %s WITH replication " +
 							"= {'class':'SimpleStrategy', 'replication_factor':3};", keyspaceName));
 			LOGGER.debug("Created keyspace with name {}", keyspaceName);
 		}
-		return keyspaceMetadata;
+		return keyspaceMetadata.orElse(null);
 	}
-	
-	@Override
-	public Set<String> getSessionIdentifiers()
-	{
-		Select.Where dataSelect = QueryBuilder
-			.select(COLUMN_SESSION_ID)
-			.from(settings.getKeyspaceName(), settings.getTableName())
-			.where();
-		
-		Set<String> identifiers = new HashSet<>();
-		session.execute(dataSelect).forEach(row -> { identifiers.add(row.getString(COLUMN_SESSION_ID)); });
-		
-		return identifiers; 
-	}
-	
-	@Override
-	public Bytes getTotalSize()
-	{
-		Select.Where dataSelect = QueryBuilder
-			.select(QueryBuilder.sum(COLUMN_PAGE_SIZE))
-			.from(settings.getKeyspaceName(), settings.getTableName())
-			.where();
 
-		ResultSet rows = session.execute(dataSelect);
+	@Override
+	public Set<String> getSessionIdentifiers() {
+		Set<String> identifiers = new HashSet<>();
+		session.execute(QueryBuilder.selectFrom(settings.getKeyspaceName(), settings.getTableName())
+				.column(COLUMN_SESSION_ID)
+				.build())
+			.forEach(row -> { identifiers.add(row.getString(COLUMN_SESSION_ID)); });
+
+		return identifiers;
+	}
+
+	@Override
+	public Bytes getTotalSize() {
+		ResultSet rows = session.execute(QueryBuilder.selectFrom(settings.getKeyspaceName(), settings.getTableName())
+			.function("sum", Selector.column(COLUMN_PAGE_SIZE))
+			.build());
 		Row row = rows.one();
-		if (row != null)
-		{
-			return Bytes.bytes(row.getInt(0)); 
+		if (row != null) {
+			return Bytes.bytes(row.getInt(0));
 		}
 
 		return null;
 	}
-	
+
 	@Override
 	public List<IPersistedPage> getPersistedPages(String contextIdentifier)
 	{
-		Select.Where dataSelect = QueryBuilder
-			.select(COLUMN_PAGE_ID, COLUMN_PAGE_SIZE, COLUMN_PAGE_TYPE)
-			.from(settings.getKeyspaceName(), settings.getTableName())
-			.where(QueryBuilder.eq(COLUMN_SESSION_ID, contextIdentifier));
-		
 		List<IPersistedPage> pages = new LinkedList<>();
-		session.execute(dataSelect).forEach(row -> { pages.add(new PersistedPage(row.getInt(COLUMN_PAGE_ID), row.getString(COLUMN_PAGE_TYPE), row.getInt(COLUMN_PAGE_SIZE))); });
-		
-		return pages; 
+		session.execute(QueryBuilder.selectFrom(settings.getKeyspaceName(), settings.getTableName())
+				.columns(COLUMN_PAGE_ID, COLUMN_PAGE_SIZE, COLUMN_PAGE_TYPE)
+				.whereColumn(COLUMN_SESSION_ID).isEqualTo(literal(contextIdentifier))
+				.build())
+			.forEach(row -> { pages.add(new PersistedPage(row.getInt(COLUMN_PAGE_ID), row.getString(COLUMN_PAGE_TYPE), row.getInt(COLUMN_PAGE_SIZE))); });
+
+		return pages;
 	}
 }

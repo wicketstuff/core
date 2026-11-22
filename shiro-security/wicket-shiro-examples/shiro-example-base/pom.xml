@@ -23,7 +23,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicket-shiro-examples</artifactId>
-		<version>10.10.0-SNAPSHOT</version>
+		<version>12.0.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>wicket-shiro-example-base</artifactId>
@@ -43,14 +43,15 @@
 			<artifactId>wicketstuff-shiro</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<!--  JETTY DEPENDENCIES FOR TESTING  -->
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-server</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-webapp</artifactId>
+			<groupId>org.eclipse.jetty.ee11</groupId>
+			<artifactId>jetty-ee11-webapp</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
@@ -59,10 +60,9 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.eclipse.jetty.websocket</groupId>
-			<artifactId>websocket-jakarta-server</artifactId>
+			<groupId>org.eclipse.jetty.ee11.websocket</groupId>
+			<artifactId>jetty-ee11-websocket-jakarta-server</artifactId>
 			<scope>compile</scope>
 		</dependency>
 	</dependencies>
-
 </project>

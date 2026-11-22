@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicketstuff-jquery-ui-parent</artifactId>
-		<version>10.10.0-SNAPSHOT</version>
+		<version>12.0.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>wicketstuff-jquery-ui-samples</artifactId>
@@ -19,54 +19,54 @@
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
 			<artifactId>wicketstuff-jquery-ui</artifactId>
-			<version>10.10.0-SNAPSHOT</version>
+			<version>12.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
 			<artifactId>wicketstuff-jquery-ui-theme-base</artifactId>
-      <version>10.10.0-SNAPSHOT</version>
+      <version>12.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
 			<artifactId>wicketstuff-jquery-ui-calendar</artifactId>
-      <version>10.10.0-SNAPSHOT</version>
+      <version>12.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
 			<artifactId>wicketstuff-jquery-ui-plugins</artifactId>
-      <version>10.10.0-SNAPSHOT</version>
+      <version>12.0.0-SNAPSHOT</version>
 		</dependency>
 
 		<!-- KENDO-UI DEPENDENCIES -->
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
 			<artifactId>wicketstuff-kendo-ui</artifactId>
-      <version>10.10.0-SNAPSHOT</version>
+      <version>12.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
 			<artifactId>wicketstuff-kendo-ui-culture</artifactId>
-      <version>10.10.0-SNAPSHOT</version>
+      <version>12.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
 			<artifactId>wicketstuff-kendo-ui-theme-default</artifactId>
-      <version>10.10.0-SNAPSHOT</version>
+      <version>12.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
 			<artifactId>wicketstuff-kendo-ui-theme-bootstrap</artifactId>
-      <version>10.10.0-SNAPSHOT</version>
+      <version>12.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
 			<artifactId>wicketstuff-kendo-ui-theme-material</artifactId>
-      <version>10.10.0-SNAPSHOT</version>
+      <version>12.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
 			<artifactId>wicketstuff-kendo-ui-theme-meridian</artifactId>
-      <version>10.10.0-SNAPSHOT</version>
+      <version>12.0.0-SNAPSHOT</version>
 		</dependency>
 
 		<!-- WICKET DEPENDENCIES -->
@@ -96,30 +96,27 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- JETTY DEPENDENCIES FOR TESTING -->
+		<!--  JETTY DEPENDENCIES FOR TESTING  -->
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-server</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-webapp</artifactId>
-			<scope>test</scope>
+			<groupId>org.eclipse.jetty.ee11</groupId>
+			<artifactId>jetty-ee11-webapp</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-jmx</artifactId>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket-native-websocket-javax</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.eclipse.jetty.websocket</groupId>
-			<artifactId>websocket-jakarta-server</artifactId>
+			<groupId>org.eclipse.jetty.ee11.websocket</groupId>
+			<artifactId>jetty-ee11-websocket-jakarta-server</artifactId>
 		</dependency>
-
 	</dependencies>
 
 	<build>
@@ -167,14 +164,11 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>org.eclipse.jetty</groupId>
-				<artifactId>jetty-maven-plugin</artifactId>
+				<groupId>org.eclipse.jetty.ee11</groupId>
+				<artifactId>jetty-ee11-maven-plugin</artifactId>
 				<configuration>
 					<systemProperties>
-						<systemProperty>
-							<name>maven.project.build.directory.test-classes</name>
-							<value>${project.build.directory}/test-classes</value>
-						</systemProperty>
+						<maven.project.build.directory.test-classes>${project.build.directory}/test-classes</maven.project.build.directory.test-classes>
 					</systemProperties>
 					<jettyXmls>${project.basedir}/src/test/jetty/jetty.xml,${project.basedir}/src/test/jetty/jetty-ssl.xml,${project.basedir}/src/test/jetty/jetty-http.xml,${project.basedir}/src/test/jetty/jetty-https.xml</jettyXmls>
 				</configuration>

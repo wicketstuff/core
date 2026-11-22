@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Sebastien Briquet - sebfz1
  */
+@Deprecated(since = "10.11.0", forRemoval = true)
 public enum CalendarView
 {
 	dayGridMonth,

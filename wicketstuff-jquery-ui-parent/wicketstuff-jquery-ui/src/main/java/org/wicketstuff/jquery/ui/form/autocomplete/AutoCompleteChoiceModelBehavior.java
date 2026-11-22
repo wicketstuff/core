@@ -33,7 +33,7 @@ import com.github.openjson.JSONObject;
  * @param <T> the model object type
  * @author Sebastien Briquet - sebfz1
  */
-abstract class AutoCompleteChoiceModelBehavior<T> extends ChoiceModelBehavior<T>
+public abstract class AutoCompleteChoiceModelBehavior<T> extends ChoiceModelBehavior<T>
 {
 	private static final long serialVersionUID = 1L;
 
@@ -45,6 +45,16 @@ abstract class AutoCompleteChoiceModelBehavior<T> extends ChoiceModelBehavior<T>
 	public AutoCompleteChoiceModelBehavior(ITextRenderer<? super T> renderer, IJQueryTemplate template)
 	{
 		super(renderer, template);
+	}
+
+	/**
+	 * Gets the {@link IElementSelectionStrategy}. Index-based selection is used by default.
+	 *
+	 * @return the selection strategy
+	 */
+	protected IElementSelectionStrategy<T> getElementSelectionStrategy()
+	{
+		return IndexBasedElementSelectionStrategy.get();
 	}
 
 	@Override
@@ -61,7 +71,8 @@ abstract class AutoCompleteChoiceModelBehavior<T> extends ChoiceModelBehavior<T>
 
 				// ITextRenderer //
 				final JSONObject object = this.renderer.render(choice);
-				object.put("id", Integer.toString(index)); /* 'id' is a reserved word */
+				String identifier = this.getElementSelectionStrategy().getIdentifier(choice, index);
+				object.put("id", identifier != null ? identifier : Integer.toString(index)); /* 'id' is a reserved word */
 				object.put("value", this.renderer.getText(choice)); /* 'value' is a reserved word */
 
 				// Additional properties (like template properties) //

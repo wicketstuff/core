@@ -157,7 +157,7 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior
 	 * Constructor
 	 * 
 	 * @param source {@link Behavior} to which the event - returned by {@link #newEvent()} - will be broadcasted.
-	 * @param duration {@link Duration}. If different than {@link Duration#NONE}, an {@link ThrottlingSettings} will be added with the specified {@link Duration}.
+	 * @param duration {@link Duration}. If different than {@link Duration#ZERO}, an {@link ThrottlingSettings} will be added with the specified {@link Duration}.
 	 */
 	public JQueryAjaxBehavior(IJQueryAjaxAware source, Duration duration)
 	{
