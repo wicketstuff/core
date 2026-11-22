@@ -81,6 +81,8 @@ class JavaScriptWriterTest
 			JavaScriptWriter.resolve(root, page, "https://cdn.example.com/a.css"));
 		assertEquals("//cdn.example.com/a.css",
 			JavaScriptWriter.resolve(root, page, "//cdn.example.com/a.css"));
+		// URI rejects a space in the fragment, which Wicket leaves unencoded
+		assertEquals("css/a.css#a b", JavaScriptWriter.resolve(root, page, "css/a.css#a b"));
 	}
 
 	@Test

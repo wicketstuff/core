@@ -21,18 +21,30 @@
 	// Editors to focus as soon as they are initialized.
 	const pendingFocus = new WeakSet();
 
-	// The content each editor had when the last Wicket Ajax call that submitted it was sent.
+	// The content each editor had when the last Wicket Ajax call that sent it went out.
 	const submitted = new WeakMap();
 
-	// Whether the Ajax call sends the element: as part of its form, or as the component itself.
-	function submits(attrs, element) {
-		if (attrs.f) {
-			const form = document.getElementById(attrs.f);
-			if (form && form.contains(element)) {
-				return true;
-			}
+	// The number of Ajax calls that sent each editor and haven't completed yet.
+	const inFlight = new WeakMap();
+
+	// The editors each Ajax call sent, keyed by the call's attributes.
+	const sentBy = new WeakMap();
+
+	// Whether the request data contains a parameter with the given name, as Wicket serialized it:
+	// FormData for a multipart call, a query string in the body (POST) or in the URL (GET).
+	function sends(settings, name) {
+		if (!name) {
+			return false;
 		}
-		return attrs.c === element.id;
+		const data = settings.data;
+		if (data instanceof FormData) {
+			return data.has(name);
+		}
+		if (typeof data === 'string' && new URLSearchParams(data).has(name)) {
+			return true;
+		}
+		const query = (settings.url || '').split('#')[0].split('?')[1];
+		return query !== undefined && new URLSearchParams(query).has(name);
 	}
 
 	// Copies the content to the textarea without marking the editor as saved, so isDirty() keeps
@@ -157,8 +169,10 @@
 		 */
 		markSaved: function (id) {
 			const editor = hugerte.get(id);
+			// With more than one call underway that sent this editor, it is unknown which content
+			// is being acknowledged, so the editor stays unsaved.
 			if (!editor || !editor.initialized || !submitted.has(editor) ||
-				submitted.get(editor) !== editor.getContent()) {
+				(inFlight.get(editor) || 0) > 1 || submitted.get(editor) !== editor.getContent()) {
 				return;
 			}
 			editor.setDirty(false);
@@ -171,18 +185,36 @@
 	};
 
 	// Wicket serializes form fields after this event, so the textareas must be up to date.
-	// Only calls that send the editor take a snapshot, so a timer or a call on another channel
-	// can't make markSaved accept content the server never received.
-	Wicket.Event.subscribe(Wicket.Event.Topic.AJAX_CALL_BEFORE, function (jqEvent, attrs) {
+	Wicket.Event.subscribe(Wicket.Event.Topic.AJAX_CALL_BEFORE, function () {
 		hugerte.get().forEach(function (editor) {
-			if (!editor.initialized) {
-				return;
-			}
-			sync(editor);
-			if (submits(attrs, editor.getElement())) {
-				submitted.set(editor, editor.getContent());
+			if (editor.initialized) {
+				sync(editor);
 			}
 		});
+	});
+
+	// Only calls that actually send an editor take a snapshot of it, so a timer, a call stopped
+	// by a precondition or a call that serializes something else can't make markSaved accept
+	// content the server never received. Runs after preconditions and serialization.
+	Wicket.Event.subscribe(Wicket.Event.Topic.AJAX_CALL_BEFORE_SEND,
+		function (jqEvent, attrs, jqXHR, settings) {
+			const sent = hugerte.get().filter(function (editor) {
+				return editor.initialized && sends(settings, editor.getElement().name);
+			});
+			sent.forEach(function (editor) {
+				submitted.set(editor, editor.getContent());
+				inFlight.set(editor, (inFlight.get(editor) || 0) + 1);
+			});
+			if (sent.length > 0) {
+				sentBy.set(attrs, sent);
+			}
+		});
+
+	Wicket.Event.subscribe(Wicket.Event.Topic.AJAX_CALL_COMPLETE, function (jqEvent, attrs) {
+		(sentBy.get(attrs) || []).forEach(function (editor) {
+			inFlight.set(editor, Math.max(0, (inFlight.get(editor) || 0) - 1));
+		});
+		sentBy.delete(attrs);
 	});
 
 	// The editor UI lives next to its textarea, so removing the textarea alone leaves it behind.

@@ -98,13 +98,30 @@ final class JavaScriptWriter
 	 */
 	static String resolve(String root, String page, String url)
 	{
-		URI target = URI.create(url);
+		URI target;
+		try
+		{
+			target = URI.create(url);
+		}
+		catch (IllegalArgumentException e)
+		{
+			// for example a space in a fragment, which Wicket leaves unencoded
+			return url;
+		}
 		if (target.isAbsolute() || target.getRawAuthority() != null ||
 			target.getRawPath().startsWith("/"))
 		{
 			return url;
 		}
-		URI base = URI.create(root + page.replaceFirst("^/+", ""));
+		URI base;
+		try
+		{
+			base = URI.create(root + page.replaceFirst("^/+", ""));
+		}
+		catch (IllegalArgumentException e)
+		{
+			return url;
+		}
 		if (target.getRawPath().isEmpty())
 		{
 			// java.net.URI drops the last path segment for a query-only reference; a browser

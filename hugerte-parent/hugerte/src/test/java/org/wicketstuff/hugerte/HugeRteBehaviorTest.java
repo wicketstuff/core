@@ -27,18 +27,18 @@ import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.core.util.lang.WicketObjects;
 import org.apache.wicket.markup.IMarkupResourceStreamProvider;
 import org.apache.wicket.markup.MarkupException;
-import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.mock.MockApplication;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.Url;
+import org.apache.wicket.request.http.WebRequest;
 import org.apache.wicket.request.resource.ByteArrayResource;
 import org.apache.wicket.request.resource.CssResourceReference;
 import org.apache.wicket.request.resource.IResource;
-import org.apache.wicket.request.Url;
-import org.apache.wicket.request.http.WebRequest;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.request.resource.UrlResourceReference;
 import org.apache.wicket.util.resource.IResourceStream;
@@ -49,8 +49,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import de.agilecoders.wicket.webjars.WicketWebjars;
-import jakarta.servlet.http.HttpServletRequest;
 import de.agilecoders.wicket.webjars.settings.WebjarsSettings;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 class HugeRteBehaviorTest
 {
