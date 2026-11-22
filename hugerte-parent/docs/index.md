@@ -49,9 +49,20 @@ text.add(new HugeRteBehavior(HugeRteConfig.defaults()
 
 `HugeRteConfig` is an immutable record. Plugins and toolbar rows have typed methods; every other [HugeRTE option](https://hugerte.org) is set with `with(name, value)`.
 
-The editor follows the component: a component that is disabled in its hierarchy gets a read-only editor, and `setRequired(true)` is validated by Wicket on the server. The behavior only supports `<textarea>` elements; HugeRTE's inline mode, which edits a `<div>` in place, is not bound to Wicket form processing.
-
 HugeRTE shows a "Powered by HugeRTE" link in the status bar by default. Its MIT licence does not require the link; hide it with `with("branding", false)`.
+
+## What the integration does
+
+- **The textarea stays the form component.** Wicket reads, converts and validates the submitted HTML as for any other `TextArea`. Only `<textarea>` is supported: other tags fail with a `MarkupException`, and HugeRTE's inline mode isn't available.
+- **The editor follows component state.** A component that is disabled in its hierarchy gets a read-only editor, also on phones and tablets. `setRequired(true)` is validated by Wicket on the server; the browser's own `required` check is suspended while the editor is active, because on the hidden textarea it would block the submit without telling the user why.
+- **Ajax works with ordinary components.** Before every Wicket Ajax call the editors copy their content to their textareas, so a plain `AjaxButton` or `AjaxSubmitLink` submits the edited text. The editor's `change`, `undo`, `redo` and `blur` reach the textarea, so `AjaxFormComponentUpdatingBehavior` and `OnChangeAjaxBehavior` work. See [Save editor content with Ajax](ajax.md).
+- **Re-rendering and hiding clean up.** When Wicket Ajax replaces or removes a component, its editor is removed; a re-rendered component gets a new editor with the model value.
+- **Unsaved changes are tracked.** Copying content to the textarea doesn't mark the editor as saved, so `isDirty()` and the autosave and save plugins keep working. `HugeRteBehavior.markSaved` marks it as saved, but only for the content the current request sent: edits made while the request was underway, or content that never reached the model, stay unsaved.
+- **The server can focus the editor.** `HugeRteBehavior.focus` puts the cursor in the editor; `AjaxRequestTarget.focusComponent` would focus the hidden textarea.
+- **Wicket resources work as options.** A `ResourceReference`, such as a style sheet, a language pack, an upload endpoint or a plugin, is written as an absolute URL that includes the context path. See [Use a language pack](language-packs.md) and [Use JavaScript callbacks with RawJavaScript](javascript-callbacks.md).
+- **The configuration is safe to render.** `HugeRteConfig` is an immutable, serializable record. Values are validated and escaped, so they can't break out of the page's script element; callbacks go through `RawJavaScript`.
+- **It works under Wicket's strict Content Security Policy.** `HugeRteCsp.allow` adds only what HugeRTE's styles need and leaves `script-src` alone. See [Allow HugeRTE under Wicket's Content Security Policy](csp.md).
+- **No extra setup.** The HugeRTE scripts are served by wicket-webjars, which the module installs when the application hasn't.
 
 ## Sanitize the submitted HTML
 
