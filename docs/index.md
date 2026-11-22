@@ -16,3 +16,5 @@ Wicket Stuff is a collection of open source projects for the [Apache Wicket](htt
 ## Reporting issues
 
 Issues can be entered at <https://github.com/wicketstuff/core/issues>.
+
+Do not report security vulnerabilities as public issues. Report them privately through [GitHub private vulnerability reporting](https://github.com/wicketstuff/core/security); the [security policy](https://github.com/wicketstuff/core/blob/master/SECURITY.md) explains what is in scope and where vulnerabilities in Apache Wicket itself go.
