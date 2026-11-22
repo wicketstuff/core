@@ -55,7 +55,7 @@ String escaping converts `"` to `\"`, `\` to `\\`, and `\n`, `\r`, `\t`, `\b`, `
 
 Four option names are reserved and cannot be passed to `with(String, Object)` or placed in `options`:
 
-- `selector` (managed by `HugeRteBehavior`)
+- `selector` (`HugeRteBehavior` attaches the editor through `target` instead)
 - `target` (set by `Wicket.HugeRte.init`)
 - `plugins` (use `withPlugins(...)`)
 - `toolbar` (use `withToolbar(...)`)
