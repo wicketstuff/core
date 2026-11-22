@@ -387,7 +387,9 @@ public abstract class DefaultAbstractTree extends AbstractTree
 				protected void onComponentTag(final ComponentTag tag)
 				{
 					super.onComponentTag(tag);
-					tag.put("onclick", "return false");
+					// the junction of a leaf is not a link; without href the browser does not
+					// follow it (an inline onclick handler would be blocked by the CSP)
+					tag.remove("href");
 				}
 			};
 		}
@@ -491,9 +493,25 @@ public abstract class DefaultAbstractTree extends AbstractTree
 			protected void onComponentTag(final ComponentTag tag)
 			{
 				super.onComponentTag(tag);
+				tag.append("class", iconStyle().getCssClass(), " ");
+			}
+
+			@Override
+			public void renderHead(final IHeaderResponse response)
+			{
+				super.renderHead(response);
+				iconStyle().renderHead(response);
+			}
+
+			/**
+			 * The icon is set as background image through a style rule instead of an inline
+			 * style attribute, which the CSP would block.
+			 */
+			private StyleRule iconStyle()
+			{
 				IRequestHandler handler = new ResourceReferenceRequestHandler(getNodeIcon(node));
-				tag.put("style", "background-image: url('" + RequestCycle.get().urlFor(handler) +
-					"')");
+				return new StyleRule("wicket15-tree-icon", "background-image:url('" +
+					RequestCycle.get().urlFor(handler) + "')");
 			}
 		};
 	}
