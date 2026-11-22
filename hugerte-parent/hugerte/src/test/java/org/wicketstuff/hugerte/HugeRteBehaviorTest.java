@@ -15,6 +15,7 @@ package org.wicketstuff.hugerte;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.apache.wicket.MarkupContainer;
@@ -35,6 +36,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import de.agilecoders.wicket.webjars.WicketWebjars;
+import de.agilecoders.wicket.webjars.settings.WebjarsSettings;
 
 class HugeRteBehaviorTest
 {
@@ -43,21 +45,42 @@ class HugeRteBehaviorTest
 	@BeforeEach
 	void setUp()
 	{
-		tester = new WicketTester(new MockApplication()
-		{
-			@Override
-			protected void init()
-			{
-				super.init();
-				WicketWebjars.install(this);
-			}
-		});
+		tester = new WicketTester(new MockApplication());
 	}
 
 	@AfterEach
 	void tearDown()
 	{
 		tester.destroy();
+	}
+
+	@Test
+	void installsWebjarsWhenTheApplicationDidNot()
+	{
+		assertTrue(WicketWebjars.isInstalled(tester.getApplication()));
+	}
+
+	@Test
+	void keepsTheWebjarsSettingsOfTheApplication()
+	{
+		var settings = new WebjarsSettings();
+		var own = new WicketTester(new MockApplication()
+		{
+			@Override
+			protected void init()
+			{
+				super.init();
+				WicketWebjars.install(this, settings);
+			}
+		});
+		try
+		{
+			assertSame(settings, WicketWebjars.settings(own.getApplication()));
+		}
+		finally
+		{
+			own.destroy();
+		}
 	}
 
 	@Test

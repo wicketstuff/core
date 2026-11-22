@@ -12,10 +12,13 @@
 	<p><a wicket:id="rerender">Re-render the form with Ajax</a></p>
 	<h3>Saved HTML</h3>
 	<div class="saved" wicket:id="saved"></div>
-	<h3>Show and hide</h3>
-	<p><a wicket:id="toggle">Show or hide a second editor</a></p>
+	<h3>Update on change, show and hide</h3>
+	<p>The second editor has no toolbar and an <code>AjaxFormComponentUpdatingBehavior("change")</code>
+		that updates the HTML below it.</p>
+	<p><a wicket:id="toggle">Show or hide the second editor</a></p>
 	<div wicket:id="toggled">
 		<textarea wicket:id="second"></textarea>
+		<div class="saved" wicket:id="live"></div>
 	</div>
 </wicket:extend>
 </body>

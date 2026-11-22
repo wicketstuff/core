@@ -21,17 +21,18 @@ Import `org.wicketstuff:wicketstuff-bom` in your `dependencyManagement` section 
 
 ## Application setup
 
-Install `wicket-webjars` and add HugeRTE's Content Security Policy rules in your `WebApplication.init()` method:
+Add HugeRTE's Content Security Policy rules in your `WebApplication.init()` method:
 
 ```java
 @Override
 protected void init()
 {
     super.init();
-    WicketWebjars.install(this);
     HugeRteCsp.allow(getCspSettings().blocking());
 }
 ```
+
+The module installs `wicket-webjars`, which serves the HugeRTE scripts, after your `init()` when the application hasn't installed it itself. Call `WicketWebjars.install(this, settings)` in `init()` if you need your own webjars settings.
 
 ## Usage
 

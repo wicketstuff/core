@@ -48,19 +48,13 @@ form.add(new AjaxSubmitLink("saveLink")
 });
 ```
 
-## Update on blur or change with AjaxFormComponentUpdatingBehavior
+## Update on change or blur with AjaxFormComponentUpdatingBehavior
 
-Because HugeRTE hides the `<textarea>` and edits inside its own iframe, user edits do not fire native DOM `change` or `blur` events on the `<textarea>`. If you attach an `AjaxFormComponentUpdatingBehavior` to the `TextArea`, forward the editor's `blur` (or `change`) event to the underlying element in a `setup` callback:
+HugeRTE hides the `<textarea>` and edits in its own iframe, so the textarea never fires `change` or `blur` itself. `hugerte-wicket.js` forwards them: when the editor fires `change` (after an edit, typically when an undo level is added or the editor loses focus) or `blur`, it writes the content back to the textarea and dispatches the same event on it. An `AjaxFormComponentUpdatingBehavior` therefore works without extra code:
 
 ```java
-HugeRteConfig config = HugeRteConfig.defaults()
-    .withMenubar(false)
-    .with("setup", new RawJavaScript(
-        "function (editor) { editor.on('blur', function () { "
-            + "editor.getElement().dispatchEvent(new Event('change')); }); }"));
-
 TextArea<String> editor = new TextArea<>("text", text);
-editor.add(new HugeRteBehavior(config));
+editor.add(new HugeRteBehavior(HugeRteConfig.defaults().withMenubar(false)));
 editor.add(new AjaxFormComponentUpdatingBehavior("change")
 {
     @Override
@@ -72,7 +66,7 @@ editor.add(new AjaxFormComponentUpdatingBehavior("change")
 });
 ```
 
-When `dispatchEvent` triggers Wicket's `change` handler, Wicket publishes `/ajax/call/before`, `hugerte-wicket.js` calls `hugerte.triggerSave()`, and Wicket sends the updated `<textarea>` value. See [Use JavaScript callbacks with RawJavaScript](javascript-callbacks.md) for details on `RawJavaScript`.
+Use `"blur"` instead of `"change"` to send the content only when the editor loses focus. The forwarding is installed in addition to any `setup` callback you configure.
 
 ## Re-render and hide editors
 

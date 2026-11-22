@@ -18,11 +18,9 @@ import org.apache.wicket.protocol.http.WebApplication;
 
 import org.wicketstuff.hugerte.HugeRteCsp;
 
-import de.agilecoders.wicket.webjars.WicketWebjars;
-
 /**
  * Example application for the HugeRTE integration. It keeps Wicket's strict Content Security Policy
- * and adds only what HugeRTE needs.
+ * and adds only what HugeRTE needs. wicket-webjars is installed by the module's initializer.
  */
 public class ExampleApplication extends WebApplication
 {
@@ -30,7 +28,6 @@ public class ExampleApplication extends WebApplication
 	protected void init()
 	{
 		super.init();
-		WicketWebjars.install(this);
 		HugeRteCsp.allow(getCspSettings().blocking());
 
 		mountPage("simple", SimplePage.class);

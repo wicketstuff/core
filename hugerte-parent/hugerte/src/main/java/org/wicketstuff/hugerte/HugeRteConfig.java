@@ -48,23 +48,29 @@ import java.util.Set;
  * @param plugins
  *            the plugins to load
  * @param toolbar
- *            toolbar rows; empty means the HugeRTE default toolbar
+ *            toolbar rows; empty means the HugeRTE default toolbar, unless {@code toolbarHidden}
+ * @param toolbarHidden
+ *            {@code true} to show no toolbar at all; {@code toolbar} must then be empty
  * @param options
  *            all other options, in insertion order
  */
 public record HugeRteConfig(Set<HugeRtePlugin> plugins, List<String> toolbar,
-	Map<String, Object> options) implements Serializable
+	boolean toolbarHidden, Map<String, Object> options) implements Serializable
 {
 	/** Options that this class or {@link HugeRteBehavior} manage. */
 	private static final Set<String> RESERVED = Set.of("selector", "target", "plugins", "toolbar");
 
-	private static final HugeRteConfig DEFAULTS = new HugeRteConfig(Set.of(), List.of(), Map.of());
+	private static final HugeRteConfig DEFAULTS = new HugeRteConfig(Set.of(), List.of(), false, Map.of());
 
 	public HugeRteConfig
 	{
 		plugins = plugins.isEmpty() ? Set.of()
 			: Collections.unmodifiableSet(EnumSet.copyOf(plugins));
 		toolbar = List.copyOf(toolbar);
+		if (toolbarHidden && !toolbar.isEmpty())
+		{
+			throw new IllegalArgumentException("A hidden toolbar cannot have rows");
+		}
 		var copy = new LinkedHashMap<String, Object>();
 		options.forEach((name, value) -> copy.put(checkOption(name), normalize(name, value)));
 		options = Collections.unmodifiableMap(copy);
@@ -87,18 +93,26 @@ public record HugeRteConfig(Set<HugeRtePlugin> plugins, List<String> toolbar,
 		var all = EnumSet.noneOf(HugeRtePlugin.class);
 		all.addAll(this.plugins);
 		all.addAll(Arrays.asList(plugins));
-		return new HugeRteConfig(all, toolbar, options);
+		return new HugeRteConfig(all, toolbar, toolbarHidden, options);
 	}
 
 	/**
 	 * @param rows
 	 *            one string per toolbar row, with button names separated by spaces and groups
 	 *            separated by {@code |}
-	 * @return a copy with the toolbar replaced
+	 * @return a copy with the toolbar replaced; without rows, HugeRTE shows its default toolbar
 	 */
 	public HugeRteConfig withToolbar(String... rows)
 	{
-		return new HugeRteConfig(plugins, List.of(rows), options);
+		return new HugeRteConfig(plugins, List.of(rows), false, options);
+	}
+
+	/**
+	 * @return a copy that shows no toolbar ({@code toolbar: false})
+	 */
+	public HugeRteConfig withoutToolbar()
+	{
+		return new HugeRteConfig(plugins, List.of(), true, options);
 	}
 
 	/**
@@ -111,7 +125,7 @@ public record HugeRteConfig(Set<HugeRtePlugin> plugins, List<String> toolbar,
 	{
 		var copy = new LinkedHashMap<>(options);
 		copy.put(option, value);
-		return new HugeRteConfig(plugins, toolbar, copy);
+		return new HugeRteConfig(plugins, toolbar, toolbarHidden, copy);
 	}
 
 	/**
@@ -121,7 +135,7 @@ public record HugeRteConfig(Set<HugeRtePlugin> plugins, List<String> toolbar,
 	{
 		var copy = new LinkedHashMap<>(options);
 		copy.remove(option);
-		return new HugeRteConfig(plugins, toolbar, copy);
+		return new HugeRteConfig(plugins, toolbar, toolbarHidden, copy);
 	}
 
 	/** Shows or hides the menu bar. */
@@ -145,7 +159,9 @@ public record HugeRteConfig(Set<HugeRtePlugin> plugins, List<String> toolbar,
 	/**
 	 * @param contentCss
 	 *            a built-in content style ({@code default}, {@code dark}, {@code document},
-	 *            {@code writer}) or the URL of a style sheet
+	 *            {@code writer}, {@code hugerte-5}, {@code hugerte-5-dark}) or the URL of a style
+	 *            sheet. For several style sheets or {@code false}, use
+	 *            {@code with("content_css", ...)}.
 	 */
 	public HugeRteConfig withContentCss(String contentCss)
 	{
@@ -162,7 +178,11 @@ public record HugeRteConfig(Set<HugeRtePlugin> plugins, List<String> toolbar,
 		{
 			all.put("plugins", plugins.stream().map(HugeRtePlugin::id).toList());
 		}
-		if (toolbar.size() == 1)
+		if (toolbarHidden)
+		{
+			all.put("toolbar", false);
+		}
+		else if (toolbar.size() == 1)
 		{
 			all.put("toolbar", toolbar.get(0));
 		}
