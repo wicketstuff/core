@@ -16,13 +16,6 @@ body:
       placeholder: "10.12.0"
     validations:
       required: true
-  - type: dropdown
-    id: wicket
-    attributes:
-      label: Wicket line
-      options: ["11.x", "10.x (LTS)", "older"]
-    validations:
-      required: true
   - type: input
     id: java
     attributes:
