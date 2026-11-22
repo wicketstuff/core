@@ -106,7 +106,7 @@ final class JavaScriptWriter
 				case '\b' -> out.append("\\b");
 				case '\f' -> out.append("\\f");
 				// keep "</script>", "<!--" and "]]>" from ending or changing the script element
-				case '<', '>', '&', '\'', ' ', ' ' -> unicodeEscape(out, c);
+				case '<', '>', '&', '\'', '\u2028', '\u2029' -> unicodeEscape(out, c);
 				default ->
 				{
 					if (c < 0x20)
