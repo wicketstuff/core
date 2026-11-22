@@ -122,8 +122,9 @@ public class HugeRteBehavior extends Behavior
 	 */
 	public static void markSaved(AjaxRequestTarget target, Component component)
 	{
-		target.prependJavaScript(
-			"Wicket.HugeRte.markSaved(" + JavaScriptWriter.write(component.getMarkupId()) + ");");
+		// the glue script is missing when no editor has been rendered on the page yet
+		target.prependJavaScript("if (Wicket.HugeRte) { Wicket.HugeRte.markSaved(" +
+			JavaScriptWriter.write(component.getMarkupId()) + "); }");
 	}
 
 	@Override
@@ -143,8 +144,8 @@ public class HugeRteBehavior extends Behavior
 	 */
 	public static void focus(AjaxRequestTarget target, Component component)
 	{
-		target.appendJavaScript(
-			"Wicket.HugeRte.focus(" + JavaScriptWriter.write(component.getMarkupId()) + ");");
+		target.appendJavaScript("if (Wicket.HugeRte) { Wicket.HugeRte.focus(" +
+			JavaScriptWriter.write(component.getMarkupId()) + "); }");
 	}
 
 	/**
