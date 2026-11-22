@@ -10,6 +10,7 @@ API and JavaScript reference for `org.wicketstuff.hugerte`.
 public record HugeRteConfig(
     Set<HugeRtePlugin> plugins,
     List<String> toolbar,
+    boolean toolbarHidden,
     Map<String, Object> options
 ) implements Serializable
 ```
@@ -18,6 +19,7 @@ Immutable editor configuration. The canonical constructor copies and normalizes 
 
 - `plugins` becomes an unmodifiable `EnumSet` copy (or `Set.of()` when empty).
 - `toolbar` becomes an unmodifiable copy via `List.copyOf(toolbar)`.
+- `toolbarHidden` must be `false` when `toolbar` has rows; otherwise the constructor throws `IllegalArgumentException`.
 - `options` becomes an unmodifiable `LinkedHashMap` copy preserving insertion order; every key is validated against the reserved option list and every value is validated and recursively copied into immutable, serializable values.
 
 ### Methods
@@ -26,14 +28,15 @@ Immutable editor configuration. The canonical constructor copies and normalizes 
 |---|---|
 | `static HugeRteConfig defaults()` | Returns a shared empty configuration (no plugins, no toolbar rows, no options). |
 | `HugeRteConfig withPlugins(HugeRtePlugin... plugins)` | Returns a copy with the given plugins added to existing plugins. |
-| `HugeRteConfig withToolbar(String... rows)` | Returns a copy with the toolbar replaced by `rows` (space-separated button names, `\|` group separators). Passing no rows clears the list, omitting `toolbar` so HugeRTE uses its default toolbar. |
+| `HugeRteConfig withToolbar(String... rows)` | Returns a copy with the toolbar replaced by `rows` (space-separated button names, `\|` group separators). Passing no rows clears the list, omitting `toolbar` so HugeRTE uses its default toolbar. Also makes a hidden toolbar visible again. |
+| `HugeRteConfig withoutToolbar()` | Returns a copy that shows no toolbar: `toolbar: false`. |
 | `HugeRteConfig with(String option, Object value)` | Returns a copy with `option` set to `value`, replacing any previous value. |
 | `HugeRteConfig without(String option)` | Returns a copy with `option` removed (no-op if absent). |
 | `HugeRteConfig withMenubar(boolean menubar)` | Shorthand for `with("menubar", menubar)`. |
 | `HugeRteConfig withStatusbar(boolean statusbar)` | Shorthand for `with("statusbar", statusbar)`. |
 | `HugeRteConfig withReadonly(boolean readonly)` | Shorthand for `with("readonly", readonly)`. |
-| `HugeRteConfig withContentCss(String contentCss)` | Shorthand for `with("content_css", contentCss)`. Built-in styles in the webjar: `default`, `dark`, `document`, `writer`, `hugerte-5`, `hugerte-5-dark`, or pass a style sheet URL. |
-| `String toJavaScript()` | Serializes the configuration as a JavaScript object literal without `target` or `selector`. Emits `plugins` as an array of plugin ids when non-empty (in enum declaration order), `toolbar` as a string for one row or an array of strings for multiple rows, then `options` in insertion order. |
+| `HugeRteConfig withContentCss(String contentCss)` | Shorthand for `with("content_css", contentCss)`. Built-in styles in the webjar: `default`, `dark`, `document`, `writer`, `hugerte-5`, `hugerte-5-dark`, or pass a style sheet URL. For several style sheets or `false`, use `with("content_css", ...)`. |
+| `String toJavaScript()` | Serializes the configuration as a JavaScript object literal without `target` or `selector`. Emits `plugins` as an array of plugin ids when non-empty (in enum declaration order), `toolbar` as `false` when hidden, a string for one row or an array of strings for multiple rows, then `options` in insertion order. |
 
 ### Supported option value types
 
@@ -136,7 +139,7 @@ Adds the following directives to `csp` and returns `csp` for chaining:
 
 ## HugeRteJavaScriptReference
 
-`public final class HugeRteJavaScriptReference extends JavaScriptResourceReference` references the package resource `hugerte-wicket.js`. Requires `WicketWebjars.install(this)` in `WebApplication.init()`.
+`public final class HugeRteJavaScriptReference extends JavaScriptResourceReference` references the package resource `hugerte-wicket.js`. Its dependencies are served by `wicket-webjars`, which `HugeRteInitializer` installs when the application hasn't.
 
 | Member | Description |
 |---|---|
@@ -145,10 +148,14 @@ Adds the following directives to `csp` and returns `csp` for chaining:
 | `public static HugeRteJavaScriptReference get()` | Returns the singleton instance. |
 | `public List<HeaderItem> getDependencies()` | Returns two `JavaScriptHeaderItem` entries: `Application.get().getJavaScriptLibrarySettings().getWicketAjaxReference()`, followed by `HUGERTE` when `Application.get().getConfigurationType() == RuntimeConfigurationType.DEVELOPMENT` or `HUGERTE_MIN` otherwise. |
 
+## HugeRteInitializer
+
+`public class HugeRteInitializer implements IInitializer`, registered in `META-INF/services/org.apache.wicket.IInitializer`. It adds an `IApplicationListener` whose `onAfterInitialized` calls `WicketWebjars.install(application)` when `WicketWebjars.isInstalled(application)` is `false`. Because it runs after the application's `init()`, settings passed to `WicketWebjars.install(this, settings)` in `init()` are kept.
+
 ## Client-side JavaScript (`hugerte-wicket.js`)
 
 [`hugerte-wicket.js`](https://github.com/wicketstuff/core/tree/wicket-10.x/hugerte-parent/hugerte/src/main/java/org/wicketstuff/hugerte/hugerte-wicket.js) initializes once (a second load exits immediately if `Wicket.HugeRte` is already defined) and exposes one function plus two Wicket event subscriptions:
 
-- `Wicket.HugeRte.init(id, config)` — looks up `document.getElementById(id)` (returns if not found), removes any existing editor returned by `hugerte.get(id)`, assigns `config.target = element`, and calls `hugerte.init(config)`.
+- `Wicket.HugeRte.init(id, config)` — looks up `document.getElementById(id)` (returns if not found), removes any existing editor returned by `hugerte.get(id)`, assigns `config.target = element`, wraps `config.setup` so that the editor's `change` and `blur` events are forwarded to the textarea (after `editor.save()`) before any `setup` callback of your own runs, and calls `hugerte.init(config)`.
 - `Wicket.Event.Topic.AJAX_CALL_BEFORE` (`'/ajax/call/before'`) — calls `hugerte.triggerSave()` so all active editors write their HTML back to their textareas before Wicket serializes form fields.
 - `Wicket.Event.Topic.DOM_NODE_REMOVING` (`'/dom/node/removing'`) — iterates over `hugerte.get()` and calls `editor.remove()` for every editor whose target element is `node` or a descendant of `node`.
