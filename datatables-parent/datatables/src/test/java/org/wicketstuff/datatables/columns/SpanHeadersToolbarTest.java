@@ -88,6 +88,67 @@ class SpanHeadersToolbarTest
 	}
 
 	@Test
+	void columnIsRenderedAgainBelowTheRowsItsRowspanCovers()
+	{
+		TablePage page = new TablePage();
+		page.table.addTopToolbar(new SpanHeadersToolbar<>(page.table, page.names, page.age));
+		page.table.addTopToolbar(new SpanHeadersToolbar<>(page.table));
+		page.table.addTopToolbar(new SpanHeadersToolbar<>(page.table));
+
+		assertEquals(List.of(
+			"<th colspan=\"2\">Names</th><th rowspan=\"2\">Age</th>",
+			"<th>First</th><th>Last</th>",
+			"<th>First</th><th>Last</th><th rowspan=\"2\">Age</th>"), renderHeaderRows(page));
+	}
+
+	@Test
+	void invisiblePrecedingToolbarDoesNotCoverColumns()
+	{
+		TablePage page = new TablePage();
+		SpanHeadersToolbar<String> hidden = new SpanHeadersToolbar<>(page.table, page.names, page.age);
+		hidden.setVisible(false);
+		page.table.addTopToolbar(hidden);
+		page.table.addTopToolbar(new SpanHeadersToolbar<>(page.table));
+
+		assertEquals(List.of("<th>First</th><th>Last</th><th rowspan=\"2\">Age</th>"),
+			renderHeaderRows(page));
+	}
+
+	@Test
+	void invisibleToolbarInBetweenIsNotCountedAsRow()
+	{
+		TablePage page = new TablePage();
+		page.table.addTopToolbar(new SpanHeadersToolbar<>(page.table, page.names, page.age));
+		page.table.addTopToolbar(new SpanHeadersToolbar<>(page.table, page.names)
+		{
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void onConfigure()
+			{
+				super.onConfigure();
+				setVisible(false);
+			}
+		});
+		page.table.addTopToolbar(new SpanHeadersToolbar<>(page.table));
+
+		assertEquals(List.of(
+			"<th colspan=\"2\">Names</th><th rowspan=\"2\">Age</th>",
+			"<th>First</th><th>Last</th>"), renderHeaderRows(page));
+	}
+
+	@Test
+	void headerIsTheSameWhenRenderedAgain()
+	{
+		TablePage page = new TablePage();
+		page.table.addTopToolbar(new SpanHeadersToolbar<>(page.table, page.names, page.age));
+		page.table.addTopToolbar(new SpanHeadersToolbar<>(page.table));
+
+		List<String> first = renderHeaderRows(page);
+		assertEquals(first, renderHeaderRows(page));
+	}
+
+	@Test
 	void columnWithRowspanInLastRowIsRendered()
 	{
 		TablePage page = new TablePage();

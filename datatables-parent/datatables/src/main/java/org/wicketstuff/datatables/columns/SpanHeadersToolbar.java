@@ -16,12 +16,12 @@
  */
 package org.wicketstuff.datatables.columns;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.wicket.AttributeModifier;
@@ -50,7 +50,7 @@ import org.wicketstuff.datatables.IDataTablesColumn;
  * A column with a {@link IDataTablesColumn#getRowspan() rowspan} larger than 1 covers the
  * header rows below the toolbar it is rendered in. Add it to the topmost toolbar it should
  * appear in; the {@code SpanHeadersToolbar}s that follow in the same table leave it out of
- * the rows it covers. For example, to render
+ * the rows it covers. Invisible toolbars do not count as rows. For example, to render
  *
  * <pre>
  * &lt;tr&gt;&lt;th colspan="2"&gt;Names&lt;/th&gt;&lt;th rowspan="2"&gt;Age&lt;/th&gt;&lt;/tr&gt;
@@ -100,15 +100,14 @@ public class SpanHeadersToolbar<S> extends AbstractToolbar
 			{
 				List<IModel<IColumn<T, S>>> columnsModels = new LinkedList<>();
 
-				List<? extends IColumn<T, S>> tableColumns = (columns != null && columns.length > 0)
-					? Arrays.asList(columns)
-					: table.getColumns();
 				Set<IColumn<?, ?>> coveredColumns = getColumnsCoveredByPrecedingToolbars();
-				for (IColumn<T, S> column : tableColumns)
+				for (IColumn<?, ?> column : getColumns())
 				{
 					if (!coveredColumns.contains(column))
 					{
-						columnsModels.add(Model.of(column));
+						@SuppressWarnings("unchecked")
+						IColumn<T, S> tableColumn = (IColumn<T, S>)column;
+						columnsModels.add(Model.of(tableColumn));
 					}
 				}
 
@@ -161,8 +160,17 @@ public class SpanHeadersToolbar<S> extends AbstractToolbar
 	}
 
 	/**
-	 * Collects the columns that a preceding {@code SpanHeadersToolbar} of the same table renders
-	 * with a rowspan that reaches into the row of this toolbar.
+	 * @return the columns this toolbar renders when no preceding toolbar covers them
+	 */
+	private List<? extends IColumn<?, ?>> getColumns()
+	{
+		return headerColumns != null ? headerColumns : getTable().getColumns();
+	}
+
+	/**
+	 * Collects the columns that a preceding {@code SpanHeadersToolbar} of the same toolbar
+	 * section renders with a rowspan that reaches into the row of this toolbar. Only visible
+	 * toolbars are counted as rows.
 	 */
 	private Set<IColumn<?, ?>> getColumnsCoveredByPrecedingToolbars()
 	{
@@ -173,30 +181,40 @@ public class SpanHeadersToolbar<S> extends AbstractToolbar
 			return covered;
 		}
 
-		List<Component> siblings = new ArrayList<>();
+		// the row (exclusive) up to which a column rendered with a rowspan covers the header
+		Map<IColumn<?, ?>, Long> coveredUntil = new HashMap<>();
+		long row = 0;
 		for (Component sibling : toolbars)
 		{
-			siblings.add(sibling);
-		}
-		int ownRow = siblings.indexOf(this);
-		for (int row = 0; row < ownRow; row++)
-		{
-			if (!(siblings.get(row) instanceof SpanHeadersToolbar<?> toolbar))
+			if (sibling == this)
+			{
+				break;
+			}
+			sibling.configure();
+			if (!sibling.determineVisibility())
 			{
 				continue;
 			}
-			List<? extends IColumn<?, ?>> columns = toolbar.headerColumns != null
-				? toolbar.headerColumns
-				: getTable().getColumns();
-			Set<IColumn<?, ?>> coveredByToolbar = toolbar.getColumnsCoveredByPrecedingToolbars();
-			for (IColumn<?, ?> column : columns)
+			if (sibling instanceof SpanHeadersToolbar<?> toolbar)
 			{
-				if (column instanceof IDataTablesColumn<?, ?> dtColumn
-					&& !coveredByToolbar.contains(column)
-					&& row + dtColumn.getRowspan() > ownRow)
+				for (IColumn<?, ?> column : toolbar.getColumns())
 				{
-					covered.add(column);
+					if (column instanceof IDataTablesColumn<?, ?> dtColumn
+						&& dtColumn.getRowspan() > 1
+						&& coveredUntil.getOrDefault(column, 0L) <= row)
+					{
+						coveredUntil.put(column, row + dtColumn.getRowspan());
+					}
 				}
+			}
+			row++;
+		}
+
+		for (Map.Entry<IColumn<?, ?>, Long> entry : coveredUntil.entrySet())
+		{
+			if (entry.getValue() > row)
+			{
+				covered.add(entry.getKey());
 			}
 		}
 		return covered;

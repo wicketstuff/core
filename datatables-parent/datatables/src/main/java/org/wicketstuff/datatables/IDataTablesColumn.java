@@ -10,14 +10,14 @@ public interface IDataTablesColumn<T, S> extends IColumn<T, S> {
 
     /**
      * @return the number of columns the header cell spans, rendered as its {@code colspan}
-     *         attribute; a value of 0 or 1 renders no attribute
+     *         attribute; a value of 1 or less renders no attribute
      */
     int getColspan();
 
     /**
      * @return the number of header rows the header cell spans, rendered as its {@code rowspan}
-     *         attribute; a value of 0 or 1 renders no attribute. A column with a rowspan larger
-     *         than 1 is left out of the {@code SpanHeadersToolbar}s that render the rows it covers.
+     *         attribute; a value of 1 or less renders no attribute. A column with a rowspan larger
+     *         than 1 is left out of the following {@code SpanHeadersToolbar}s that render the rows it covers.
      */
     int getRowspan();
 }
