@@ -21,7 +21,8 @@
 	// Editors to focus as soon as they are initialized.
 	const pendingFocus = new WeakSet();
 
-	// The content each editor had when the last Wicket Ajax call that sent it went out.
+	// The content each editor had when the Ajax call that sent it went out, until that call
+	// completes.
 	const submitted = new WeakMap();
 
 	// The number of Ajax calls that sent each editor and haven't completed yet.
@@ -29,10 +30,6 @@
 
 	// The editors each Ajax call sent, keyed by the call's attributes.
 	const sentBy = new WeakMap();
-
-	// Marks a snapshot that can't be attributed to one call, because calls that sent the editor
-	// overlapped.
-	const AMBIGUOUS = {};
 
 	// Whether the element is in what the Ajax call serializes, following Wicket.Ajax.Call.doAjax:
 	// the form (attrs.f), otherwise the component (attrs.c), recursively when attrs.sr is set.
@@ -194,17 +191,14 @@
 
 		/**
 		 * Marks the editor with the given id as saved: it is no longer dirty, and a draft kept by
-		 * the autosave plugin is discarded. Runs in the response to the Ajax call that submitted
-		 * the content. The editor stays unsaved when it changed since that call was sent, or
-		 * when no submitted content is known for it.
+		 * the autosave plugin is discarded. Only acts in the response to the Ajax call that sent
+		 * the editor, and only when no other call that sent it is underway and the editor still
+		 * holds the content that call sent.
 		 */
 		markSaved: function (id) {
 			const editor = hugerte.get(id);
-			// When calls that sent this editor overlapped, it is unknown which content is being
-			// acknowledged, so the editor stays unsaved until a call sends it on its own.
-			const snapshot = submitted.get(editor);
-			if (!editor || !editor.initialized || typeof snapshot !== 'string' ||
-				(inFlight.get(editor) || 0) > 1 || snapshot !== editor.getContent()) {
+			if (!editor || !editor.initialized || inFlight.get(editor) !== 1 ||
+				submitted.get(editor) !== editor.getContent()) {
 				return;
 			}
 			editor.setDirty(false);
@@ -232,13 +226,12 @@
 		function (jqEvent, attrs, jqXHR, settings) {
 			const sent = hugerte.get().filter(function (editor) {
 				const element = editor.getElement();
-				return editor.initialized && targets(attrs, element) &&
+				return editor.initialized && element && targets(attrs, element) &&
 					sends(settings, element.name);
 			});
 			sent.forEach(function (editor) {
-				const underway = inFlight.get(editor) || 0;
-				submitted.set(editor, underway > 0 ? AMBIGUOUS : editor.getContent());
-				inFlight.set(editor, underway + 1);
+				submitted.set(editor, editor.getContent());
+				inFlight.set(editor, (inFlight.get(editor) || 0) + 1);
 			});
 			if (sent.length > 0) {
 				sentBy.set(attrs, sent);
@@ -246,8 +239,11 @@
 		});
 
 	Wicket.Event.subscribe(Wicket.Event.Topic.AJAX_CALL_COMPLETE, function (jqEvent, attrs) {
+		// A completed call can't vouch for what a later call stores, for example after it failed
+		// validation, so its snapshot expires.
 		(sentBy.get(attrs) || []).forEach(function (editor) {
 			inFlight.set(editor, Math.max(0, (inFlight.get(editor) || 0) - 1));
+			submitted.delete(editor);
 		});
 		sentBy.delete(attrs);
 	});

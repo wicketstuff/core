@@ -113,9 +113,12 @@ public class HugeRteBehavior extends Behavior
 	 * kept by the autosave plugin is discarded. Call it after the content has been stored, so the
 	 * editor stops warning about unsaved changes.
 	 * <p>
-	 * The editor is only marked as saved if it still holds the content it had when this Ajax call
-	 * was sent; edits made while the request was underway stay unsaved. The script runs before
-	 * Wicket replaces components, so it also works when the response re-renders the editor.
+	 * Call it in the Ajax request that sent the editor, such as {@code onSubmit} of an
+	 * {@code AjaxButton} or {@code onUpdate} of an {@code AjaxFormComponentUpdatingBehavior}. The
+	 * editor is only marked as saved if it still holds the content that request sent; edits made
+	 * while the request was underway stay unsaved, and in a request that didn't send the editor
+	 * nothing happens. The script runs before Wicket replaces components, so it also works when
+	 * the response re-renders the editor.
 	 */
 	public static void markSaved(AjaxRequestTarget target, Component component)
 	{
