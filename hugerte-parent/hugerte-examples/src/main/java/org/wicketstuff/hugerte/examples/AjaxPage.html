@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<body>
+<wicket:extend>
+	<h2>Ajax</h2>
+	<p><em>Save</em> is a plain <code>AjaxButton</code>: the integration writes the editor content
+		back to the textarea before every Wicket Ajax call.</p>
+	<form wicket:id="form">
+		<textarea wicket:id="text"></textarea>
+		<p><button wicket:id="save">Save</button></p>
+	</form>
+	<p><a wicket:id="rerender">Re-render the form with Ajax</a></p>
+	<h3>Saved HTML</h3>
+	<div class="saved" wicket:id="saved"></div>
+	<h3>Show and hide</h3>
+	<p><a wicket:id="toggle">Show or hide a second editor</a></p>
+	<div wicket:id="toggled">
+		<textarea wicket:id="second"></textarea>
+	</div>
+</wicket:extend>
+</body>
+</html>
