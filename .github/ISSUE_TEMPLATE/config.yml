@@ -1,0 +1,14 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Ask a question
+    url: https://github.com/wicketstuff/core/discussions/categories/q-a
+    about: Questions about using a module belong in Discussions.
+  - name: Propose a feature or a new module
+    url: https://github.com/wicketstuff/core/discussions/categories/ideas
+    about: Feature requests and proposals are discussed in Discussions (Ideas).
+  - name: Report a security vulnerability
+    url: https://github.com/wicketstuff/core/security/advisories/new
+    about: Report it privately, not as a public issue.
+  - name: Bug in Apache Wicket itself
+    url: https://github.com/apache/wicket/issues
+    about: Problems in Wicket core go to the Apache Wicket tracker.
