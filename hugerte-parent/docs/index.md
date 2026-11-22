@@ -40,6 +40,8 @@ config.with("setup", new RawJavaScript("function (editor) { editor.on('init', ()
 
 Strings are escaped; `RawJavaScript` is written as is, so never build it from user input. To change the configuration per request, pass an `IModel<HugeRteConfig>` to the behavior.
 
+HugeRTE shows a "Powered by HugeRTE" link in the status bar. Its MIT licence doesn't require the link; hide it with `with("branding", false)`.
+
 ## Ajax
 
 No special buttons or links are needed:
@@ -78,6 +80,16 @@ This is a new integration, not a renamed copy of `wicketstuff-tinymce6`:
 
 HugeRTE renamed the JavaScript global from `tinymce` to `hugerte`, so your own JavaScript must use `hugerte.*`. HugeRTE also includes the TinyMCE 7.0 core changes: `sandbox_iframes`, `convert_unsafe_embeds` and `highlight_on_focus` default to `true`.
 
-The [`hugerte-examples`](https://github.com/wicketstuff/core/tree/master/hugerte-parent/hugerte-examples) module contains a runnable example application.
+## Examples
+
+The [`hugerte-examples`](https://github.com/wicketstuff/core/tree/master/hugerte-parent/hugerte-examples) module contains an example application. To run it, build it from the root of the repository and start Jetty in the module:
+
+```sh
+mvn -DskipTests install -pl hugerte-parent/hugerte-examples -am
+cd hugerte-parent/hugerte-examples
+mvn org.eclipse.jetty.ee11:jetty-ee11-maven-plugin:run -Djetty.http.port=8080
+```
+
+Then open <http://localhost:8080/>. The examples show the default editor, an editor with every plugin, and Ajax saving and re-rendering. The application keeps Wicket's strict Content Security Policy, with `HugeRteCsp` added.
 
 Source: [`hugerte-parent`](https://github.com/wicketstuff/core/tree/master/hugerte-parent)
