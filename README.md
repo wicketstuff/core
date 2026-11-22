@@ -46,6 +46,11 @@ dependencies without specifying a version for each of them:
 </dependencies>
 ```
 
+Reporting security issues:
+----------------------
+
+Do not report security vulnerabilities in public issues or pull requests. Report them through [GitHub private vulnerability reporting](https://github.com/wicketstuff/core/security), and see [SECURITY.md](SECURITY.md) for the policy.
+
 Project Documentation (Wiki):
 ----------------------
 
