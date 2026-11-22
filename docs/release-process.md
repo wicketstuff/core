@@ -29,13 +29,13 @@ Make sure that your ~/.m2/settings.xml contains your credentials to deploy to ht
 
 ***
 
-### First we set the start point on the current 10.x branch:
+### First we set the start point on the branch of the release line, see [Release lines](release-lines.md):
 
-`git checkout master`
+`git checkout wicket-11.x`
 
 ### Second we create a local branch to stage the stable release into.
 
-`git checkout -b core-11.1.0 master`
+`git checkout -b core-11.1.0 wicket-11.x`
 
 ### Third we edit the `pom.xml` and change **<wicket.version>** in the properties section to be **11.1.0**.
 
@@ -138,3 +138,66 @@ seb (5):
 git log --name-status --diff-filter=A wicketstuff-core-11.0.0..wicketstuff-core-11.1.0
 ```
 Then we look for new top level directories being created and add then to the release message if found.
+
+### After the release
+
+* Update the version of `wicketstuff-bom` in the `README.md` of the release branch.
+* Update the `version` of the line in `releases` in the website's [`_config.yml`](https://github.com/wicketstuff/wicketstuff.github.com/blob/master/_config.yml) (wicketstuff/wicketstuff.github.com).
+
+## New major version
+
+Every new Wicket major starts a new release line, see [Release lines](release-lines.md). In the steps below Wicket 12.0.0 has just been released, `master` is at `12.0.0-SNAPSHOT`, Wicket 11 was the previous quarterly line and Wicket 10 is the LTS line.
+
+### Cut the release branch
+
+Create `wicket-12.x` from `master` and push it:
+
+```text
+git checkout -b wicket-12.x origin/master
+git push origin wicket-12.x
+```
+
+Then make the branch build and link to itself, in a pull request against `wicket-12.x`:
+
+* In `.github/workflows/ci.yml`, change the `push` and `pull_request` branches from `master` to `wicket-12.x`.
+* Point the GitHub links in the documentation at the branch: replace `github.com/wicketstuff/core/tree/master` and `github.com/wicketstuff/core/blob/master` with `tree/wicket-12.x` and `blob/wicket-12.x` in `docs/` and in the `docs/` folder of every module, and use `wicket-12.x` in the example link in [Writing module documentation](writing-module-documentation.md).
+
+```text
+grep -rlE 'github.com/wicketstuff/core/(tree|blob)/master' --include='*.md' . \
+  | xargs sed -i -E 's#(github.com/wicketstuff/core/(tree|blob))/master#\1/wicket-12.x#g'
+```
+
+Release 12.0.0 from `wicket-12.x` with the steps above.
+
+### Move master to the next major
+
+In a pull request against `master`:
+
+* Set the version of all poms to the next major's snapshot, and `<wicket.version>` in the root `pom.xml` to the same snapshot:
+
+  ```text
+  mvn versions:set -DgenerateBackupPoms=false -DnewVersion=13.0.0-SNAPSHOT
+  ```
+
+  ```xml
+  <wicket.version>13.0.0-SNAPSHOT</wicket.version>
+  ```
+
+* In `.github/dependabot.yml`, add a `maven` entry with `target-branch: "wicket-12.x"`, and remove the entry of the branch that reaches its end of life. Dependabot only reads this file on `master`.
+
+### Check the Java baseline
+
+Check the Java version that Wicket 13 requires. When it differs from `maven.compiler.release` in the root `pom.xml` on `master`, update that property, the Java version in the matrix of `.github/workflows/ci.yml` and the Java version in [Building Wicket Stuff](building.md) on `master`.
+
+[Building Wicket Stuff](building.md) also says which Java version each live branch uses. Update that sentence on `master` and on every live branch.
+
+### End the previous quarterly line
+
+Unless the previous quarterly line is the LTS line, it reaches its end of life with the new major. Add a note at the top of the `README.md` of `wicket-11.x` that the branch is no longer maintained and which branch to use instead, as [#1711](https://github.com/wicketstuff/core/pull/1711) did for `wicket-9.x`. When the new major is an LTS release, the old LTS line ends as well and its branch gets the same note.
+
+### Update the website
+
+In `_config.yml` of the website ([wicketstuff/wicketstuff.github.com](https://github.com/wicketstuff/wicketstuff.github.com)), update `releases`:
+
+* `current`: the new line, with its `version`, `wicket`, `java`, `servlet` and `branch`.
+* `lts`: only when the new major starts a new LTS line. Set it to the new line as well, with `supported_until` from the [Wicket versions page](https://wicket.apache.org/versions/). The site's main documentation then comes from the new LTS branch.
