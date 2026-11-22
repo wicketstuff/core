@@ -18,9 +18,13 @@ import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.request.resource.ResourceReference;
+
 /**
  * Writes configuration values as a JavaScript object literal. Strings are escaped so that the
- * output is safe inside an HTML {@code <script>} element; {@link RawJavaScript} is written as is.
+ * output is safe inside an HTML {@code <script>} element; {@link RawJavaScript} is written as is, and a
+ * {@link ResourceReference} as the string of its URL for the current request.
  */
 final class JavaScriptWriter
 {
@@ -51,6 +55,8 @@ final class JavaScriptWriter
 			case Double d -> out.append(d);
 			case Float f -> out.append(f);
 			case RawJavaScript raw -> out.append(raw.code());
+			case ResourceReference reference -> writeString(out,
+				RequestCycle.get().urlFor(reference, null).toString());
 			case List<?> list -> writeList(out, list);
 			case Map<?, ?> map -> writeMap(out, map);
 			default -> throw new IllegalArgumentException(

@@ -66,7 +66,17 @@ editor.add(new AjaxFormComponentUpdatingBehavior("change")
 });
 ```
 
-Use `"blur"` instead of `"change"` to send the content only when the editor loses focus. The forwarding is installed in addition to any `setup` callback you configure.
+HugeRTE fires `change` when it records an undo level, for example after formatting, pressing Enter or leaving the editor, so the update doesn't run on every keystroke. Undo and redo are forwarded as `change` as well. `OnChangeAjaxBehavior` therefore also works, at the same granularity. Use `"blur"` instead of `"change"` to send the content only when the editor loses focus. The forwarding is installed in addition to any `setup` callback you configure.
+
+Copying the content to the textarea doesn't mark the editor as saved: `editor.isDirty()` stays `true` until the page is reloaded, so the autosave and save plugins keep working.
+
+## Focus the editor from the server
+
+`AjaxRequestTarget.focusComponent(textArea)` focuses the hidden textarea, which does nothing. Use `HugeRteBehavior.focus` instead; it focuses the editor, waiting until it is initialized if needed:
+
+```java
+HugeRteBehavior.focus(target, editor);
+```
 
 ## Re-render and hide editors
 
@@ -78,7 +88,7 @@ To re-render an editor or its enclosing form, add it to the `AjaxRequestTarget`:
 target.add(form);
 ```
 
-Wicket removes the old editor before replacing the markup, and the Ajax response runs `Wicket.HugeRte.init(...)` to create a fresh editor for the new `<textarea>`.
+Wicket removes the old editor before replacing the markup, and the Ajax response runs `Wicket.HugeRte.init(...)` to create a fresh editor for the new `<textarea>`. Re-rendering is also how you change the content from the server: update the model and add the component to the target. The new editor shows the model value, so edits the user hasn't submitted are lost, along with the undo history.
 
 To hide and show an editor with Ajax, enable a placeholder tag on the toggled component or container:
 

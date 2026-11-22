@@ -6,38 +6,29 @@ Pass an `IModel<HugeRteConfig>` to `HugeRteBehavior` when the editor configurati
 
 `HugeRteBehavior` reads the model every time the component renders in `renderHead` and detaches it in `detach`. Because `HugeRteConfig` is immutable, each `with...` call returns a new instance without affecting any shared base configuration.
 
-## Build a configuration from component state
+## Build a configuration from request state
 
-The example below switches an editor between editable and read-only mode on an Ajax click:
+The example below gives administrators more plugins than other users. The model is read on every render, so the configuration follows the current session:
 
 ```java
-private boolean readOnly = true;
-
-// Inside your page or panel constructor:
 HugeRteConfig base = HugeRteConfig.defaults()
     .withPlugins(HugeRtePlugin.LISTS, HugeRtePlugin.LINK)
     .withToolbar("undo redo | bold italic | bullist numlist | link")
     .withMenubar(false);
 
-IModel<HugeRteConfig> configModel = LoadableDetachableModel.of(
-    () -> base.withReadonly(readOnly));
+IModel<HugeRteConfig> configModel = () -> MySession.get().isAdmin()
+    ? base.withPlugins(HugeRtePlugin.IMAGE, HugeRtePlugin.CODE)
+        .withToolbar("undo redo | bold italic | bullist numlist | link image | code")
+    : base;
 
 TextArea<String> editor = new TextArea<>("text", textModel);
 editor.add(new HugeRteBehavior(configModel));
 add(editor);
-
-add(new AjaxLink<Void>("toggleEdit")
-{
-    @Override
-    public void onClick(AjaxRequestTarget target)
-    {
-        readOnly = !readOnly;
-        target.add(editor);
-    }
-});
 ```
 
-When `toggleEdit` runs, Wicket re-renders `editor`. `hugerte-wicket.js` removes the previous editor instance, `HugeRteBehavior` evaluates `configModel` to obtain the updated `HugeRteConfig`, and `Wicket.HugeRte.init(...)` initializes the editor with the new `readonly` setting.
+You don't need a model for read-only mode: when the component, or a parent such as the form, is disabled, `HugeRteBehavior` makes the editor read-only. Disable or enable it with Ajax by changing the component and adding it, or its form, to the target. Re-rendering replaces the editor with the model value, so submit the form first if the user's edits must be kept.
+
+Subclasses can also override `getConfig(Component)` to vary the configuration per component when one behavior is shared.
 
 ## Share one behavior across multiple editors
 

@@ -19,8 +19,10 @@ import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextArea;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
 import org.wicketstuff.hugerte.HugeRteBehavior;
 import org.wicketstuff.hugerte.HugeRteConfig;
@@ -42,7 +44,13 @@ public class AjaxPage extends BasePage
 		form.setOutputMarkupId(true);
 		add(form);
 
+		var feedback = new FeedbackPanel("feedback");
+		feedback.setOutputMarkupId(true);
+		form.add(feedback);
+
 		var editor = new TextArea<>("text", text);
+		editor.setRequired(true);
+		editor.setLabel(Model.of("Text"));
 		editor.add(new HugeRteBehavior(HugeRteConfig.defaults()
 			.withPlugins(HugeRtePlugin.LISTS, HugeRtePlugin.LINK)
 			.withToolbar("undo redo | bold italic | bullist numlist | link")
@@ -62,7 +70,47 @@ public class AjaxPage extends BasePage
 			protected void onSubmit(AjaxRequestTarget target)
 			{
 				saved.setObject(text.getObject());
-				target.add(output);
+				target.add(output, feedback);
+			}
+
+			@Override
+			protected void onError(AjaxRequestTarget target)
+			{
+				target.add(feedback);
+			}
+		});
+
+		form.add(new Button("submit")
+		{
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void onSubmit()
+			{
+				saved.setObject(text.getObject());
+			}
+		});
+
+		add(new AjaxLink<Void>("focus")
+		{
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void onClick(AjaxRequestTarget target)
+			{
+				HugeRteBehavior.focus(target, editor);
+			}
+		});
+
+		add(new AjaxLink<Void>("enable")
+		{
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void onClick(AjaxRequestTarget target)
+			{
+				editor.setEnabled(!editor.isEnabled());
+				target.add(form);
 			}
 		});
 

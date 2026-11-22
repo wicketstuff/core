@@ -49,6 +49,7 @@ Immutable editor configuration. The canonical constructor copies and normalizes 
 | `Integer`, `Long`, `Short`, `Byte`, `BigInteger`, `BigDecimal` | Kept as is | Unquoted numeric literal |
 | `Double`, `Float` | Must satisfy `isFinite(...)` | Unquoted numeric literal |
 | `RawJavaScript` | Kept as is | `code()` written verbatim, unescaped |
+| `ResourceReference` | Kept as is | The reference's URL for the current request (`RequestCycle.urlFor`), as an escaped string |
 | `Collection<?>` | Recursively normalized into an unmodifiable `List` | JavaScript array `[...]` |
 | `Map<?, ?>` | Keys must be `String`; values recursively normalized into an unmodifiable `LinkedHashMap` | JavaScript object `{...}` with escaped string keys |
 
@@ -93,7 +94,7 @@ Errors thrown by `HugeRteConfig` construction and `with(...)`:
 
 ## HugeRteBehavior
 
-`public class HugeRteBehavior extends Behavior` attaches HugeRTE to a `<textarea>` (or, with `with("inline", true)`, another HTML element). A single instance holds no per-component state and can be added to multiple components.
+`public class HugeRteBehavior extends Behavior` attaches HugeRTE to a `<textarea>`; the textarea stays the form component. HugeRTE's inline mode is not supported. A single instance holds no per-component state and can be added to multiple components.
 
 ### Constructors
 
@@ -109,9 +110,11 @@ Errors thrown by `HugeRteConfig` construction and `with(...)`:
 |---|---|
 | `public void bind(Component component)` | Calls `component.setOutputMarkupId(true)`. |
 | `public void renderHead(Component component, IHeaderResponse response)` | Contributes `HugeRteJavaScriptReference.get()` via `JavaScriptHeaderItem` and `getInitScript(component)` via `OnDomReadyHeaderItem`. |
-| `protected String getInitScript(Component component)` | Returns `Wicket.HugeRte.init("<escapedMarkupId>",<configJs>);`. |
+| `protected String getInitScript(Component component)` | Returns `Wicket.HugeRte.init("<escapedMarkupId>",<configJs>);` with the configuration from `getConfig(component)`. |
+| `protected HugeRteConfig getConfig(Component component)` | Returns `getConfig()`, with `withReadonly(true)` applied when `component.isEnabledInHierarchy()` is `false`. Override it to vary the configuration per component. |
 | `public HugeRteConfig getConfig()` | Returns `config.getObject()`. Throws `NullPointerException` if the model returns `null`. |
 | `public void detach(Component component)` | Calls `config.detach()` and `super.detach(component)`. |
+| `public static void focus(AjaxRequestTarget target, Component component)` | Appends `Wicket.HugeRte.focus("<markupId>");`, which focuses the editor once it is initialized. Use it instead of `target.focusComponent(...)`, which focuses the hidden textarea. |
 
 ## RawJavaScript
 
@@ -119,7 +122,7 @@ Errors thrown by `HugeRteConfig` construction and `with(...)`:
 public record RawJavaScript(String code) implements Serializable
 ```
 
-Wraps a JavaScript expression to be emitted verbatim inside `HugeRteConfig.toJavaScript()`. The canonical constructor rejects a `null` `code` with `NullPointerException`. Because no escaping is performed, never construct `RawJavaScript` from user input.
+Wraps a JavaScript expression to be emitted verbatim inside `HugeRteConfig.toJavaScript()`. The canonical constructor rejects a `null` `code` with `NullPointerException` and blank code with `IllegalArgumentException`. Because no escaping is performed, never construct `RawJavaScript` from user input.
 
 ## HugeRteCsp
 
@@ -139,14 +142,13 @@ Adds the following directives to `csp` and returns `csp` for chaining:
 
 ## HugeRteJavaScriptReference
 
-`public final class HugeRteJavaScriptReference extends JavaScriptResourceReference` references the package resource `hugerte-wicket.js`. Its dependencies are served by `wicket-webjars`, which `HugeRteInitializer` installs when the application hasn't.
+`public final class HugeRteJavaScriptReference extends JavaScriptResourceReference` references the package resource `hugerte-wicket.js`. It can be referenced from `WebApplication.init()`: the webjar references are only created on first use.
 
 | Member | Description |
 |---|---|
-| `public static final ResourceReference HUGERTE` | `WebjarsJavaScriptResourceReference("hugerte/current/hugerte.js")` |
-| `public static final ResourceReference HUGERTE_MIN` | `WebjarsJavaScriptResourceReference("hugerte/current/hugerte.min.js")` |
 | `public static HugeRteJavaScriptReference get()` | Returns the singleton instance. |
-| `public List<HeaderItem> getDependencies()` | Returns two `JavaScriptHeaderItem` entries: `Application.get().getJavaScriptLibrarySettings().getWicketAjaxReference()`, followed by `HUGERTE` when `Application.get().getConfigurationType() == RuntimeConfigurationType.DEVELOPMENT` or `HUGERTE_MIN` otherwise. |
+| `public static ResourceReference editor()` | Returns the HugeRTE webjar script: `hugerte.js` in development mode, `hugerte.min.js` otherwise. The path uses the version placeholder from the installed `WebjarsSettings`. Created on first use and cached. |
+| `public List<HeaderItem> getDependencies()` | Returns Wicket's Ajax script (`getJavaScriptLibrarySettings().getWicketAjaxReference()`) followed by `editor()`. |
 
 ## HugeRteInitializer
 
@@ -154,8 +156,13 @@ Adds the following directives to `csp` and returns `csp` for chaining:
 
 ## Client-side JavaScript (`hugerte-wicket.js`)
 
-[`hugerte-wicket.js`](https://github.com/wicketstuff/core/tree/master/hugerte-parent/hugerte/src/main/java/org/wicketstuff/hugerte/hugerte-wicket.js) initializes once (a second load exits immediately if `Wicket.HugeRte` is already defined) and exposes one function plus two Wicket event subscriptions:
+[`hugerte-wicket.js`](https://github.com/wicketstuff/core/tree/master/hugerte-parent/hugerte/src/main/java/org/wicketstuff/hugerte/hugerte-wicket.js) initializes once (a second load exits immediately if `Wicket.HugeRte` is already defined) and exposes two functions plus two Wicket event subscriptions:
 
-- `Wicket.HugeRte.init(id, config)` — looks up `document.getElementById(id)` (returns if not found), removes any existing editor returned by `hugerte.get(id)`, assigns `config.target = element`, wraps `config.setup` so that the editor's `change` and `blur` events are forwarded to the textarea (after `editor.save()`) before any `setup` callback of your own runs, and calls `hugerte.init(config)`.
-- `Wicket.Event.Topic.AJAX_CALL_BEFORE` (`'/ajax/call/before'`) — calls `hugerte.triggerSave()` so all active editors write their HTML back to their textareas before Wicket serializes form fields.
+- `Wicket.HugeRte.init(id, config)` — looks up `document.getElementById(id)` (returns if not found), removes any existing editor returned by `hugerte.get(id)`, and calls `hugerte.init` with a copy of `config` whose `target` is the element and whose `setup` first installs the integration and then calls your own `setup`. The integration:
+  - removes the textarea's `required` attribute while the editor is active (a hidden required field blocks the browser's form submit; Wicket validates on the server) and restores it when the editor is removed;
+  - forwards the editor's `change`, `undo` and `redo` events as `change`, and `blur` as `blur`, to the textarea after copying the content to it;
+  - removes the editor when it finishes initializing after its textarea was already removed;
+  - focuses the editor if `Wicket.HugeRte.focus` was called before it was ready.
+- `Wicket.HugeRte.focus(id)` — focuses the editor, or does so once it is initialized.
+- `Wicket.Event.Topic.AJAX_CALL_BEFORE` (`'/ajax/call/before'`) — copies every editor's content to its textarea with `editor.save({ set_dirty: false })`, so Wicket serializes current values and `editor.isDirty()` is left unchanged.
 - `Wicket.Event.Topic.DOM_NODE_REMOVING` (`'/dom/node/removing'`) — iterates over `hugerte.get()` and calls `editor.remove()` for every editor whose target element is `node` or a descendant of `node`.

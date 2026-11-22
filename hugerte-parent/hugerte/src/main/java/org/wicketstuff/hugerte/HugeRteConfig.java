@@ -27,6 +27,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import org.apache.wicket.request.resource.ResourceReference;
+
 /**
  * Immutable configuration of a HugeRTE editor.
  * <p>
@@ -42,8 +44,8 @@ import java.util.Set;
  * 	.with("height", 300);
  * }</pre>
  *
- * Option values may be strings, booleans, numbers, {@link RawJavaScript}, and lists or maps (with
- * string keys) of those. The editor's target element is set by {@link HugeRteBehavior}.
+ * Option values may be strings, booleans, numbers, {@link RawJavaScript}, {@link ResourceReference}
+ * (written as its URL when the editor renders), and lists or maps (with string keys) of those. The editor's target element is set by {@link HugeRteBehavior}.
  *
  * @param plugins
  *            the plugins to load
@@ -169,7 +171,17 @@ public record HugeRteConfig(Set<HugeRtePlugin> plugins, List<String> toolbar,
 	}
 
 	/**
-	 * @return the configuration as a JavaScript object literal, without a target element
+	 * @param contentCss
+	 *            a style sheet served by Wicket, for example a {@code CssResourceReference}
+	 */
+	public HugeRteConfig withContentCss(ResourceReference contentCss)
+	{
+		return with("content_css", contentCss);
+	}
+
+	/**
+	 * @return the configuration as a JavaScript object literal, without a target element.
+	 *         {@link ResourceReference} values need an active request cycle.
 	 */
 	public String toJavaScript()
 	{
@@ -225,6 +237,7 @@ public record HugeRteConfig(Set<HugeRtePlugin> plugins, List<String> toolbar,
 			case Double d when Double.isFinite(d) -> d;
 			case Float f when Float.isFinite(f) -> f;
 			case RawJavaScript raw -> raw;
+			case ResourceReference reference -> reference;
 			case Collection<?> collection -> {
 				var list = new ArrayList<Object>(collection.size());
 				collection.forEach(item -> list.add(normalize(name, item)));

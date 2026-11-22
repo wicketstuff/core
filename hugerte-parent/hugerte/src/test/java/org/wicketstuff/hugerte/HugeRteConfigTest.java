@@ -114,6 +114,12 @@ class HugeRteConfigTest
 	}
 
 	@Test
+	void rejectsBlankRawJavaScript()
+	{
+		assertThrows(IllegalArgumentException.class, () -> new RawJavaScript(" "));
+	}
+
+	@Test
 	void isSerializable()
 	{
 		var config = HugeRteConfig.defaults()

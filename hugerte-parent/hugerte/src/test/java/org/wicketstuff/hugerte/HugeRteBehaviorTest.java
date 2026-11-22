@@ -19,15 +19,18 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.apache.wicket.MarkupContainer;
+import org.apache.wicket.RuntimeConfigurationType;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.core.util.lang.WicketObjects;
 import org.apache.wicket.markup.IMarkupResourceStreamProvider;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.mock.MockApplication;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.resource.CssResourceReference;
 import org.apache.wicket.util.resource.IResourceStream;
 import org.apache.wicket.util.resource.StringResourceStream;
 import org.apache.wicket.util.tester.WicketTester;
@@ -80,6 +83,86 @@ class HugeRteBehaviorTest
 		finally
 		{
 			own.destroy();
+		}
+	}
+
+	@Test
+	void makesTheEditorReadonlyWhenTheComponentIsDisabled()
+	{
+		var page = new EditorPage(HugeRteConfig.defaults());
+		page.form.setEnabled(false);
+		tester.startPage(page);
+
+		assertTrue(tester.getLastResponseAsString().contains(
+			"Wicket.HugeRte.init(\"" + page.text.getMarkupId() + "\",{\"readonly\":true});"));
+	}
+
+	@Test
+	void writesResourceReferencesAsUrls()
+	{
+		var css = new CssResourceReference(HugeRteBehaviorTest.class, "content.css");
+		tester.startPage(new EditorPage(HugeRteConfig.defaults().withContentCss(css)));
+
+		var html = tester.getLastResponseAsString();
+		assertTrue(html.matches("(?s).*\"content_css\":\"[^\"]*org\\.wicketstuff\\.hugerte\\.HugeRteBehaviorTest/content(-ver-[0-9]+)?\\.css\".*"), html);
+	}
+
+	@Test
+	void focusesTheEditorFromAjax()
+	{
+		var page = new EditorPage(HugeRteConfig.defaults());
+		tester.startPage(page);
+
+		tester.clickLink("focus");
+
+		assertTrue(tester.getLastResponseAsString()
+			.contains("Wicket.HugeRte.focus(\"" + page.text.getMarkupId() + "\");"));
+	}
+
+	@Test
+	void canBeReferencedDuringApplicationInit()
+	{
+		var early = new WicketTester(new MockApplication()
+		{
+			@Override
+			protected void init()
+			{
+				super.init();
+				getHeaderContributorListeners().add(response -> response
+					.render(JavaScriptHeaderItem.forReference(HugeRteJavaScriptReference.get())));
+			}
+		});
+		try
+		{
+			early.startPage(new EditorPage(HugeRteConfig.defaults()));
+			assertTrue(early.getLastResponseAsString().contains("webjars/hugerte/"));
+		}
+		finally
+		{
+			early.destroy();
+		}
+	}
+
+	@Test
+	void usesTheMinifiedEditorInDeployment()
+	{
+		var deployment = new WicketTester(new MockApplication()
+		{
+			@Override
+			public RuntimeConfigurationType getConfigurationType()
+			{
+				return RuntimeConfigurationType.DEPLOYMENT;
+			}
+		});
+		try
+		{
+			deployment.startPage(new EditorPage(HugeRteConfig.defaults()));
+			var html = deployment.getLastResponseAsString();
+			assertTrue(html.matches("(?s).*webjars/hugerte/[^\"]*/hugerte(-ver-[0-9]+)?\\.min\\.js.*"), html);
+		}
+		finally
+		{
+			deployment.destroy();
 		}
 	}
 
@@ -146,6 +229,8 @@ class HugeRteBehaviorTest
 	{
 		private static final long serialVersionUID = 1L;
 
+		final Form<Void> form;
+
 		final TextArea<String> text;
 
 		EditorPage(HugeRteConfig config)
@@ -155,11 +240,21 @@ class HugeRteBehaviorTest
 
 		EditorPage(HugeRteBehavior behavior)
 		{
-			var form = new Form<Void>("form");
+			form = new Form<Void>("form");
 			add(form);
 			text = new TextArea<>("text", Model.of("<p>hello</p>"));
 			text.add(behavior);
 			form.add(text);
+			add(new AjaxLink<Void>("focus")
+			{
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void onClick(AjaxRequestTarget target)
+				{
+					HugeRteBehavior.focus(target, text);
+				}
+			});
 			add(new AjaxLink<Void>("refresh")
 			{
 				private static final long serialVersionUID = 1L;
@@ -180,6 +275,7 @@ class HugeRteBehaviorTest
 				<html><head></head><body>
 				<form wicket:id="form"><textarea wicket:id="text"></textarea></form>
 				<a wicket:id="refresh">refresh</a>
+				<a wicket:id="focus">focus</a>
 				</body></html>""");
 		}
 	}

@@ -36,7 +36,7 @@ The module installs `wicket-webjars`, which serves the HugeRTE scripts, after yo
 
 ## Usage
 
-Add a `HugeRteBehavior` to a `TextArea`:
+Add a `HugeRteBehavior` to a `TextArea`. The textarea stays the form component: Wicket reads, converts and validates the submitted HTML as for any other `TextArea`.
 
 ```java
 TextArea<String> text = new TextArea<>("text", model);
@@ -49,7 +49,13 @@ text.add(new HugeRteBehavior(HugeRteConfig.defaults()
 
 `HugeRteConfig` is an immutable record. Plugins and toolbar rows have typed methods; every other [HugeRTE option](https://hugerte.org) is set with `with(name, value)`.
 
+The editor follows the component: a component that is disabled in its hierarchy gets a read-only editor, and `setRequired(true)` is validated by Wicket on the server. The behavior only supports `<textarea>` elements; HugeRTE's inline mode, which edits a `<div>` in place, is not bound to Wicket form processing.
+
 HugeRTE shows a "Powered by HugeRTE" link in the status bar by default. Its MIT licence does not require the link; hide it with `with("branding", false)`.
+
+## Sanitize the submitted HTML
+
+The editor submits HTML. HugeRTE cleans pasted content in the browser, but anyone can post arbitrary HTML to your form, so treat the model value as untrusted. Before you render it with `setEscapeModelStrings(false)` or store it for display elsewhere, clean it on the server with an allowlist sanitizer such as the OWASP Java HTML Sanitizer or jsoup's `Safelist`.
 
 ## Guides and reference
 

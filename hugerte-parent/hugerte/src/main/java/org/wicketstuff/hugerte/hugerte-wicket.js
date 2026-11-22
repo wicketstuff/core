@@ -18,6 +18,15 @@
 		return;
 	}
 
+	// Ids of editors to focus as soon as they are initialized.
+	const pendingFocus = new Set();
+
+	// Copies the content to the textarea without marking the editor as saved, so isDirty() keeps
+	// meaning "changed since load" for the autosave and save plugins and for application code.
+	function sync(editor) {
+		editor.save({ set_dirty: false });
+	}
+
 	function removeEditorsWithin(node) {
 		hugerte.get().forEach(function (editor) {
 			const element = editor.getElement();
@@ -30,13 +39,26 @@
 	// The textarea is hidden while the editor is active, so it never fires change or blur itself.
 	// Forwarding them lets behaviors such as AjaxFormComponentUpdatingBehavior work unchanged.
 	function forwardEvents(editor, element) {
-		editor.on('change', function () {
-			editor.save();
+		editor.on('change undo redo', function () {
+			sync(editor);
 			element.dispatchEvent(new Event('change', { bubbles: true }));
 		});
 		editor.on('blur', function () {
-			editor.save();
+			sync(editor);
 			element.dispatchEvent(new Event('blur'));
+		});
+	}
+
+	// A hidden textarea with the required attribute makes the browser refuse a normal form submit
+	// without showing why. Wicket validates required components on the server, so the attribute
+	// is removed while the editor is active and restored when the editor is removed.
+	function suspendRequired(editor, element) {
+		if (!element.hasAttribute('required')) {
+			return;
+		}
+		element.removeAttribute('required');
+		editor.on('remove', function () {
+			element.setAttribute('required', 'required');
 		});
 	}
 
@@ -54,21 +76,45 @@
 			if (previous) {
 				previous.remove();
 			}
-			config.target = element;
-			const setup = config.setup;
-			config.setup = function (editor) {
+			const options = Object.assign({}, config);
+			const setup = options.setup;
+			options.target = element;
+			options.setup = function (editor) {
+				suspendRequired(editor, element);
 				forwardEvents(editor, element);
+				editor.on('init', function () {
+					// The element may have been replaced by Ajax while the editor was loading.
+					if (!element.isConnected) {
+						editor.remove();
+						return;
+					}
+					if (pendingFocus.delete(id)) {
+						editor.focus();
+					}
+				});
 				if (setup) {
 					setup.call(this, editor);
 				}
 			};
-			hugerte.init(config);
+			hugerte.init(options);
+		},
+
+		/**
+		 * Focuses the editor with the given id, or does so once it has been initialized.
+		 */
+		focus: function (id) {
+			const editor = hugerte.get(id);
+			if (editor && editor.initialized) {
+				editor.focus();
+			} else {
+				pendingFocus.add(id);
+			}
 		}
 	};
 
 	// Wicket serializes form fields after this event, so the textareas must be up to date.
 	Wicket.Event.subscribe(Wicket.Event.Topic.AJAX_CALL_BEFORE, function () {
-		hugerte.triggerSave();
+		hugerte.get().forEach(sync);
 	});
 
 	// The editor UI lives next to its textarea, so removing the textarea alone leaves it behind.

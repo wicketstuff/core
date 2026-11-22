@@ -42,9 +42,9 @@ Unlike `TinyMceBehavior`, a single `HugeRteBehavior` instance can be attached to
 |---|---|
 | `setMenuBar(boolean)` | `withMenubar(boolean)` |
 | `setStatusBar(boolean)` | `withStatusbar(boolean)` |
-| `setReadOnly(boolean)` | `withReadonly(boolean)` |
+| `setReadOnly(boolean)` | `withReadonly(boolean)`, or disable the component |
 | `setContentCss(String)` | `withContentCss(String)` |
-| `setInLine(Boolean)` | `with("inline", boolean)` |
+| `setInLine(Boolean)` | Not supported: `HugeRteBehavior` edits textareas only |
 | `setConvertUrls(boolean)` | `with("convert_urls", boolean)` |
 | `setRelativeUrls(Boolean)` | `with("relative_urls", boolean)` |
 | `setRemoveScriptHost(Boolean)` | `with("remove_script_host", boolean)` |

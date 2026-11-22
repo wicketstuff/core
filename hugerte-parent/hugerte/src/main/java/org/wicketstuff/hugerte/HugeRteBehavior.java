@@ -16,6 +16,7 @@ package org.wicketstuff.hugerte;
 import java.util.Objects;
 
 import org.apache.wicket.Component;
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
@@ -24,8 +25,8 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
 /**
- * Turns a {@code <textarea>} (or, with the {@code inline} option, another element) into a HugeRTE
- * editor.
+ * Turns a {@code <textarea>} into a HugeRTE editor. The textarea stays the form component: Wicket
+ * reads the submitted HTML from it as usual.
  *
  * <pre>{@code
  * TextArea<String> text = new TextArea<>("text", model);
@@ -38,6 +39,8 @@ import org.apache.wicket.model.Model;
  * Ajax submits see the edited text.</li>
  * <li>When Wicket Ajax replaces or removes the component, its editor is removed, and a re-rendered
  * component gets a fresh editor.</li>
+ * <li>A component that is disabled in the hierarchy gets a read-only editor, and a {@code required}
+ * component keeps its server-side validation without blocking the browser's form submit.</li>
  * </ul>
  * One behavior instance can be added to several components.
  */
@@ -90,7 +93,27 @@ public class HugeRteBehavior extends Behavior
 	protected String getInitScript(Component component)
 	{
 		return "Wicket.HugeRte.init(" + JavaScriptWriter.write(component.getMarkupId()) + "," +
-			getConfig().toJavaScript() + ");";
+			getConfig(component).toJavaScript() + ");";
+	}
+
+	/**
+	 * @return the configuration for the component: the configured one, made read-only when the
+	 *         component is disabled in its hierarchy
+	 */
+	protected HugeRteConfig getConfig(Component component)
+	{
+		var config = getConfig();
+		return component.isEnabledInHierarchy() ? config : config.withReadonly(true);
+	}
+
+	/**
+	 * Moves the keyboard focus into the component's editor once it is ready. Use it instead of
+	 * {@link AjaxRequestTarget#focusComponent(Component)}, which focuses the hidden textarea.
+	 */
+	public static void focus(AjaxRequestTarget target, Component component)
+	{
+		target.appendJavaScript(
+			"Wicket.HugeRte.focus(" + JavaScriptWriter.write(component.getMarkupId()) + ");");
 	}
 
 	/**
