@@ -23,6 +23,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.wicket.core.util.lang.WicketObjects;
+import org.apache.wicket.request.resource.CssResourceReference;
 import org.junit.jupiter.api.Test;
 
 class HugeRteConfigTest
@@ -93,7 +94,7 @@ class HugeRteConfigTest
 	@Test
 	void rejectsReservedOptions()
 	{
-		for (var option : List.of("selector", "target", "plugins", "toolbar"))
+		for (var option : List.of("selector", "target", "plugins", "toolbar", "inline"))
 		{
 			assertThrows(IllegalArgumentException.class,
 				() -> HugeRteConfig.defaults().with(option, "x"));
@@ -111,6 +112,28 @@ class HugeRteConfigTest
 			() -> defaults.with("a", Map.of(1, "non-string key")));
 		assertThrows(IllegalArgumentException.class,
 			() -> defaults.with("a", List.of(new Object())));
+	}
+
+	@Test
+	void rejectsInlineInMobileOptions()
+	{
+		assertThrows(IllegalArgumentException.class,
+			() -> HugeRteConfig.defaults().with("mobile", Map.of("inline", true)));
+	}
+
+	@Test
+	void needsARequestCycleForResourceReferences()
+	{
+		var config = HugeRteConfig.defaults()
+			.withContentCss(new CssResourceReference(HugeRteConfigTest.class, "content.css"));
+
+		assertThrows(IllegalStateException.class, config::toJavaScript);
+	}
+
+	@Test
+	void rejectsBlankRawJavaScript()
+	{
+		assertThrows(IllegalArgumentException.class, () -> new RawJavaScript(" "));
 	}
 
 	@Test

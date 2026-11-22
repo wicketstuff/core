@@ -44,6 +44,16 @@ HugeRteCsp.allow(getCspSettings().blocking())
 
 All other directives in Wicket's strict policy (`default-src`, `connect-src`, `font-src`, `manifest-src`, `child-src`, `base-uri`) remain unchanged.
 
+## Known limitations
+
+HugeRTE has no nonce support, so a few features add `<style>` or `<script>` elements that the strict policy blocks. The browser reports these as CSP violations:
+
+- The `content_style` option is applied with a `<style>` element and has no effect. Put content styles in a style sheet and pass it with `withContentCss`, for example as a `CssResourceReference`.
+- In Firefox and on iOS Safari, HugeRTE adds a few default content rules in a `<style>` element. The editor works without them, but expect violation reports.
+- The `PREVIEW` plugin puts an inline script in its preview frame, which is blocked. The preview still shows the content.
+- With `WebjarsSettings.useCdnResources(true)`, the skin style sheets come from the CDN; add its origin to `style-src`.
+- HugeRTE does not support Trusted Types. With `requireTrustedTypes()` (`require-trusted-types-for 'script'`) the editor fails to load.
+
 ## External resources
 
 If your editor loads style sheets (`content_css`) or images from another origin, add that origin to `style-src` or `img-src` in your application's CSP configuration.

@@ -4,28 +4,21 @@ title: Use a language pack
 
 Set both `language` and `language_url` in `HugeRteConfig` to localize the editor UI. The HugeRTE webjar (`org.webjars.npm:hugerte`) includes English (`en`) built in and ships no language packs.
 
-If you set `language` to a non-English code without `language_url`, HugeRTE requests `langs/<code>.js` relative to its webjar base URL, which fails with HTTP 404.
+If you set `language` to a non-English code without `language_url`, HugeRTE requests `langs/<code>.js` from the webjar, which doesn't contain it, so the editor stays in English.
 
 ## Serve a language pack from your application
 
-Place the HugeRTE language pack file (for example `nl.js`) on your classpath next to a class in your application, expose it as a `JavaScriptResourceReference`, and pass its URL in `language_url` using an `IModel<HugeRteConfig>` so Wicket resolves the URL during rendering:
+Place the HugeRTE language pack file (for example `nl.js`) on your classpath next to a class in your application and pass it as a `JavaScriptResourceReference`. `HugeRteConfig` accepts resource references as values and writes their URL, with your context path and Wicket's resource versioning, when the editor renders:
 
 ```java
 private static final ResourceReference NL_LANG =
     new JavaScriptResourceReference(MyPage.class, "langs/nl.js");
 
-IModel<HugeRteConfig> configModel = () -> {
-    String langUrl = RequestCycle.get().urlFor(NL_LANG, null).toString();
-    return HugeRteConfig.defaults()
-        .with("language", "nl")
-        .with("language_url", langUrl);
-};
-
 TextArea<String> editor = new TextArea<>("text", textModel);
-editor.add(new HugeRteBehavior(configModel));
+editor.add(new HugeRteBehavior(HugeRteConfig.defaults()
+    .with("language", "nl")
+    .with("language_url", NL_LANG)));
 ```
-
-Resolving the URL through `RequestCycle.get().urlFor(...)` ensures the path includes your application's context path and Wicket's resource versioning.
 
 A HugeRTE language file registers its translations on the `hugerte` global using `hugerte.addI18n`:
 
@@ -58,7 +51,7 @@ IModel<HugeRteConfig> configModel = () -> {
     }
     return base
         .with("language", lang)
-        .with("language_url", RequestCycle.get().urlFor(pack, null).toString());
+        .with("language_url", pack);
 };
 ```
 
@@ -70,7 +63,7 @@ For right-to-left locales, also set `directionality` to `"rtl"` (and optionally 
 
 ```java
 config.with("language", "ar")
-    .with("language_url", langUrl)
+    .with("language_url", AR_LANG)
     .with("directionality", "rtl");
 ```
 

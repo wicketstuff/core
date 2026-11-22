@@ -53,31 +53,63 @@ HugeRteConfig config = HugeRteConfig.defaults()
 
 Call `callback(url, meta)` with the chosen URL and optional metadata such as `alt` or `title`.
 
-## Upload pasted or dropped images with images_upload_handler
+## Upload pasted or dropped images
 
-`images_upload_handler` receives `(blobInfo, progress)` and returns a `Promise` that resolves to the URL of the stored image. `blobInfo.blob()` returns the `Blob` and `blobInfo.filename()` returns its file name; call `progress(percent)` with a number from `0` to `100` to update HugeRTE's progress indicator:
+By default HugeRTE keeps pasted and dropped images as data URLs inside the HTML, so they end up in your model. To store them as files, point `images_upload_url` at a Wicket resource. HugeRTE posts each image as the multipart field `file` and expects JSON with the image's URL in `location`. Pass the resource as a `ResourceReference`, so the URL includes your context path:
 
 ```java
+public class ImageUploadResource extends AbstractResource
+{
+    @Override
+    protected ResourceResponse newResourceResponse(Attributes attributes)
+    {
+        var response = new ResourceResponse();
+        var request = (ServletWebRequest) attributes.getRequest();
+        try
+        {
+            var multipart = request.newMultipartWebRequest(Bytes.megabytes(5), "image-upload");
+            multipart.parseFileParts();
+            var file = multipart.getFile("file").get(0);
+            String location;
+            try (InputStream in = file.getInputStream())
+            {
+                location = store(file.getName(), in); // your storage; returns the image URL
+            }
+            response.setContentType("application/json");
+            response.setWriteCallback(new WriteCallback()
+            {
+                @Override
+                public void writeData(Attributes attributes)
+                {
+                    attributes.getResponse().write("{\"location\":\"" + location + "\"}");
+                }
+            });
+        }
+        catch (IOException e)
+        {
+            response.setError(HttpServletResponse.SC_BAD_REQUEST);
+        }
+        return response;
+    }
+}
+```
+
+Mount it in your application and configure the editor:
+
+```java
+// in WebApplication.init()
+mountResource("/image-upload", IMAGE_UPLOAD);
+
+// IMAGE_UPLOAD is a static ResourceReference whose getResource() returns new ImageUploadResource()
 HugeRteConfig config = HugeRteConfig.defaults()
     .withPlugins(HugeRtePlugin.IMAGE)
     .withToolbar("undo redo | image")
-    .with("images_upload_handler", new RawJavaScript("""
-        function (blobInfo, progress) {
-            return new Promise(function (resolve, reject) {
-                const body = new FormData();
-                body.append('file', blobInfo.blob(), blobInfo.filename());
-                fetch('/upload-image', { method: 'POST', body: body })
-                    .then(function (response) {
-                        if (!response.ok) {
-                            throw new Error('Upload failed: ' + response.status);
-                        }
-                        return response.json();
-                    })
-                    .then(function (json) { resolve(json.location); })
-                    .catch(function (err) { reject(err.message); });
-            });
-        }"""));
+    .with("images_upload_url", IMAGE_UPLOAD);
 ```
+
+The resource is reachable without a page, so check authorization in it, limit what it accepts, and decide how long stored images live. Escape `location` if it can contain `"` or `\`. HugeRTE uploads images asynchronously: an Ajax save that runs while an upload is still in progress sends the data URL instead of the final one.
+
+For a custom transport, set `images_upload_handler` to a `RawJavaScript` function `(blobInfo, progress)` that returns a `Promise` resolving to the image URL.
 
 ## Reference a function from a static script
 

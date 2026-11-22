@@ -27,6 +27,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import org.apache.wicket.request.resource.ResourceReference;
+
 /**
  * Immutable configuration of a HugeRTE editor.
  * <p>
@@ -42,8 +44,8 @@ import java.util.Set;
  * 	.with("height", 300);
  * }</pre>
  *
- * Option values may be strings, booleans, numbers, {@link RawJavaScript}, and lists or maps (with
- * string keys) of those. The editor's target element is set by {@link HugeRteBehavior}.
+ * Option values may be strings, booleans, numbers, {@link RawJavaScript}, {@link ResourceReference}
+ * (written as its URL when the editor renders), and lists or maps (with string keys) of those. The editor's target element is set by {@link HugeRteBehavior}.
  *
  * @param plugins
  *            the plugins to load
@@ -57,8 +59,12 @@ import java.util.Set;
 public record HugeRteConfig(Set<HugeRtePlugin> plugins, List<String> toolbar,
 	boolean toolbarHidden, Map<String, Object> options) implements Serializable
 {
-	/** Options that this class or {@link HugeRteBehavior} manage. */
-	private static final Set<String> RESERVED = Set.of("selector", "target", "plugins", "toolbar");
+	/**
+	 * Options that this class or {@link HugeRteBehavior} manage, and {@code inline}, which
+	 * HugeRTE does not allow on the textarea the behavior is attached to.
+	 */
+	private static final Set<String> RESERVED = Set.of("selector", "target", "plugins", "toolbar",
+		"inline");
 
 	private static final HugeRteConfig DEFAULTS = new HugeRteConfig(Set.of(), List.of(), false, Map.of());
 
@@ -73,6 +79,11 @@ public record HugeRteConfig(Set<HugeRtePlugin> plugins, List<String> toolbar,
 		}
 		var copy = new LinkedHashMap<String, Object>();
 		options.forEach((name, value) -> copy.put(checkOption(name), normalize(name, value)));
+		if (copy.get("mobile") instanceof Map<?, ?> mobile && mobile.containsKey("inline"))
+		{
+			throw new IllegalArgumentException(
+				"Option 'mobile' cannot set 'inline': inline mode is not supported");
+		}
 		options = Collections.unmodifiableMap(copy);
 	}
 
@@ -119,7 +130,7 @@ public record HugeRteConfig(Set<HugeRtePlugin> plugins, List<String> toolbar,
 	 * @return a copy with the option set to the value, replacing an earlier value
 	 * @throws IllegalArgumentException
 	 *             for a reserved option ({@code selector}, {@code target}, {@code plugins},
-	 *             {@code toolbar}) or an unsupported value type
+	 *             {@code toolbar}, {@code inline}) or an unsupported value type
 	 */
 	public HugeRteConfig with(String option, Object value)
 	{
@@ -169,7 +180,17 @@ public record HugeRteConfig(Set<HugeRtePlugin> plugins, List<String> toolbar,
 	}
 
 	/**
-	 * @return the configuration as a JavaScript object literal, without a target element
+	 * @param contentCss
+	 *            a style sheet served by Wicket, for example a {@code CssResourceReference}
+	 */
+	public HugeRteConfig withContentCss(ResourceReference contentCss)
+	{
+		return with("content_css", contentCss);
+	}
+
+	/**
+	 * @return the configuration as a JavaScript object literal, without a target element.
+	 *         {@link ResourceReference} values need an active request cycle.
 	 */
 	public String toJavaScript()
 	{
@@ -200,7 +221,7 @@ public record HugeRteConfig(Set<HugeRtePlugin> plugins, List<String> toolbar,
 		if (RESERVED.contains(name))
 		{
 			throw new IllegalArgumentException("Option '" + name +
-				"' is managed by HugeRteConfig or HugeRteBehavior and cannot be set directly");
+				"' cannot be set: use withPlugins or withToolbar; the behavior sets the target, and inline mode is not supported");
 		}
 		return name;
 	}
@@ -225,6 +246,7 @@ public record HugeRteConfig(Set<HugeRtePlugin> plugins, List<String> toolbar,
 			case Double d when Double.isFinite(d) -> d;
 			case Float f when Float.isFinite(f) -> f;
 			case RawJavaScript raw -> raw;
+			case ResourceReference reference -> reference;
 			case Collection<?> collection -> {
 				var list = new ArrayList<Object>(collection.size());
 				collection.forEach(item -> list.add(normalize(name, item)));
