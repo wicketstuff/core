@@ -30,8 +30,38 @@
 	// The editors each Ajax call sent, keyed by the call's attributes.
 	const sentBy = new WeakMap();
 
-	// Whether the request data contains a parameter with the given name, as Wicket serialized it:
-	// FormData for a multipart call, a query string in the body (POST) or in the URL (GET).
+	// Marks a snapshot that can't be attributed to one call, because calls that sent the editor
+	// overlapped.
+	const AMBIGUOUS = {};
+
+	// Whether the element is in what the Ajax call serializes, following Wicket.Ajax.Call.doAjax:
+	// the form (attrs.f), otherwise the component (attrs.c), recursively when attrs.sr is set.
+	function targets(attrs, element) {
+		if (attrs.f) {
+			let form = document.getElementById(attrs.f);
+			if (!form) {
+				return false;
+			}
+			if (form.tagName.toLowerCase() === 'form') {
+				return element.form === form;
+			}
+			// a nested Wicket form renders as a div; Wicket serializes the enclosing form
+			while (form.parentNode && form.tagName.toLowerCase() !== 'form' &&
+				form.tagName.toLowerCase() !== 'body') {
+				form = form.parentNode;
+			}
+			return form.contains(element);
+		}
+		if (attrs.c) {
+			const component = document.getElementById(attrs.c);
+			return !!component &&
+				(component === element || (!!attrs.sr && component.contains(element)));
+		}
+		return false;
+	}
+
+	// Whether the request data, as jQuery is about to send it, contains the parameter: FormData
+	// for a multipart call, the body for a POST, the URL's query for a GET.
 	function sends(settings, name) {
 		if (!name) {
 			return false;
@@ -40,11 +70,12 @@
 		if (data instanceof FormData) {
 			return data.has(name);
 		}
-		if (typeof data === 'string' && new URLSearchParams(data).has(name)) {
-			return true;
+		if (typeof data === 'string') {
+			return new URLSearchParams(data).has(name);
 		}
-		const query = (settings.url || '').split('#')[0].split('?')[1];
-		return query !== undefined && new URLSearchParams(query).has(name);
+		const url = (settings.url || '').split('#')[0];
+		const query = url.indexOf('?');
+		return query >= 0 && new URLSearchParams(url.slice(query + 1)).has(name);
 	}
 
 	// Copies the content to the textarea without marking the editor as saved, so isDirty() keeps
@@ -169,10 +200,11 @@
 		 */
 		markSaved: function (id) {
 			const editor = hugerte.get(id);
-			// With more than one call underway that sent this editor, it is unknown which content
-			// is being acknowledged, so the editor stays unsaved.
-			if (!editor || !editor.initialized || !submitted.has(editor) ||
-				(inFlight.get(editor) || 0) > 1 || submitted.get(editor) !== editor.getContent()) {
+			// When calls that sent this editor overlapped, it is unknown which content is being
+			// acknowledged, so the editor stays unsaved until a call sends it on its own.
+			const snapshot = submitted.get(editor);
+			if (!editor || !editor.initialized || typeof snapshot !== 'string' ||
+				(inFlight.get(editor) || 0) > 1 || snapshot !== editor.getContent()) {
 				return;
 			}
 			editor.setDirty(false);
@@ -199,11 +231,14 @@
 	Wicket.Event.subscribe(Wicket.Event.Topic.AJAX_CALL_BEFORE_SEND,
 		function (jqEvent, attrs, jqXHR, settings) {
 			const sent = hugerte.get().filter(function (editor) {
-				return editor.initialized && sends(settings, editor.getElement().name);
+				const element = editor.getElement();
+				return editor.initialized && targets(attrs, element) &&
+					sends(settings, element.name);
 			});
 			sent.forEach(function (editor) {
-				submitted.set(editor, editor.getContent());
-				inFlight.set(editor, (inFlight.get(editor) || 0) + 1);
+				const underway = inFlight.get(editor) || 0;
+				submitted.set(editor, underway > 0 ? AMBIGUOUS : editor.getContent());
+				inFlight.set(editor, underway + 1);
 			});
 			if (sent.length > 0) {
 				sentBy.set(attrs, sent);

@@ -83,7 +83,7 @@ protected void onSubmit(AjaxRequestTarget target)
 }
 ```
 
-`markSaved` acknowledges the content the editor had when an Ajax call last sent it, for example with an `AjaxButton` or a behavior on the textarea. If the user kept typing while the request was underway, the editor no longer holds that content and stays dirty. Only calls whose request data contains the textarea count, so timers and calls stopped by a precondition don't; calling `markSaved` before the editor was ever sent has no effect, and when two calls that sent the editor are underway at once, it stays dirty. `markSaved` runs before Wicket replaces components, so it also works when the same response re-renders the editor.
+`markSaved` acknowledges the content the editor had when an Ajax call last sent it, for example with an `AjaxButton` or a behavior on the textarea. If the user kept typing while the request was underway, the editor no longer holds that content and stays dirty. Only calls that serialize the textarea count, so timers and calls stopped by a precondition don't; calling `markSaved` before the editor was ever sent has no effect. When two calls that sent the editor overlap, which only happens with custom Ajax channels, the editor stays dirty until a call sends it on its own. `markSaved` runs before Wicket replaces components, so it also works when the same response re-renders the editor.
 
 An `AjaxButton` or `AjaxSubmitLink` that returns `true` from `shouldTriggerJavaScriptSubmitEvent()` fires the form's `submit` event, and HugeRTE marks the editor as saved on that event, before the server has answered.
 
