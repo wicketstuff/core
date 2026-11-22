@@ -218,8 +218,8 @@ public abstract class AbstractTree extends Panel
 				// this is necessary for createElement js to work correctly
 				String tagName = ((ComponentTag)getMarkup().get(0)).getName();
 				Response response = getResponse();
-				response.write("<" + tagName + " style=\"display:none\" id=\"" + getMarkupId() +
-					"\">");
+				// the hidden attribute instead of an inline style, which the CSP would block
+				response.write("<" + tagName + " hidden id=\"" + getMarkupId() + "\">");
 				if ("table".equals(tagName))
 				{
 					response.write("<tbody><tr><td></td></tr></tbody>");

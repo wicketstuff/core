@@ -19,7 +19,9 @@ package org.apache.wicket.extensions.markup.html.tree.table;
 import javax.swing.tree.TreeNode;
 
 import org.apache.wicket.Component;
+import org.apache.wicket.extensions.markup.html.tree.StyleRule;
 import org.apache.wicket.markup.IMarkupFragment;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.request.Response;
 import org.apache.wicket.request.cycle.RequestCycle;
 
@@ -86,7 +88,7 @@ final class SideColumnsView extends AbstractColumnsView
 			IRenderable renderable = renderables.get(i);
 
 			// write wrapping markup
-			response.write("<span class=\"b_\" style=\"" + renderColumnStyle(column) + "\">");
+			response.write("<span class=\"b_ " + columnStyle(column).getCssClass() + "\">");
 			if ((column.getLocation().getAlignment() == ColumnLocation.Alignment.LEFT) && (firstLeft == true))
 			{
 				// for the first left column we have different style class
@@ -151,16 +153,28 @@ final class SideColumnsView extends AbstractColumnsView
 		}
 	}
 
+	@Override
+	public void renderHead(final IHeaderResponse response)
+	{
+		super.renderHead(response);
+		for (IColumn column : columns)
+		{
+			columnStyle(column).renderHead(response);
+		}
+	}
+
 	/**
-	 * Renders content of the style attribute for the given column.
+	 * Returns the width and float of the given column as a style rule. A style rule instead of an
+	 * inline style attribute, because the CSP blocks inline style attributes.
 	 * 
 	 * @param column
-	 *            The column to render the style attribute from
-	 * @return The style as a string
+	 *            The column to render the style from
+	 * @return The style rule
 	 */
-	private String renderColumnStyle(final IColumn column)
+	private StyleRule columnStyle(final IColumn column)
 	{
-		return "width:" + renderColumnWidth(column) + ";float:" + renderColumnFloat(column);
+		return new StyleRule("wicket15-tree-column", "width:" + renderColumnWidth(column),
+			"float:" + renderColumnFloat(column));
 	}
 
 	/**
