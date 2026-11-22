@@ -71,7 +71,7 @@ Errors thrown by `HugeRteConfig` construction and `with(...)`:
 | Condition | Exception |
 |---|---|
 | `option` name is `null` | `NullPointerException` |
-| `option` is `selector`, `target`, `plugins`, `toolbar`, or `inline` | `IllegalArgumentException` |
+| `option` is `selector`, `target`, `plugins`, `toolbar`, or `inline`, or the `mobile` map contains `inline` | `IllegalArgumentException` |
 | Value (top-level or nested inside a `Collection` or `Map`) is `null` | `IllegalArgumentException` |
 | `Double` or `Float` is `NaN`, `+Infinity`, or `-Infinity` | `IllegalArgumentException` |
 | `Map` contains a key that is not a `String` | `IllegalArgumentException` |
@@ -116,7 +116,8 @@ Errors thrown by `HugeRteConfig` construction and `with(...)`:
 | `protected HugeRteConfig getConfig(Component component)` | Returns `getConfig()`, with `withReadonly(true)` applied when `component.isEnabledInHierarchy()` is `false`. Override it to vary the configuration per component. |
 | `public HugeRteConfig getConfig()` | Returns `config.getObject()`. Throws `NullPointerException` if the model returns `null`. |
 | `public void detach(Component component)` | Calls `config.detach()` and `super.detach(component)`. |
-| `public static void markSaved(AjaxRequestTarget target, Component component)` | Appends `Wicket.HugeRte.markSaved("<markupId>");`: the editor is no longer dirty and the autosave plugin's draft is discarded. Call it after storing the content. |
+| `public static void markSaved(AjaxRequestTarget target, Component component)` | Prepends `Wicket.HugeRte.markSaved("<markupId>", <hash>);`, which runs before components are replaced: the editor is no longer dirty and the autosave plugin's draft is discarded. When the component is a `FormComponent` with input in this request, `<hash>` is the hash of that input, and the editor is only marked as saved if it still holds that content. Call it after storing the content. |
+| `public void onComponentTag(Component component, ComponentTag tag)` | Throws `MarkupException` when the tag is not a `<textarea>`. |
 | `public static void focus(AjaxRequestTarget target, Component component)` | Appends `Wicket.HugeRte.focus("<markupId>");`, which focuses the editor once it is initialized. Use it instead of `target.focusComponent(...)`, which focuses the hidden textarea. |
 
 ## RawJavaScript
@@ -166,7 +167,7 @@ Adds the following directives to `csp` and returns `csp` for chaining:
   - forwards the editor's `change`, `undo` and `redo` events as `change`, and `blur` as `blur`, to the textarea after copying the content to it;
   - removes the editor, just after it finishes initializing, when its textarea was already removed;
   - focuses the editor if `Wicket.HugeRte.focus` was called before it was ready.
-- `Wicket.HugeRte.focus(id)` — focuses the editor, or does so once it is initialized, and stops Wicket from moving the focus back to the element that triggered the Ajax call.
-- `Wicket.HugeRte.markSaved(id)` — calls `editor.setDirty(false)` and, when the autosave plugin is loaded, discards its draft.
+- `Wicket.HugeRte.focus(id)` — when an editor with that id exists, focuses it (or does so once it is initialized) and stops Wicket from moving the focus back to the element that triggered the Ajax call.
+- `Wicket.HugeRte.markSaved(id, submittedHash)` — for an initialized editor whose content hash (Java's `String.hashCode`, ignoring carriage returns) equals `submittedHash`, or when no hash is given: calls `editor.setDirty(false)`, discards the autosave plugin's draft with `removeDraft()`, and calls `editor.nodeChanged()` so the save and restore buttons update.
 - `Wicket.Event.Topic.AJAX_CALL_BEFORE` (`'/ajax/call/before'`) — copies every editor's content to its textarea with `editor.save({ set_dirty: false })`, so Wicket serializes current values and `editor.isDirty()` is left unchanged.
 - `Wicket.Event.Topic.DOM_NODE_REMOVING` (`'/dom/node/removing'`) — iterates over `hugerte.get()` and calls `editor.remove()` for every editor whose target element is `node` or a descendant of `node`.

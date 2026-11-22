@@ -16,6 +16,7 @@ package org.wicketstuff.hugerte;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.apache.wicket.MarkupContainer;
@@ -24,13 +25,18 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.core.util.lang.WicketObjects;
 import org.apache.wicket.markup.IMarkupResourceStreamProvider;
+import org.apache.wicket.markup.MarkupException;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.mock.MockApplication;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.resource.ByteArrayResource;
 import org.apache.wicket.request.resource.CssResourceReference;
+import org.apache.wicket.request.resource.IResource;
+import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.util.resource.IResourceStream;
 import org.apache.wicket.util.resource.StringResourceStream;
 import org.apache.wicket.util.tester.WicketTester;
@@ -97,15 +103,56 @@ class HugeRteBehaviorTest
 			"Wicket.HugeRte.init(\"" + page.text.getMarkupId() + "\",{\"readonly\":true});"));
 	}
 
-	@Test
-	void writesResourceReferencesAsUrls()
+	static final CssResourceReference CSS = new CssResourceReference(HugeRteBehaviorTest.class,
+		"content.css");
+
+	static final ResourceReference UPLOAD = new ResourceReference("image-upload")
 	{
-		var css = new CssResourceReference(HugeRteBehaviorTest.class, "content.css");
-		tester.startPage(new EditorPage(HugeRteConfig.defaults().withContentCss(css)));
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public IResource getResource()
+		{
+			return new ByteArrayResource("application/json", new byte[0]);
+		}
+	};
+
+	private static final String CSS_URL = "\"content_css\":\"" + "/context/servlet/wicket/resource/" +
+		"org.wicketstuff.hugerte.HugeRteBehaviorTest/content";
+
+	@Test
+	void writesResourceReferencesAsAbsolutePaths()
+	{
+		tester.startPage(new EditorPage(HugeRteConfig.defaults().withContentCss(CSS)));
 
 		var html = tester.getLastResponseAsString();
-		assertTrue(html.matches("(?s).*\"content_css\":\"/[^\"]*org\\.wicketstuff\\.hugerte\\.HugeRteBehaviorTest/content(-ver-[0-9]+)?\\.css\".*"), html);
-		assertTrue(!html.contains("\"content_css\":\"./"), html);
+		assertTrue(html.contains(CSS_URL), html);
+	}
+
+	@Test
+	void writesResourceReferencesAsAbsolutePathsOnNestedMounts()
+	{
+		tester.getApplication().mountPage("admin/articles/edit", MountedEditorPage.class);
+		tester.getApplication().mountResource("image-upload", UPLOAD);
+		tester.startPage(MountedEditorPage.class);
+
+		var html = tester.getLastResponseAsString();
+		assertTrue(html.contains(CSS_URL), html);
+		assertTrue(html.contains("\"images_upload_url\":\"/context/servlet/image-upload\""), html);
+	}
+
+	@Test
+	void hashesContentLikeTheScript()
+	{
+		// String.hashCode, ignoring carriage returns, as contentHash in hugerte-wicket.js
+		assertEquals("<p>a</p>\n<p>b</p>".hashCode(),
+			HugeRteBehavior.contentHash("<p>a</p>\r\n<p>b</p>"));
+	}
+
+	@Test
+	void rejectsOtherTagsThanTextarea()
+	{
+		assertThrows(MarkupException.class, () -> tester.startPage(new DivPage()));
 	}
 
 	@Test
@@ -236,6 +283,33 @@ class HugeRteBehaviorTest
 
 		assertNotNull(copy);
 		assertEquals(behavior.getConfig(), copy.getConfig());
+	}
+
+	public static class MountedEditorPage extends EditorPage
+	{
+		private static final long serialVersionUID = 1L;
+
+		public MountedEditorPage()
+		{
+			super(HugeRteConfig.defaults().withContentCss(CSS).with("images_upload_url", UPLOAD));
+		}
+	}
+
+	public static class DivPage extends WebPage implements IMarkupResourceStreamProvider
+	{
+		private static final long serialVersionUID = 1L;
+
+		DivPage()
+		{
+			add(new WebMarkupContainer("div").add(new HugeRteBehavior()));
+		}
+
+		@Override
+		public IResourceStream getMarkupResourceStream(MarkupContainer container,
+			Class<?> containerClass)
+		{
+			return new StringResourceStream("<html><body><div wicket:id=\"div\"></div></body></html>");
+		}
 	}
 
 	public static class EditorPage extends WebPage implements IMarkupResourceStreamProvider

@@ -76,12 +76,16 @@ final class JavaScriptWriter
 				"Writing a ResourceReference as a URL needs an active request cycle: " + reference);
 		}
 		Url url = cycle.mapUrlFor(reference, null);
-		String full = cycle.getUrlRenderer().renderFullUrl(url);
+		var renderer = cycle.getUrlRenderer();
 		if (url.isFull())
 		{
-			return full;
+			return renderer.renderFullUrl(url);
 		}
-		URI uri = URI.create(full);
+		// renderUrl makes the URL relative to the current page; renderFullUrl resolves such a
+		// URL against the page, which gives the absolute address
+		String relative = renderer.renderUrl(url);
+		URI uri = URI.create(renderer.renderFullUrl(Url.parse(relative, url.getCharset())))
+			.normalize();
 		return uri.getRawQuery() == null ? uri.getRawPath()
 			: uri.getRawPath() + "?" + uri.getRawQuery();
 	}

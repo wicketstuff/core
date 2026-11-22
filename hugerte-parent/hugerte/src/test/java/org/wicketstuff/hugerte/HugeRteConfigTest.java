@@ -115,6 +115,13 @@ class HugeRteConfigTest
 	}
 
 	@Test
+	void rejectsInlineInMobileOptions()
+	{
+		assertThrows(IllegalArgumentException.class,
+			() -> HugeRteConfig.defaults().with("mobile", Map.of("inline", true)));
+	}
+
+	@Test
 	void needsARequestCycleForResourceReferences()
 	{
 		var config = HugeRteConfig.defaults()

@@ -27,6 +27,16 @@
 		editor.save({ set_dirty: false });
 	}
 
+	// Java's String.hashCode, ignoring carriage returns; must match HugeRteBehavior.contentHash.
+	function contentHash(content) {
+		const text = content.replace(/\r/g, '');
+		let hash = 0;
+		for (let i = 0; i < text.length; i++) {
+			hash = (Math.imul(31, hash) + text.charCodeAt(i)) | 0;
+		}
+		return hash;
+	}
+
 	function removeEditorsWithin(node) {
 		hugerte.get().forEach(function (editor) {
 			const element = editor.getElement();
@@ -122,10 +132,13 @@
 		 * Focuses the editor with the given id, or does so once it has been initialized.
 		 */
 		focus: function (id) {
+			const editor = hugerte.get(id);
+			if (!editor) {
+				return;
+			}
 			// Stop Wicket from moving the focus back to the element that triggered the Ajax call.
 			Wicket.Focus.setFocusOnId(null);
-			const editor = hugerte.get(id);
-			if (editor && editor.initialized) {
+			if (editor.initialized) {
 				editor.focus();
 			} else {
 				pendingFocus.add(id);
@@ -134,17 +147,23 @@
 
 		/**
 		 * Marks the editor with the given id as saved: it is no longer dirty, and a draft kept by
-		 * the autosave plugin is discarded.
+		 * the autosave plugin is discarded. With a content hash, only when the editor still holds
+		 * the content that was submitted.
 		 */
-		markSaved: function (id) {
+		markSaved: function (id, submittedHash) {
 			const editor = hugerte.get(id);
-			if (!editor) {
+			if (!editor || !editor.initialized) {
+				return;
+			}
+			if (submittedHash !== undefined && contentHash(editor.getContent()) !== submittedHash) {
 				return;
 			}
 			editor.setDirty(false);
 			if (editor.plugins.autosave) {
-				editor.plugins.autosave.removeDraft(false);
+				editor.plugins.autosave.removeDraft();
 			}
+			// Lets the save and restore buttons update their state.
+			editor.nodeChanged();
 		}
 	};
 

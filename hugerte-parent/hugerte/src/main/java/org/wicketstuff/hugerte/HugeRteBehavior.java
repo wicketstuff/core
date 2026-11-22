@@ -18,9 +18,12 @@ import java.util.Objects;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.Behavior;
+import org.apache.wicket.markup.ComponentTag;
+import org.apache.wicket.markup.MarkupException;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
+import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
@@ -110,11 +113,39 @@ public class HugeRteBehavior extends Behavior
 	 * Marks the component's editor as saved: {@code isDirty()} becomes {@code false} and a draft
 	 * kept by the autosave plugin is discarded. Call it after the content has been stored, so the
 	 * editor stops warning about unsaved changes.
+	 * <p>
+	 * When the component was submitted in this request, the editor is only marked as saved if it
+	 * still holds the submitted content; edits made while the request was underway stay unsaved.
+	 * The script runs before Wicket replaces components, so it also works when the response
+	 * re-renders the editor.
 	 */
 	public static void markSaved(AjaxRequestTarget target, Component component)
 	{
-		target.appendJavaScript(
-			"Wicket.HugeRte.markSaved(" + JavaScriptWriter.write(component.getMarkupId()) + ");");
+		String id = JavaScriptWriter.write(component.getMarkupId());
+		String input = component instanceof FormComponent<?> formComponent
+			? formComponent.getInput() : null;
+		target.prependJavaScript(input == null ? "Wicket.HugeRte.markSaved(" + id + ");"
+			: "Wicket.HugeRte.markSaved(" + id + "," + contentHash(input) + ");");
+	}
+
+	/**
+	 * The hash {@code hugerte-wicket.js} computes over the editor content: Java's string hash,
+	 * ignoring carriage returns.
+	 */
+	static int contentHash(String content)
+	{
+		return content.replace("\r", "").hashCode();
+	}
+
+	@Override
+	public void onComponentTag(Component component, ComponentTag tag)
+	{
+		super.onComponentTag(component, tag);
+		if (!"textarea".equalsIgnoreCase(tag.getName()))
+		{
+			throw new MarkupException("HugeRteBehavior only supports <textarea>, but component '" +
+				component.getId() + "' is attached to <" + tag.getName() + ">");
+		}
 	}
 
 	/**

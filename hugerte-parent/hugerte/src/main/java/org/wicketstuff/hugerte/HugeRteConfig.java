@@ -79,6 +79,11 @@ public record HugeRteConfig(Set<HugeRtePlugin> plugins, List<String> toolbar,
 		}
 		var copy = new LinkedHashMap<String, Object>();
 		options.forEach((name, value) -> copy.put(checkOption(name), normalize(name, value)));
+		if (copy.get("mobile") instanceof Map<?, ?> mobile && mobile.containsKey("inline"))
+		{
+			throw new IllegalArgumentException(
+				"Option 'mobile' cannot set 'inline': inline mode is not supported");
+		}
 		options = Collections.unmodifiableMap(copy);
 	}
 
