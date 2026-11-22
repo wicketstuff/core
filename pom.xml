@@ -262,19 +262,6 @@
 									<pluginExecutions>
 										<pluginExecution>
 											<pluginExecutionFilter>
-												<groupId>org.apache.maven.plugins</groupId>
-												<artifactId>maven-toolchains-plugin</artifactId>
-												<versionRange>[1.0,)</versionRange>
-												<goals>
-													<goal>toolchain</goal>
-												</goals>
-											</pluginExecutionFilter>
-											<action>
-												<ignore>true</ignore>
-											</action>
-										</pluginExecution>
-										<pluginExecution>
-											<pluginExecutionFilter>
 												<groupId>net.alchim31.maven</groupId>
 												<artifactId>scala-maven-plugin</artifactId>
 												<versionRange>[3.2.2,)</versionRange>
@@ -322,8 +309,7 @@
 	<properties>
 		<wicket.version>11.1.0-SNAPSHOT</wicket.version>
 
-		<maven.compiler.source>21</maven.compiler.source>
-		<maven.compiler.target>21</maven.compiler.target>
+		<maven.compiler.release>21</maven.compiler.release>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -1144,6 +1130,10 @@
 								<requireMavenVersion>
 									<version>3.5.0</version>
 								</requireMavenVersion>
+								<requireJavaVersion>
+									<version>[${maven.compiler.release},)</version>
+									<message>Wicket Stuff needs JDK ${maven.compiler.release} or newer to build; set JAVA_HOME to such a JDK.</message>
+								</requireJavaVersion>
 								<!-- Every Wicket artifact on any classpath must be ${wicket.version}, also
 									when a third-party library brings its own (older) Wicket. Manage the
 									artifact in dependencyManagement when this rule fails. -->
@@ -1184,25 +1174,6 @@
 				</executions>
 			</plugin>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-toolchains-plugin</artifactId>
-				<version>3.3.0</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>toolchain</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<toolchains>
-						<jdk>
-							<version>${maven.compiler.source}</version>
-						</jdk>
-					</toolchains>
-				</configuration>
-			</plugin>
-			<plugin>
 				<groupId>org.apache.felix</groupId>
 				<artifactId>maven-bundle-plugin</artifactId>
 				<inherited>true</inherited>
@@ -1223,7 +1194,7 @@
 						<quiet>true</quiet>
 						<doclint>none</doclint>
 						<!-- Plugin passes the javadoc no-fonts flag by default (since 3.11.3), but that
-						     flag only exists in JDK 24+ javadoc; disable it so the JDK 17 toolchain works. -->
+						     flag only exists in JDK 24+ javadoc; disable it so a JDK older than 24 works. -->
 						<disableNoFonts>true</disableNoFonts>
 						<links>
 							<link>https://docs.oracle.com/en/java/javase/17/docs/api/</link>
@@ -1327,7 +1298,6 @@
 					<version>${maven-compiler-plugin.version}</version>
 					<inherited>true</inherited>
 					<configuration>
-						<release>${maven.compiler.source}</release>
 						<debug>true</debug>
 						<showDeprecation>true</showDeprecation>
 						<showWarnings>true</showWarnings>
