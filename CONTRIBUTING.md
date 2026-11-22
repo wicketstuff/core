@@ -9,6 +9,7 @@ The developer documentation is in the [`docs/`](docs/index.md) folder:
 * [Contributing a new project](docs/contributing.md)
 * [Building Wicket Stuff](docs/building.md)
 * [Git workflow](docs/git-workflow.md)
+* [Release lines](docs/release-lines.md)
 * [Code formatting and test naming](docs/code-style.md)
 * [Licensing](docs/licensing.md)
 * [Gaining commit access](docs/commit-access.md)
