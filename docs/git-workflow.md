@@ -6,7 +6,7 @@ The main git documentation is at <https://git-scm.com/doc>.
 
 ## Branches
 
-`master` builds against the next major version of Wicket. Each Wicket release line has its own `wicket-N.x` branch (for example `wicket-11.x`), from which the releases for that line are made. Make your change on the branch of the release line it is meant for.
+`master` builds against the next major version of Wicket. Each Wicket release line has its own `wicket-N.x` branch (for example `wicket-11.x`), from which the releases for that line are made. Features go to `master`; fixes go to `master` first and are then backported to the live release branches. See [Release lines](release-lines.md) for which branches are live and how to backport.
 
 ## Pull requests
 
