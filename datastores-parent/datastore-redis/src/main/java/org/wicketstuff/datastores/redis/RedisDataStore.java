@@ -48,7 +48,7 @@ public class RedisDataStore extends AbstractPersistentPageStore implements IPers
 	private static final String SIZE = "size";
 
 	/**
-	 * A pool of connections to the cluster
+	 * The client used to talk to Redis
 	 */
 	private final RedisClient redis;
 
@@ -58,7 +58,7 @@ public class RedisDataStore extends AbstractPersistentPageStore implements IPers
 	private final IRedisSettings settings;
 
 	/**
-	 * Creates a connection pool by using the hostname and port from
+	 * Creates a client by using the hostname and port from
 	 * the provided settings
 	 *
 	 * @param applicationname    The name of wicket application
@@ -66,10 +66,30 @@ public class RedisDataStore extends AbstractPersistentPageStore implements IPers
 	 */
 	public RedisDataStore(String applicationname, IRedisSettings settings)
 	{
+		this(applicationname, createClient(settings), settings);
+	}
+
+	/**
+	 * Uses a client configured by the caller, e.g. with credentials, TLS, a database or pool
+	 * settings. The hostname and port of the settings are not used.
+	 *
+	 * @param applicationname The name of wicket application
+	 * @param redis The client to use; it is closed in {@link #destroy()}
+	 * @param settings The various settings
+	 */
+	public RedisDataStore(String applicationname, RedisClient redis, IRedisSettings settings)
+	{
 		super(applicationname);
 
+		this.redis = Args.notNull(redis, "redis");
 		this.settings = Args.notNull(settings, "settings");
-		this.redis = RedisClient.builder()
+	}
+
+	private static RedisClient createClient(IRedisSettings settings)
+	{
+		Args.notNull(settings, "settings");
+
+		return RedisClient.builder()
 				.hostAndPort(settings.getHostname(), settings.getPort())
 				.build();
 	}
@@ -140,6 +160,8 @@ public class RedisDataStore extends AbstractPersistentPageStore implements IPers
 		if (redis != null) {
 			redis.close();
 		}
+
+		super.destroy();
 	}
 
 	@Override
