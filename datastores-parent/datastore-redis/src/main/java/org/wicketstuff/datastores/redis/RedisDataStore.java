@@ -85,12 +85,19 @@ public class RedisDataStore extends AbstractPersistentPageStore implements IPers
 		byte[] bytes = redis.get(SafeEncoder.encode(key));
 
 		String attributesKey = makeKey(sessionIdentifier, id, ATTRIBUTES);
-		String type = new String(redis.hmget(attributesKey, TYPE).get(0));
+		List<String> attributes = redis.hmget(attributesKey, ID, TYPE);
 
-		LOGGER.debug("Got {} for session '{}' and page id '{}'",
-				new Object[] {bytes != null ? "data" : "'null'", sessionIdentifier, id});
+		// data and attributes are stored (and expire) as separate keys, so either may be gone;
+		// 'id' is always written, 'type' only when the page has one
+		if (bytes == null || attributes.get(0) == null)
+		{
+			LOGGER.debug("No (complete) data for session '{}' and page id '{}'", sessionIdentifier, id);
+			return null;
+		}
 
-		return new SerializedPage(id,  type,  bytes);
+		LOGGER.debug("Got data for session '{}' and page id '{}'", sessionIdentifier, id);
+
+		return new SerializedPage(id, attributes.get(1), bytes);
 	}
 
 	@Override
@@ -140,6 +147,8 @@ public class RedisDataStore extends AbstractPersistentPageStore implements IPers
 		if (redis != null) {
 			redis.close();
 		}
+
+		super.destroy();
 	}
 
 	@Override
@@ -167,6 +176,11 @@ public class RedisDataStore extends AbstractPersistentPageStore implements IPers
 		for (String key : keys) {
 			if (key.endsWith(ATTRIBUTES)) {
 				List<String> hm = redis.hmget(key, ID, TYPE, SIZE);
+				if (hm.get(0) == null || hm.get(2) == null)
+				{
+					// expired or evicted after KEYS returned it
+					continue;
+				}
 
 				pages.add(new PersistedPage(Integer.parseInt(hm.get(0)), hm.get(1), Integer.parseInt(hm.get(2))));
 			}
@@ -200,7 +214,10 @@ public class RedisDataStore extends AbstractPersistentPageStore implements IPers
 		Map<String, String> hm = new HashMap<>();
 
 		hm.put(ID, String.valueOf(serializedPage.getPageId()));
-		hm.put(TYPE, serializedPage.getPageType());
+		// a Redis hash cannot hold null values, so a page without a type has no 'type' field
+		if (serializedPage.getPageType() != null) {
+			hm.put(TYPE, serializedPage.getPageType());
+		}
 		hm.put(SIZE, String.valueOf(serializedPage.getData().length));
 
 		return hm;
