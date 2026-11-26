@@ -85,12 +85,18 @@ public class RedisDataStore extends AbstractPersistentPageStore implements IPers
 		byte[] bytes = redis.get(SafeEncoder.encode(key));
 
 		String attributesKey = makeKey(sessionIdentifier, id, ATTRIBUTES);
-		String type = new String(redis.hmget(attributesKey, TYPE).get(0));
+		String type = redis.hget(attributesKey, TYPE);
 
-		LOGGER.debug("Got {} for session '{}' and page id '{}'",
-				new Object[] {bytes != null ? "data" : "'null'", sessionIdentifier, id});
+		// data and attributes are stored (and expire) as separate keys, so either may be gone
+		if (bytes == null || type == null)
+		{
+			LOGGER.debug("No (complete) data for session '{}' and page id '{}'", sessionIdentifier, id);
+			return null;
+		}
 
-		return new SerializedPage(id,  type,  bytes);
+		LOGGER.debug("Got data for session '{}' and page id '{}'", sessionIdentifier, id);
+
+		return new SerializedPage(id, type, bytes);
 	}
 
 	@Override
@@ -140,6 +146,8 @@ public class RedisDataStore extends AbstractPersistentPageStore implements IPers
 		if (redis != null) {
 			redis.close();
 		}
+
+		super.destroy();
 	}
 
 	@Override
@@ -167,6 +175,11 @@ public class RedisDataStore extends AbstractPersistentPageStore implements IPers
 		for (String key : keys) {
 			if (key.endsWith(ATTRIBUTES)) {
 				List<String> hm = redis.hmget(key, ID, TYPE, SIZE);
+				if (hm.get(0) == null || hm.get(2) == null)
+				{
+					// expired or evicted after KEYS returned it
+					continue;
+				}
 
 				pages.add(new PersistedPage(Integer.parseInt(hm.get(0)), hm.get(1), Integer.parseInt(hm.get(2))));
 			}
