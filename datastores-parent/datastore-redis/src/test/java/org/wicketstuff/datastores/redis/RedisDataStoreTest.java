@@ -100,6 +100,26 @@ public class RedisDataStoreTest extends BaseDataStoreTest {
 	}
 
 	@Test
+	void getPersistedPageSupportsPagesWithoutType() {
+		store.addPersistedPage(session, new SerializedPage(1, DATA));
+
+		SerializedPage page = (SerializedPage) store.getPersistedPage(session, 1);
+
+		assertNull(page.getPageType());
+		assertArrayEquals(DATA, page.getData());
+	}
+
+	@Test
+	void getPersistedPagesListsPagesWithoutType() {
+		store.addPersistedPage(session, new SerializedPage(1, DATA));
+
+		List<IPersistedPage> pages = store.getPersistedPages(session);
+
+		assertEquals(1, pages.size());
+		assertNull(pages.get(0).getPageType());
+	}
+
+	@Test
 	void getPersistedPagesSkipsIncompleteAttributes() {
 		store.addPersistedPage(session, new SerializedPage(1, "type", DATA));
 		store.addPersistedPage(session, new SerializedPage(2, "type", DATA));
